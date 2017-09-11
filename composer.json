@@ -16,5 +16,10 @@
 	},
 	"autoload": {
 		"classmap": [ "src/" ]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SeinTest\\PluginEntity": "test/"
+		}
 	}
 }
