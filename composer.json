@@ -1,0 +1,20 @@
+{
+	"name": "sein/plugin_entity",
+	"description": "Doctrine entity plugin for the sein market micro applications",
+	"authors": [
+		{
+			"name": "Samuel Belu-John",
+			"email": "samuel.belujohn@seinanalytics.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"require-dev": {
+		"php": ">=5.6.4",
+        	"laravel/framework": "5.3.30",
+        	"laravel-doctrine/orm": "^1.2",
+        	"phpunit/phpunit": "^5.5"
+	},
+	"autoload": {
+		"classmap": [ "src/" ]
+	}
+}
