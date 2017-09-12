@@ -25,6 +25,9 @@ class Issuer
     /** @ORM\Column(type="string", nullable=false) **/
     protected $issuerName;
 
+    /** @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="issuer")   */
+    protected $users;
+
     /** @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
@@ -111,5 +114,7 @@ class Issuer
     {
         $this->approvedDate = $approvedDate;
     }
+
+
 
 }
