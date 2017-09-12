@@ -1,5 +1,5 @@
 {
-	"name": "sein/plugin_entity",
+	"name": "sein-analytics/market_entity",
 	"description": "Doctrine entity plugin for the sein market micro applications",
 	"authors": [
 		{
