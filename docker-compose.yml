@@ -1,0 +1,32 @@
+version: '2'
+services:
+  app:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    image: sbelujohn/orm.src
+    volumes:
+     - .:/var/www/html
+    ports:
+     - "${SRC_PORT}:8888"
+    networks:
+     - ormnet
+  mysql-orm:
+    image: mysql:5.7
+    ports:
+     - "${MYSQL_PORT}:3308"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "homestead"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "root"
+    volumes:
+     - mysqlormdata:/var/lib/mysql
+    networks:
+     - ormnet
+networks:
+  ormnet:
+    driver: "bridge"
+volumes:
+  mysqlormdata:
+    driver: "local"

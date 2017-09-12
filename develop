@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+export SRC_PORT=${SRC_PORT:-8888}
+export MYSQL_PORT=${MYSQL_PORT:-3308}
+
+if [ $# -gt 0 ] ; then
+    docker-compose "$@"
+else
+    docker-compose ps
+fi

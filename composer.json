@@ -9,16 +9,12 @@
 	],
 	"require-dev": {
 		"php": ">=5.6.4",
-        	"laravel/framework": "5.3.30",
-        	"laravel-doctrine/orm": "^1.2",
-        	"phpunit/phpunit": "^5.5"
+        "laravel/framework": "5.3.30",
+		"doctrine/orm" : "^2.5.0",
+        "laravel-doctrine/orm": "^1.2",
+        "phpunit/phpunit": "^5.5"
 	},
 	"autoload": {
 		"classmap": [ "src/" ]
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"SeinTest\\MarketEntity": "test/"
-		}
 	}
 }
