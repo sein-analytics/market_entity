@@ -37,8 +37,8 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $upb;
 
-    /** @ORM\Column(type="json_array", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $states;
 
@@ -47,8 +47,8 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $summaryStates;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $ltv;
 
@@ -57,56 +57,58 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $summaryLtv;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $balance;
 
-    /** @ORM\Column(type="string", nullable=true)
+    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var string
      **/
     protected $summaryBalance;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $rate;
 
     /** @ORM\Column(type="decimal", precision=5, scale=3, nullable=true)
-     * @var number
+     * @var string
      **/
     protected $summaryRate;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
+     **/
     protected $loanType;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $propertyType;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $occupancy;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $maturity;
 
     /** @ORM\Column(type="decimal", precision=4, scale=0, nullable=true)
-     * @var number
+     * @var string
      **/
     protected $summaryMaturity;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $credit;
 
     /** @ORM\Column(type="decimal", precision=4, scale=0, nullable=true)
-     * @var number
+     * @var string
      **/
     protected $summaryCredit;
 
@@ -187,9 +189,9 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getLtv(): string
+    public function getLtv()
     {
         return $this->ltv;
     }
@@ -221,7 +223,7 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getBalance()
     {
@@ -229,12 +231,13 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $balance
+     * @param array $balance
      */
-    public function setBalance(string $balance)
+    public function setBalance(array $balance)
     {
-        $this->_onPropertyChanged('balance', $this->balance, $balance);
-        $this->balance = $balance;
+        $string = json_encode($balance);
+        $this->_onPropertyChanged('balance', $this->balance, $string);
+        $this->balance = $string;
     }
 
     /**
@@ -255,41 +258,42 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getRate(): string
+    public function getRate()
     {
         return $this->rate;
     }
 
     /**
-     * @param string $rate
+     * @param array $rate
      */
-    public function setRate(string $rate)
+    public function setRate(array $rate)
     {
-        $this->_onPropertyChanged('rate', $this->rate, $rate);
-        $this->rate = $rate;
+        $string = json_encode($rate);
+        $this->_onPropertyChanged('rate', $this->rate, $string);
+        $this->rate = $string;
     }
 
     /**
-     * @return number
+     * @return string
      */
-    public function getSummaryRate(): number
+    public function getSummaryRate()
     {
         return $this->summaryRate;
     }
 
     /**
-     * @param number $summaryRate
+     * @param string $summaryRate
      */
-    public function setSummaryRate(number $summaryRate)
+    public function setSummaryRate(string $summaryRate)
     {
         $this->_onPropertyChanged('summaryRate', $this->summaryRate, $summaryRate);
         $this->summaryRate = $summaryRate;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getLoanType()
     {
@@ -297,16 +301,17 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param mixed $loanType
+     * @param array $loanType
      */
-    public function setLoanType($loanType)
+    public function setLoanType(array $loanType)
     {
-        $this->_onPropertyChanged('loanType', $this->loanType, $loanType);
-        $this->loanType = $loanType;
+        $string = json_encode($loanType);
+        $this->_onPropertyChanged('loanType', $this->loanType, $string);
+        $this->loanType = $string;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getPropertyType()
     {
@@ -314,16 +319,17 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $propertyType
+     * @param array $propertyType
      */
-    public function setPropertyType(string $propertyType)
+    public function setPropertyType(array $propertyType)
     {
-        $this->_onPropertyChanged('propertyType', $this->propertyType, $propertyType);
-        $this->propertyType = $propertyType;
+        $json_string = json_encode($propertyType);
+        $this->_onPropertyChanged('propertyType', $this->propertyType, $json_string);
+        $this->propertyType = $json_string;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getOccupancy()
     {
@@ -331,16 +337,17 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $occupancy
+     * @param array $occupancy
      */
-    public function setOccupancy(string $occupancy)
+    public function setOccupancy(array $occupancy)
     {
-        $this->_onPropertyChanged('occupancy', $this->occupancy, $occupancy);
-        $this->occupancy = $occupancy;
+        $json_string = json_encode($occupancy);
+        $this->_onPropertyChanged('occupancy', $this->occupancy, $json_string);
+        $this->occupancy = $json_string;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getMaturity()
     {
@@ -348,16 +355,17 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $maturity
+     * @param array $maturity
      */
-    public function setMaturity(string $maturity)
+    public function setMaturity(array $maturity)
     {
-        $this->_onPropertyChanged('maturity', $this->maturity, $maturity);
-        $this->maturity = $maturity;
+        $json_string = json_encode($maturity);
+        $this->_onPropertyChanged('maturity', $this->maturity, $json_string);
+        $this->maturity = $json_string;
     }
 
     /**
-     * @return number
+     * @return string
      */
     public function getSummaryMaturity()
     {
@@ -365,16 +373,16 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param number $summaryMaturity
+     * @param string $summaryMaturity
      */
-    public function setSummaryMaturity(number $summaryMaturity)
+    public function setSummaryMaturity(string $summaryMaturity)
     {
         $this->_onPropertyChanged('summaryMaturity', $this->summaryMaturity, $summaryMaturity);
         $this->summaryMaturity = $summaryMaturity;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getCredit()
     {
@@ -382,16 +390,17 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $credit
+     * @param array $credit
      */
-    public function setCredit(string $credit)
+    public function setCredit(array $credit)
     {
-        $this->_onPropertyChanged('credit', $this->credit, $credit);
-        $this->credit = $credit;
+        $json_string = json_encode($credit);
+        $this->_onPropertyChanged('credit', $this->credit, $json_string);
+        $this->credit = $json_string;
     }
 
     /**
-     * @return number
+     * @return string
      */
     public function getSummaryCredit()
     {
@@ -399,9 +408,9 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param number $summaryCredit
+     * @param string $summaryCredit
      */
-    public function setSummaryCredit(number $summaryCredit)
+    public function setSummaryCredit(string $summaryCredit)
     {
         $this->_onPropertyChanged('summaryCredit', $this->summaryCredit, $summaryCredit);
         $this->summaryCredit = $summaryCredit;
