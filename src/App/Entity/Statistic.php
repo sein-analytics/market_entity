@@ -102,8 +102,8 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $credit;
 
-    /** @ORM\Column(type="decimal", precision=4, scale=0, nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $summaryCredit;
 
@@ -384,7 +384,7 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getSummaryCredit()
     {
@@ -392,12 +392,13 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $summaryCredit
+     * @param array $summaryCredit
      */
-    public function setSummaryCredit(string $summaryCredit)
+    public function setSummaryCredit(array $summaryCredit)
     {
-        $this->_onPropertyChanged('summaryCredit', $this->summaryCredit, $summaryCredit);
-        $this->summaryCredit = $summaryCredit;
+        $json_string = json_encode($summaryCredit);
+        $this->_onPropertyChanged('summaryCredit', $this->summaryCredit, $json_string);
+        $this->summaryCredit = $json_string;
     }
 
 
