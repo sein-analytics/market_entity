@@ -47,7 +47,7 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $ltv;
 
-    /** @ORM\Column(type=json, nullable=true)
+    /** @ORM\Column(type="json", nullable=true)
      * @var array
      **/
     protected $summaryLtv;
