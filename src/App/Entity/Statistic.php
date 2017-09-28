@@ -32,18 +32,13 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $deal;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2)
-     * @var number
-     **/
-    protected $upb;
-
     /** @ORM\Column(type="json", nullable=true)
      * @var array
      **/
     protected $states;
 
-    /** @ORM\Column(type="string", nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $summaryStates;
 
@@ -52,8 +47,8 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $ltv;
 
-    /** @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
-     * @var number
+    /** @ORM\Column(type=json, nullable=true)
+     * @var array
      **/
     protected $summaryLtv;
 
@@ -62,8 +57,8 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $balance;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $summaryBalance;
 
@@ -72,8 +67,8 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $rate;
 
-    /** @ORM\Column(type="decimal", precision=5, scale=3, nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $summaryRate;
 
@@ -97,8 +92,8 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $maturity;
 
-    /** @ORM\Column(type="decimal", precision=4, scale=0, nullable=true)
-     * @var string
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
      **/
     protected $summaryMaturity;
 
@@ -138,24 +133,7 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
-     */
-    public function getUpb()
-    {
-        return $this->upb;
-    }
-
-    /**
-     * @param mixed $upb
-     */
-    public function setUpb($upb)
-    {
-        $this->_onPropertyChanged('upb', $this->upb, $upb);
-        $this->upb = $upb;
-    }
-
-    /**
-     * @return mixed
+     * @return array
      */
     public function getStates()
     {
@@ -163,16 +141,17 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param mixed $states
+     * @param array $states
      */
-    public function setStates($states)
+    public function setStates(array $states)
     {
-        $this->_onPropertyChanged('states', $this->states, $states);
-        $this->states = $states;
+        $json_string = json_encode($states);
+        $this->_onPropertyChanged('states', $this->states, $json_string);
+        $this->states = $json_string;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getSummaryStates()
     {
@@ -180,12 +159,13 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $summaryStates
+     * @param array $summaryStates
      */
-    public function setSummaryStates(string $summaryStates)
+    public function setSummaryStates(array $summaryStates)
     {
-        $this->_onPropertyChanged('summaryStates', $this->summaryStates, $summaryStates);
-        $this->summaryStates = $summaryStates;
+        $json_string = json_encode($summaryStates);
+        $this->_onPropertyChanged('summaryStates', $this->summaryStates, $json_string);
+        $this->summaryStates = $json_string;
     }
 
     /**
@@ -206,7 +186,7 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return number
+     * @return array
      */
     public function getSummaryLtv()
     {
@@ -214,12 +194,13 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param number $summaryLtv
+     * @param array $summaryLtv
      */
-    public function setSummaryLtv(number $summaryLtv)
+    public function setSummaryLtv(array $summaryLtv)
     {
-        $this->_onPropertyChanged('summaryLtv', $this->summaryLtv, $summaryLtv);
-        $this->summaryLtv = $summaryLtv;
+        $json_string = json_encode($summaryLtv);
+        $this->_onPropertyChanged('summaryLtv', $this->summaryLtv, $json_string);
+        $this->summaryLtv = $json_string;
     }
 
     /**
@@ -241,7 +222,7 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getSummaryBalance()
     {
@@ -249,12 +230,13 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $summaryBalance
+     * @param array $summaryBalance
      */
-    public function setSummaryBalance(string $summaryBalance)
+    public function setSummaryBalance(array $summaryBalance)
     {
-        $this->_onPropertyChanged('summaryBalance', $this->summaryBalance, $summaryBalance);
-        $this->summaryBalance = $summaryBalance;
+        $json_string = json_encode($summaryBalance);
+        $this->_onPropertyChanged('summaryBalance', $this->summaryBalance, $json_string);
+        $this->summaryBalance = $json_string;
     }
 
     /**
@@ -276,7 +258,7 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getSummaryRate()
     {
@@ -284,12 +266,13 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $summaryRate
+     * @param array $summaryRate
      */
-    public function setSummaryRate(string $summaryRate)
+    public function setSummaryRate(array $summaryRate)
     {
-        $this->_onPropertyChanged('summaryRate', $this->summaryRate, $summaryRate);
-        $this->summaryRate = $summaryRate;
+        $json_string = json_encode($summaryRate);
+        $this->_onPropertyChanged('summaryRate', $this->summaryRate, $json_string);
+        $this->summaryRate = $json_string;
     }
 
     /**
@@ -365,7 +348,7 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getSummaryMaturity()
     {
@@ -373,12 +356,13 @@ class Statistic implements NotifyPropertyChanged
     }
 
     /**
-     * @param string $summaryMaturity
+     * @param array $summaryMaturity
      */
-    public function setSummaryMaturity(string $summaryMaturity)
+    public function setSummaryMaturity(array $summaryMaturity)
     {
-        $this->_onPropertyChanged('summaryMaturity', $this->summaryMaturity, $summaryMaturity);
-        $this->summaryMaturity = $summaryMaturity;
+        $json_string = json_encode($summaryMaturity);
+        $this->_onPropertyChanged('summaryMaturity', $this->summaryMaturity, $json_string);
+        $this->summaryMaturity = $json_string;
     }
 
     /**
