@@ -6,6 +6,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
@@ -37,7 +38,25 @@ class Message
     protected $user;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     */
+    protected $date;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected $subject;
+
+    /**
+     * @ORM\ManyToONe(targetEntity\App\Entity\Message)
+     * @var ArrayCollection
+     */
+    protected $responses;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
      * @var int
      */
     protected $type;
@@ -102,9 +121,9 @@ class Message
     }
 
     /**
-     * @param mixed $type
+     * @param MessageType $type
      */
-    public function setType($type)
+    public function setType(MessageType $type)
     {
         $this->type = $type;
     }
@@ -125,5 +144,52 @@ class Message
         $this->message = $message;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param string $subject
+     */
+    public function setSubject(string $subject)
+    {
+        $this->subject = $subject;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getResponses()
+    {
+        return $this->responses;
+    }
+
+    /**
+     * @param ArrayCollection $responses
+     */
+    public function setResponses(ArrayCollection $responses)
+    {
+        $this->responses = $responses;
+    }
 
 }
