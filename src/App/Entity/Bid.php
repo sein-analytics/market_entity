@@ -25,6 +25,7 @@ class Bid implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="bids")
+     * @ORM\JoinColumn(name="user_id", referenceColumn="id", nullable=false)
      * @var \App\Entity\MarketUser
      */
     protected $user;
