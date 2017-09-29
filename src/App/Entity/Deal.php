@@ -27,7 +27,9 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      **/
     protected $id;
 
-    /** @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="deals")
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="deals")
+     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Issuer
      **/
     protected $issuer;
@@ -43,7 +45,9 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /** @ORM\Column(type="datetime", nullable=false) **/
     protected $closingDate;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\DealStatus", inversedBy="deals")
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealStatus", inversedBy="deals")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\DealStatus
      **/
     protected $status;
@@ -63,13 +67,22 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
     protected $originalBalance;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\DealAuction", inversedBy="deals") **/
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAuction", inversedBy="deals")
+     * @ORM\JoinColumn(name="auction_type_id", referencedColumnName="id", nullable=false)
+     **/
     protected $auctionType;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset", inversedBy="deals") **/
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset", inversedBy="deals")
+     * @ORM\JoinColumn(name="asset_type_id", referencedColumnName="id", nullable=false)
+     **/
     protected $assetType;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\DealBid", inversedBy="deals") **/
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealBid", inversedBy="deals")
+     * @ORM\JoinColumn(name="bid_type_id", referencedColumnName="id", nullable=false)
+     **/
     protected $bidType;
 
     /** @ORM\OneToOne(targetEntity="\App\Entity\Statistic", mappedBy="deal")
@@ -139,6 +152,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="deals")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\MarketUser
      */
     protected $user;
