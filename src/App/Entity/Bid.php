@@ -32,6 +32,7 @@ class Bid implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bids")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Deal
      */
     protected $deal;
@@ -56,6 +57,7 @@ class Bid implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\BidStatus", inversedBy="bids")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\BidStatus
      */
     protected $status;
