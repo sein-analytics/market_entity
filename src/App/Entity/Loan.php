@@ -261,7 +261,7 @@ abstract class Loan implements NotifyPropertyChanged
      **/
     protected $zeroBalanceDate;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\Bid", mappedBy="loan")   */
+    /** @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")   */
     protected $bids;
 
     /** @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="loan") */

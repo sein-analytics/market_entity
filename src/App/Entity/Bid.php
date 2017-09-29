@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,10 +36,10 @@ class Bid implements NotifyPropertyChanged
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="bids")
-     * @var \App\Entity\Loan
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy="bids")
+     * @var ArrayCollection
      */
-    protected $loan;
+    protected $loans;
 
     /** @ORM\Column(type="decimal", precision=9, scale=3, nullable=false) */
     protected $price = 0.0;
@@ -180,20 +181,20 @@ class Bid implements NotifyPropertyChanged
     }
 
     /**
-     * @return Loan
+     * @return ArrayCollection
      */
     public function getLoan()
     {
-        return $this->loan;
+        return $this->loans;
     }
 
     /**
-     * @param Loan $loan
+     * @param ArrayCollection $loans
      */
-    public function setLoan(Loan $loan)
+    public function setLoans(ArrayCollection $loans)
     {
-        $this->_onPropertyChanged('loan', $this->loan, $loan);
-        $this->loan = $loan;
+        $this->_onPropertyChanged('loan', $this->loans, $loans);
+        $this->loans = $loans;
     }
 
     /**
