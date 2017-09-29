@@ -30,7 +30,7 @@ class MessageType
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy=type)
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="type")
      * @var ArrayCollection
      */
     protected $messages;
