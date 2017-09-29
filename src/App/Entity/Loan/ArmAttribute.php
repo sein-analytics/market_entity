@@ -22,6 +22,7 @@ class ArmAttribute implements NotifyPropertyChanged
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="armAttributes")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Loan
      **/
     protected $loan;
