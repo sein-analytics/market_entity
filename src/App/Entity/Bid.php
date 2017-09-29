@@ -52,7 +52,9 @@ class Bid implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) */
     protected $proportionalBalance = 0.0;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
+     **/
     protected $bidHistory;
 
     /**
@@ -134,10 +136,9 @@ class Bid implements NotifyPropertyChanged
                 date("F j, Y, g:i a") => $price,
             );
         }else{
-            $hist = @unserialize($this->bidHistory);
+            $hist = $this->getBidHistory();
             $hist[date("F j, Y, g:i a")] = $price;
         }
-        $hist = @serialize($hist);
         $this->bidHistory = $hist;
     }
 
@@ -176,7 +177,7 @@ class Bid implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getBidHistory()
     {
