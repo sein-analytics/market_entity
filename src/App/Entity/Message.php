@@ -50,7 +50,7 @@ class Message
     protected $subject;
 
     /**
-     * @ORM\ManyToONe(targetEntity\App\Entity\Message)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Message")
      * @var ArrayCollection
      */
     protected $responses;
