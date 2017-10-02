@@ -279,12 +279,23 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\LoanTrigger", mappedBy="loans")   */
     protected $triggers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="loan")
+     * @var ArrayCollection  */
+    protected $issues;
+
     function __construct (){
         $this->bids = new ArrayCollection();
         $this->triggers = new ArrayCollection();
         $this->specifics = new ArrayCollection();
         $this->updates = new ArrayCollection();
         $this->accounts = new ArrayCollection();
+        $this->issues = new ArrayCollection();
+    }
+
+    function addIssue(Message $issue)
+    {
+        $this->issues->add($issue);
     }
 
     /**
@@ -1167,5 +1178,12 @@ abstract class Loan implements NotifyPropertyChanged
         $this->bids = $bids;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getIssues()
+    {
+        return $this->issues;
+    }
 
 }

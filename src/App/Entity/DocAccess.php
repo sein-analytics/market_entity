@@ -40,6 +40,12 @@ class DocAccess
     /**
      * @ORM\Column(type="string", nullable=false)
      * @var string
+     */
+    protected $awsARN;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
      **/
     protected $dealHash;
 
@@ -141,6 +147,14 @@ class DocAccess
     public function setSignedUrl(string $signedUrl)
     {
         $this->signedUrl = $signedUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAwsARN()
+    {
+        return $this->awsARN;
     }
 
 

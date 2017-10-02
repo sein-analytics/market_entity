@@ -151,6 +151,12 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     protected $triggers;
 
     /**
+     * ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
+     * @var ArrayCollection
+     */
+    protected $messages;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="deals")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\MarketUser
@@ -164,6 +170,12 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->bids = new ArrayCollection();
         $this->dealDocs = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+    }
+
+    function addMessage(Message $message)
+    {
+        $this->messages->add($message);
     }
 
     /**
@@ -428,4 +440,14 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->_onPropertyChanged('user', $this->user, $user);
         $this->user = $user;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+
 }

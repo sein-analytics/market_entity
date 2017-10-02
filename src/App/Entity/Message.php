@@ -18,14 +18,6 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
  */
 class Message
 {
-    const TEXT_STRING = 'Text';
-    const CHAT_STRING = 'Chat';
-
-    protected static $messageTypes = array(
-        self::CHAT_STRING      => 0,
-        self::TEXT_STRING      => 1
-    );
-
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
@@ -34,9 +26,24 @@ class Message
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="messages")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="messages")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
+     * @var Deal
+     */
+    protected $deal;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues"
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
+     * @var Loan
+     */
+    protected $loan;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -51,42 +58,25 @@ class Message
     protected $subject;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Message")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message")
      * @var ArrayCollection
      */
     protected $responses;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
-     * @var int
+     * @var MessageType
      */
     protected $type;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected $message;
 
     public function __construct()
     {
-        $this->type = self::$messageTypes[self::TEXT_STRING];
-    }
-
-    /**
-     * @return array
-     */
-    public static function getMessageTypes()
-    {
-        return self::$messageTypes;
-    }
-
-    /**
-     * @param array $messageTypes
-     */
-    public static function setMessageTypes($messageTypes)
-    {
-        self::$messageTypes = $messageTypes;
     }
 
     /**
@@ -114,7 +104,7 @@ class Message
     }
 
     /**
-     * @return mixed
+     * @return MessageType
      */
     public function getType()
     {
@@ -192,5 +182,39 @@ class Message
     {
         $this->responses = $responses;
     }
+
+    /**
+     * @return Deal
+     */
+    public function getDeal()
+    {
+        return $this->deal;
+    }
+
+    /**
+     * @param mixed $deal
+     */
+    public function setDeal(Deal $deal)
+    {
+        $this->deal = $deal;
+    }
+
+    /**
+     * @return Loan
+     */
+    public function getLoan()
+    {
+        return $this->loan;
+    }
+
+    /**
+     * @param mixed $loan
+     */
+    public function setLoan(Loan $loan)
+    {
+        $this->loan = $loan;
+    }
+
+
 
 }
