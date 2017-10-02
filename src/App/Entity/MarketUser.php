@@ -170,10 +170,10 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     /** @ORM\ManyToMany(targetEntity="\App\Entity\Rating", mappedBy="users") **/
     protected $ratings;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser") **/
+    /** @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="following") **/
     protected $followers;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser") **/
+    /** @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="followers") **/
     protected $following;
 
     /** @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="user")  */
