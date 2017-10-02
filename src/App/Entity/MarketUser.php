@@ -7,6 +7,7 @@ use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Arr;
 
 /**
  * @ORM\Entity
@@ -129,6 +130,12 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     protected $messages;
 
     /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Message", mappedBy="recipients")
+     * @var ArrayCollection
+     */
+    protected $receivedMessages;
+
+    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="user")
      * @var ArrayCollection
      */
@@ -206,6 +213,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->documents = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->following = new ArrayCollection();
+        $this->receivedMessages = new ArrayCollection();
     }
 
     public function getId()

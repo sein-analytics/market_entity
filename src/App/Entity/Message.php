@@ -78,6 +78,12 @@ class Message
     protected $marketResponses;
 
     /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUsers", inversedBy="receivedMessages")
+     * @var ArrayCollection
+     */
+    protected $recipients;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
      * @var MessageType
      */
@@ -91,6 +97,9 @@ class Message
 
     public function __construct()
     {
+        $this->responses = new ArrayCollection();
+        $this->marketResponses = new ArrayCollection();
+        $this->recipients = new ArrayCollection();
     }
 
     /**
