@@ -66,7 +66,7 @@ class Message
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
      * @ORM\JoinTable(name="followers",
-     *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id)},
+     *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
      * @var ArrayCollection
