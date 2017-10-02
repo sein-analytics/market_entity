@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 /**
- * @ORM\Entity(repositoryClass="\Repository\Message")
+ * @ORM\Entity
+ * @ORM\Table(name="Message")
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
