@@ -59,19 +59,23 @@ class Message
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
+     * @ORM\JoinTable(name="responses",
+     *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
+     *     )
      * @var ArrayCollection
      */
     protected $responses;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
-     * @ORM\JoinTable(name="followers",
+     * @ORM\JoinTable(name="market_responses",
      *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
      * @var ArrayCollection
      */
-    protected $marketResponse;
+    protected $marketResponses;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
