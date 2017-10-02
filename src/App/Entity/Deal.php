@@ -151,7 +151,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     protected $triggers;
 
     /**
-     * ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $messages;
