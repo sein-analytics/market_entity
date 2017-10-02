@@ -78,7 +78,7 @@ class Message
     protected $marketResponses;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUsers", inversedBy="receivedMessages")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
      * @var ArrayCollection
      */
     protected $recipients;
