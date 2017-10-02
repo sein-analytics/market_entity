@@ -167,13 +167,27 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
     protected $dealVolume = 0;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Rating", mappedBy="users") **/
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Rating", mappedBy="users")
+     **/
     protected $ratings;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="following") **/
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinTable(name="followers",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="follower_id", referencedColumnName="id")}
+     *     )
+     **/
     protected $followers;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="followers") **/
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinTable(name="following",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="following_id", referencedColumnName="id")}
+     *     )
+     **/
     protected $following;
 
     /** @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="user")  */
