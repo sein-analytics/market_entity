@@ -69,7 +69,6 @@ class Message
      *     joinColumns={@JoinColumn(name="message_id", referencedColumnName="id)},
      *     inverseJoinColumns={@JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
-     *     )
      * @var ArrayCollection
      */
     protected $marketResponse;
