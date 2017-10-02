@@ -39,7 +39,7 @@ class Message
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues"
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
      * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */
