@@ -29,7 +29,7 @@ class DueDiligence
     protected $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", mappedBy="ddRole")
+     * @ORM\OneToMany(targetEntity="\App\Entity\MarketUser", mappedBy="ddRole")
      * @var ArrayCollection
      */
     protected $users;
