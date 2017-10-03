@@ -205,6 +205,12 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      */
     protected $token;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="users")
+     * @var \App\Entity\DueDiligence
+     */
+    protected $ddRole;
+
     public function __construct()
     {
         $this->bids = new ArrayCollection();
@@ -336,6 +342,23 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     {
         $this->_onPropertyChanged('authyId', $this->authyId, $authyId);
         $this->authyId = $authyId;
+    }
+
+    /**
+     * @return DueDiligence
+     */
+    public function getDdRole()
+    {
+        return $this->ddRole;
+    }
+
+    /**
+     * @param DueDiligence $ddRole
+     */
+    public function setDdRole(DueDiligence $ddRole)
+    {
+        $this->_onPropertyChanged('ddRole', $this->ddRole, $ddRole);
+        $this->ddRole = $ddRole;
     }
 
 }
