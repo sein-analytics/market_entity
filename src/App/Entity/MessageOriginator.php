@@ -30,7 +30,7 @@ class MessageOriginator
     protected $originator;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message, mappedBy="originator")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="originator")
      * @var ArrayCollection
      */
     protected $messages;
