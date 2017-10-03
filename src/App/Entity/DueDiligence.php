@@ -44,6 +44,22 @@ class DueDiligence
     protected $deal;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="dueDiligence")
+     * @var ArrayCollection
+     */
+    protected $messages;
+
+    function __construct()
+    {
+        $this->messages = new ArrayCollection();
+    }
+
+    function addMessage(Message $message)
+    {
+        $this->messages->add($message);
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -97,6 +113,14 @@ class DueDiligence
     public function setDeal(Deal $deal)
     {
         $this->deal = $deal;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 
 

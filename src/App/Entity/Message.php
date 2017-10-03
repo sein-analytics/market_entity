@@ -96,6 +96,18 @@ class Message
      */
     protected $message;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageOriginator", inversedBy="messages")
+     * @ORM\JoinColumn(name="originator_id", referencedColumnName="id", nullable=false)
+     * @var MessageOriginator
+     */
+    protected $originator;
+
+    /**
+     * @ORM\MannyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="messages")
+     */
+    protected $dueDiligence;
+
     public function __construct()
     {
         $this->responses = new ArrayCollection();
@@ -239,6 +251,45 @@ class Message
         $this->loan = $loan;
     }
 
+    /**
+     * @return MessageOriginator
+     */
+    public function getOriginator()
+    {
+        return $this->originator;
+    }
+
+    /**
+     * @param MessageOriginator $originator
+     */
+    public function setOriginator(MessageOriginator $originator)
+    {
+        $this->originator = $originator;
+    }
+
+    /**
+     * @return DueDiligence
+     */
+    public function getDueDiligence()
+    {
+        return $this->dueDiligence;
+    }
+
+    /**
+     * @param DueDiligence $dueDiligence
+     */
+    public function setDueDiligence(DueDiligence $dueDiligence)
+    {
+        $this->dueDiligence = $dueDiligence;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getRecipients(): ArrayCollection
+    {
+        return $this->recipients;
+    }
 
 
 }
