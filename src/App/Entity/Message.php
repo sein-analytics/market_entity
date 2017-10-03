@@ -104,7 +104,7 @@ class Message
     protected $originator;
 
     /**
-     * @ORM\MannyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="messages")
      */
     protected $dueDiligence;
 
