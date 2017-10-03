@@ -23,26 +23,25 @@ class DueDiligence
     protected $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="diligence")
+     * @ORM\JoinColumn(name="due_diligence_role_id", referencedColumnName="id", nullable=false)
+     * @var DueDiligenceRole
      */
     protected $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\MarketUser", mappedBy="ddRole")
-     * @var ArrayCollection
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="diligence")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @var MarketUser
      */
-    protected $users;
+    protected $user;
 
-    function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
-
-    function addUser(MarketUser $user)
-    {
-        $this->users->add($user);
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="diligence")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @var Deal
+     */
+    protected $deal;
 
     /**
      * @return mixed
@@ -53,7 +52,7 @@ class DueDiligence
     }
 
     /**
-     * @return string
+     * @return DueDiligenceRole
      */
     public function getRole()
     {
@@ -61,11 +60,43 @@ class DueDiligence
     }
 
     /**
-     * @return ArrayCollection
+     * @param DueDiligenceRole $role
      */
-    public function getUsers()
+    public function setRole(DueDiligenceRole $role)
     {
-        return $this->users;
+        $this->role = $role;
+    }
+
+    /**
+     * @param MarketUser $user
+     */
+    public function setUser(MarketUser $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return MarketUser
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return Deal
+     */
+    public function getDeal()
+    {
+        return $this->deal;
+    }
+
+    /**
+     * @param Deal $deal
+     */
+    public function setDeal(Deal $deal)
+    {
+        $this->deal = $deal;
     }
 
 

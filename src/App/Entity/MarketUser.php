@@ -206,10 +206,10 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     protected $token;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="users")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="user")
      * @var \App\Entity\DueDiligence
      */
-    protected $ddRole;
+    protected $diligence;
 
     public function __construct()
     {
@@ -220,11 +220,17 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->followers = new ArrayCollection();
         $this->following = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
+        $this->diligence = new ArrayCollection();
     }
 
     public function getId()
     {
         return $this->id;
+    }
+
+    function addDiligence(DueDiligence $diligence)
+    {
+        $this->diligence->add($diligence);
     }
 
     /**
@@ -315,8 +321,6 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->failedAttempts = $failedAttempts;
     }
 
-
-
     public function addFollower(MarketUser $follower)
     {
         $this->followers->add($follower);
@@ -345,20 +349,12 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     }
 
     /**
-     * @return DueDiligence
+     * @return ArrayCollection
      */
-    public function getDdRole()
+    public function getDiligence()
     {
-        return $this->ddRole;
+        return $this->diligence;
     }
 
-    /**
-     * @param DueDiligence $ddRole
-     */
-    public function setDdRole(DueDiligence $ddRole)
-    {
-        $this->_onPropertyChanged('ddRole', $this->ddRole, $ddRole);
-        $this->ddRole = $ddRole;
-    }
 
 }
