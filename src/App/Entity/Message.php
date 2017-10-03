@@ -91,7 +91,7 @@ class Message
     protected $type;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      * @var string
      */
     protected $message;
