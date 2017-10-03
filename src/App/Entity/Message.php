@@ -85,6 +85,7 @@ class Message
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
      * @var MessageType
      */
     protected $type;
