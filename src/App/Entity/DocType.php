@@ -31,7 +31,7 @@ class DocType
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile, mappedBy="docType")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="docType")
      * @var ArrayCollection
      */
     protected $dealFiles;
