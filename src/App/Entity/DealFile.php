@@ -84,7 +84,7 @@ class DealFile implements NotifyPropertyChanged
     protected $localPath;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
      * @ORM\JoinTable(name="file_replacements",
      *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="replacement_id", referencedColumnName="id")}
@@ -94,7 +94,7 @@ class DealFile implements NotifyPropertyChanged
     protected $replacements;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
      * @ORM\JoinTable(name="file_appends",
      *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="append_id", referencedColumnName="id")}
