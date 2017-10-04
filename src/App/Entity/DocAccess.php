@@ -21,39 +21,19 @@ class DocAccess
      **/
     protected $id;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="documents")
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="documents")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\MarketUser
      **/
     protected $user;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="documents")
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="documents")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Deal
      **/
     protected $deal;
-
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
-     **/
-    protected $userHash;
-
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
-     */
-    protected $awsARN;
-
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
-     **/
-    protected $dealHash;
-
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
-     **/
-    protected $signedUrl;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="docAccess")
@@ -99,62 +79,6 @@ class DocAccess
     public function setDeal(Deal $deal)
     {
         $this->deal = $deal;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserHash()
-    {
-        return $this->userHash;
-    }
-
-    /**
-     * @param mixed $userHash
-     */
-    public function setUserHash(string $userHash)
-    {
-        $this->userHash = $userHash;
-    }
-
-    /**
-     * @return string | null
-     */
-    public function getDealHash()
-    {
-        return $this->dealHash;
-    }
-
-    /**
-     * @param string $dealHash
-     */
-    public function setDealHash(string $dealHash)
-    {
-        $this->dealHash = $dealHash;
-    }
-
-    /**
-     * @return string | null
-     */
-    public function getSignedUrl()
-    {
-        return $this->signedUrl;
-    }
-
-    /**
-     * @param string $signedUrl
-     */
-    public function setSignedUrl(string $signedUrl)
-    {
-        $this->signedUrl = $signedUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAwsARN()
-    {
-        return $this->awsARN;
     }
 
 

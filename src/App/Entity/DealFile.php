@@ -28,18 +28,22 @@ class DealFile implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="dealDocs")
-     * @var \App\Entity\Deal
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @var Deal
      */
     protected $deal;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="files")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @var MarketUser
      */
     protected $user;
 
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="document")
+     * @var DocAccess
      */
     protected $docAccess;
 
@@ -65,7 +69,13 @@ class DealFile implements NotifyPropertyChanged
      * @ORM\Column(type="string", nullable=false)
      * @var string
      */
-    protected $s3Path;
+    protected $prefix;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected $s3Bucket;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -73,14 +83,37 @@ class DealFile implements NotifyPropertyChanged
      */
     protected $localPath;
 
-    /** @ORM\OneToOne(targetEntity="\App\Entity\DealFile") **/
-    protected $replacedBy;
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile")
+     * @ORM\JoinTable(name="file_replacements",
+     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="replacement_id", referencedColumnName="id")}
+     *     )
+     * @var ArrayCollection
+     **/
+    protected $replacements;
 
-    /** @ORM\OneToONe(targetEntity="\App\Entity\DealFile")  */
-    protected $appendedTo;
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile")
+     * @ORM\JoinTable(name="file_appends",
+     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="append_id", referencedColumnName="id")}
+     *     )
+     * @var ArrayCollection
+     */
+    protected $appends;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
+     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
+     * @var DocType
+     */
+    protected $docType;
 
     public function __construct()
     {
+        $this->replacements = new ArrayCollection();
+        $this->appends = new ArrayCollection();
     }
 
     /**
@@ -162,18 +195,18 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @return string
      */
-    public function getS3Path()
+    public function getS3Bucket()
     {
-        return $this->s3Path;
+        return $this->s3Bucket;
     }
 
     /**
-     * @param string $s3Path
+     * @param string $s3Bucket
      */
-    public function setS3Path(string $s3Path)
+    public function setS3Path(string $s3Bucket)
     {
-        $this->_onPropertyChanged('s3Path', $this->s3Path, $s3Path);
-        $this->s3Path = $s3Path;
+        $this->_onPropertyChanged('s3Bucket', $this->s3Bucket, $s3Bucket);
+        $this->s3Bucket = $s3Bucket;
     }
 
     /**
@@ -193,7 +226,63 @@ class DealFile implements NotifyPropertyChanged
         $this->localPath = $localPath;
     }
 
+    /**
+     * @return MarketUser
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getReplacements()
+    {
+        return $this->replacements;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppends()
+    {
+        return $this->appends;
+    }
+
+    /**
+     * @return DocType
+     */
+    public function getDocType()
+    {
+        return $this->docType;
+    }
+
+    /**
+     * @return DocAccess
+     */
+    public function getDocAccess()
+    {
+        return $this->docAccess;
+    }
+
+    /**
+     * @param string $prefix
+     */
+    public function setPrefix(string $prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+
+
+    /**
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
 
 
 }

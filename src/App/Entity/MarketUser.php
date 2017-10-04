@@ -197,7 +197,10 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      **/
     protected $following;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="user")  */
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="user")
+     * @var ArrayCollection
+     */
     protected $files;
 
     /**
@@ -221,6 +224,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->following = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
         $this->diligence = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     public function getId()
@@ -334,10 +338,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     /**
      * @return mixed
      */
-    public function getAuthyId()
-    {
-        return $this->authyId;
-    }
+    public function getAuthyId() { return $this->authyId; }
 
     /**
      * @param mixed $authyId
@@ -351,10 +352,13 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     /**
      * @return ArrayCollection
      */
-    public function getDiligence()
-    {
-        return $this->diligence;
-    }
+    public function getDiligence() { return $this->diligence; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFiles(){ return $this->files; }
+
 
 
 }
