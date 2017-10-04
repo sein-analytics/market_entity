@@ -68,16 +68,6 @@ class Message
     protected $responses;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
-     * @ORM\JoinTable(name="market_responses",
-     *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
-     *     )
-     * @var ArrayCollection
-     */
-    protected $marketResponses;
-
-    /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
      * @var ArrayCollection
      */
@@ -111,8 +101,12 @@ class Message
     public function __construct()
     {
         $this->responses = new ArrayCollection();
-        $this->marketResponses = new ArrayCollection();
         $this->recipients = new ArrayCollection();
+    }
+
+    public function addRecipient(MarketUser $user)
+    {
+        $this->recipients->add($user);
     }
 
     /**
@@ -286,7 +280,7 @@ class Message
     /**
      * @return ArrayCollection
      */
-    public function getRecipients(): ArrayCollection
+    public function getRecipients()
     {
         return $this->recipients;
     }
