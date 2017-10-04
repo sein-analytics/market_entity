@@ -25,7 +25,7 @@ class DocType
     protected $id;
 
     /**
-     * @ORM\Column(type=string, nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected $type;
