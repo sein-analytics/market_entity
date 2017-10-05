@@ -40,6 +40,12 @@ class DealFile implements NotifyPropertyChanged
      */
     protected $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="files")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
+     * @var Loan
+     */
+    protected $loan;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="document")
@@ -78,7 +84,7 @@ class DealFile implements NotifyPropertyChanged
     protected $s3Bucket;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $localPath;

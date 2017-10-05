@@ -280,6 +280,12 @@ abstract class Loan implements NotifyPropertyChanged
     protected $triggers;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="loan")
+     * @var ArrayCollection
+     */
+    protected $files;
+
+    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="loan")
      * @var ArrayCollection  */
     protected $issues;
@@ -291,6 +297,7 @@ abstract class Loan implements NotifyPropertyChanged
         $this->updates = new ArrayCollection();
         $this->accounts = new ArrayCollection();
         $this->issues = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     function addIssue(Message $issue)
@@ -301,18 +308,12 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
     /**
      * @return mixed
      */
-    public function getLoanId()
-    {
-        return $this->loanId;
-    }
+    public function getLoanId() { return $this->loanId; }
 
     /**
      * @param mixed $loanId
@@ -326,10 +327,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return Pool
      */
-    public function getPool()
-    {
-        return $this->pool;
-    }
+    public function getPool() { return $this->pool; }
 
     /**
      * @param Pool $pool
@@ -343,10 +341,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getOriginalBalance()
-    {
-        return $this->originalBalance;
-    }
+    public function getOriginalBalance() { return $this->originalBalance; }
 
     /**
      * @param mixed $originalBalance
@@ -360,10 +355,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getCurrentBalance()
-    {
-        return $this->currentBalance;
-    }
+    public function getCurrentBalance() { return $this->currentBalance; }
 
     /**
      * @param mixed $currentBalance
@@ -377,10 +369,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getMonthlyPayment()
-    {
-        return $this->monthlyPayment;
-    }
+    public function getMonthlyPayment() { return $this->monthlyPayment; }
 
     /**
      * @param mixed $monthlyPayment
@@ -394,10 +383,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getIssuanceBalance()
-    {
-        return $this->issuanceBalance;
-    }
+    public function getIssuanceBalance() { return $this->issuanceBalance; }
 
     /**
      * @param mixed $issuanceBalance
@@ -411,10 +397,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getInitialRate()
-    {
-        return $this->initialRate;
-    }
+    public function getInitialRate() { return $this->initialRate; }
 
     /**
      * @param mixed $initialRate
@@ -428,10 +411,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getCurrentRate()
-    {
-        return $this->currentRate;
-    }
+    public function getCurrentRate() { return $this->currentRate; }
 
     /**
      * @param mixed $currentRate
@@ -445,10 +425,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return \DateTime|null
      */
-    public function getOriginationDate()
-    {
-        return $this->originationDate;
-    }
+    public function getOriginationDate() { return $this->originationDate; }
 
     /**
      * @param \DateTime $originationDate
@@ -462,10 +439,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return \DateTime | null
      */
-    public function getCurrentDueforDate()
-    {
-        return $this->currentDueforDate;
-    }
+    public function getCurrentDueforDate() { return $this->currentDueforDate; }
 
     /**
      * @param \DateTime $currentDueforDate
@@ -479,10 +453,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getFirstPaymentDate()
-    {
-        return $this->firstPaymentDate;
-    }
+    public function getFirstPaymentDate() { return $this->firstPaymentDate; }
 
     /**
      * @param \DateTime $firstPaymentDate
@@ -496,10 +467,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getLoanStatus()
-    {
-        return $this->loanStatus;
-    }
+    public function getLoanStatus() { return $this->loanStatus; }
 
     /**
      * @param mixed $loanStatus
@@ -513,10 +481,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return \DateTime|null
      */
-    public function getFinalDueforDate()
-    {
-        return $this->finalDueforDate;
-    }
+    public function getFinalDueforDate() { return $this->finalDueforDate; }
 
     /**
      * @param \DateTime $finalDueforDate
@@ -530,10 +495,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getOriginalTerm()
-    {
-        return $this->originalTerm;
-    }
+    public function getOriginalTerm() { return $this->originalTerm; }
 
     /**
      * @param mixed $originalTerm
@@ -547,10 +509,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getRemainingTerm()
-    {
-        return $this->remainingTerm;
-    }
+    public function getRemainingTerm() { return $this->remainingTerm; }
 
     /**
      * @param mixed $remainingTerm
@@ -564,10 +523,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getAmortizationTerm()
-    {
-        return $this->amortizationTerm;
-    }
+    public function getAmortizationTerm() { return $this->amortizationTerm; }
 
     /**
      * @param mixed $amortizationTerm
@@ -581,10 +537,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getIoTerm()
-    {
-        return $this->ioTerm;
-    }
+    public function getIoTerm() { return $this->ioTerm; }
 
     /**
      * @param mixed $ioTerm
@@ -598,10 +551,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getBalloonPeriod()
-    {
-        return $this->balloonPeriod;
-    }
+    public function getBalloonPeriod() { return $this->balloonPeriod; }
 
     /**
      * @param mixed $balloonPeriod
@@ -615,10 +565,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getOriginalLtv()
-    {
-        return $this->originalLtv;
-    }
+    public function getOriginalLtv() { return $this->originalLtv; }
 
     /**
      * @param mixed $originalLtv
@@ -632,10 +579,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getOriginalCltv()
-    {
-        return $this->originalCltv;
-    }
+    public function getOriginalCltv() { return $this->originalCltv; }
 
     /**
      * @param mixed $originalCltv
@@ -649,10 +593,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getAppraisedValue()
-    {
-        return $this->appraisedValue;
-    }
+    public function getAppraisedValue() { return $this->appraisedValue; }
 
     /**
      * @param mixed $appraisedValue
@@ -666,10 +607,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getCreditScore()
-    {
-        return $this->creditScore;
-    }
+    public function getCreditScore() { return $this->creditScore; }
 
     /**
      * @param mixed $creditScore
@@ -683,10 +621,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return number
      */
-    public function getFrontDti()
-    {
-        return $this->frontDti;
-    }
+    public function getFrontDti() { return $this->frontDti; }
 
     /**
      * @param number $frontDti
@@ -700,10 +635,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return number
      */
-    public function getBackDti()
-    {
-        return $this->backDti;
-    }
+    public function getBackDti() { return $this->backDti; }
 
     /**
      * @param number $backDti
@@ -717,10 +649,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getNumberOfBorrowers()
-    {
-        return $this->numberOfBorrowers;
-    }
+    public function getNumberOfBorrowers() { return $this->numberOfBorrowers; }
 
     /**
      * @param mixed $numberOfBorrowers
@@ -734,10 +663,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getFirstTimeBuyer()
-    {
-        return $this->firstTimeBuyer;
-    }
+    public function getFirstTimeBuyer() { return $this->firstTimeBuyer; }
 
     /**
      * @param mixed $firstTimeBuyer
@@ -751,10 +677,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getLienPosition()
-    {
-        return $this->lienPosition;
-    }
+    public function getLienPosition() { return $this->lienPosition; }
 
     /**
      * @param mixed $lienPosition
@@ -768,10 +691,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getNoteType()
-    {
-        return $this->noteType;
-    }
+    public function getNoteType() { return $this->noteType; }
 
     /**
      * @param mixed $noteType
@@ -785,10 +705,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getLoanType()
-    {
-        return $this->loanType;
-    }
+    public function getLoanType() { return $this->loanType; }
 
     /**
      * @param mixed $loanType
@@ -802,10 +719,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getDocumentation()
-    {
-        return $this->documentation;
-    }
+    public function getDocumentation() { return $this->documentation; }
 
     /**
      * @param mixed $documentation
@@ -819,10 +733,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getPurpose()
-    {
-        return $this->purpose;
-    }
+    public function getPurpose() { return $this->purpose; }
 
     /**
      * @param mixed $purpose
@@ -836,10 +747,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getOccupancy()
-    {
-        return $this->occupancy;
-    }
+    public function getOccupancy() { return $this->occupancy; }
 
     /**
      * @param mixed $occupancy
@@ -853,10 +761,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getDwelling()
-    {
-        return $this->dwelling;
-    }
+    public function getDwelling() { return $this->dwelling; }
 
     /**
      * @param mixed $dwelling
@@ -870,10 +775,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getAddress()
-    {
-        return $this->address;
-    }
+    public function getAddress() { return $this->address; }
 
     /**
      * @param mixed $address
@@ -888,9 +790,7 @@ abstract class Loan implements NotifyPropertyChanged
      * @return mixed
      */
     public function getState()
-    {
-        return $this->state;
-    }
+    { return $this->state; }
 
     /**
      * @param mixed $state
@@ -904,10 +804,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getCity()
-    {
-        return $this->city;
-    }
+    public function getCity() { return $this->city; }
 
     /**
      * @param mixed $city
@@ -921,10 +818,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getZip()
-    {
-        return $this->zip;
-    }
+    public function getZip() { return $this->zip; }
 
     /**
      * @param mixed $zip
@@ -938,10 +832,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return string
      */
-    public function getMsaCode()
-    {
-        return $this->msaCode;
-    }
+    public function getMsaCode() { return $this->msaCode; }
 
     /**
      * @param string $msaCode
@@ -955,10 +846,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getPaymentString()
-    {
-        return $this->paymentString;
-    }
+    public function getPaymentString() { return $this->paymentString; }
 
     /**
      * @param mixed $paymentString
@@ -972,10 +860,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getServicingfee()
-    {
-        return $this->servicingfee;
-    }
+    public function getServicingfee() { return $this->servicingfee; }
 
     /**
      * @param mixed $servicingfee
@@ -989,10 +874,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getLpmiFee()
-    {
-        return $this->lpmiFee;
-    }
+    public function getLpmiFee() { return $this->lpmiFee; }
 
     /**
      * @param mixed $lpmiFee
@@ -1006,10 +888,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getMiCoverage()
-    {
-        return $this->miCoverage;
-    }
+    public function getMiCoverage() { return $this->miCoverage; }
 
     /**
      * @param mixed $miCoverage
@@ -1023,10 +902,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return string
      */
-    public function getAmortization()
-    {
-        return $this->amortization;
-    }
+    public function getAmortization() { return $this->amortization; }
 
     /**
      * @param $amortization
@@ -1044,10 +920,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return string
      */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+    public function getDescription() { return $this->description; }
 
     /**
      * @param $description
@@ -1064,10 +937,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return \dateTime
      */
-    public function getForeclosureDate()
-    {
-        return $this->foreclosureDate;
-    }
+    public function getForeclosureDate() { return $this->foreclosureDate; }
 
     /**
      * @param \dateTime $foreclosureDate
@@ -1081,10 +951,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return \dateTime|null
      */
-    public function getBankruptcyDate()
-    {
-        return $this->bankruptcyDate;
-    }
+    public function getBankruptcyDate() { return $this->bankruptcyDate; }
 
     /**
      * @param \DateTime $bankruptcyDate
@@ -1098,10 +965,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return \DateTime|null
      */
-    public function getReoDate()
-    {
-        return $this->reoDate;
-    }
+    public function getReoDate() { return $this->reoDate; }
 
     /**
      * @param mixed $reoDate
@@ -1115,10 +979,7 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return \dateTime
      */
-    public function getZeroBalanceDate()
-    {
-        return $this->zeroBalanceDate;
-    }
+    public function getZeroBalanceDate() { return $this->zeroBalanceDate; }
 
     /**
      * @param \dateTime $zeroBalanceDate
@@ -1132,26 +993,17 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getUpdates()
-    {
-        return $this->updates;
-    }
+    public function getUpdates() { return $this->updates; }
 
     /**
      * @param mixed $updates
      */
-    public function setUpdates($updates)
-    {
-        $this->updates = $updates;
-    }
+    public function setUpdates($updates) { $this->updates = $updates; }
 
     /**
      * @return mixed
      */
-    public function getSeasoning()
-    {
-        return $this->seasoning;
-    }
+    public function getSeasoning() { return $this->seasoning; }
 
     /**
      * @param mixed $seasoning
@@ -1165,25 +1017,16 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getBids()
-    {
-        return $this->bids;
-    }
+    public function getBids() { return $this->bids; }
 
     /**
      * @param mixed $bids
      */
-    public function setBids($bids)
-    {
-        $this->bids = $bids;
-    }
+    public function setBids($bids) { $this->bids = $bids; }
 
     /**
      * @return ArrayCollection
      */
-    public function getIssues()
-    {
-        return $this->issues;
-    }
+    public function getIssues() { return $this->issues; }
 
 }
