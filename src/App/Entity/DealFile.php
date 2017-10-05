@@ -73,18 +73,6 @@ class DealFile implements NotifyPropertyChanged
     protected $mime;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
-     */
-    protected $prefix;
-
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
-     */
-    protected $s3Bucket;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
@@ -200,23 +188,6 @@ class DealFile implements NotifyPropertyChanged
     }
 
     /**
-     * @return string
-     */
-    public function getS3Bucket()
-    {
-        return $this->s3Bucket;
-    }
-
-    /**
-     * @param string $s3Bucket
-     */
-    public function setS3Path(string $s3Bucket)
-    {
-        $this->_onPropertyChanged('s3Bucket', $this->s3Bucket, $s3Bucket);
-        $this->s3Bucket = $s3Bucket;
-    }
-
-    /**
      * @return string | null
      */
     public function getLocalPath()
@@ -273,23 +244,6 @@ class DealFile implements NotifyPropertyChanged
         return $this->docAccess;
     }
 
-    /**
-     * @param string $prefix
-     */
-    public function setPrefix(string $prefix)
-    {
-        $this->prefix = $prefix;
-    }
-
-
-
-    /**
-     * @return string
-     */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
 
 
 }
