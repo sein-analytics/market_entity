@@ -66,10 +66,11 @@ class DealFile implements NotifyPropertyChanged
     protected $fileSize;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MimeType", inversedBy="files")
+     * @ORM\JoinColumn(name="mime_id", referencedColumnName="id", nullable=false)
+     * @var MimeType
      */
-    protected $mimeType;
+    protected $mime;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -182,20 +183,20 @@ class DealFile implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return MimeType
      */
     public function getMimeType()
     {
-        return $this->mimeType;
+        return $this->mime;
     }
 
     /**
-     * @param string $mimeType
+     * @param MimeType $mime
      */
-    public function setMimeType(string $mimeType)
+    public function setMimeType(MimeType $mime)
     {
-        $this->_onPropertyChanged('mimeType', $this->mimeType, $mimeType);
-        $this->mimeType = $mimeType;
+        $this->_onPropertyChanged('mime', $this->mime, $mime);
+        $this->mime = $mime;
     }
 
     /**
