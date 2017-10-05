@@ -60,8 +60,8 @@ class DealFile implements NotifyPropertyChanged
     protected $fileName;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=false)
-     * @var float
+     * @ORM\Column(type="integer", nullable=false)
+     * @var integer
      */
     protected $fileSize;
 
@@ -162,9 +162,9 @@ class DealFile implements NotifyPropertyChanged
     }
 
     /**
-     * @param float $fileSize
+     * @param integer $fileSize
      */
-    public function setFileSize(float $fileSize)
+    public function setFileSize(int $fileSize)
     {
         $this->_onPropertyChanged('fileSize', $this->fileSize, $fileSize);
         $this->fileSize = $fileSize;
