@@ -37,6 +37,7 @@ class DocAccess
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="docAccess")
+     * @ORM\JoinColumn(name="document_id", referencedColumnName="id", nullable=false)
      * @var DealFile
      */
     protected $document;
