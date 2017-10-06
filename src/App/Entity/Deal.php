@@ -169,6 +169,12 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     protected $user;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketDeals")
+     * @var ArrayCollection
+     */
+    protected $marketUsers;
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
@@ -178,6 +184,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->documents = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->diligence = new ArrayCollection();
+        $this->marketUsers = new ArrayCollection();
     }
 
     function addMessage(Message $message)
@@ -190,21 +197,20 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->diligence->add($diligence);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    function addMarketUser(MarketUser $user)
     {
-        return $this->id;
+        $this->marketUsers->add($user);
     }
 
     /**
      * @return mixed
      */
-    public function getIssuer()
-    {
-        return $this->issuer;
-    }
+    public function getId() { return $this->id; }
+
+    /**
+     * @return mixed
+     */
+    public function getIssuer() { return $this->issuer; }
 
     /**
      * @param mixed $issuer
@@ -218,10 +224,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getIssue()
-    {
-        return $this->issue;
-    }
+    public function getIssue() { return $this->issue; }
 
     /**
      * @param mixed $issue
@@ -235,10 +238,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getClosingDate()
-    {
-        return $this->closingDate;
-    }
+    public function getClosingDate() { return $this->closingDate; }
 
     /**
      * @param mixed $closingDate
@@ -252,10 +252,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return \DateTime
      */
-    public function getCutOffDate()
-    {
-        return $this->cutOffDate;
-    }
+    public function getCutOffDate() { return $this->cutOffDate; }
 
     /**
      * @param \DateTime $cutOffDate
@@ -269,10 +266,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getPaymentDay()
-    {
-        return $this->paymentDay;
-    }
+    public function getPaymentDay() { return $this->paymentDay; }
 
     /**
      * @param mixed $paymentDay
@@ -286,10 +280,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getOriginalBalance()
-    {
-        return $this->originalBalance;
-    }
+    public function getOriginalBalance() { return $this->originalBalance; }
 
     /**
      * @param mixed $originalBalance
@@ -303,10 +294,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getPriorOC()
-    {
-        return $this->priorOC;
-    }
+    public function getPriorOC() { return $this->priorOC; }
 
     /**
      * @param mixed $priorOC
@@ -320,10 +308,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getCashflowEngine()
-    {
-        return $this->cashflowEngine;
-    }
+    public function getCashflowEngine() { return $this->cashflowEngine; }
 
     /**
      * @param mixed $cashflowEngine
@@ -337,10 +322,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getCallFormular()
-    {
-        return $this->callFormular;
-    }
+    public function getCallFormular() { return $this->callFormular; }
 
     /**
      * @param mixed $callFormular
@@ -354,10 +336,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getPools()
-    {
-        return $this->pools;
-    }
+    public function getPools() { return $this->pools; }
 
     /**
      * @param mixed $pools
@@ -371,10 +350,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getBonds()
-    {
-        return $this->bonds;
-    }
+    public function getBonds() { return $this->bonds; }
 
     /**
      * @param mixed $bonds
@@ -388,10 +364,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getPeriods()
-    {
-        return $this->periods;
-    }
+    public function getPeriods() { return $this->periods; }
 
     /**
      * @param mixed $periods
@@ -405,10 +378,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getLatestPeriod()
-    {
-        return $this->latestPeriod;
-    }
+    public function getLatestPeriod() { return $this->latestPeriod; }
 
     /**
      * @param mixed $latestPeriod
@@ -422,10 +392,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getLoanDataParser()
-    {
-        return $this->loanDataParser;
-    }
+    public function getLoanDataParser() { return $this->loanDataParser; }
 
     /**
      * @param mixed $loanDataParser
@@ -439,10 +406,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return MarketUser
      */
-    public function getUser()
-    {
-        return $this->user;
-    }
+    public function getUser() { return $this->user; }
 
     /**
      * @param MarketUser $user
@@ -456,18 +420,17 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return ArrayCollection
      */
-    public function getMessages()
-    {
-        return $this->messages;
-    }
+    public function getMessages() { return $this->messages; }
 
     /**
      * @return ArrayCollection
      */
-    public function getDiligence()
-    {
-        return $this->diligence;
-    }
+    public function getDiligence() { return $this->diligence; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMarketUsers() { return $this->marketUsers; }
 
 
 }

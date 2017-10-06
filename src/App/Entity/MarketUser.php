@@ -209,6 +209,13 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     protected $token;
 
     /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="marketUsers")
+     *
+     * @var ArrayCollection
+     */
+    protected $marketDeals;
+
+    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="user")
      * @var \App\Entity\DueDiligence
      */
@@ -225,12 +232,15 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->receivedMessages = new ArrayCollection();
         $this->diligence = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->marketDeals = new ArrayCollection();
     }
 
-    public function getId()
+    function addMarketDeal(Deal $deal)
     {
-        return $this->id;
+        $this->marketDeals->add($deal);
     }
+
+    public function getId() { return $this->id; }
 
     function addDiligence(DueDiligence $diligence)
     {
@@ -240,33 +250,18 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     /**
      * @return mixed
      */
-    public function getAuthPassword()
-    {
-        return $this->password;
-    }
+    public function getAuthPassword() { return $this->password; }
 
-    public function getAuthIdentifierName()
-    {
-        return 'userName';
-    }
+    public function getAuthIdentifierName() { return 'userName'; }
 
     /**
      * @return mixed
      */
-    public function getAuthIdentifier()
-    {
-        return $this->userName;
-    }
+    public function getAuthIdentifier() { return $this->userName; }
 
-    public function getRememberTokenName()
-    {
-        return 'token';
-    }
+    public function getRememberTokenName() { return 'token'; }
 
-    public function getRememberToken()
-    {
-        return $this->token;
-    }
+    public function getRememberToken() { return $this->token; }
 
     public function setRememberToken($value)
     {
@@ -276,26 +271,17 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     /**
      * @param mixed $password
      */
-    public function setAuthPassword($password)
-    {
-        $this->password = $password;
-    }
+    public function setAuthPassword($password) { $this->password = $password; }
 
     /**
      * @return mixed
      */
-    public function getUserSalt()
-    {
-        return $this->userSalt;
-    }
+    public function getUserSalt() { return $this->userSalt; }
 
     /**
      * @return mixed
      */
-    public function getStatus()
-    {
-        return $this->status;
-    }
+    public function getStatus() { return $this->status; }
 
     /**
      * @param $status UserStatus
@@ -310,10 +296,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     /**
      * @return mixed
      */
-    public function getFailedAttempts()
-    {
-        return $this->failedAttempts;
-    }
+    public function getFailedAttempts(){ return $this->failedAttempts; }
 
     /**
      * @param $failedAttempts
@@ -359,6 +342,10 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      */
     public function getFiles(){ return $this->files; }
 
+    /**
+     * @return mixed
+     */
+    public function getMarketDeals() { return $this->marketDeals; }
 
 
 }
