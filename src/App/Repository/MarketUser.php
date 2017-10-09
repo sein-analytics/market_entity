@@ -10,6 +10,7 @@ namespace App\Repository;
 
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class MarketUser extends EntityRepository
 {
@@ -20,7 +21,16 @@ class MarketUser extends EntityRepository
         $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $userId);
         $stmt->execute();
-        $results = $stmt->fetchAll();
-        return $results;
+        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        return $this->flattenHydration($results, 'deal_id');
+    }
+
+    function flattenHydration(array $hydration, $key)
+    {
+        $flat = [];
+        foreach ($hydration as $dataPoint){
+            array_push($flat, $dataPoint[$key]);
+        }
+        return $flat;
     }
 }
