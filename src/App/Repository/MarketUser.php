@@ -20,10 +20,7 @@ class MarketUser extends EntityRepository
         $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $userId);
         $stmt->execute();
-        $results = $this->getEntityManager()->getConnection()->exec($sql);
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter(1, $userId);
-
-        return $result;
+        $results = $stmt->fetchAll();
+        return $results;
     }
 }
