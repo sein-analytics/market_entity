@@ -12,20 +12,9 @@ use Doctrine\ORM\Query;
 
 class Deal extends EntityRepository
 {
-    public function fetchUserDealIds($userId)
+    public function fetchUserDeals($userId)
     {
-        $connection = $this->getEntityManager()->getConnection();
-        $repo =
-        //$dql = 'SELECT s FROM App\\Entity\\Deal s WHERE s.level = 0';
-        $query = $this->getEntityManager()->createQuery('');
+        //
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    public function returnEntityManager()
-    {
-        $em = $this->getEntityManager();
-        return $em;
-    }
 }

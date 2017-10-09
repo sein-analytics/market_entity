@@ -9,7 +9,13 @@
 namespace App\Service;
 
 
-class MarketUser
+use Doctrine\ORM\EntityRepository;
+
+class MarketUser extends EntityRepository
 {
+    public function fetchUserMarketDeal($userId)
+    {
+
+    }
 
 }
