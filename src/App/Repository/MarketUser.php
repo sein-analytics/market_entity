@@ -16,7 +16,6 @@ class MarketUser extends EntityRepository
 {
     function fetchUserMarketDealIds($userId)
     {
-        $dql = 'SELECT u FROM \App\Entity\MarketUser u INNER JOIN deal_market_user WHERE deal_market_user.market_user_id = ?1';
         $sql = "SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?";
         $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $userId);
@@ -29,7 +28,7 @@ class MarketUser extends EntityRepository
     {
         $flat = [];
         foreach ($hydration as $dataPoint){
-            array_push($flat, $dataPoint[$key]);
+            array_push($flat, str_replace('"', "",$dataPoint[$key]));
         }
         return $flat;
     }

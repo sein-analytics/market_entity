@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Support\Facades\App;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Bid")
  * @ORM\Table(name="Bid")
  * @ChangeTrackingPolicy("NOTIFY")
  */

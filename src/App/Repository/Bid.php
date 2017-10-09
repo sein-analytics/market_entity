@@ -2,20 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: ac1189
- * Date: 10/6/17
- * Time: 1:32 PM
+ * Date: 10/9/17
+ * Time: 5:56 PM
  */
 
 namespace App\Repository;
+
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class Deal extends EntityRepository
+class Bid extends EntityRepository
 {
-    public function fetchUserDealsFromIds(array $ids)
+    public function getBidsForDealIds(array $dealIds)
     {
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery('SELECT * FROM Deal WHERE status_id = 1 AND id IN (?)',
-            array($ids),
+        $stmt = $this->getEntityManager()->getConnection()->executeQuery('SELECT * FROM Bid WHERE deal_id IN (?)',
+            array($dealIds),
             array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
