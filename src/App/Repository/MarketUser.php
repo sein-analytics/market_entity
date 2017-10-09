@@ -15,10 +15,13 @@ class MarketUser extends EntityRepository
 {
     function fetchUserMarketDealIds($userId)
     {
-        $dql = 'SELECT u FROM MarketUser u INNER JOIN deal_market_user WHERE deal_market_user.market_user_id = ?1';
+        $dql = 'SELECT u FROM \App\Entity\MarketUser u INNER JOIN deal_market_user WHERE deal_market_user.market_user_id = ?1';
+        $sql = "SELECT deal_id FROM deal_market_user WHERE  market_user_id = $userId";
+        $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
+        $results = $this->getEntityManager()->getConnection()->exec($sql);
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter(1, $userId);
-        $result = $query->getResult();
+
         return $result;
     }
 }
