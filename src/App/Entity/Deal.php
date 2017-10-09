@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Support\Facades\App;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Deal")
  * @ORM\Table(name="Deal")
  * @ChangeTrackingPolicy("NOTIFY")
  */
