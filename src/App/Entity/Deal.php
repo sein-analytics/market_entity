@@ -175,6 +175,9 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     protected $marketUsers;
 
+    /** @ORM\Column(type="integer", nullable=true)   */
+    protected $views;
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
@@ -431,6 +434,17 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      * @return ArrayCollection
      */
     public function getMarketUsers() { return $this->marketUsers; }
+
+    /**
+     * @param integer $views
+     */
+    public function setViews($views)
+    {
+        $this->_onPropertyChanged('views', $this->views, $views);
+        $this->views = $views;
+    }
+
+    public function getViews() { return $this->views; }
 
 
 }

@@ -18,6 +18,6 @@ abstract class ServiceAbstract
 
     function __construct()
     {
-        $this->em = EntityManager::create(connection_status());
+        //$this->em = EntityManager::create(connection_status());
     }
 }

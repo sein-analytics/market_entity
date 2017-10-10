@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Statistic")
  * @ORM\Table(name="Statistic")
  * @ChangeTrackingPolicy("NOTIFY")
  */
