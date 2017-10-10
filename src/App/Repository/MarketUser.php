@@ -33,7 +33,7 @@ class MarketUser extends EntityRepository
         return $flat;
     }
 
-    public function fetchMarketUsersFromDealIds(array $dealIds){
+    public function fetchMarketUsersFromIds(array $dealIds){
         $stmt = $this->getEntityManager()->getConnection()->executeQuery("Select * FROM MarketUser WHERE id IN (?)",
             array($dealIds),
             array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
