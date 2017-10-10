@@ -14,7 +14,7 @@ use Doctrine\ORM\Query;
 
 class Bid extends EntityRepository
 {
-    public function getBidsForDealIds(array $dealIds)
+    public function fetchBidsForDealIds(array $dealIds)
     {
         $stmt = $this->getEntityManager()->getConnection()->executeQuery('SELECT * FROM Bid WHERE deal_id IN (?)',
             array($dealIds),
