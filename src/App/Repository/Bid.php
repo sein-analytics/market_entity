@@ -9,19 +9,32 @@
 namespace App\Repository;
 
 
+use App\Service\FetchingTrait;
+use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 
+/**
+ * Class Bid
+ * @package App\Repository
+ */
 class Bid extends EntityRepository
 {
-    public function fetchBidsForDealIds(array $dealIds)
+    use FetchMapperTrait, FetchingTrait;
+    const BID_DEAL = "deal_id";
+
+    /**
+     * @param array $dealIds
+     * @param bool $mapBidsToDeals
+     * @return array
+     */
+    public function fetchBidsForDealIds(array $dealIds, $mapBidsToDeals = true)
     {
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery('SELECT * FROM Bid WHERE deal_id IN (?)',
-            array($dealIds),
-            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
-        );
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);
+        if ($mapBidsToDeals
+            && count($results ) > 0)
+        {
+            $results = $this->mapRequestIdsToResults($dealIds, $results, self::BID_DEAL);
+        }
         return $results;
     }
-
 }

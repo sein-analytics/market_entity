@@ -9,18 +9,20 @@
 namespace App\Repository;
 
 
+use App\Service\FetchingTrait;
+use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 
 class Statistic extends EntityRepository
 {
-    public function fetchDealStatisticsByDealIds(array $dealIds)
+    use FetchingTrait, FetchMapperTrait;
+    public function fetchDealStatisticsByDealIds(array $dealIds, $mapStatisticsToDeal = true)
     {
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery('SELECT * FROM Statistic WHERE deal_id IN (?)',
-            array($dealIds),
-            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
-        );
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $sql = 'SELECT * FROM Statistic WHERE deal_id IN (?)';
+        $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);
+        if(count($results) > 0 && $mapStatisticsToDeal){
+            $results = $this->mapRequestIdsToResults($dealIds, $results, "deal_id");
+        }
         return $results;
     }
 

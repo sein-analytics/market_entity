@@ -7,18 +7,18 @@
  */
 
 namespace App\Repository;
+use App\Service\FetchingTrait;
+use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 
 class Deal extends EntityRepository
 {
+    use FetchingTrait, FetchMapperTrait;
+
     public function fetchUserDealsFromIds(array $ids)
     {
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery('SELECT * FROM Deal WHERE status_id = 1 AND id IN (?)',
-            array($ids),
-            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
-        );
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $sql = 'SELECT * FROM Deal WHERE status_id = 1 AND id IN (?) ORDER BY id ASC';
+        $results = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
         return $results;
     }
 
