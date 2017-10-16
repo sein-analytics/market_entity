@@ -207,7 +207,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="userFavorites")
-     * @ORM\JoinTable(name="user-favorite_deals",
+     * @ORM\JoinTable(name="user_favorite_deals",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="favorite_deal_id", referencedColumnName="id")}
      *     )
