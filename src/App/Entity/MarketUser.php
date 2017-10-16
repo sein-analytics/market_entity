@@ -185,6 +185,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="follower_id", referencedColumnName="id")}
      *     )
+     * @var ArrayCollection
      **/
     protected $followers;
 
@@ -194,6 +195,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="following_id", referencedColumnName="id")}
      *     )
+     * @var ArrayCollection
      **/
     protected $following;
 
@@ -202,6 +204,16 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      * @var ArrayCollection
      */
     protected $files;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="userFavorites")
+     * @ORM\JoinTable(name="user-favorite_deals",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="favorite_deal_id", referencedColumnName="id")}
+     *     )
+     * @var ArrayCollection
+     */
+    protected $marketFavorites;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -233,11 +245,16 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->diligence = new ArrayCollection();
         $this->files = new ArrayCollection();
         $this->marketDeals = new ArrayCollection();
+        $this->marketFavorites = new ArrayCollection();
     }
 
     function addMarketDeal(Deal $deal)
     {
         $this->marketDeals->add($deal);
+    }
+
+    function addMarketFavorites(Deal $deal){
+        $this->marketFavorites->add($deal);
     }
 
     public function getId() { return $this->id; }
@@ -346,6 +363,11 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      * @return mixed
      */
     public function getMarketDeals() { return $this->marketDeals; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMarketFavorites() { return $this->marketFavorites; }
 
 
 }

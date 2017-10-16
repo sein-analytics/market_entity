@@ -175,6 +175,12 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     protected $marketUsers;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketFavorites")
+     * @var ArrayCollection
+     */
+    protected $userFavorites;
+
     /** @ORM\Column(type="integer", nullable=true)   */
     protected $views;
 
@@ -188,6 +194,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->messages = new ArrayCollection();
         $this->diligence = new ArrayCollection();
         $this->marketUsers = new ArrayCollection();
+        $this->userFavorites = new ArrayCollection();
     }
 
     function addMessage(Message $message)
@@ -203,6 +210,10 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     function addMarketUser(MarketUser $user)
     {
         $this->marketUsers->add($user);
+    }
+
+    function addUserFavorites(MarketUser $user){
+        $this->userFavorites->add($user);
     }
 
     /**
@@ -434,6 +445,11 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      * @return ArrayCollection
      */
     public function getMarketUsers() { return $this->marketUsers; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUserFavorites() { return $this->userFavorites; }
 
     /**
      * @param integer $views
