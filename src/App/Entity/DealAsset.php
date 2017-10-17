@@ -31,7 +31,7 @@ class DealAsset
     protected $assetClass;
 
     /** @ORM\Column(type="string", nullable=false) **/
-    protected $label;
+    protected $name;
 
     public function __construct()
     {
@@ -56,7 +56,7 @@ class DealAsset
     /**
      * @return string
      */
-    public function getLabel() { return $this->label; }
+    public function getName() { return $this->name; }
 
 
 }
