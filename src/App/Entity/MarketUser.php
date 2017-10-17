@@ -233,6 +233,12 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      */
     protected $diligence;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="user")
+     * @var  ArrayCollection
+     * */
+    protected $templates;
+
     public function __construct()
     {
         $this->bids = new ArrayCollection();
@@ -246,6 +252,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->files = new ArrayCollection();
         $this->marketDeals = new ArrayCollection();
         $this->marketFavorites = new ArrayCollection();
+        $this->templates = new ArrayCollection();
     }
 
     function addMarketDeal(Deal $deal)
@@ -262,6 +269,11 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     function addDiligence(DueDiligence $diligence)
     {
         $this->diligence->add($diligence);
+    }
+
+    function addTemplate(LoanTapeTemplate $template)
+    {
+        $this->templates->add($template);
     }
 
     /**
@@ -369,5 +381,9 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      */
     public function getMarketFavorites() { return $this->marketFavorites; }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getTemplates() { return $this->templates; }
 
 }
