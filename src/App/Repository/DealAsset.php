@@ -7,13 +7,17 @@
  */
 
 namespace App\Repository;
+use App\Service\FetchingTrait;
+use App\Service\FetchMapperTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
 class DealAsset extends EntityRepository
 {
-    public function fetchDealAssetTypes()
+    use FetchingTrait, FetchMapperTrait;
+
+    function fetchDealAssetTypes()
     {
         $dql = 'SELECT * FROM \\App\\Entity\\DealAsset';
         $query = $this->getEntityManager()->createQuery($dql);

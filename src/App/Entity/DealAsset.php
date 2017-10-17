@@ -30,7 +30,7 @@ class DealAsset
     /** @ORM\Column(type="string", nullable=false) **/
     protected $assetClass;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $label;
 
     public function __construct()
