@@ -15,6 +15,10 @@ class Deal extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait;
 
+    /**
+     * @param array $ids
+     * @return array|bool
+     */
     public function fetchUserDealsFromIds(array $ids)
     {
         $sql = 'SELECT Deal.id, Deal.issuer_id, Deal.auction_type_id, Deal.asset_type_id, Deal.bid_type_id, Deal.issue, Deal.cut_off_date, Deal.closing_date, ' .

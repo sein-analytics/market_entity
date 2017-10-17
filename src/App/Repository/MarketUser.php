@@ -18,6 +18,10 @@ class MarketUser extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait;
 
+    /**
+     * @param $userId
+     * @return array
+     */
     function fetchUserMarketDealIds($userId)
     {
         $sql = "SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?";
@@ -28,6 +32,10 @@ class MarketUser extends EntityRepository
         return $this->flattenResultArrayByKey($results, 'deal_id');
     }
 
+    /**
+     * @param array $dealIds
+     * @return array|bool
+     */
     public function fetchMarketUsersFromIds(array $dealIds){
         $sql = "SELECT * FROM MarketUser WHERE id IN (?) ORDER BY id ASC";
         $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);

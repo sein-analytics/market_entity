@@ -18,6 +18,10 @@ class DealAsset extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait;
 
+    /**
+     * @param bool $object
+     * @return array
+     */
     function fetchDealAssetTypes($object = true)
     {
         if($object){

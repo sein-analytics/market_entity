@@ -16,6 +16,12 @@ use Doctrine\ORM\EntityRepository;
 class Statistic extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait;
+
+    /**
+     * @param array $dealIds
+     * @param bool $mapStatisticsToDeal
+     * @return array|bool
+     */
     public function fetchDealStatisticsByDealIds(array $dealIds, $mapStatisticsToDeal = true)
     {
         $sql = 'SELECT * FROM Statistic WHERE deal_id IN (?)';
