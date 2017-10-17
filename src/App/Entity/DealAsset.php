@@ -30,6 +30,9 @@ class DealAsset
     /** @ORM\Column(type="string", nullable=false) **/
     protected $assetClass;
 
+    /** @ORM\Column(type="string", nullable=true) **/
+    protected $label;
+
     public function __construct()
     {
         $this->deals = new ArrayCollection();
@@ -38,27 +41,22 @@ class DealAsset
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
     /**
      * @return ArrayCollection
      */
-    public function getDeals()
-    {
-        return $this->deals;
-    }
+    public function getDeals() { return $this->deals; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAssetClass()
-    {
-        return $this->assetClass;
-    }
+    public function getAssetClass() { return $this->assetClass; }
 
+    /**
+     * @return string
+     */
+    public function getLabel() { return $this->label; }
 
 
 }
