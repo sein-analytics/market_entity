@@ -20,7 +20,7 @@ class DealAsset extends EntityRepository
 
     function fetchDealAssetTypes($object = true)
     {
-        $dql = 'SELECT * FROM \\App\\Entity\\DealAsset';
+        $dql = 'SELECT * FROM DealAsset';
         $query = $this->getEntityManager()->createQuery($dql);
         if($object){
             $result = $query->getResult(Query::HYDRATE_OBJECT);
