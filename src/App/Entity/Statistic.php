@@ -108,20 +108,20 @@ class Statistic implements NotifyPropertyChanged
     protected $summaryCredit;
 
     /**
+     * @ORM\Column(type="json", nullable=true)
+     * @var array
+     */
+    protected $filterData;
+
+    /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
     /**
      * @return Deal
      */
-    public function getDeal()
-    {
-        return $this->deal;
-    }
+    public function getDeal() { return $this->deal; }
 
     /**
      * @param Deal $deal
@@ -135,10 +135,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getStates()
-    {
-        return $this->states;
-    }
+    public function getStates() { return $this->states; }
 
     /**
      * @param array $states
@@ -153,10 +150,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getSummaryStates()
-    {
-        return $this->summaryStates;
-    }
+    public function getSummaryStates() { return $this->summaryStates; }
 
     /**
      * @param array $summaryStates
@@ -171,10 +165,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getLtv()
-    {
-        return $this->ltv;
-    }
+    public function getLtv() { return $this->ltv; }
 
     /**
      * @param string $ltv
@@ -188,10 +179,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getSummaryLtv()
-    {
-        return $this->summaryLtv;
-    }
+    public function getSummaryLtv() { return $this->summaryLtv; }
 
     /**
      * @param array $summaryLtv
@@ -206,10 +194,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getBalance()
-    {
-        return $this->balance;
-    }
+    public function getBalance() { return $this->balance; }
 
     /**
      * @param array $balance
@@ -224,10 +209,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getSummaryBalance()
-    {
-        return $this->summaryBalance;
-    }
+    public function getSummaryBalance() { return $this->summaryBalance; }
 
     /**
      * @param array $summaryBalance
@@ -242,10 +224,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getRate()
-    {
-        return $this->rate;
-    }
+    public function getRate() { return $this->rate; }
 
     /**
      * @param array $rate
@@ -260,10 +239,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getSummaryRate()
-    {
-        return $this->summaryRate;
-    }
+    public function getSummaryRate() { return $this->summaryRate; }
 
     /**
      * @param array $summaryRate
@@ -278,10 +254,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getLoanType()
-    {
-        return $this->loanType;
-    }
+    public function getLoanType() { return $this->loanType; }
 
     /**
      * @param array $loanType
@@ -296,10 +269,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getPropertyType()
-    {
-        return $this->propertyType;
-    }
+    public function getPropertyType() { return $this->propertyType; }
 
     /**
      * @param array $propertyType
@@ -314,10 +284,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getOccupancy()
-    {
-        return $this->occupancy;
-    }
+    public function getOccupancy() { return $this->occupancy; }
 
     /**
      * @param array $occupancy
@@ -332,10 +299,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getMaturity()
-    {
-        return $this->maturity;
-    }
+    public function getMaturity() { return $this->maturity; }
 
     /**
      * @param array $maturity
@@ -350,10 +314,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getSummaryMaturity()
-    {
-        return $this->summaryMaturity;
-    }
+    public function getSummaryMaturity() { return $this->summaryMaturity; }
 
     /**
      * @param array $summaryMaturity
@@ -368,10 +329,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getCredit()
-    {
-        return $this->credit;
-    }
+    public function getCredit() { return $this->credit; }
 
     /**
      * @param array $credit
@@ -386,10 +344,7 @@ class Statistic implements NotifyPropertyChanged
     /**
      * @return array
      */
-    public function getSummaryCredit()
-    {
-        return $this->summaryCredit;
-    }
+    public function getSummaryCredit() { return $this->summaryCredit; }
 
     /**
      * @param array $summaryCredit
@@ -399,6 +354,21 @@ class Statistic implements NotifyPropertyChanged
         $json_string = json_encode($summaryCredit);
         $this->_onPropertyChanged('summaryCredit', $this->summaryCredit, $json_string);
         $this->summaryCredit = $json_string;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilterData() { return $this->filterData; }
+
+    /**
+     * @param array $filterData
+     */
+    public function setFilterData(array $filterData)
+    {
+        $json_string = json_encode($filterData);
+        $this->_onPropertyChanged('filterData', $this->filterData, $json_string);
+        $this->filterData = $json_string;
     }
 
 
