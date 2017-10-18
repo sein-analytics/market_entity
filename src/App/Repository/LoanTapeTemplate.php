@@ -17,6 +17,10 @@ class LoanTapeTemplate extends EntityRepository
 {
     use FetchMapperTrait, FetchingTrait;
 
+    /**
+     * @param array $userId
+     * @return array|bool
+     */
     public function fetchUserLoanTemplates(array $userId)
     {
         $sql = "SELECT * FROM LoanTapeTemplate WHERE user_id in (?) ORDER BY id ASC";
