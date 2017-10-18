@@ -38,6 +38,13 @@ class LoanTapeTemplate
     protected $template;
 
     /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     *
+     **/
+    protected $templateName;
+
+    /**
      * @return mixed
      */
     public function getId() { return $this->id; }
@@ -48,6 +55,11 @@ class LoanTapeTemplate
     public function getUser() { return $this->user; }
 
     /**
+     * @return string
+     */
+    public function getTemplateName() { return $this->templateName; }
+
+    /**
      * @param \App\Entity\MarketUser $user
      */
     public function setUsers(\App\Entity\MarketUser $user)
@@ -56,7 +68,7 @@ class LoanTapeTemplate
     }
 
     /**
-     * @return array | null
+     * @return array
      */
     public function getTemplate()
     {
