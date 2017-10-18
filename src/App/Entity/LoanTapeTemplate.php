@@ -25,6 +25,7 @@ class LoanTapeTemplate
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\MarketUser", inversedBy="templates")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
     protected $user;
