@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Loan")
  * @ORM\MappedSuperClass
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\DiscriminatorColumn(name="assetClass", type="string")
