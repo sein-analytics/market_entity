@@ -12,7 +12,7 @@ use App\Entity\MarketUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\LoanTapeTemplate")
  * @ORM\Table(name="LoanTapeTemplate")
  */
 class LoanTapeTemplate
