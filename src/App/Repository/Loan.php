@@ -27,7 +27,7 @@ class Loan extends EntityRepository
         $sql = "SELECT * FROM Pool WHERE deal_id IN (?)";
         $results = $this->fetchByIntArray($em, array($dealId), $sql);
         if(count($results) > 0){
-            $results = $this->fetchLoansByPoolIds($results);
+            $results = $this->fetchLoansByPoolIds(array($results[0]['id']));
         }
         return $results;
     }
