@@ -22,7 +22,7 @@ class MarketUser extends EntityRepository
      * @param $userId
      * @return array
      */
-    function fetchUserMarketDealIds($userId)
+    function fetchUserMarketDealIds(int $userId)
     {
         $sql = "SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?";
         $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
