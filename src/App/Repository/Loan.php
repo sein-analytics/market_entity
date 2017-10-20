@@ -38,7 +38,7 @@ class Loan extends EntityRepository
      */
     public function fetchLoansByPoolIds(array $ids)
     {
-        $sql = "SELECT * FROM loans WHERE pool_id IN (?) ORDER BY pool_id ASC ";
+        $sql = "SELECT loans.*, ArmAttribute.* FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
         $results = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
         return $results;
     }
