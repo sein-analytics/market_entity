@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class Loan extends EntityRepository
 {
@@ -38,8 +39,25 @@ class Loan extends EntityRepository
      */
     public function fetchLoansByPoolIds(array $ids)
     {
-        $sql = "SELECT loans.*, ArmAttribute.* FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
-        $results = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
+        $sql = "SELECT loans.*, ArmAttribute.id, ArmAttribute.gross_margin, ArmAttribute.minimum_rate, ArmAttribute.maximum_rate, ArmAttribute.rate_index, ".
+            "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
+            " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap ".
+            "FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
+        $armLoans = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
+        $noArms = [];
+        if(count($armLoans) > 0){
+            $loansId = [];
+            foreach ($armLoans as $loan){
+                array_push($loansId, (int)$loan['id']);
+            }
+            $sql = "SELECT * FROM loans WHERE pool_id IN (?) AND loans.id NOT in (?) ORDER BY pool_id ASC ";
+            $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
+                array($ids, $loansId),
+                array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+            );
+            $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        }
+        $results = array_merge($noArms, $armLoans);
         return $results;
     }
 
