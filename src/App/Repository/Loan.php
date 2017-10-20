@@ -48,12 +48,13 @@ class Loan extends EntityRepository
         if(count($armLoans) > 0){
             $loansId = [];
             foreach ($armLoans as $loan){
-                array_push($loansId, (int)$loan['id']);
+                array_push($loansId, $loan['id']);
             }
-            $sql = "SELECT * FROM loans WHERE pool_id IN (?) AND loans.id NOT in (?) ORDER BY pool_id ASC ";
+            $sql = "SELECT * FROM loans WHERE pool_id IN (?) AND id NOT IN (?) ORDER BY id ASC ";
             $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
                 array($ids, $loansId),
-                array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+                array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY,
+                    \Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
             );
             $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         }
