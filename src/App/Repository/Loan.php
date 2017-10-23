@@ -39,7 +39,7 @@ class Loan extends EntityRepository
      */
     public function fetchLoansByPoolIds(array $ids)
     {
-        $sql = "SELECT loans.*, ArmAttribute.id, ArmAttribute.gross_margin, ArmAttribute.minimum_rate, ArmAttribute.maximum_rate, ArmAttribute.rate_index, ".
+        $sql = "SELECT loans.*, ArmAttribute.gross_margin, ArmAttribute.minimum_rate, ArmAttribute.maximum_rate, ArmAttribute.rate_index, ".
             "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
             " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap ".
             "FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
