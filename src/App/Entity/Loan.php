@@ -54,7 +54,7 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;
 
-    /** @ORM\Column(type="string") **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $loanId;
 
 
@@ -66,14 +66,15 @@ abstract class Loan implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
+     * @ORM\JoinColumn(name="pool_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Pool
      **/
     protected $pool;
 
-    /** @ORM\Column(type="decimal", precision=16, scale=3) */
+    /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=false) */
     protected $originalBalance = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=16, scale=3) */
+    /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=false) */
     protected $currentBalance = 0.0;
 
     /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=true) **/
@@ -82,49 +83,49 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=true) **/
     protected $issuanceBalance;
 
-    /** @ORM\Column(type="decimal", precision=10, scale=6) **/
+    /** @ORM\Column(type="decimal", precision=10, scale=6, nullable=false) **/
     protected $initialRate;
 
     /** @ORM\Column(type="integer", nullable=true) **/
     protected $seasoning;
 
-    /** @ORM\Column(type="decimal", precision=10, scale=6) **/
+    /** @ORM\Column(type="decimal", precision=10, scale=6, nullable=false) **/
     protected $currentRate;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $originationDate;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $currentDueforDate;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $firstPaymentDate;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $loanStatus;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $finalDueforDate;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
+    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
     protected $originalTerm;
 
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
     protected $remainingTerm;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
+    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
     protected $amortizationTerm;
 
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
@@ -133,25 +134,25 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type="integer", nullable=true) **/
     protected $balloonPeriod;
 
-    /** @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
+    /** @ORM\Column(type="decimal", precision=8, scale=4, nullable=false)
      * @var number
      **/
     protected $originalLtv;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=false)
      *
      **/
     protected $originalCltv;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=16, scale=4, nullable=false)
      *
      **/
     protected $appraisedValue;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=false)
      **/
     protected $creditScore;
 
@@ -162,7 +163,7 @@ abstract class Loan implements NotifyPropertyChanged
     protected $frontDti;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=false)
      * @var number
      **/
     protected $backDti;
@@ -173,22 +174,22 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type = "integer", nullable=true) **/
     protected $firstTimeBuyer;
 
-    /** @ORM\Column(type = "integer", nullable=true) **/
+    /** @ORM\Column(type = "integer", nullable=false) **/
     protected $lienPosition;
 
     /** @ORM\Column(type="string", nullable=true) **/
     protected $noteType;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $loanType;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $documentation;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $purpose;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $occupancy;
 
     /** @ORM\Column(type="string", nullable=true) **/
@@ -203,7 +204,7 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type="string", nullable=true) **/
     protected $city;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=false) **/
     protected $zip;
 
 
