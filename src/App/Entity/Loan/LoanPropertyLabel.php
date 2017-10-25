@@ -105,7 +105,7 @@ class LoanPropertyLabel extends EntityRepository
             $row[self::CATEGORY] = self::CREDIT_DATA ;
         } elseif (in_array($fieldMapping[self::ENTITY_COLUMN], $this->mortgageData)){
             $row[self::CATEGORY] = self::MTGE_DATA;
-        } elseif ($this->getClassMetadata()->getName() == '\App\Entity\Loan\ArmAttribute'){
+        } elseif ($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
             $row[self::CATEGORY] = self::ARM_DATA;
         } else {
             $row[self::CATEGORY] = self::LOAN_DATA;
@@ -114,7 +114,7 @@ class LoanPropertyLabel extends EntityRepository
     }
 
     public function assignSignificance(array $fieldMapping, $row){
-        if($this->getClassMetadata()->getName() == '\App\Entity\Loan\ArmAttribute'){
+        if($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
             $row[self::SIGNIFICANCE] = self::CONDITIONAL;
         }elseif ($fieldMapping[self::ENTITY_NULL]){
             $row[self::SIGNIFICANCE] = self::OPTIONAL;
