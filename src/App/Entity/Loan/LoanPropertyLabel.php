@@ -97,12 +97,8 @@ class LoanPropertyLabel extends EntityRepository
         'appraised_value' => [self::LABEL => 'Appraised Value', self::CATEGORY => self::LOAN_DATA, self::SIGNIFICANCE => self::OPTIONAL]
     ];
 
-    public function __construct($em = null, $class = null)
+    public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
     {
-        if(is_null($em) || is_null($class)){
-            $em = $this->getEntityManager();
-            $class = $em->getClassMetadata('\App\Entity\Loan');
-        }
         parent::__construct($em, $class);
     }
 
