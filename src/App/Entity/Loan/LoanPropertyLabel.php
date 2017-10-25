@@ -77,7 +77,7 @@ class LoanPropertyLabel extends EntityRepository
     {
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(in_array($properties[self::ENTITY_COLUMN], $this->propertyLabels)
-                && $this->propertyLabels[$properties[self::ENTITY_COLUMN]] == null){
+                && is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
                 continue;
             }
             $row['id'] = $count++;
