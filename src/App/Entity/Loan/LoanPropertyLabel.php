@@ -9,7 +9,9 @@
 namespace App\Entity\Loan;
 
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping;
 
 class LoanPropertyLabel extends EntityRepository
 {
@@ -94,6 +96,15 @@ class LoanPropertyLabel extends EntityRepository
         'initial_rate' => [self::LABEL => 'Servicing Fee', self::CATEGORY => self::LOAN_DATA, self::SIGNIFICANCE => self::REQUIRED],
         'appraised_value' => [self::LABEL => 'Appraised Value', self::CATEGORY => self::LOAN_DATA, self::SIGNIFICANCE => self::OPTIONAL]
     ];
+
+    public function __construct($em = null, $class = null)
+    {
+        if(is_null($em) || is_null($class)){
+            $em = $this->getEntityManager();
+            $class = $em->getClassMetadata('\App\Entity\Loan');
+        }
+        parent::__construct($em, $class);
+    }
 
     public function buildTapeUploadArray()
     {
