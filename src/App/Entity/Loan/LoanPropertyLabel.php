@@ -77,13 +77,13 @@ class LoanPropertyLabel extends EntityRepository
         $count = 0;
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(in_array($properties[self::ENTITY_COLUMN], $this->propertyLabels)
-                && $this->propertyLabels[self::ENTITY_COLUMN] == null){
+                && $this->propertyLabels[$properties[self::ENTITY_COLUMN]] == null){
                 continue;
             }
             $row['id'] = $count++;
             $row = $this->assignDataType($properties, $row);
             if (in_array($properties[self::ENTITY_COLUMN], $this->propertyLabels)
-                && !is_null($this->propertyLabels[self::ENTITY_COLUMN])){
+                && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
                 $properties[self::ENTITY_COLUMN] = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
             }
             $row[self::DB_NAME] = $properties[self::ENTITY_COLUMN];
