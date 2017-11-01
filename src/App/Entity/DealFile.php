@@ -105,6 +105,18 @@ class DealFile implements NotifyPropertyChanged
      */
     protected $docType;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $virusScanId;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @var boolean
+     */
+    protected $hasViruses;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
@@ -202,6 +214,38 @@ class DealFile implements NotifyPropertyChanged
     {
         $this->_onPropertyChanged('localPath', $this->localPath, $localPath);
         $this->localPath = $localPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVirusScanId(): string
+    {
+        return $this->virusScanId;
+    }
+
+    /**
+     * @param string $virusScanId
+     */
+    public function setVirusScanId(string $virusScanId)
+    {
+        $this->virusScanId = $virusScanId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasViruses(): bool
+    {
+        return $this->hasViruses;
+    }
+
+    /**
+     * @param bool $hasViruses
+     */
+    public function setHasViruses(bool $hasViruses)
+    {
+        $this->hasViruses = $hasViruses;
     }
 
     /**
