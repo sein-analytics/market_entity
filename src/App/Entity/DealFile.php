@@ -112,6 +112,12 @@ class DealFile implements NotifyPropertyChanged
     protected $virusScanId;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $scanLocation;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
@@ -286,6 +292,22 @@ class DealFile implements NotifyPropertyChanged
     public function getDocAccess()
     {
         return $this->docAccess;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScanLocation(): string
+    {
+        return $this->scanLocation;
+    }
+
+    /**
+     * @param string $scanLocation
+     */
+    public function setScanLocation(string $scanLocation)
+    {
+        $this->scanLocation = $scanLocation;
     }
 
 
