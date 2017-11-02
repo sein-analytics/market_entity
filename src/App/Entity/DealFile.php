@@ -106,19 +106,19 @@ class DealFile implements NotifyPropertyChanged
     protected $docType;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected $virusScanId;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected $scanLocation;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=false)
      * @var boolean
      */
     protected $hasViruses;
