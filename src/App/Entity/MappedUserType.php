@@ -57,7 +57,7 @@ class MappedUserType
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\PropertyType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="loan_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="property_type_id", referencedColumnName="id", nullable=false)
      * @var PropertyType
      */
     protected $propertyType;
@@ -85,7 +85,7 @@ class MappedUserType
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\DocumentationType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="status_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="documentation_type_id", referencedColumnName="id", nullable=false)
      * @var DocumentationType
      */
     protected $documentationType;
