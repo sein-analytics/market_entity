@@ -24,6 +24,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MappedUserType
 {
+    use NotifyChangeTrait;
+
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
