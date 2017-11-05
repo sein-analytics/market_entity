@@ -11,6 +11,7 @@ namespace App\Entity\Typed;
 
 use App\Entity\MappedUserType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 abstract class MappedTypeAbstract
 {
