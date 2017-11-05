@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use App\Entity\Typed\ArmIndexType;
+use App\Entity\Typed\DocumentationType;
 use App\Entity\Typed\LoanType;
 use App\Entity\Typed\OccupancyType;
 use App\Entity\Typed\PropertyType;
@@ -83,6 +84,13 @@ class MappedUserType
     protected $statusType;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\DocumentationType", inversedBy="mappedUserType")
+     * @ORM\JoinColumn(name="status_type_id", referencedColumnName="id", nullable=false)
+     * @var DocumentationType
+     */
+    protected $documentationType;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -124,6 +132,11 @@ class MappedUserType
      * @return StatusType
      */
     public function getStatusType(): StatusType { return $this->statusType; }
+
+    /**
+     * @return DocumentationType
+     */
+    public function getDocumentationType(): DocumentationType { return $this->documentationType; }
 
     /**
      * @param MarketUser $user
