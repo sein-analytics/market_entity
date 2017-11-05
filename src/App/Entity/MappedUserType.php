@@ -15,6 +15,7 @@ use App\Entity\Typed\PropertyType;
 use App\Entity\Typed\PurposeType;
 use App\Entity\Typed\StatusType;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 /**
  * @ORM\Entity
