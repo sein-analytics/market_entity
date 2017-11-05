@@ -239,6 +239,12 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      * */
     protected $templates;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\MappedUserType", mappedBy="user")
+     * @var  ArrayCollection
+     * */
+    protected $mappedTypes;
+
     public function __construct()
     {
         $this->bids = new ArrayCollection();
@@ -253,6 +259,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->marketDeals = new ArrayCollection();
         $this->marketFavorites = new ArrayCollection();
         $this->templates = new ArrayCollection();
+        $this->mappedTypes = new ArrayCollection();
     }
 
     function addMarketDeal(Deal $deal)
@@ -262,6 +269,10 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 
     function addMarketFavorites(Deal $deal){
         $this->marketFavorites->add($deal);
+    }
+
+    function addMappedType(MappedUserType $type){
+        $this->mappedTypes->add($this);
     }
 
     public function getId() { return $this->id; }
@@ -385,5 +396,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      * @return ArrayCollection
      */
     public function getTemplates() { return $this->templates; }
+
+    public function getMappedTypes() { return $this->mappedTypes; }
 
 }
