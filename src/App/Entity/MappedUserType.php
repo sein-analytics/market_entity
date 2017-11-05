@@ -69,7 +69,7 @@ class MappedUserType
     protected $purposeType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\OccupanctType", inversedBy="mappedUserType")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\OccupancyType", inversedBy="mappedUserType")
      * @ORM\JoinColumn(name="occupancy_type_id", referencedColumnName="id", nullable=false)
      * @var OccupancyType
      */
