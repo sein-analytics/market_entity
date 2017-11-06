@@ -11,7 +11,7 @@ namespace App\Entity\Typed;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Typed\MappedType")
  * @ORM\Table(name="LoanType")
  */
 class LoanType extends MappedTypeAbstract
