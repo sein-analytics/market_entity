@@ -71,11 +71,14 @@ class LoanPropertyLabel extends EntityRepository
     /**
      * @param array $data
      * @param int $count
+     * @param bool $addState
      * @return array
      */
-    public function buildTapeUploadArray($data = array(), $count = 0)
+    public function buildTapeUploadArray($data = array(), $count = 0, $addState=true)
     {
-        $data = $this->addStateProp($data);
+        if($addState){
+            $data = $this->addStateProp($data);
+        }
         $count++;
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
