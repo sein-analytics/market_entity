@@ -75,14 +75,14 @@ class LoanPropertyLabel extends EntityRepository
      */
     public function buildTapeUploadArray($data = array(), $count = 0)
     {
-        $data = $this->addStateProp($data);
-        $count++;
+        //$data = $this->addStateProp($data);
+        //$count++;
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
                 && is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
                 continue;
             }
-            $row['id'] = $count;
+            $row['id'] = $count++;
             $row = $this->assignDataType($properties, $row);
             if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
                 && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
@@ -94,7 +94,7 @@ class LoanPropertyLabel extends EntityRepository
             $row[self::DB_NAME] = $properties[self::ENTITY_COLUMN];
             $row = $this->assignSignificance($properties, $row);
             array_push($data, $row);
-            $count++;
+            //$count++;
         }
         return $data;
     }
