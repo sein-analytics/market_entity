@@ -20,7 +20,8 @@ class MappedType extends EntityRepository
         'statusType' => 'loanStatus',
         'loanType' => 'loanType',
         'propertyType' => 'dwelling',
-        'documentationType' => 'documentation'
+        'documentationType' => 'documentation',
+        'state' => 'state'
     ];
 
     public function fetchAllMappedTypeData()
