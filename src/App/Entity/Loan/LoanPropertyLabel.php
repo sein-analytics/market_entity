@@ -37,6 +37,8 @@ class LoanPropertyLabel extends EntityRepository
 
     const CONDITIONAL = 'conditional';
 
+    const DB_DATA = 'dbData';
+
     const LABEL = 'label';
 
     const ENTITY_TYPE = 'type';
@@ -63,6 +65,48 @@ class LoanPropertyLabel extends EntityRepository
 
     private $creditData = ['credit_score', 'front_dti', 'back_dti', 'number_of_borrowers', 'first_time_buyer', 'status', 'payment_string', 'lien_position'];
 
+    private $idProp = [
+        "category"  => "dbData",
+        "dbName"    => "id",
+        "significance" => self::DB_DATA,
+        "label"     => "id"
+    ];
+
+    private $poolProp = [
+        "category"  => "dbData",
+        "dbName"    => "pool_id",
+        "significance" => self::DB_DATA,
+        "label"     => "pool_id"
+    ];
+
+    private $stateProp = [
+        "category"  => "loanData",
+        "dbName"    => "state_id",
+        "significance" => "required",
+        "label"     => "State"
+    ];
+
+    private $msaProp = [
+        "category"  => "loanData",
+        "dbName"    => "msa_code_id",
+        "significance" => "optional",
+        "label"     => "MSA CODE"
+    ];
+
+    private $amortizationProp = [
+        "category"  => "dbData",
+        "dbName"    => "amortization_id",
+        "significance" => self::DB_DATA,
+        "label"     => "amortization_id"
+    ];
+
+    private $descriptionProp = [
+        "category"  => "dbData",
+        "dbName"    => "description_id",
+        "significance" => self::DB_DATA,
+        "label"     => "description_id"
+    ];
+
     public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -76,9 +120,7 @@ class LoanPropertyLabel extends EntityRepository
      */
     public function buildTapeUploadArray($data = array(), $count = 0, $addState=true)
     {
-        if($addState){
-            $data = $this->addStateProp($data);
-        }
+        $data = $this->addStateProp($data, $addState);
         $count++;
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
@@ -132,14 +174,22 @@ class LoanPropertyLabel extends EntityRepository
         return $row;
     }
 
-    private function addStateProp(array $data){
-        $state = [
-            "category"  => "loanData",
-            "dbName"    => "state_id",
-            "significance" => "required",
-            "label"     => "State"
-        ];
-        array_unshift($data, $state);
+    /**
+     * @param array $data
+     * @param bool $addProps
+     * @return array
+     */
+    private function addStateProp(array $data, $addProps=false){
+        if($addProps){
+            $data = array_merge(
+                $this->idProp,
+                $this->poolProp,
+                $this->stateProp,
+                $this->msaProp,
+                $this->amortizationProp,
+                $this->descriptionProp
+            );
+        }
         return $data;
     }
 
