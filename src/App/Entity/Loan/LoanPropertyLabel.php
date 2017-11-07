@@ -168,12 +168,12 @@ class LoanPropertyLabel extends EntityRepository
     }
 
     /**
-     * @param string $userValue
+     * @param mixed $userValue
      * @param array $searchArray
      * @param array $dbProperties
      * @return array
      */
-    public function searchForUserStateValue(string $userValue, array $searchArray, array $dbProperties)
+    public function searchForUserStateValue($userValue, array $searchArray, array $dbProperties)
     {
         foreach ($searchArray as $dbData){
             if(!array_key_exists(self::STATE_AB_KEY, $dbData)
@@ -193,7 +193,13 @@ class LoanPropertyLabel extends EntityRepository
         return $dbProperties;
     }
 
-    public function searchForMappedTypeValue(string $userValue, array $searchArray, array $dbProperties)
+    /**
+     * @param $userValue
+     * @param array $searchArray
+     * @param array $dbProperties
+     * @return array
+     */
+    public function searchForMappedTypeValue($userValue, array $searchArray, array $dbProperties)
     {
         foreach ($searchArray as $dbData){
             if(!array_key_exists(self::SLUG_KEY, $dbData))
