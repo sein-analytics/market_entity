@@ -49,6 +49,18 @@ class LoanPropertyLabel extends EntityRepository
 
     const ENTITY_COLUMN = 'columnName';
 
+    const STATE_AB_KEY = 'abbreviation';
+
+    const STATE_NAME_KEY = 'name';
+
+    const SLUG_KEY = 'slug';
+
+    const MAPPED_ID_KEY = 'mapped-id';
+
+    const HAY_KEY = 'haystack';
+
+    const SEARCH_KEY = 'search';
+
     private $propertyLabels = [
         "id" => null,
         "pool_id" => null,
@@ -150,6 +162,58 @@ class LoanPropertyLabel extends EntityRepository
         return $data;
     }
 
+    public function searchForUserValue(string $userValue, array $searchArray, array $dbProperties)
+    {
+        //
+    }
+
+    /**
+     * @param string $userValue
+     * @param array $searchArray
+     * @param array $dbProperties
+     * @return array
+     */
+    public function searchForUserStateValue(string $userValue, array $searchArray, array $dbProperties)
+    {
+        foreach ($searchArray as $dbData){
+            if(!array_key_exists(self::STATE_AB_KEY, $dbData)
+                || !array_key_exists(self::STATE_NAME_KEY, $dbData))
+            { continue; }
+            $search = $this->searchVsHaystack($userValue, $dbData[self::STATE_NAME_KEY]);
+            if(strtoupper($userValue) === strtoupper($dbData[self::STATE_AB_KEY])
+                || $pos = strrpos(strtoupper($search[self::HAY_KEY]), strtoupper($search[self::SEARCH_KEY])) !== FALSE)
+            {
+                $dbProperties[self::MAPPED_ID_KEY] = $dbData['id'];
+                $dbProperties[self::STATE_AB_KEY] = $dbData[self::STATE_AB_KEY];
+                return $dbProperties;
+            }
+        }
+        $dbProperties[self::MAPPED_ID_KEY] = 51;
+        $dbProperties[self::STATE_AB_KEY] = 'NA';
+        return $dbProperties;
+    }
+
+    public function searchForMappedTypeValue(string $userValue, array $searchArray, array $dbProperties)
+    {
+        foreach ($searchArray as $dbData){
+            if(!array_key_exists(self::SLUG_KEY, $dbData))
+            { continue; }
+            $searches = explode($dbData[self::SLUG_KEY], ' ');
+            foreach ($searches as $slug){
+                $search = $this->searchVsHaystack(str_replace(" ", "", $userValue), $slug);
+                $pos = strrpos($search[self::HAY_KEY], $search[self::SEARCH_KEY]);
+                if($pos !== FALSE){
+                    $dbProperties[self::MAPPED_ID_KEY] = $dbData['id'];
+                    $dbProperties[self::STATE_AB_KEY] = $dbData[self::LABEL];
+                    return $dbProperties;
+                }
+            }
+        }
+        $dbProperties[self::MAPPED_ID_KEY] = 1;
+        $dbProperties[self::STATE_AB_KEY] = 'Other';
+        return $dbProperties;
+    }
+
     /**
      * @param array $fieldMapping
      * @param array $row
@@ -195,6 +259,26 @@ class LoanPropertyLabel extends EntityRepository
             array_push($data, $this->descriptionProp);
         }
         return $data;
+    }
+
+    /**
+     * @param string $search1
+     * @param string $search2
+     * @return array
+     */
+    public function searchVsHaystack(string $search1, string $search2)
+    {
+        if(strlen($search1) >= strlen($search2)){
+            return [
+                self::HAY_KEY => $search1,
+                self::SEARCH_KEY => $search2
+            ];
+        }else {
+            return [
+                self::HAY_KEY => $search2,
+                self::SEARCH_KEY => $search1
+            ];
+        }
     }
 
     public function getPropertyLabels()
