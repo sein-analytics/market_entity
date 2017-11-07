@@ -69,41 +69,47 @@ class LoanPropertyLabel extends EntityRepository
         "category"  => "dbData",
         "dbName"    => "id",
         "significance" => self::DB_DATA,
-        "label"     => "id"
+        "label"     => "id",
+        'type'  => 'integer',
     ];
 
     private $poolProp = [
         "category"  => "dbData",
         "dbName"    => "pool_id",
         "significance" => self::DB_DATA,
-        "label"     => "pool_id"
+        "label"     => "pool_id",
+        'type'  => 'integer',
     ];
 
     private $stateProp = [
         "category"  => "loanData",
         "dbName"    => "state_id",
         "significance" => "required",
-        "label"     => "State"
+        "label"     => "State",
+        'type'  => 'integer',
     ];
 
     private $msaProp = [
         "category"  => "loanData",
         "dbName"    => "msa_code_id",
         "significance" => "optional",
-        "label"     => "MSA CODE"
+        "label"     => "MSA CODE",
+        'type'  => 'integer',
     ];
 
     private $amortizationProp = [
         "category"  => "dbData",
         "dbName"    => "amortization_id",
         "significance" => self::DB_DATA,
-        "label"     => "amortization_id"
+        "label"     => "amortization_id",
+        'type'  => 'integer',
     ];
 
     private $descriptionProp = [
         "category"  => "dbData",
         "dbName"    => "description_id",
         "significance" => self::DB_DATA,
+        'type'  => 'integer',
         "label"     => "description_id"
     ];
 
@@ -121,7 +127,6 @@ class LoanPropertyLabel extends EntityRepository
     public function buildTapeUploadArray($data = array(), $count = 0, $addState=true)
     {
         $data = $this->addStateProp($data, $addState);
-        $count++;
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
                 && is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
@@ -137,6 +142,7 @@ class LoanPropertyLabel extends EntityRepository
                 $row[self::LABEL] = ucwords(str_replace('_',' ', $properties[self::ENTITY_COLUMN]));
             }
             $row[self::DB_NAME] = $properties[self::ENTITY_COLUMN];
+            $row[self::ENTITY_TYPE] = $properties[self::ENTITY_TYPE];
             $row = $this->assignSignificance($properties, $row);
             array_push($data, $row);
             $count++;
@@ -181,14 +187,12 @@ class LoanPropertyLabel extends EntityRepository
      */
     private function addStateProp(array $data, $addProps=false){
         if($addProps){
-            $data = array_merge(
-                $this->idProp,
-                $this->poolProp,
-                $this->stateProp,
-                $this->msaProp,
-                $this->amortizationProp,
-                $this->descriptionProp
-            );
+            array_push($data, $this->idProp);
+            array_push($data, $this->poolProp);
+            array_push($data, $this->stateProp);
+            array_push($data, $this->msaProp);
+            array_push($data, $this->amortizationProp);
+            array_push($data, $this->descriptionProp);
         }
         return $data;
     }
