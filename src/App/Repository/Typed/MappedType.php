@@ -14,15 +14,21 @@ use Doctrine\ORM\EntityRepository;
 class MappedType extends EntityRepository
 {
     protected $mappedRepos = [
-        'armIndexType',  'purposeType', 'occupancyType', 'statusType', 'loanType', 'propertyType', 'documentationType'
+        'armIndexType' => 'rateIndex',
+        'purposeType' => 'purpose',
+        'occupancyType' => 'occupancy',
+        'statusType' => 'loanStatus',
+        'loanType' => 'loanType',
+        'propertyType' => 'dwelling',
+        'documentationType' => 'documentation'
     ];
 
     public function fetchAllMappedTypeData()
     {
         $result =[];
-        foreach ($this->mappedRepos as $db){
+        foreach ($this->mappedRepos as $db => $propName){
             $name =ucfirst($db);
-            $result[$db] = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM $name");
+            $result[$propName] = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM $name");
         }
         return $result;
     }
