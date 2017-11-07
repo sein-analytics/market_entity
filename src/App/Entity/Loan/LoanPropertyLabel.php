@@ -183,8 +183,8 @@ class LoanPropertyLabel extends EntityRepository
             if(strtoupper($userValue) === strtoupper($dbData[self::STATE_AB_KEY])
                 || $pos = strrpos(strtoupper($search[self::HAY_KEY]), strtoupper($search[self::SEARCH_KEY])) !== FALSE)
             {
-                $dbProperties[self::MAPPED_ID_KEY] = $dbData['id'];
-                $dbProperties[self::STATE_AB_KEY] = $dbData[self::STATE_AB_KEY];
+                $dbProperties[self::MAPPED_ID_KEY] = (int)$dbData['id'];
+                $dbProperties[self::LABEL] = $dbData[self::STATE_AB_KEY];
                 return $dbProperties;
             }
         }
@@ -203,8 +203,8 @@ class LoanPropertyLabel extends EntityRepository
                 $search = $this->searchVsHaystack(str_replace(" ", "", $userValue), $slug);
                 $pos = strrpos($search[self::HAY_KEY], $search[self::SEARCH_KEY]);
                 if($pos !== FALSE){
-                    $dbProperties[self::MAPPED_ID_KEY] = $dbData['id'];
-                    $dbProperties[self::STATE_AB_KEY] = $dbData[self::LABEL];
+                    $dbProperties[self::MAPPED_ID_KEY] =(int) $dbData['id'];
+                    $dbProperties[self::LABEL] = $dbData[self::LABEL];
                     return $dbProperties;
                 }
             }
