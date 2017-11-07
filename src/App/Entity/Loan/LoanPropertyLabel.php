@@ -9,12 +9,15 @@
 namespace App\Entity\Loan;
 
 
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 
 class LoanPropertyLabel extends EntityRepository
 {
+    use CreatePropertiesArrayTrait;
+
     const LOAN_DATA = 'loanData';
 
     const CREDIT_DATA = 'creditData';
@@ -60,6 +63,8 @@ class LoanPropertyLabel extends EntityRepository
     const HAY_KEY = 'haystack';
 
     const SEARCH_KEY = 'search';
+
+
 
     private $propertyLabels = [
         "id" => null,
@@ -139,6 +144,8 @@ class LoanPropertyLabel extends EntityRepository
     public function buildTapeUploadArray($data = array(), $count = 0, $addState=true)
     {
         $data = $this->addStateProp($data, $addState);
+        $class = new \ReflectionClass($this->_class);
+        $props = $this->createEntityPropertiesArray();
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
                 && is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
