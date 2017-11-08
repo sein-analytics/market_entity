@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 use function foo\func;
+use phpDocumentor\Reflection\Types\This;
 
 class LoanPropertyLabel extends EntityRepository
 {
@@ -202,6 +203,7 @@ class LoanPropertyLabel extends EntityRepository
      */
     public function searchForUserStateValue($userValue, array $searchArray, array $dbProperties)
     {
+        $userValue = $this->mappedTypeSanitizer($userValue);
         foreach ($searchArray as $dbData){
             if(!array_key_exists(self::STATE_AB_KEY, $dbData)
                 || !array_key_exists(self::STATE_NAME_KEY, $dbData))
@@ -228,12 +230,13 @@ class LoanPropertyLabel extends EntityRepository
      */
     public function searchForMappedTypeValue($userValue, array $searchArray, array $dbProperties)
     {
+        $userValue = $this->mappedTypeSanitizer($userValue);
         foreach ($searchArray as $dbData){
             if(!array_key_exists(self::SLUG_KEY, $dbData))
             { continue; }
             $searches = preg_split('/\s+/', $dbData[self::SLUG_KEY]);
             foreach ($searches as $slug){
-                $search = $this->searchVsHaystack(preg_replace('/[^a-zA-Z0-9-.\/]/', '', $userValue), $slug);
+                $search = $this->searchVsHaystack($userValue, $slug);
                 $pos = strrpos($search[self::HAY_KEY], $search[self::SEARCH_KEY]);
                 if($pos !== FALSE){
                     $dbProperties[self::MAPPED_ID_KEY] =(int) $dbData['id'];
@@ -245,6 +248,21 @@ class LoanPropertyLabel extends EntityRepository
         $dbProperties[self::MAPPED_ID_KEY] = 1;
         $dbProperties[self::LABEL] = 'Other';
         return $dbProperties;
+    }
+
+    /**
+     * @param string $string
+     * @return mixed|string
+     */
+    public function mappedTypeSanitizer(string $string)
+    {
+        $string = preg_replace('/[^a-zA-Z0-9-_.\/]/', '', $string);
+        //Clean up multiple dashes or whitespaces
+        $string = preg_replace("/[\s-]+/", " ", $string);
+        //Convert whitespaces and underscore to dash
+        $string = preg_replace("/[\s_]/", "-", $string);
+        return $string;
+
     }
 
     /**
