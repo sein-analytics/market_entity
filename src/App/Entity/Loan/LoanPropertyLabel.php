@@ -137,15 +137,15 @@ class LoanPropertyLabel extends EntityRepository
     {
         $this->dbTypeSanitizer = [
             "integer" => function($value){
-                $val = preg_replace("/[^a-zA-Z]0-9./", "", $value);
+                $val = preg_replace("/[^0-9.]/", "", $value);
                 return (int)$val;
             },
             "decimal" => function($value){
-                $val = preg_replace("/[^a-zA-Z]0-9./", "", $value);
+                $val = preg_replace("/[^0-9.]/", "", $value);
                 return round((float)$val, 2);
             },
             "datetime" => function($value){
-                $val = preg_replace('/[^a-zA-Z0-9-\/]/', '', $value);
+                $val = preg_replace('/[^0-9-\/]/', '', $value);
                 try{
                     $date = new \DateTime($val);
                 } catch (\Exception $e){
