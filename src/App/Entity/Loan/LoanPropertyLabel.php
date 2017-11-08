@@ -131,11 +131,11 @@ class LoanPropertyLabel extends EntityRepository
         "label"     => "description_id"
     ];
 
-    protected $dbTypeSanitize = [];
+    protected $dbTypeSanitizer = [];
 
     public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
     {
-        $this->dbTypeSanitize = [
+        $this->dbTypeSanitizer = [
             "integer" => function($value){
                 $val = preg_replace_array("/[^a-zA-Z]/", "", $value);
                 return (int)$val;
@@ -314,8 +314,7 @@ class LoanPropertyLabel extends EntityRepository
         }
     }
 
-    public function getPropertyLabels()
-    {
-        return $this->propertyLabels;
-    }
+    public function getPropertyLabels() { return $this->propertyLabels; }
+
+    public function getDbTypeSanitizer() { return $this->dbTypeSanitizer; }
 }
