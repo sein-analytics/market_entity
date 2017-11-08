@@ -243,7 +243,7 @@ class LoanPropertyLabel extends EntityRepository
             }
         }
         $dbProperties[self::MAPPED_ID_KEY] = 1;
-        $dbProperties[self::STATE_AB_KEY] = 'Other';
+        $dbProperties[self::LABEL] = 'Other';
         return $dbProperties;
     }
 
