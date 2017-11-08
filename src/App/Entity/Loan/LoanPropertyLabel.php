@@ -13,6 +13,7 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
+use function foo\func;
 
 class LoanPropertyLabel extends EntityRepository
 {
@@ -130,8 +131,32 @@ class LoanPropertyLabel extends EntityRepository
         "label"     => "description_id"
     ];
 
+    protected $dbTypeSanitize = [];
+
     public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
     {
+        $this->dbTypeSanitize = [
+            "integer" => function($value){
+                $val = preg_replace_array("/[^a-zA-Z]/", "", $value);
+                return (int)$val;
+            },
+            "decimal" => function($value){
+                $val = preg_replace_array("/[^a-zA-Z]/", "", $value);
+                return round((float)$val, 2);
+            },
+            "datetime" => function($value){
+                $val = preg_replace('/[^a-zA-Z0-9-\/]/', '', $value);
+                try{
+                    $date = new \DateTime($val);
+                } catch (\Exception $e){
+                    return $e->getMessage();
+                }
+                return $date->format("Y-m-d");
+            },
+            "string" => function($value){
+                return $value;
+            }
+        ];
         parent::__construct($em, $class);
     }
 
@@ -167,11 +192,6 @@ class LoanPropertyLabel extends EntityRepository
             $count++;
         }
         return $data;
-    }
-
-    public function searchForUserValue(string $userValue, array $searchArray, array $dbProperties)
-    {
-        //
     }
 
     /**
@@ -213,7 +233,7 @@ class LoanPropertyLabel extends EntityRepository
             { continue; }
             $searches = explode($dbData[self::SLUG_KEY], ' ');
             foreach ($searches as $slug){
-                $search = $this->searchVsHaystack(str_replace(" ", "", $userValue), $slug);
+                $search = $this->searchVsHaystack(preg_replace('/[^a-zA-Z0-9-.\/]/', '', $userValue), $slug);
                 $pos = strrpos($search[self::HAY_KEY], $search[self::SEARCH_KEY]);
                 if($pos !== FALSE){
                     $dbProperties[self::MAPPED_ID_KEY] =(int) $dbData['id'];
