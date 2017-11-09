@@ -13,6 +13,16 @@ use Doctrine\ORM\EntityRepository;
 
 class MappedType extends EntityRepository
 {
+    public function fetchAllMappedTypeData()
+    {
+        $result =[];
+        foreach ($this->mappedRepos as $db => $propName){
+            $name =ucfirst($db);
+            $result[$propName] = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM $name");
+        }
+        return $result;
+    }
+
     protected $mappedRepos = [
         'armIndexType' => 'rateIndex',
         'purposeType' => 'purpose',
@@ -23,14 +33,4 @@ class MappedType extends EntityRepository
         'documentationType' => 'documentation',
         'state' => 'state'
     ];
-
-    public function fetchAllMappedTypeData()
-    {
-        $result =[];
-        foreach ($this->mappedRepos as $db => $propName){
-            $name =ucfirst($db);
-            $result[$propName] = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM $name");
-        }
-        return $result;
-    }
 }

@@ -150,7 +150,8 @@ class LoanPropertyLabel extends EntityRepository
                 try{
                     $date = new \DateTime($val);
                 } catch (\Exception $e){
-                    return $e->getMessage();
+                    //return $e->getMessage();
+                    return "1970-10-10";
                 }
                 return $date->format("Y-m-d");
             },
