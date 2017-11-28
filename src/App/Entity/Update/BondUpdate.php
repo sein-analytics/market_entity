@@ -9,6 +9,7 @@
 namespace App\Entity\Update;
 
 use App\Entity\NotifyChangeTrait;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\NotifyPropertyChanged;
@@ -25,7 +26,7 @@ use App\Entity\Period;
  */
 class BondUpdate implements NotifyPropertyChanged
 {   
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

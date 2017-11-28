@@ -6,6 +6,7 @@
 
 namespace App\Entity;
 
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
@@ -20,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Period implements NotifyPropertyChanged
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;

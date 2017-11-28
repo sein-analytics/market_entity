@@ -9,6 +9,7 @@
 namespace App\Entity\Update;
 
 use App\Entity\NotifyChangeTrait;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
@@ -22,7 +23,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class PoolUpdate implements NotifyPropertyChanged
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") **/
     protected $id;

@@ -9,6 +9,7 @@ namespace App\Entity\Typed;
 
 use App\Entity\NotifyChangeTrait;
 use App\Entity\Typed\Update\TypedUpdateInterface;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +18,7 @@ use App\Entity\Period;
 
  abstract class AbstractTyped implements NotifyPropertyChanged, TypedInterface
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /** @return ArrayCollection */
     abstract public function getMappedEntities();

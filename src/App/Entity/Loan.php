@@ -6,6 +6,7 @@
 
 namespace App\Entity;
 
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,7 +29,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 abstract class Loan implements NotifyPropertyChanged
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     abstract public function getAssetAttributes();
 

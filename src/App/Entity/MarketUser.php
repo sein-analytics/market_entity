@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
@@ -17,7 +18,7 @@ use Illuminate\Support\Arr;
  */
 class MarketUser implements NotifyPropertyChanged, Authenticatable
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id

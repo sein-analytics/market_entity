@@ -5,6 +5,7 @@
  */
 
 namespace App\Entity;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Support\Facades\App;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Issuer
 {
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;
 

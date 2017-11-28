@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use App\Entity\MarketUser;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,6 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LoanTapeTemplate
 {
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue

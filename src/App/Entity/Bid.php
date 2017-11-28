@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\App;
  */
 class Bid implements NotifyPropertyChanged
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id

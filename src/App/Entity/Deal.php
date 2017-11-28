@@ -6,6 +6,7 @@
 
 namespace App\Entity;
 
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\App;
  */
 class Deal extends DealAbstract implements NotifyPropertyChanged
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

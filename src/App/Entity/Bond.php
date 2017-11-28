@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Entity\Bond\Component;
 use App\Entity\Update\BondUpdate;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,7 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Bond implements NotifyPropertyChanged
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     const SOLVE_FOR_YIELD = 1;
     const SOLVE_FOR_PRICE = 2;

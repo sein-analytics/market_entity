@@ -15,6 +15,7 @@ use App\Entity\Typed\OccupancyType;
 use App\Entity\Typed\PropertyType;
 use App\Entity\Typed\PurposeType;
 use App\Entity\Typed\StatusType;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
@@ -26,7 +27,7 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
  */
 class MappedUserType
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
