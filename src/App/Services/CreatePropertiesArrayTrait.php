@@ -22,9 +22,11 @@ trait CreatePropertiesArrayTrait
     {
         $propData = [];
         $properties = get_class_vars(get_class($this));
+        array_push($this->ignoreDbProperties, $this->id_text);
         foreach ($properties as $propName => $property){
             $propData[] = $property;
-            if(array_key_exists($propName, $this->ignoreDbProperties)){
+            if(array_key_exists($propName, $this->ignoreDbProperties)
+                || is_array($property)){
                 continue;
             }
             if(array_key_exists($propName, $this->defaultValueProperties)){
@@ -46,6 +48,6 @@ trait CreatePropertiesArrayTrait
      */
     public function camelCaseToUs(string $input)
     {
-        return ltrim(strtolower(preg_replace('/[A-Z]([A-Z])(?![a-z])*/', '_$0', $input)), '_');
+        return ltrim(strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $input)), '_');
     }
 }
