@@ -24,7 +24,6 @@ trait CreatePropertiesArrayTrait
         $properties = get_class_vars(get_class($this));
         array_push($this->ignoreDbProperties, $this->id_text);
         foreach ($properties as $propName => $property){
-            $propData[] = $property;
             if(array_key_exists($propName, $this->ignoreDbProperties)
                 || is_array($property)){
                 continue;
