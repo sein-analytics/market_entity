@@ -37,7 +37,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
     {
         $em = $this->getEntityManager();
         $sql = "SELECT * FROM Pool WHERE deal_id IN (?)";
-        $results = $this->fetchByIntArray($em, array($dealId), $sql);
+        $results = $this->fetchByIntArray($this->em, array($dealId), $sql);
         if(count($results) > 0){
             $results = $this->fetchLoansByPoolIds(array($results[0]['id']));
         }
@@ -54,7 +54,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
             "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
             " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap ".
             "FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
-        $armLoans = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
+        $armLoans = $this->fetchByIntArray($this->em, $ids, $sql);
         $noArms = [];
         if(count($armLoans) > 0){
             $loansId = [];
@@ -62,7 +62,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
                 array_push($loansId, $loan['id']);
             }
             $sql = "SELECT * FROM loans WHERE pool_id IN (?) AND id NOT IN (?) ORDER BY id ASC ";
-            $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
+            $stmt = $this->em->getConnection()->executeQuery($sql,
                 array($ids, $loansId),
                 array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY,
                     \Doctrine\DBAL\Connection::PARAM_INT_ARRAY)

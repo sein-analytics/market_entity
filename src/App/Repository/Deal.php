@@ -14,7 +14,7 @@ use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 
-class Deal extends EntityRepository
+class Deal extends EntityRepository implements SqlManagerTraitInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 

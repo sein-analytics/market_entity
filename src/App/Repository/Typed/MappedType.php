@@ -29,7 +29,7 @@ class MappedType extends EntityRepository
         $result =[];
         foreach ($this->mappedRepos as $db => $propName){
             $name =ucfirst($db);
-            $result[$propName] = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM $name");
+            $result[$propName] = $this->em->getConnection()->fetchAll("SELECT * FROM $name");
         }
         return $result;
     }

@@ -25,7 +25,7 @@ class Statistic extends EntityRepository
     public function fetchDealStatisticsByDealIds(array $dealIds, $mapStatisticsToDeal = true)
     {
         $sql = 'SELECT * FROM Statistic WHERE deal_id IN (?)';
-        $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);
+        $results = $this->fetchByIntArray($this->em, $dealIds, $sql);
         if(count($results) > 0 && $mapStatisticsToDeal){
             $results = $this->mapRequestIdsToResults($dealIds, $results, "deal_id");
         }
