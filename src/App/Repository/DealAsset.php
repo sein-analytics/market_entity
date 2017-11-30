@@ -25,10 +25,10 @@ class DealAsset extends EntityRepository
     function fetchDealAssetTypes($object = true)
     {
         if($object){
-            $query = $this->em->createQuery("SELECT t FROM \App\Entity\DealAsset t WHERE t.id > 0");
+            $query = $this->getEntityManager()->createQuery("SELECT t FROM \App\Entity\DealAsset t WHERE t.id > 0");
             $result = $query->getResult();
         }else {
-            $result = $query = $this->em->getConnection()->fetchAll("SELECT * FROM DealAsset");
+            $result = $query = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM DealAsset");
         }
         return $result;
     }

@@ -25,7 +25,7 @@ class MarketUser extends EntityRepository
     function fetchUserMarketDealIds(int $userId)
     {
         $sql = "SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?";
-        $stmt= $this->em->getConnection()->prepare($sql);
+        $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $userId);
         $stmt->execute();
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
@@ -38,7 +38,7 @@ class MarketUser extends EntityRepository
      */
     public function fetchMarketUsersFromIds(array $dealIds){
         $sql = "SELECT * FROM MarketUser WHERE id IN (?) ORDER BY id ASC";
-        $results = $this->fetchByIntArray($this->em, $dealIds, $sql);
+        $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);
         return $results;
     }
 }

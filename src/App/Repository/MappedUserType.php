@@ -15,7 +15,7 @@ class MappedUserType extends EntityRepository
 {
     public function fetchUserMappedTypes($userId)
     {
-        $result = $this->em->getConnection()->fetchAll("SELECT * FROM MappedUserType WHERE user_id=$userId");
+        $result = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM MappedUserType WHERE user_id=$userId");
         return $result;
     }
 }
