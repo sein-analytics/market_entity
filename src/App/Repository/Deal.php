@@ -7,13 +7,16 @@
  */
 
 namespace App\Repository;
+
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
+use App\Service\QueryManagerTrait;
+use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 
-class Deal extends EntityRepository
+class Deal extends EntityRepository implements SqlManagerTraitInterface
 {
-    use FetchingTrait, FetchMapperTrait;
+    use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     /**
      * @param array $ids
@@ -28,5 +31,25 @@ class Deal extends EntityRepository
         $results = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
         return $results;
     }
+
+    /**
+     * @return bool|\ReflectionClass
+     */
+    public function fetchRepositoryClass()
+    {
+        return $this->entityReflectorFromEntityName('App\Entity\Deal');
+    }
+
+    public function fetchNextAvailableId()
+    {
+        return $this->fetchNextAvailableTableId('Deal');
+    }
+
+    public function fetchEntityPropertiesForSql(string $subType = null)
+    {
+        $reflector = $this->entityReflectorFromEntityName('App\Entity\Deal');
+        return $this->entityPropertiesFromReflector($reflector);
+    }
+
 
 }

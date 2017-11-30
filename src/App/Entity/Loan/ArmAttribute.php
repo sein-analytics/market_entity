@@ -4,18 +4,25 @@ namespace App\Entity\Loan;
 
 use App\Entity\Loan;
 use App\Entity\NotifyChangeTrait;
+use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Loan\ArmAttribute")
  * @ORM\Table(name="ArmAttribute")
  * @ChangeTrackingPolicy("NOTIFY")
  */
 class ArmAttribute implements NotifyPropertyChanged
 {
-    use NotifyChangeTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+
+    protected $ignoreDbProperties = [];
+
+    protected $addUcIdToPropName = ['loan' => null];
+
+    protected $defaultValueProperties = [];
 
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;

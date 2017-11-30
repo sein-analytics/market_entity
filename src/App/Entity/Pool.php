@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Pool")
  * @ORM\Table(name="Pool")
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
@@ -20,6 +20,23 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 class Pool implements NotifyPropertyChanged
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
+
+    protected $ignoreDbProperties = [
+        'bonds' => null, 'loans' => null, 'accounts' => null, 'specifics' => null,
+        'triggers' => null, 'fees' => null, 'latestPeriod' => 'null'
+    ];
+
+    protected $addUcIdToPropName = [
+        'deal' => null,
+    ];
+
+    protected $defaultValueProperties = [
+        'poolStructure' => null,
+        'isCrossed' => null,
+        'isPoGroup' => null,
+        'isIoGroup' => null,
+        'addReserveToCredit' => null,
+    ];
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

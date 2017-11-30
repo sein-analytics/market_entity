@@ -22,6 +22,24 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
+    protected $ignoreDbProperties = [
+        'bonds' => null, 'pools' => null, 'accounts' => null, 'shelfSpecifics' => null,
+        'bids' => null  ,'triggers' => null, 'fees' => null, 'latestPeriod' => 'null'
+    ];
+
+    protected $addUcIdToPropName = [
+        'issuer' => null, 'latestPeriod' => null, 'bidType',
+        'status' => null, 'auctionType' => null, 'user' => null, 'assetType'
+    ];
+
+    protected $defaultValueProperties = [
+        'views' => 0,
+        'callFormular' => null,
+        'loanDataParser' => null,
+        'priorOC' => null,
+        'cashflowEngine' => null,
+    ];
+
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
@@ -196,6 +214,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->diligence = new ArrayCollection();
         $this->marketUsers = new ArrayCollection();
         $this->userFavorites = new ArrayCollection();
+        $this->periods = new ArrayCollection();
     }
 
     function addMessage(Message $message)

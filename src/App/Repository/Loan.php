@@ -8,15 +8,26 @@
 
 namespace App\Repository;
 
-
+use App\Service\QueryManagerTrait;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
+use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class Loan extends EntityRepository
+class Loan extends EntityRepository implements SqlManagerTraitInterface
 {
-    use FetchingTrait, FetchMapperTrait;
+    use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
+
+    private $subTypes = [
+        'Auto' => '\AssetType\Auto',
+        'Commercial' => '\AssetType\Commercial',
+        'Cre' => '\AssetType\Cre',
+        'CreditCard' => '\AssetType\CreditCard',
+        'HomeEquity' => '\AssetType\HomeEquity',
+        'Residential' => '\AssetType\Residential'
+    ];
+
 
     /**
      * @param int $dealId
@@ -60,6 +71,24 @@ class Loan extends EntityRepository
         }
         $results = array_merge($noArms, $armLoans);
         return $results;
+    }
+
+    /**
+     * @return bool|int
+     */
+    public function fetchNextAvailableId()
+    {
+        return $this->fetchNextAvailableTableId('loans');
+    }
+
+    public function fetchEntityPropertiesForSql(string $subType = null)
+    {
+        if(is_null($subType) && !array_key_exists($subType, $this->subTypes)){
+            return false;
+        }
+
+        $reflector = $this->entityReflectorFromEntityName('App\Entity' . $this->subTypes[$subType]);
+        return $this->entityPropertiesFromReflector($reflector);
     }
 
 }

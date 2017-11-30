@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\DealFile")
  * @ORM\Table(name="DealFile")
  * @ChangeTrackingPolicy("NOTIFY")
  *
@@ -20,6 +20,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 class DealFile implements NotifyPropertyChanged
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
+
+    protected $ignoreDbProperties = [
+        'appends' => null,
+        'replacements' => null,
+        'docAccess' => null
+    ];
+
+    protected $addUcIdToPropName = ['loan' => null];
+
+    protected $defaultValueProperties = [];
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -128,23 +138,18 @@ class DealFile implements NotifyPropertyChanged
     {
         $this->replacements = new ArrayCollection();
         $this->appends = new ArrayCollection();
+        $this->docAccess = new ArrayCollection();
     }
 
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
     /**
      * @return Deal
      */
-    public function getDeal()
-    {
-        return $this->deal;
-    }
+    public function getDeal() { return $this->deal; }
 
     /**
      * @param \App\Entity\Deal $deal
@@ -158,10 +163,7 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @return string
      */
-    public function getFileName()
-    {
-        return $this->fileName;
-    }
+    public function getFileName() { return $this->fileName; }
 
     /**
      * @param string $fileName
@@ -175,10 +177,7 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @return float
      */
-    public function getFileSize()
-    {
-        return $this->fileSize;
-    }
+    public function getFileSize() { return $this->fileSize; }
 
     /**
      * @param integer $fileSize
@@ -192,10 +191,7 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @return MimeType
      */
-    public function getMimeType()
-    {
-        return $this->mime;
-    }
+    public function getMimeType() { return $this->mime; }
 
     /**
      * @param MimeType $mime
@@ -209,10 +205,7 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @return string | null
      */
-    public function getLocalPath()
-    {
-        return $this->localPath;
-    }
+    public function getLocalPath() { return $this->localPath; }
 
     /**
      * @param string $localPath
@@ -226,10 +219,7 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @return string
      */
-    public function getVirusScanId(): string
-    {
-        return $this->virusScanId;
-    }
+    public function getVirusScanId(): string { return $this->virusScanId; }
 
     /**
      * @param string $virusScanId
@@ -258,50 +248,32 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @return MarketUser
      */
-    public function getUser()
-    {
-        return $this->user;
-    }
+    public function getUser() { return $this->user; }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getReplacements()
-    {
-        return $this->replacements;
-    }
+    public function getReplacements() { return $this->replacements; }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getAppends()
-    {
-        return $this->appends;
-    }
+    public function getAppends() { return $this->appends; }
 
     /**
      * @return DocType
      */
-    public function getDocType()
-    {
-        return $this->docType;
-    }
+    public function getDocType() { return $this->docType; }
 
     /**
      * @return DocAccess
      */
-    public function getDocAccess()
-    {
-        return $this->docAccess;
-    }
+    public function getDocAccess() { return $this->docAccess; }
 
     /**
      * @return string
      */
-    public function getScanLocation(): string
-    {
-        return $this->scanLocation;
-    }
+    public function getScanLocation(): string { return $this->scanLocation; }
 
     /**
      * @param string $scanLocation

@@ -52,6 +52,25 @@ abstract class Loan implements NotifyPropertyChanged
         self::ACTUAL  => 'Actual'
     );
 
+    protected $ignoreDbProperties = [
+        'bids' => null, 'updates' => null, 'accounts' => null, 'specifics' => null,
+        'triggers' => null, 'fees' => null, 'files' => 'null', 'issues' => null
+    ];
+
+    protected $addUcIdToPropName = [
+        'pool' => null,
+        'amortization' => null,
+        'description' => null,
+        'state' => null,
+        'msaCode' => null
+    ];
+
+    protected $defaultValueProperties = [
+        'msaCode' => null,
+        'seasoning' => null,
+        'remainingTerm' => null,
+    ];
+
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;
 
@@ -300,6 +319,7 @@ abstract class Loan implements NotifyPropertyChanged
         $this->accounts = new ArrayCollection();
         $this->issues = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->fees = new ArrayCollection();
     }
 
     function addIssue(Message $issue)
