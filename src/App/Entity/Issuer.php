@@ -19,6 +19,15 @@ class Issuer
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
+    protected $ignoreDbProperties = [
+        'deals' => null,
+        'users' => null
+    ];
+
+    protected $addUcIdToPropName = [];
+
+    protected $defaultValueProperties = [];
+
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;
 
