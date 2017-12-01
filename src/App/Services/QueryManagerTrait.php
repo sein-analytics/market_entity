@@ -17,6 +17,8 @@ trait QueryManagerTrait
     /** @var  EntityManager */
     protected $em;
 
+    static $base = 'App\\Entity\\';
+
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -58,5 +60,24 @@ trait QueryManagerTrait
         }
         $class = $reflector->getName();
         return $reflector->getMethod('createEntityPropertiesArray')->invoke(new $class);
+    }
+
+    /**
+     * @param string $tableName
+     * @return bool|\Doctrine\Common\Persistence\Mapping\ClassMetadata
+     */
+    public function fetchEntityMetaData(string $tableName)
+    {
+        if(!$this->doesEntityTableExist($tableName)){
+            return false;
+        }
+        $meta = $this->em->getMetadataFactory()->getMetadataFor(self::$base . $tableName);
+        return $meta;
+    }
+
+    public function doesEntityTableExist($tableName)
+    {
+        $schemaManager = $this->em->getConnection()->getSchemaManager();
+        return $schemaManager->tablesExist($tableName);
     }
 }

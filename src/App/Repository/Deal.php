@@ -32,6 +32,11 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         return $results;
     }
 
+    public function addDealFromUploadOptions(array $options)
+    {
+        $id = $this->fetchNextAvailableId();
+    }
+
     /**
      * @return bool|\ReflectionClass
      */
@@ -47,8 +52,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        $reflector = $this->entityReflectorFromEntityName('App\Entity\Deal');
-        return $this->entityPropertiesFromReflector($reflector);
+        return $this->fetchEntityMetaData('Deal');
     }
 
 
