@@ -11,6 +11,20 @@ namespace App\Service;
 
 interface SqlManagerTraitInterface
 {
+    const DATA_TYPE = 'type';
+
+    const DATA_DEFAULT = 'default';
+
+    const INSERT__SQL_START = "INSERT INTO ";
+
+    const TYPE_MAPPER = [
+        'integer' => 'int',
+        'string'  => ['varchar', 'json'],
+        'double'  => 'decimal',
+        'float'   => 'decimal',
+        'boolean' => 'tinyint'
+    ];
+
     /**
      * @return bool|mixed
      */

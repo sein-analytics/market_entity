@@ -18,6 +18,16 @@ use Doctrine\ORM\EntityRepository;
 class Issuer extends EntityRepository implements SqlManagerTraitInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
+    
+    static $table = [
+      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'issuer_name' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'approved_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+      'equity' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'outstanding' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'main_contact' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'phone' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL']
+    ];
 
     public function fetchNextAvailableId()
     {
@@ -26,7 +36,6 @@ class Issuer extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        $reflector = $this->entityReflectorFromEntityName('App\Entity\Issuer');
-        return $this->entityPropertiesFromReflector($reflector);
+        array_keys(self::$table);
     }
 }

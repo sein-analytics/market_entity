@@ -18,6 +18,24 @@ class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
+    static $table = [
+      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'gross_margin' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'minimum_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'maximum_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'rate_index' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'fst_rate_adj_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'fst_rate_adj_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+      'fst_pmnt_adj_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'fst_pmnt_adj_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+      'rate_adj_frequency' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'periodic_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'initial_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'pmnt_adj_frequency' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'pmnt_increase_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
+    ];
+    
     /**
      * @return bool|int
      */
@@ -28,7 +46,6 @@ class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        $reflector = $this->entityReflectorFromEntityName('App\Entity\Loan\ArmAttribute');
-        return $this->entityPropertiesFromReflector($reflector);
+        array_keys(self::$table);
     }
 }

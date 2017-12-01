@@ -17,6 +17,21 @@ use Doctrine\ORM\EntityRepository;
 class Pool extends EntityRepository implements SqlManagerTraitInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
+    
+    static $table = [
+      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'deal_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'bonds_count' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'bonds_total_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'loan_total_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'loans_count' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'original_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'pool_structure' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'is_crossed' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => false],
+      'is_pogroup' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'is_io_group' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'add_reserve_to_credit_support' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL']
+    ];
 
     /**
      * @return bool|int
@@ -28,7 +43,6 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        $reflector = $this->entityReflectorFromEntityName('App\Entity\Pool');
-        return $this->entityPropertiesFromReflector($reflector);
+        return array_keys(self::$table);
     }
 }

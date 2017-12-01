@@ -18,6 +18,21 @@ class DealFile extends EntityRepository implements SqlManagerTraitInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
+    static $table = [
+      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'deal_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'user_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'mime_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'doc_type_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'file_name' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'file_size' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'local_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'virus_scan_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'scan_location' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'has_viruses' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL']
+    ];
+
     /**
      * @return bool|int
      */
@@ -28,7 +43,6 @@ class DealFile extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        $reflector = $this->entityReflectorFromEntityName('App\Entity\DealFile');
-        return $this->entityPropertiesFromReflector($reflector);
+        return array_keys(self::$table);
     }
 }

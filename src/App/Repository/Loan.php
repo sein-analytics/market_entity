@@ -28,6 +28,60 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         'Residential' => '\AssetType\Residential'
     ];
 
+    static $table = [
+       'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'pool_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'state_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'msa_code_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'amortization_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'description_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'loan_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'original_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'current_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'monthly_payment' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'issuance_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'initial_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'seasoning' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'current_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'origination_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+      'current_duefor_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+      'first_payment_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+      'loan_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'final_duefor_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+      'original_term' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'remaining_term' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'amortization_term' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'io_term' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'balloon_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'original_ltv' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'original_cltv' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'appraised_value' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'credit_score' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'front_dti' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'back_dti' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+      'number_of_borrowers' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'first_time_buyer' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+      'lien_position' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'note_type' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'loan_type' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'documentation' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'purpose' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'occupancy' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'dwelling' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'address' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'city' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'zip' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'asset_attributes' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'payment_string' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'servicingfee' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'lpmi_fee' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'mi_coverage' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'foreclosure_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'bankruptcy_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'reo_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'zero_balance_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
+    ];
+
 
     /**
      * @param int $dealId
@@ -83,12 +137,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        if(is_null($subType) && !array_key_exists($subType, $this->subTypes)){
-            return false;
-        }
-
-        $reflector = $this->entityReflectorFromEntityName('App\Entity' . $this->subTypes[$subType]);
-        return $this->entityPropertiesFromReflector($reflector);
+        return array_keys(self::$table);
     }
 
 }

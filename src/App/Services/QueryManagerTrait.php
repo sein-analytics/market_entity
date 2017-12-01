@@ -72,12 +72,99 @@ trait QueryManagerTrait
             return false;
         }
         $meta = $this->em->getMetadataFactory()->getMetadataFor(self::$base . $tableName);
-        return $meta;
+        return $meta->getColumnNames();
     }
 
     public function doesEntityTableExist($tableName)
     {
         $schemaManager = $this->em->getConnection()->getSchemaManager();
         return $schemaManager->tablesExist($tableName);
+    }
+
+    public function buildInsertSqlStatement(string $tableName){
+        $columns = implode(",", array_keys(self::$table));
+        $sqlInsertLine = self::INSERT__SQL_START . "$tableName ($columns) VALUES" . PHP_EOL;
+        return $sqlInsertLine;
+    }
+
+    public function buildInsertElementStatement(array $data){
+        if(count($data) !== count(self::$table)){
+            return ['message' => 'Insert array size is wrong'];
+        }
+        reset(self::$table);
+        $size = count(self::$table);
+        $counter = 0;
+        $insertStmt = '(';
+        foreach (self::$table as $colName => $properties){
+            $value = $data[$counter];
+            if(is_null($value)) {
+                $value = $this->isValueNullable($value, $colName, $properties);
+                if(is_array($value)){
+                    return $value;
+                }
+            }
+            $typeResult = $this->isTypeMappingCorrect(gettype($value), $colName, $properties);
+            if(is_array($typeResult)){
+                return $typeResult;
+            }
+            $insertStmt .= $value . $this->sqlEndingByCountSize($counter, $size - 1);
+            $counter++;
+        }
+        return $insertStmt;
+    }
+
+    /**
+     * @param $value
+     * @param $colName
+     * @param array $properties
+     * @return array|mixed
+     */
+    public function isValueNullable($value, $colName, array $properties)
+    {
+        if ($properties[self::DATA_DEFAULT] !== 'NOT NULL') {
+            $value = $properties[self::DATA_DEFAULT];
+        } else {
+            return ['message' => "property: $colName cannot be null"];
+        }
+        return $value;
+    }
+
+    /**
+     * @param $type
+     * @param string $propName
+     * @param array $properties
+     * @return array|bool
+     */
+    public function isTypeMappingCorrect($type, string $propName, array $properties)
+    {
+        if(array_key_exists($type , self::TYPE_MAPPER)){
+            if(is_array(self::TYPE_MAPPER[$type])){
+                if(in_array($properties[self::DATA_TYPE], self::TYPE_MAPPER[$type])){
+                    return true;
+                }
+            }else{
+                if($properties[self::DATA_TYPE] == self::TYPE_MAPPER[$type]){
+                    return true;
+                }
+                return ['message' => "Type $type for $propName is not appropriate"];
+            }
+        }else {
+            return ['message' => "Type $type for $propName is not appropriate"];
+        }
+    }
+
+    /**
+     * @param int $count
+     * @param int $size
+     * @return string
+     */
+    public function sqlEndingByCountSize(int $count, int $size){
+        if($count == 0){
+            return ',';
+        } elseif($count > 0 && $count < $size) {
+            return ',';
+        } else{
+            return '),' . PHP_EOL;
+        }
     }
 }
