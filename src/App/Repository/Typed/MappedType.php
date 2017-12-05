@@ -24,6 +24,9 @@ class MappedType extends EntityRepository
         'state' => 'state'
     ];
 
+    /**
+     * @return array
+     */
     public function fetchAllMappedTypeData()
     {
         $result =[];
@@ -32,5 +35,20 @@ class MappedType extends EntityRepository
             $result[$propName] = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM $name");
         }
         return $result;
+    }
+
+    /**
+     * @param array $states
+     * @param string $stateText
+     * @return int|bool
+     */
+    public function stateIdFromStatesArray(array $states, string $stateText){
+        foreach ($states as $stateProps){
+            if($stateText == $stateProps['abbreviation']
+                || $stateText == $stateProps['name']){
+                return $stateProps['id'];
+            }
+        }
+        return false;
     }
 }
