@@ -172,7 +172,7 @@ trait QueryManagerTrait
      * @param string $columnName
      * @return bool|int
      */
-    public function fetchElementNumericalIndex(string $columnName)
+    public function fetchTableColumnNumericalIndex(string $columnName)
     {
         $counter = 0;
         foreach (self::$table as $col => $props){
