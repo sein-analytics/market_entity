@@ -171,8 +171,6 @@ class LoanPropertyLabel extends EntityRepository
     public function buildTapeUploadArray($data = array(), $count = 0, $addState=true)
     {
         $data = $this->addStateProp($data, $addState);
-        //$class = new \ReflectionClass($this->_class); ToDo Try Refactoring  using ReflectionClass
-        //$props = $this->createEntityPropertiesArray();
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
             if(array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
                 && is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
