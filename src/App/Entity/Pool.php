@@ -79,17 +79,29 @@ class Pool implements NotifyPropertyChanged
     /** @ORM\Column(type="string", nullable=true) */
     protected $poolStructure;
 
-    /** @ORM\Column(type = "boolean") **/
+    /**
+     * @ORM\Column(type = "boolean", nullable=false)
+     * @var bool
+     * **/
     protected $isCrossed = false;
 
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $isPogroup;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var bool
+     **/
+    protected $isPogroup = false;
 
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $isIoGroup;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var bool
+     **/
+    protected $isIoGroup = false;
 
-    /** @ORM\Column(type="integer", nullable=true) */
-    protected $addReserveToCreditSupport;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var bool
+     */
+    protected $addReserveToCreditSupport = false;
     
     /** 
      * @ORM\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="pool", fetch="LAZY")
@@ -293,68 +305,56 @@ class Pool implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getIsCrossed()
-    {
-        return $this->isCrossed;
-    }
+    public function getIsCrossed() { return $this->isCrossed; }
 
     /**
-     * @param mixed $isCrossed
+     * @param bool $isCrossed
      */
-    public function setIsCrossed($isCrossed)
+    public function setIsCrossed(bool $isCrossed)
     {
         $this->_onPropertyChanged('isCrossed', $this->isCrossed, $isCrossed);
         $this->isCrossed = $isCrossed;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getIsPogroup()
-    {
-        return $this->isPogroup;
-    }
+    public function getIsPogroup() { return $this->isPogroup; }
 
     /**
-     * @param mixed $isPogroup
+     * @param bool $isPogroup
      */
-    public function setIsPogroup($isPogroup)
+    public function setIsPogroup(bool $isPogroup)
     {
         $this->_onPropertyChanged('isPogroup', $this->isPogroup, $isPogroup);
         $this->isPogroup = $isPogroup;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getIsIoGroup()
-    {
-        return $this->isIoGroup;
-    }
+    public function getIsIoGroup() { return $this->isIoGroup; }
 
     /**
-     * @param mixed $isIoGroup
+     * @param bool $isIoGroup
      */
-    public function setIsIoGroup($isIoGroup)
+    public function setIsIoGroup(bool $isIoGroup)
     {
         $this->_onPropertyChanged('isIoGroup', $this->isIoGroup, $isIoGroup);
         $this->isIoGroup = $isIoGroup;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getAddReserveToCreditSupport()
-    {
-        return $this->addReserveToCreditSupport;
-    }
+    public function getAddReserveToCreditSupport() { return $this->addReserveToCreditSupport; }
 
     /**
-     * @param mixed $addReserveToCreditSupport
+     * @param bool $addReserveToCreditSupport
      */
-    public function setAddReserveToCreditSupport($addReserveToCreditSupport)
+    public function setAddReserveToCreditSupport(bool $addReserveToCreditSupport)
     {
         $this->_onPropertyChanged('addReserveToCreditSupport', $this->addReserveToCreditSupport, $addReserveToCreditSupport);
         $this->addReserveToCreditSupport = $addReserveToCreditSupport;
