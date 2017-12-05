@@ -17,8 +17,7 @@ class State extends EntityRepository
     public function fetchAllStates()
     {
         $sql = "SELECT * FROM State";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $result = $this->getEntityManager()->getConnection()->fetchAll($sql);
         return $result;
     }
 }
