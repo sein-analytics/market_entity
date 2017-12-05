@@ -107,7 +107,7 @@ trait QueryManagerTrait
             if(is_array($typeResult)){
                 return $typeResult;
             }
-            if(is_string($value)){
+            if(is_string($value) && $value !== 'NULL'){
                 $value = '"' . $value . '"';
             }
             $insertStmt .= $value . $this->sqlEndingByCountSize($counter, $size - 1);
