@@ -71,7 +71,7 @@ class LoanPropertyLabel extends EntityRepository
     private $propertyLabels = [
         "id" => null,
         "pool_id" => null,
-        "zero_balance_date" => 'zero_balance_date',
+        "zero_balance_date" => 'zero_balance_date',//
         "current_duefor_date" => "paid-through_date",
         "final_duefor_date" => "stated_maturity_date",
         "dwelling" => 'property_type',
