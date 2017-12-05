@@ -110,10 +110,26 @@ trait QueryManagerTrait
             if(is_string($value) && $value !== 'NULL'){
                 $value = '"' . $value . '"';
             }
+            $value = $this->boolToIntValue($value);
             $insertStmt .= $value . $this->sqlEndingByCountSize($counter, $size - 1);
             $counter++;
         }
         return $insertStmt;
+    }
+
+    /**
+     * @param $bool
+     * @return int
+     */
+    public function boolToIntValue($bool){
+        if (!is_bool($bool)){
+            return $bool;
+        }
+        if($bool === true){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     /**
