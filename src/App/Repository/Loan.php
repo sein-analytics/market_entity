@@ -29,7 +29,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
     ];
 
     static $table = [
-       'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
       'pool_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
       'state_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
       'msa_code_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
