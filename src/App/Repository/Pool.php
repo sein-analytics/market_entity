@@ -28,9 +28,9 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
       'original_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
       'pool_structure' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
       'is_crossed' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => false],
-      'is_pogroup' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-      'is_io_group' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-      'add_reserve_to_credit_support' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL']
+      'is_pogroup' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL'],
+      'is_io_group' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL'],
+      'add_reserve_to_credit_support' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL']
     ];
 
     /**
