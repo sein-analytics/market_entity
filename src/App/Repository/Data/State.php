@@ -20,4 +20,19 @@ class State extends EntityRepository
         $result = $this->getEntityManager()->getConnection()->fetchAll($sql);
         return $result;
     }
+
+    /**
+     * @param array $states
+     * @param string $stateText
+     * @return int|bool
+     */
+    public function stateIdFromStatesArray(array $states, string $stateText){
+        foreach ($states as $stateProps){
+            if($stateText == $stateProps['abbreviation']
+                || $stateText == $stateProps['name']){
+                return $stateProps['id'];
+            }
+        }
+        return false;
+    }
 }
