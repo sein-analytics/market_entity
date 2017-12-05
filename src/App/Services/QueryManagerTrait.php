@@ -167,4 +167,20 @@ trait QueryManagerTrait
             return '),' . PHP_EOL;
         }
     }
+
+    /**
+     * @param string $columnName
+     * @return bool|int
+     */
+    public function fetchElementNumericalIndex(string $columnName)
+    {
+        $counter = 0;
+        foreach (self::$table as $col => $props){
+            if ($col === $columnName){
+                return $counter;
+            }
+            $counter++;
+        }
+        return false;
+    }
 }
