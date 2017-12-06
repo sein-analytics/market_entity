@@ -158,8 +158,16 @@ trait QueryManagerTrait
     {
         if(array_key_exists($type , self::TYPE_MAPPER)){
             if(is_array(self::TYPE_MAPPER[$type])){
-                if(in_array($properties[self::DATA_TYPE], self::TYPE_MAPPER[$type])){
-                    return true;
+                if(!is_array($properties[self::DATA_TYPE])){
+                    if(in_array($properties[self::DATA_TYPE], self::TYPE_MAPPER[$type])){
+                        return true;
+                    }
+                }else{
+                    foreach ($properties[self::DATA_TYPE] as $type){
+                        if (array_key_exists($type, self::TYPE_MAPPER)){
+                            return true;
+                        }
+                    }
                 }
             }else{
                 if($properties[self::DATA_TYPE] == self::TYPE_MAPPER[$type]){
