@@ -88,11 +88,11 @@ trait QueryManagerTrait
     }
 
     public function buildInsertElementStatement(array $data){
-        if(count($data) !== count(self::$table)){
+        $size = count(self::$table);
+        if(count($data) !== $size){
             return ['message' => 'Insert array size is wrong'];
         }
         reset(self::$table);
-        $size = count(self::$table);
         $counter = 0;
         $insertStmt = '(';
         foreach (self::$table as $colName => $properties){
@@ -107,14 +107,28 @@ trait QueryManagerTrait
             if(is_array($typeResult)){
                 return $typeResult;
             }
-            if(is_string($value) && $value !== 'NULL'){
-                $value = '"' . $value . '"';
-            }
+
+            $value = $this->quoteStringValue($value, $properties);
             $value = $this->boolToIntValue($value);
             $insertStmt .= $value . $this->sqlEndingByCountSize($counter, $size - 1);
             $counter++;
         }
         return $insertStmt;
+    }
+
+    public function quoteStringValue($value, array $properties){
+        if(!is_array($properties[self::DATA_TYPE])
+            && $properties[self::DATA_TYPE] == 'decimal'){
+            return $value;
+        }
+        if(is_array($properties[self::DATA_TYPE])
+            && in_array('decimal', $properties[self::DATA_TYPE])){
+            return $value;
+        }
+        if(is_string($value) && $value !== 'NULL'){
+            $value = '"' . $value . '"';
+        }
+        return $value;
     }
 
     /**
