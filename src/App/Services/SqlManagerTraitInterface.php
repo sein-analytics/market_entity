@@ -35,4 +35,10 @@ interface SqlManagerTraitInterface
      * @return bool|mixed
      */
     function fetchEntityPropertiesForSql(string $subType = null);
+
+    function fetchTableColumnNumericalIndex(string $colName);
+
+    function buildInsertSqlStatement(string $tableName);
+
+    public function buildInsertElementStatement(array $data);
 }
