@@ -126,8 +126,9 @@ trait QueryManagerTrait
             return $value;
         }
         if($properties[self::DATA_TYPE] == 'json'){
-            $value = trim($value,'"');
-            return "'" . $value . "'";
+            $obj = json_decode($value);
+            $value = json_encode($obj);
+            return $value;
         }
         if(is_string($value) && $value !== 'NULL'){
             $value = '"' . $value . '"';
