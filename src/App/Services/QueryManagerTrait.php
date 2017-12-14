@@ -126,7 +126,7 @@ trait QueryManagerTrait
             return $value;
         }
         if($properties[self::DATA_TYPE] == 'json'){
-            $value = preg_replace('/(^[\"\']|[\"\']$)/', '', $value);
+            $value = trim($value,'"');
             return "'" . $value . "'";
         }
         if(is_string($value) && $value !== 'NULL'){
