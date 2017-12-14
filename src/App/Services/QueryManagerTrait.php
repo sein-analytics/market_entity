@@ -126,8 +126,10 @@ trait QueryManagerTrait
             return $value;
         }
         if($properties[self::DATA_TYPE] == 'json'){
-            $obj = json_decode($value);
-            $value = json_encode($obj);
+            $obj = json_decode($value, true);
+            if(json_last_error() == JSON_ERROR_NONE){
+                return $value = json_encode($obj);
+            }
             return $value;
         }
         if(is_string($value) && $value !== 'NULL'){
