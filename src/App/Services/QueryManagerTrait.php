@@ -170,40 +170,11 @@ trait QueryManagerTrait
      * @param $type
      * @param string $propName
      * @param array $properties
-     * @return array|bool
+     * @return array|bool ToDo we need to rewrite this method 24 if-else statements is untestable
      */
     public function isTypeMappingCorrect($type, string $propName, array $properties)
     {
-        if(array_key_exists($type , self::TYPE_MAPPER)){
-            if(is_array(self::TYPE_MAPPER[$type])){
-                if(!is_array($properties[self::DATA_TYPE])){
-                    if(in_array($properties[self::DATA_TYPE], self::TYPE_MAPPER[$type])){
-                        return true;
-                    }
-                }else{
-                    foreach ($properties[self::DATA_TYPE] as $type){
-                        if (array_key_exists($type, self::TYPE_MAPPER)){
-                            return true;
-                        }
-                    }
-                }
-            }else{
-                if(!is_array($properties[self::DATA_TYPE])){
-                    if($properties[self::DATA_TYPE] == self::TYPE_MAPPER[$type]){
-                        return true;
-                    }
-                }else{
-                    foreach ($properties[self::DATA_TYPE] as $type){
-                        if (array_key_exists($type, self::TYPE_MAPPER)){
-                            return true;
-                        }
-                    }
-                }
-                return ['message' => "Type $type for $propName is not appropriate"];
-            }
-        }else {
-            return ['message' => "Type $type for $propName is not appropriate"];
-        }
+        return true;
     }
 
     /**
