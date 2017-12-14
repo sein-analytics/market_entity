@@ -63,7 +63,7 @@ class Statistic extends EntityRepository implements SqlManagerTraitInterface
         return $this->fetchNextAvailableTableId('Statistic');
     }
 
-    public function fetchEntityPropertiesForSql(json $subType = null)
+    public function fetchEntityPropertiesForSql(string $subType = null)
     {
         return array_keys(self::$table);
     }
