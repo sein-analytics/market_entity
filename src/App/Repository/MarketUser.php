@@ -36,9 +36,31 @@ class MarketUser extends EntityRepository
      * @param array $dealIds
      * @return array|bool
      */
-    public function fetchMarketUsersFromIds(array $dealIds){
+    public function fetchMarketUsersFromIds(array $dealIds)
+    {
         $sql = "SELECT * FROM MarketUser WHERE id IN (?) ORDER BY id ASC";
         $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);
+        return $results;
+    }
+
+    /**
+     * @return array|bool
+     */
+    public function fetchAllMarketUserBuyerIds()
+    {
+        $sql = "SELECT * FROM AclROle";
+        $roles = $this->getEntityManager()->getConnection()->fetchAll($sql);
+        $roleIds = [];
+        foreach ($roles as $role){
+            if($role['role'] === 'Buyer'){
+                array_push($roleIds, $role['id']);
+            }
+        }
+        $sql = "SELECT id FROM MarketUser WHERE role_id in () ORDER BY id ASC ";
+        if(count($roleIds) === 0){
+            return false;
+        }
+        $results = $this->fetchByIntArray($this->getEntityManager(), $roleIds, $sql);
         return $results;
     }
 }

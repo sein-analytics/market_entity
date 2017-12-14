@@ -125,6 +125,10 @@ trait QueryManagerTrait
             && in_array('decimal', $properties[self::DATA_TYPE])){
             return $value;
         }
+        if($properties[self::DATA_TYPE] == 'json'){
+            $value = preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $value);
+            return $value;
+        }
         if(is_string($value) && $value !== 'NULL'){
             $value = '"' . $value . '"';
         }
