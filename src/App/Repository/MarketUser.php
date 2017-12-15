@@ -55,9 +55,9 @@ class MarketUser extends EntityRepository
         }
         $rolesIds = [];
         foreach ($roles as $key => $role){
-            array_push($rolesIds, $role['id']);
+            array_push($rolesIds, (int)$role['id']);
         }
-        $sql = "SELECT id FROM MarketUser WHERE role_id in () ORDER BY id ASC ";
+        $sql = "SELECT id FROM MarketUser WHERE role_id in (?) ORDER BY id ASC ";
         $results = $this->fetchByIntArray($this->getEntityManager(), $rolesIds, $sql);
         return $results;
     }
