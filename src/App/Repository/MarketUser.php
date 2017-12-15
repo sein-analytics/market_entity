@@ -48,19 +48,13 @@ class MarketUser extends EntityRepository
      */
     public function fetchAllMarketUserBuyerIds()
     {
-        $sql = "SELECT * FROM AclROle";
+        $sql = "SELECT id FROM AclRole WHERE role='Buyer' OR role='Both'";
         $roles = $this->getEntityManager()->getConnection()->fetchAll($sql);
-        $roleIds = [];
-        foreach ($roles as $role){
-            if($role['role'] === 'Buyer'){
-                array_push($roleIds, $role['id']);
-            }
-        }
-        $sql = "SELECT id FROM MarketUser WHERE role_id in () ORDER BY id ASC ";
-        if(count($roleIds) === 0){
+        if(!$roles){
             return false;
         }
-        $results = $this->fetchByIntArray($this->getEntityManager(), $roleIds, $sql);
+        $sql = "SELECT id FROM MarketUser WHERE role_id in () ORDER BY id ASC ";
+        $results = $this->fetchByIntArray($this->getEntityManager(), $roles, $sql);
         return $results;
     }
 }
