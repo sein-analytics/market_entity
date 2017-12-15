@@ -50,11 +50,15 @@ class MarketUser extends EntityRepository
     {
         $sql = "SELECT id FROM AclRole WHERE role='Buyer' OR role='Both'";
         $roles = $this->getEntityManager()->getConnection()->fetchAll($sql);
-        if(!$roles){
+        if(!is_array($roles) || count($roles) ===0){
             return false;
         }
+        $rolesIds = [];
+        foreach ($roles as $key => $role){
+            array_push($rolesIds, $role['id']);
+        }
         $sql = "SELECT id FROM MarketUser WHERE role_id in () ORDER BY id ASC ";
-        $results = $this->fetchByIntArray($this->getEntityManager(), $roles, $sql);
+        $results = $this->fetchByIntArray($this->getEntityManager(), $rolesIds, $sql);
         return $results;
     }
 }
