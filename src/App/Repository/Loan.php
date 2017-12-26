@@ -127,6 +127,14 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         return $results;
     }
 
+    public function deleteLoansByIds(array $ids)
+    {
+        $sql = 'DELETE FROM loans WHERE id IN (?)';
+        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
+        $result = $stmt->execute();
+        return $result;
+    }
+
     /**
      * @return bool|int
      */

@@ -35,6 +35,19 @@ class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
       'pmnt_adj_frequency' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
       'pmnt_increase_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
+
+    /**
+     * @param array $ids
+     * @return bool
+     */
+    public function deleteArmAttributesByIds(array $ids)
+    {
+        $sql = 'DELETE FROM ArmAttribute WHERE id IN (?)';
+        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
+        $result = $stmt->execute();
+        return $result;
+    }
+
     
     /**
      * @return bool|int

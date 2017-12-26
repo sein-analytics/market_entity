@@ -56,6 +56,18 @@ class Statistic extends EntityRepository implements SqlManagerTraitInterface
     }
 
     /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteStatisticById(int $id)
+    {
+        $sql = "DELETE FROM Statistic WHERE id = $id";
+        $stmt = $this->em->getConnection()->executeQuery($sql);
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    /**
      * @return bool|int
      */
     public function fetchNextAvailableId()

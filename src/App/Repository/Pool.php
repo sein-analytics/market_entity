@@ -33,6 +33,14 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
       'add_reserve_to_credit_support' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL']
     ];
 
+    public function deletePoolByIds(array $ids)
+    {
+        $sql = 'DELETE FROM Pool WHERE id IN (?)';
+        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
+        $result = $stmt->execute();
+        return $result;
+    }
+
     /**
      * @return bool|int
      */

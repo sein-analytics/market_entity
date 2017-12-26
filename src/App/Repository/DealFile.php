@@ -34,6 +34,18 @@ class DealFile extends EntityRepository implements SqlManagerTraitInterface
     ];
 
     /**
+     * @param array $ids
+     * @return bool
+     */
+    public function deleteDealFileByIds(array $ids)
+    {
+        $sql = "DELETE FROM DealFile WHERE id IN (?)";
+        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    /**
      * @return bool|int
      */
     public function fetchNextAvailableId()

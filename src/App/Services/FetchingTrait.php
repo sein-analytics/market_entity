@@ -22,12 +22,24 @@ trait FetchingTrait
      */
     public function fetchByIntArray(EntityManager $em, array $keys, string $sql){
         if(!count($keys) > 0) { return false; }
+        $stmt = $this->returnInArraySqlStmt($em, $keys, $sql);
+        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        return $results;
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param array $keys
+     * @param string $sql
+     * @return \Doctrine\DBAL\Driver\Statement
+     */
+    public function returnInArraySqlStmt(EntityManager $em, array $keys, string $sql)
+    {
         $stmt = $em->getConnection()->executeQuery($sql,
             array($keys),
             array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        return $results;
+        return $stmt;
     }
 
 }

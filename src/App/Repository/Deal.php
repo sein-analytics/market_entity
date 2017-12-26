@@ -54,9 +54,20 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         return $results;
     }
 
-    public function addDealFromUploadOptions(array $options)
+    public function deleteDealById(int $id)
     {
-        $id = $this->fetchNextAvailableId();
+        $sql = "DELETE FROM Deal WHERE id = $id";
+        $stmt = $this->em->getConnection()->executeQuery($sql);
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    public function deleteDealMarketUsersByDealId(int $dealId)
+    {
+        $sql = "DELETE FROM deal_market_user WHERE deal_id = $dealId";
+        $stmt = $this->em->getConnection()->executeQuery($sql);
+        $result = $stmt->execute();
+        return $result;
     }
 
     /**
