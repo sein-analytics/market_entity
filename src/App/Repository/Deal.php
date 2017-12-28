@@ -61,8 +61,10 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         $stmt = $this->em->getConnection()->prepare($sql);
         $stmt->bindValue('issuer_id', $issuerId);
         $stmt->bindValue('issue', $dealName);
-        $result =  $this->completeIdFetchQuery($stmt);
-        return $result;
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        if(count($results) == 0){ return false; }
+        return $this->flattenResultArrayByKey($results, 'id');
     }
 
     /**
