@@ -43,6 +43,7 @@ trait FetchMapperTrait
 
     public function completeIdFetchQuery(Statement $stmt)
     {
+        $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         if (count($result) > 0){
             return $this->flattenResultArrayByKey($result, 'id');
