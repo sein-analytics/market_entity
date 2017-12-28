@@ -50,7 +50,7 @@ class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchArmAttributeIdsByLoanIds(array $loanIds)
     {
-        $sql = "SELECT id FROM ArmAttribut Where loan_id in (?)";
+        $sql = "SELECT id FROM ArmAttribute Where loan_id in (?)";
         $stmt = $this->returnInArraySqlStmt($this->em, $loanIds, $sql);
         return $this->completeIdFetchQuery($stmt);
     }
