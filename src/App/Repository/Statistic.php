@@ -55,6 +55,14 @@ class Statistic extends EntityRepository implements SqlManagerTraitInterface
         return $results;
     }
 
+    public function fetchStatisticIdByDealId(int $dealId)
+    {
+        $sql = "SELECT id FROM Statistic Where deal_id = ?";
+        $stmt = $this->em->getConnection()->prepare($sql);
+        $stmt->bindValue(1, $dealId);
+        return $this->completeIdFetchQuery($stmt);
+    }
+
     /**
      * @param int $id
      * @return bool

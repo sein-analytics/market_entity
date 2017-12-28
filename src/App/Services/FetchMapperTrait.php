@@ -7,6 +7,8 @@
  */
 
 namespace App\Service;
+use Doctrine\DBAL\Driver\Statement;
+use Doctrine\ORM\Query;
 
 /**
  * Trait FetchMapperTrait
@@ -39,11 +41,24 @@ trait FetchMapperTrait
         return $data;
     }
 
+    public function completeIdFetchQuery(Statement $stmt)
+    {
+        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        if (count($result) > 0){
+            return $this->flattenResultArrayByKey($result, 'id');
+        }
+        return false;
+    }
+
     public function flattenResultArrayByKey(array $hydration, $key)
     {
         $flat = [];
         foreach ($hydration as $dataPoint){
-            array_push($flat, $dataPoint[$key]);
+            if($key == 'id'){
+                array_push($flat, (int)$dataPoint[$key]);
+            }else{
+                array_push($flat, $dataPoint[$key]);
+            }
         }
         return $flat;
     }

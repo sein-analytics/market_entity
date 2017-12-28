@@ -13,6 +13,7 @@ use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class Pool extends EntityRepository implements SqlManagerTraitInterface
 {
@@ -33,6 +34,18 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
       'add_reserve_to_credit_support' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL']
     ];
 
+    public function fetchPoolIdsByDealId(int $dealId)
+    {
+        $sql = "SELECT id FROM Pool Where deal_id = ?";
+        $stmt = $this->em->getConnection()->prepare($sql);
+        $stmt->bindValue(1, $dealId);
+        return $this->completeIdFetchQuery($stmt);
+    }
+
+    /**
+     * @param array $ids
+     * @return bool
+     */
     public function deletePoolByIds(array $ids)
     {
         $sql = 'DELETE FROM Pool WHERE id IN (?)';

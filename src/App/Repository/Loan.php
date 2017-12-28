@@ -127,6 +127,17 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         return $results;
     }
 
+    public function fetchLoanIdsByPoolIds(array $poolIds)
+    {
+        $sql = "SELECT id FROM loans Where pool_id in (?)";
+        $stmt = $this->returnInArraySqlStmt($this->em, $poolIds, $sql);
+        return $this->completeIdFetchQuery($stmt);
+    }
+
+    /**
+     * @param array $ids
+     * @return bool
+     */
     public function deleteLoansByIds(array $ids)
     {
         $sql = 'DELETE FROM loans WHERE id IN (?)';

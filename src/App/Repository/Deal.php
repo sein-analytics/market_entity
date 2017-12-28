@@ -13,6 +13,7 @@ use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class Deal extends EntityRepository implements SqlManagerTraitInterface
 {
@@ -54,6 +55,19 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         return $results;
     }
 
+    public function fetchDealIdByIssuerIdAndDealName(int $issuerId, string $dealName)
+    {
+        $sql = "SELECT id FROM Deal Where issuer_id = ? AND issue = ? ";
+        $stmt = $this->em->getConnection()->prepare($sql);
+        $stmt->bindValue(1, $issuerId);
+        $stmt->bindValue(2, $dealName);
+        return $this->completeIdFetchQuery($stmt);
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
     public function deleteDealById(int $id)
     {
         $sql = "DELETE FROM Deal WHERE id = $id";
@@ -62,6 +76,10 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         return $result;
     }
 
+    /**
+     * @param int $dealId
+     * @return bool
+     */
     public function deleteDealMarketUsersByDealId(int $dealId)
     {
         $sql = "DELETE FROM deal_market_user WHERE deal_id = $dealId";
