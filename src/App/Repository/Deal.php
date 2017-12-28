@@ -57,13 +57,10 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchDealIdByIssuerIdAndDealName(int $issuerId, string $dealName)
     {
-        $sql1 = "SELECT id FROM Deal Where issuer_id = $issuerId AND issue = $dealName";
-        $sql2 = "SELECT id FROM Deal Where issuer_id = ? AND issue = ?";
-        $stmt = $this->em->getConnection()->prepare($sql2);
-        $stmt->bindParam(1, $issuerId);
-        $stmt->bindValue(2, $dealName);
-        $temp = $this->em->getConnection()->executeQuery($sql1);
-        $tempR = $temp->fetchAll(Query::HYDRATE_ARRAY);
+        $sql = "SELECT id FROM Deal Where issuer_id = :issuer_id AND issue = :issue?";
+        $stmt = $this->em->getConnection()->prepare($sql);
+        $stmt->bindValue('issuer_id', $issuerId);
+        $stmt->bindValue('issue', $dealName);
         $result =  $this->completeIdFetchQuery($stmt);
         return $result;
     }
