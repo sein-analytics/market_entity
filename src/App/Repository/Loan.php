@@ -149,7 +149,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $data = [];
         foreach ($result as $dbData){
-            $data[$dbData['loan_id']] = $dbData['id'];
+            $data[$dbData['loan_id']] = (int)$dbData['id'];
         }
         return $data;
     }
