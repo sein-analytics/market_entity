@@ -33,6 +33,10 @@ class DealFile extends EntityRepository implements SqlManagerTraitInterface
       'has_viruses' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL']
     ];
 
+    /**
+     * @param int $dealId
+     * @return array|bool
+     */
     public function fetchDealFileIdsByDealId(int $dealId)
     {
         $sql = "SELECT id FROM DealFile Where deal_id = ?";

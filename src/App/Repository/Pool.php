@@ -34,6 +34,10 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
       'add_reserve_to_credit_support' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL']
     ];
 
+    /**
+     * @param int $dealId
+     * @return array|bool
+     */
     public function fetchPoolIdsByDealId(int $dealId)
     {
         $sql = "SELECT id FROM Pool Where deal_id = ?";

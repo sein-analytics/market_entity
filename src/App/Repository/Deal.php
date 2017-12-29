@@ -55,6 +55,11 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         return $results;
     }
 
+    /**
+     * @param int $issuerId
+     * @param string $dealName
+     * @return array|bool
+     */
     public function fetchDealIdByIssuerIdAndDealName(int $issuerId, string $dealName)
     {
         $sql = "SELECT id FROM Deal Where issuer_id = :issuer_id AND issue = :issue";
