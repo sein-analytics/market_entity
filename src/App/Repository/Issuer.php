@@ -14,6 +14,7 @@ use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class Issuer extends EntityRepository implements SqlManagerTraitInterface
 {
@@ -28,6 +29,14 @@ class Issuer extends EntityRepository implements SqlManagerTraitInterface
       'main_contact' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
       'phone' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL']
     ];
+
+    public function fetchIssuerDataForBidReportById(int $id)
+    {
+        $sql = "SELECT id, issuer_name, main_contact, phone FROM Issuer WHERE ";
+        $stmt = $this->em->getConnection()->prepare($sql);
+        $result = $stmt->execute(Query::HYDRATE_ARRAY);
+        return $result;
+    }
 
     public function fetchNextAvailableId()
     {

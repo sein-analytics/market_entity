@@ -33,13 +33,13 @@ class MarketUser extends EntityRepository
     }
 
     /**
-     * @param array $dealIds
+     * @param array $ids
      * @return array|bool
      */
-    public function fetchMarketUsersFromIds(array $dealIds)
+    public function fetchMarketUsersFromIds(array $ids)
     {
         $sql = "SELECT * FROM MarketUser WHERE id IN (?) ORDER BY id ASC";
-        $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);
+        $results = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
         return $results;
     }
 

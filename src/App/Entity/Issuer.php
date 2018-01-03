@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\App;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Issuer")
  * @ORM\Table(name="Issuer")
  *
  */

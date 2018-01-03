@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * Class Bid
@@ -37,5 +38,14 @@ class Bid extends EntityRepository
             $results = $this->mapRequestIdsToResults($dealIds, $results, self::BID_DEAL);
         }
         return $results;
+    }
+
+    public function fetchMaxPriceByDealId(int $dealId)
+    {
+        $sql = "SELECT Max(price) as price FROM Bid WHERE deal_id = ?";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindValue(1, $dealId);
+        $result = $stmt->execute(Query::HYDRATE_ARRAY);
+        return $result;
     }
 }

@@ -14,12 +14,21 @@ use Doctrine\ORM\Query;
 
 class BidStatus extends EntityRepository
 {
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public function fetchAllBidStatus()
     {
         $sql = "SELECT * FROM DealStatus";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        return $result;
+        if(!$result) { throw new \Exception("Could not fetch BidStatus data", 400); }
+        $base = [];
+        foreach ($result as $int => $status){
+            $base[$status['id']] = $status['status'];
+        }
+        return $base;
     }
 
 }
