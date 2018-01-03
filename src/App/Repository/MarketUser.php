@@ -44,6 +44,19 @@ class MarketUser extends EntityRepository
     }
 
     /**
+     * @param int $userId
+     * @return int
+     */
+    public function fetchIssuerIdByUserId(int $userId)
+    {
+        $sql = "SELECT issuer_id FROM MarketUser WHERE  id = ?";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindValue(1, $userId);
+        $result = (int)$stmt->fetch(Query::HYDRATE_ARRAY)[$userId];
+        return $result;
+    }
+
+    /**
      * @return array|bool
      */
     public function fetchAllMarketUserBuyerIds()

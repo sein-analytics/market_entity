@@ -30,12 +30,16 @@ class Issuer extends EntityRepository implements SqlManagerTraitInterface
       'phone' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL']
     ];
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function fetchIssuerDataForBidReportById(int $id)
     {
         $sql = "SELECT id, issuer_name, main_contact, phone FROM Issuer WHERE id = ?";
         $stmt = $this->em->getConnection()->prepare($sql);
         $stmt->bindValue(1, $id);
-        $result = $stmt->execute(Query::HYDRATE_ARRAY);
+        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
         return $result;
     }
 
