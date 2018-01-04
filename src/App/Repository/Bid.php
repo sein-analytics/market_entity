@@ -45,7 +45,24 @@ class Bid extends EntityRepository
         $sql = "SELECT Max(price) as price FROM Bid WHERE deal_id = ?";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $dealId);
-        $result = $stmt->execute(Query::HYDRATE_ARRAY);
+        $temp = $stmt->execute();
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    /**
+     * @param int $dealId
+     * @param int $userId
+     * @return array
+     */
+    public function fetchBidsByDealIdAndUserId(int $dealId, int $userId)
+    {
+        $sql = "SELECT * FROM Bid WHERE user_id = :user_id AND deal_id = :deal_id ORDER BY id ASC";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindValue('user_id', $userId);
+        $stmt->bindValue('deal_id', $dealId);
+        $temp = $stmt->execute();
+        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $result;
     }
 }
