@@ -56,6 +56,10 @@ class MarketUser extends EntityRepository
         return $result;
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
     public function fetchUserDataForBidByUserId(int $id)
     {
         $sql = "SELECT id, first_name, last_name, user_name, issuer_id CONCAT(first_name, ' ', last_name) AS first_last FROM MarketUser WHERE  id = ?";
