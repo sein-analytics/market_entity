@@ -20,8 +20,9 @@ class BidStatus extends EntityRepository
      */
     public function fetchAllBidStatus()
     {
-        $sql = "SELECT * FROM BidStatus WHERE id > 0";
+        $sql = "SELECT * FROM BidStatus";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $temp = $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         if(!$result) { throw new \Exception("Could not fetch BidStatus data", 400); }
         $base = [];
