@@ -62,7 +62,7 @@ class MarketUser extends EntityRepository
      */
     public function fetchUserDataForBidByUserId(int $id)
     {
-        $sql = "SELECT id, first_name, last_name, user_name, issuer_id CONCAT(first_name, ' ', last_name) AS first_last FROM MarketUser WHERE  id = ?";
+        $sql = "SELECT CONCAT(first_name, ' ', last_name) AS first_last, id, user_name, issuer_id  FROM MarketUser WHERE  id = ?";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $id);
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
