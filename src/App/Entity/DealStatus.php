@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\DealStatus")
  * @ORM\Table(name="DealStatus")
  */
 class DealStatus

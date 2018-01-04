@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
+use Doctrine\DBAL\Driver\Statement;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -40,7 +41,7 @@ class Bid extends EntityRepository
         return $results;
     }
 
-    public function fetchMaxPriceByDealId(int $dealId)
+    public function fetchMaxBidByDealId(int $dealId)
     {
         $sql = "SELECT Max(price) as price FROM Bid WHERE deal_id = ?";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
@@ -64,5 +65,23 @@ class Bid extends EntityRepository
         $temp = $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $result;
+    }
+
+    /**
+     * @param int $dealId
+     * @return bool|int
+     */
+    public function fetchLastBidByDealId(int $dealId)
+    {
+        $sql = "SELECT price WHERE id IN (SELECT Max(id) FROM Bid WHERE deal_id = :deal_id)";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindValue('deal_id', $dealId);
+        $temp = $stmt->execute();
+        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        if (count($result) === 1){
+            return (int)$result[0]['price'];
+        }else{
+            return false;
+        }
     }
 }

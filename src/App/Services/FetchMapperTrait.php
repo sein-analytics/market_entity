@@ -51,6 +51,11 @@ trait FetchMapperTrait
         return false;
     }
 
+    /**
+     * @param array $hydration
+     * @param $key
+     * @return array
+     */
     public function flattenResultArrayByKey(array $hydration, $key)
     {
         $flat = [];
@@ -62,6 +67,19 @@ trait FetchMapperTrait
             }
         }
         return $flat;
+    }
+
+    /**
+     * @param array $statusArray
+     * @return array
+     */
+    public function idToStatusMapper(array $statusArray)
+    {
+        $base = [];
+        foreach ($statusArray as $int => $status){
+            $base[$status['id']] = $status['status'];
+        }
+        return $base;
     }
 
 }
