@@ -59,8 +59,8 @@ trait FetchMapperTrait
     public function flattenResultArrayByKey(array $hydration, $key)
     {
         $flat = [];
+        $pos = strripos($key, 'id');
         foreach ($hydration as $dataPoint){
-            $pos = strripos($dataPoint, 'id');
             if($pos !== false){
                 array_push($flat, (int)$dataPoint[$key]);
             }else{
