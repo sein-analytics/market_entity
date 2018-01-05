@@ -41,6 +41,10 @@ class Bid extends EntityRepository
         return $results;
     }
 
+    /**
+     * @param int $dealId
+     * @return float
+     */
     public function fetchMaxBidByDealId(int $dealId)
     {
         $sql = "SELECT Max(price) as price FROM Bid WHERE deal_id = ?";
@@ -48,7 +52,10 @@ class Bid extends EntityRepository
         $stmt->bindValue(1, $dealId);
         $temp = $stmt->execute();
         $result = $stmt->fetch();
-        return $result;
+        if (count($result) == 1 && array_key_exists('price', $result)){
+            return (float)$result['price'];
+        }
+        return 0.00;
     }
 
     /**
@@ -69,7 +76,7 @@ class Bid extends EntityRepository
 
     /**
      * @param int $dealId
-     * @return bool|int
+     * @return float
      */
     public function fetchLastBidByDealId(int $dealId)
     {
@@ -78,10 +85,10 @@ class Bid extends EntityRepository
         $stmt->bindValue('deal_id', $dealId);
         $temp = $stmt->execute();
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
-        if (count($result) === 1){
-            return (int)$result[0]['price'];
+        if (count($result) === 1 && array_key_exists('price', $result)){
+            return (float)$result['price'];
         }else{
-            return false;
+            return 0.00;
         }
     }
 
