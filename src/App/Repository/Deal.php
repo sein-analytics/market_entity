@@ -52,7 +52,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
                 'Deal.current_balance, Deal.views, Deal.status_id, Deal.user_id, ' .
                 'MarketUser.first_name, MarketUser.last_name FROM Deal INNER JOIN MarketUser ON Deal.user_id = MarketUser.id ';
         if ($isMarket){ $sql .= 'WHERE Deal.status_id = 1 AND Deal.id IN (?) ORDER BY Deal.id ASC'; }
-        else { $sql .= 'WHERE Deal.status_id = 1 OR Deal.status_id = 2 AND Deal.id IN (?) ORDER BY Deal.id ASC'; }
+        else { $sql .= 'WHERE Deal.status_id IN (1,4) AND Deal.id IN (?) ORDER BY Deal.id ASC'; }
         $results = $this->fetchByIntArray($this->em, $ids, $sql);
         return $results;
     }
