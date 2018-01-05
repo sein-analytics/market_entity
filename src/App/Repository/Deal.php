@@ -71,11 +71,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         return $this->completeIdFetchQuery($stmt);
     }
 
-    public function fetchDealIdsByUserIds(array $userIds)
+    public function fetchDealIdsByUserIdsAndStatusIds(array $userIds, array $statusIds)
     {
-        $sql = "SELECT id FROM Deal Where user_id IN (?)";
-        $stmt = $this->returnInArraySqlStmt($this->em, $userIds, $sql);
-        return $this->completeIdFetchQuery($stmt);
+        $sql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?)";
+        $stmt = $this->em->getConnection()->executeQuery($sql,
+            array($userIds, $statusIds),
+            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY,
+                \Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+        );
+        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        return $this->flattenResultArrayByKey($result, 'id');
     }
 
         /**

@@ -60,7 +60,8 @@ trait FetchMapperTrait
     {
         $flat = [];
         foreach ($hydration as $dataPoint){
-            if($key == 'id'){
+            $pos = strripos($dataPoint, 'id');
+            if($pos !== false){
                 array_push($flat, (int)$dataPoint[$key]);
             }else{
                 array_push($flat, $dataPoint[$key]);
