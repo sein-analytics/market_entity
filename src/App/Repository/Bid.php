@@ -73,7 +73,7 @@ class Bid extends EntityRepository
      */
     public function fetchLastBidByDealId(int $dealId)
     {
-        $sql = "SELECT price WHERE id IN (SELECT Max(id) FROM Bid WHERE deal_id = :deal_id)";
+        $sql = "SELECT price FROM Bid WHERE id IN (SELECT Max(id) FROM Bid WHERE deal_id = :deal_id)";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue('deal_id', $dealId);
         $temp = $stmt->execute();
