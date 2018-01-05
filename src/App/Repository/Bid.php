@@ -87,8 +87,9 @@ class Bid extends EntityRepository
 
     public function fetchDistinctDealIdsForDealsWithUserBids(int $userId)
     {
-        $sql = "SELECT DISTINCT deal_id FROM Bid where `user_id` = ?";
+        $sql = "SELECT DISTINCT deal_id FROM Bid where user_id = ?";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindValue(1, $userId);
         $result = $stmt->execute();
         $result = $stmt->fetchAll();
         return $this->flattenResultArrayByKey($result, 'deal_id');
