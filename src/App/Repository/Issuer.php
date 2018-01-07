@@ -40,6 +40,7 @@ class Issuer extends EntityRepository implements SqlManagerTraitInterface
         $stmt = $this->em->getConnection()
             ->prepare($sql);
         $stmt->bindValue(1, $id);
+        $stmt->execute();
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
         return $result;
     }
