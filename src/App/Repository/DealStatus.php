@@ -23,6 +23,7 @@ class DealStatus extends EntityRepository
         $stmt = $this->getEntityManager()
             ->getConnection()
             ->prepare($sql);
+        $result = $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         if(!$result) { throw new \Exception("Could not fetch DealStatus data", 400); }
         return $this->idToStatusMapper($result);
