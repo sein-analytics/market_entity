@@ -65,6 +65,7 @@ class MarketUser extends EntityRepository
         $sql = "SELECT CONCAT(first_name, ' ', last_name) AS first_last, id, user_name, issuer_id  FROM MarketUser WHERE  id = ?";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $id);
+        $stmt->execute();
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
         return $result;
     }
