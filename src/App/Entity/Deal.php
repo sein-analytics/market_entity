@@ -368,9 +368,9 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getPools() { return $this->pools; }
+    public function getPools() : ArrayCollection { return $this->pools; }
 
     /**
      * @param mixed $pools
@@ -464,7 +464,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return ArrayCollection
      */
-    public function getMarketUsers() { return $this->marketUsers; }
+    public function getMarketUsers() : ArrayCollection { return $this->marketUsers; }
 
     /**
      * @return ArrayCollection

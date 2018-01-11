@@ -40,5 +40,21 @@ class BidStatus
         $this->bids->add($bid);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getBids(): ArrayCollection
+    {
+        return $this->bids;
+    }
+
 
 }

@@ -82,7 +82,7 @@ class Bid implements NotifyPropertyChanged
     /**
      * @return MarketUser
      */
-    public function getUser()
+    public function getUser() : MarketUser
     {
         return $this->user;
     }
@@ -97,9 +97,9 @@ class Bid implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return Deal
      */
-    public function getDeal()
+    public function getDeal() : Deal
     {
         return $this->deal;
     }
@@ -114,17 +114,17 @@ class Bid implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getPrice()
+    public function getPrice() : float
     {
         return $this->price;
     }
 
     /**
-     * @param mixed $price
+     * @param float $price
      */
-    public function setPrice($price)
+    public function setPrice(float $price)
     {
         $this->updateBidHistory($price);
         $this->price = $price;
@@ -144,9 +144,9 @@ class Bid implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getEffectiveBalance()
+    public function getEffectiveBalance() : float
     {
         return $this->effectiveBalance;
     }
@@ -154,7 +154,7 @@ class Bid implements NotifyPropertyChanged
     /**
      * @param mixed $effectiveBalance
      */
-    public function setEffectiveBalance($effectiveBalance)
+    public function setEffectiveBalance(float $effectiveBalance)
     {
         $this->_onPropertyChanged('effectiveBalance', $this->effectiveBalance, $effectiveBalance);
         $this->effectiveBalance = $effectiveBalance;
@@ -203,9 +203,9 @@ class Bid implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return BidStatus
      */
-    public function getStatus()
+    public function getStatus() : BidStatus
     {
         return $this->status;
     }
@@ -222,7 +222,7 @@ class Bid implements NotifyPropertyChanged
     /**
      * @return \DateTime
      */
-    public function getDate()
+    public function getDate() : \DateTime
     {
         return $this->date;
     }
