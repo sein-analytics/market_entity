@@ -11,6 +11,7 @@ use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 
 /**
@@ -190,7 +191,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketDeals")
-     * @var ArrayCollection
+     * @var PersistentCollection
      */
     protected $marketUsers;
 
@@ -212,7 +213,6 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->documents = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->diligence = new ArrayCollection();
-        $this->marketUsers = new ArrayCollection();
         $this->userFavorites = new ArrayCollection();
         $this->periods = new ArrayCollection();
     }
@@ -229,7 +229,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
 
     function addMarketUser(MarketUser $user)
     {
-        $this->marketUsers->add($user);
+        $this->getMarketUsers()->add($user);
     }
 
     function addUserFavorites(MarketUser $user){
@@ -462,9 +462,9 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     public function getDiligence() { return $this->diligence; }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getMarketUsers() : ArrayCollection { return $this->marketUsers; }
+    public function getMarketUsers() : PersistentCollection { return $this->marketUsers; }
 
     /**
      * @return ArrayCollection
