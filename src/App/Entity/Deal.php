@@ -270,14 +270,14 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
-    public function getClosingDate() { return $this->closingDate; }
+    public function getClosingDate() :\DateTime { return $this->closingDate; }
 
     /**
-     * @param mixed $closingDate
+     * @param \DateTime $closingDate
      */
-    public function setClosingDate($closingDate)
+    public function setClosingDate(\DateTime $closingDate)
     {
         $this->_onPropertyChanged('closingDate', $this->closingDate, $closingDate);
         $this->closingDate = $closingDate;
@@ -286,12 +286,12 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return \DateTime
      */
-    public function getCutOffDate() { return $this->cutOffDate; }
+    public function getCutOffDate() :\DateTime { return $this->cutOffDate; }
 
     /**
      * @param \DateTime $cutOffDate
      */
-    public function setCutOffDate($cutOffDate)
+    public function setCutOffDate(\DateTime$cutOffDate)
     {
         $this->_onPropertyChanged('cutOffDate', $this->cutOffDate, $cutOffDate);
         $this->cutOffDate = $cutOffDate;
