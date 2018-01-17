@@ -440,7 +440,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     /**
      * @return MarketUser
      */
-    public function getUser() { return $this->user; }
+    public function getUser() : MarketUser { return $this->user; }
 
     /**
      * @param MarketUser $user
