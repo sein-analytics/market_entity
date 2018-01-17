@@ -400,4 +400,19 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 
     public function getMappedTypes() { return $this->mappedTypes; }
 
+    /**
+     * @return mixed
+     */
+    public function getFirstName() { return $this->firstName; }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName() { return $this->lastName; }
+
+    /**
+     * @return mixed
+     */
+    public function getSignatureArn() { return $this->signature_arn; }
+
 }
