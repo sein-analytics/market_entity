@@ -7,6 +7,7 @@
 namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -31,13 +32,17 @@ class Issuer
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\Deal", mappedBy="issuer")   */
+    /** @ORM\OneToMany(targetEntity="App\Entity\Deal", mappedBy="issuer")
+     * @var PersistentCollection
+     */
     protected $deals;
 
     /** @ORM\Column(type="string", nullable=false) **/
     protected $issuerName;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="issuer")   */
+    /** @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="issuer")
+     * @var PersistentCollection
+     */
     protected $users;
 
     /** @ORM\Column(type="datetime", nullable=false)
@@ -59,17 +64,11 @@ class Issuer
 
     function __construct()
     {
-        $this->deals = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
-    function addDeal(Deal $deal){
-        $this->deals->add($deal);
-    }
+    function addDeal(Deal $deal){ $this->getDeals()->add($deal); }
 
-    function addUser(MarketUser $user){
-        $this->users->add($user);
-    }
+    function addUser(MarketUser $user){ $this->getUsers()->add($user); }
 
     /**
      * @return mixed
@@ -80,15 +79,12 @@ class Issuer
     }
 
     /**
-     * @return mixed
+     * @return PersistentCollection
      */
-    public function getDeals()
-    {
-        return $this->deals;
-    }
+    public function getDeals() : PersistentCollection { return $this->deals; }
 
     /**
-     * @return mixed
+     * @return PersistentCollection
      */
     public function getUsers()
     {
@@ -96,36 +92,24 @@ class Issuer
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getIssuerName()
-    {
-        return $this->issuerName;
-    }
+    public function getIssuerName() :string { return $this->issuerName; }
 
     /**
-     * @param mixed $issuerName
+     * @param string $issuerName
      */
-    public function setIssuerName($issuerName)
-    {
-        $this->issuerName = $issuerName;
-    }
+    public function setIssuerName(string $issuerName) { $this->issuerName = $issuerName; }
 
     /**
      * @return \DateTime
      */
-    public function getApprovedDate()
-    {
-        return $this->approvedDate;
-    }
+    public function getApprovedDate() : \DateTime { return $this->approvedDate; }
 
     /**
      * @param \DateTime $approvedDate
      */
-    public function setApprovedDate(\DateTime $approvedDate)
-    {
-        $this->approvedDate = $approvedDate;
-    }
+    public function setApprovedDate(\DateTime $approvedDate) { $this->approvedDate = $approvedDate; }
 
 
 
