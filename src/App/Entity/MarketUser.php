@@ -334,6 +334,8 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->status = $status;
     }
 
+    public function setIssuer(Issuer $issuer) { $this->issuer =  $issuer; }
+
     /**
      * @return mixed
      */
@@ -414,5 +416,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      * @return mixed
      */
     public function getSignatureArn() { return $this->signature_arn; }
+
+    public function getIssuer() :Issuer { return $this->issuer; }
 
 }
