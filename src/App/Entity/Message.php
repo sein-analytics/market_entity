@@ -10,9 +10,10 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Message")
  * @ORM\Table(name="Message")
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
@@ -66,13 +67,13 @@ class Message
      *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
-     * @var ArrayCollection
+     * @var PersistentCollection
      */
     protected $responses;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
-     * @var ArrayCollection
+     * @var PersistentCollection
      */
     protected $recipients;
 
@@ -103,13 +104,16 @@ class Message
 
     public function __construct()
     {
-        $this->responses = new ArrayCollection();
-        $this->recipients = new ArrayCollection();
     }
 
     public function addRecipient(MarketUser $user)
     {
         $this->recipients->add($user);
+    }
+
+    public function addResponse(Message $message)
+    {
+        $this->responses->add($message);
     }
 
     /**
@@ -201,28 +205,14 @@ class Message
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getResponses()
-    {
-        return $this->responses;
-    }
-
-    /**
-     * @param ArrayCollection $responses
-     */
-    public function setResponses(ArrayCollection $responses)
-    {
-        $this->responses = $responses;
-    }
+    public function getResponses() : PersistentCollection { return $this->responses; }
 
     /**
      * @return Deal
      */
-    public function getDeal()
-    {
-        return $this->deal;
-    }
+    public function getDeal() {return $this->deal; }
 
     /**
      * @param mixed $deal
@@ -235,26 +225,17 @@ class Message
     /**
      * @return Loan
      */
-    public function getLoan()
-    {
-        return $this->loan;
-    }
+    public function getLoan() { return $this->loan; }
 
     /**
      * @param mixed $loan
      */
-    public function setLoan(Loan $loan)
-    {
-        $this->loan = $loan;
-    }
+    public function setLoan(Loan $loan) { $this->loan = $loan; }
 
     /**
      * @return MessageOriginator
      */
-    public function getOriginator()
-    {
-        return $this->originator;
-    }
+    public function getOriginator() : MessageOriginator { return $this->originator; }
 
     /**
      * @param MessageOriginator $originator
@@ -265,12 +246,9 @@ class Message
     }
 
     /**
-     * @return DueDiligence
+     * @return DueDiligence|null
      */
-    public function getDueDiligence()
-    {
-        return $this->dueDiligence;
-    }
+    public function getDueDiligence() { return $this->dueDiligence; }
 
     /**
      * @param DueDiligence $dueDiligence
@@ -281,12 +259,9 @@ class Message
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection
      */
-    public function getRecipients()
-    {
-        return $this->recipients;
-    }
+    public function getRecipients() : PersistentCollection { return $this->recipients; }
 
 
 }
