@@ -73,10 +73,7 @@ class Issuer
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
     /**
      * @return PersistentCollection

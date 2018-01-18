@@ -419,4 +419,11 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 
     public function getIssuer() :Issuer { return $this->issuer; }
 
+    /**
+     * @return mixed
+     */
+    public function getImageArn() { return $this->image_arn; }
+
+
+
 }
