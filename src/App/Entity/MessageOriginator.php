@@ -11,6 +11,8 @@ namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="MessageOriginator")
@@ -34,13 +36,12 @@ class MessageOriginator
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="originator")
-     * @var ArrayCollection
+     * @var PersistentCollection
      */
     protected $messages;
 
     function __construct()
     {
-        $this->messages = new ArrayCollection();
     }
 
     public function addMessage(Message $message)
@@ -49,27 +50,18 @@ class MessageOriginator
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() :int { return $this->id; }
 
     /**
      * @return string
      */
-    public function getOriginator()
-    {
-        return $this->originator;
-    }
+    public function getOriginator() { return $this->originator; }
 
     /**
      * @return mixed
      */
-    public function getMessages()
-    {
-        return $this->messages;
-    }
+    public function getMessages() :PersistentCollection { return $this->messages; }
 
 }

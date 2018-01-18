@@ -98,6 +98,13 @@ class Message
     protected $originator;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
+     * @var MessageStatus
+     */
+    protected $status;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="messages")
      */
     protected $dueDiligence;
@@ -127,10 +134,7 @@ class Message
     /**
      * @return MarketUser
      */
-    public function getUser()
-    {
-        return $this->user;
-    }
+    public function getUser(){ return $this->user; }
 
     /**
      * @param MarketUser $user
@@ -143,66 +147,42 @@ class Message
     /**
      * @return MessageType
      */
-    public function getType()
-    {
-        return $this->type;
-    }
+    public function getType() : MessageType { return $this->type; }
 
     /**
      * @param MessageType $type
      */
-    public function setType(MessageType $type)
-    {
-        $this->type = $type;
-    }
+    public function setType(MessageType $type) { $this->type = $type; }
 
     /**
      * @return mixed
      */
-    public function getMessage()
-    {
-        return $this->message;
-    }
+    public function getMessage() : string { return $this->message; }
 
     /**
      * @param mixed $message
      */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
+    public function setMessage(string $message) { $this->message = $message; }
 
     /**
      * @return \DateTime
      */
-    public function getDate()
-    {
-        return $this->date;
-    }
+    public function getDate() { return $this->date; }
 
     /**
      * @param mixed $date
      */
-    public function setDate($date)
-    {
-        $this->date = $date;
-    }
+    public function setDate(\DateTime $date) { $this->date = $date; }
 
     /**
      * @return string
      */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
+    public function getSubject() :string { return $this->subject; }
 
     /**
      * @param string $subject
      */
-    public function setSubject(string $subject)
-    {
-        $this->subject = $subject;
-    }
+    public function setSubject(string $subject) { $this->subject = $subject; }
 
     /**
      * @return PersistentCollection
@@ -212,15 +192,12 @@ class Message
     /**
      * @return Deal
      */
-    public function getDeal() {return $this->deal; }
+    public function getDeal()  { return $this->deal; }
 
     /**
      * @param mixed $deal
      */
-    public function setDeal(Deal $deal)
-    {
-        $this->deal = $deal;
-    }
+    public function setDeal(Deal $deal) { $this->deal = $deal; }
 
     /**
      * @return Loan
@@ -240,10 +217,7 @@ class Message
     /**
      * @param MessageOriginator $originator
      */
-    public function setOriginator(MessageOriginator $originator)
-    {
-        $this->originator = $originator;
-    }
+    public function setOriginator(MessageOriginator $originator) { $this->originator = $originator; }
 
     /**
      * @return DueDiligence|null
@@ -253,10 +227,7 @@ class Message
     /**
      * @param DueDiligence $dueDiligence
      */
-    public function setDueDiligence(DueDiligence $dueDiligence)
-    {
-        $this->dueDiligence = $dueDiligence;
-    }
+    public function setDueDiligence(DueDiligence $dueDiligence) { $this->dueDiligence = $dueDiligence; }
 
     /**
      * @return PersistentCollection
