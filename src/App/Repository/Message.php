@@ -20,7 +20,7 @@ class Message extends EntityRepository
 
     public function fetchMessageIdsFromUserMessage(int $userId)
     {
-        $sql = "SELECT message_id FROM market_user_message WHERE market_user_id = ?;";
+        $sql = "SELECT message_id FROM market_user_message WHERE market_user_id = ?";
         $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $userId);
         $stmt->execute();
