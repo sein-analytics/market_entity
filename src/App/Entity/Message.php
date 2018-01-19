@@ -112,7 +112,7 @@ class Message
     protected $priority;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
      * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
      * @var MessagePriority
      */
