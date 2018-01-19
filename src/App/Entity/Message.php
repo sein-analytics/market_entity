@@ -105,6 +105,20 @@ class Message
     protected $status;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="messages")
+     * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=true)
+     * @var MessagePriority
+     */
+    protected $priority;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
+     * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
+     * @var MessagePriority
+     */
+    protected $action;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="messages")
      */
     protected $dueDiligence;
@@ -233,6 +247,21 @@ class Message
      * @return PersistentCollection
      */
     public function getRecipients() : PersistentCollection { return $this->recipients; }
+
+    /**
+     * @return MessageStatus
+     */
+    public function getStatus(): MessageStatus { return $this->status; }
+
+    /**
+     * @return MessagePriority
+     */
+    public function getPriority(): MessagePriority { return $this->priority; }
+
+    /**
+     * @return MessagePriority
+     */
+    public function getAction(): MessagePriority { return $this->action; }
 
 
 }
