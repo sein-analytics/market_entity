@@ -9,8 +9,14 @@
 namespace App\Entity;
 
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="MessageStatus")
+ *
+ */
 class MessageStatus
 {
     /**

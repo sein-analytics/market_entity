@@ -8,8 +8,6 @@ namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
-use Illuminate\Support\Facades\App;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\Issuer")
