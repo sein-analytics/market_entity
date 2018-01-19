@@ -114,7 +114,7 @@ class Message
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
      * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
-     * @var MessagePriority
+     * @var MessageAction
      */
     protected $action;
 
@@ -259,9 +259,9 @@ class Message
     public function getPriority(): MessagePriority { return $this->priority; }
 
     /**
-     * @return MessagePriority
+     * @return MessageAction
      */
-    public function getAction(): MessagePriority { return $this->action; }
+    public function getAction(): MessageAction { return $this->action; }
 
 
 }
