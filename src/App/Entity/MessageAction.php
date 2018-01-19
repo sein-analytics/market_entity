@@ -28,8 +28,20 @@ class MessageAction
     /**
      * @ORM\Column(type="string", nullable=false)
      * @var string
-     *   */
-    protected $messageAction;
+     */
+    protected $urlText;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected $documentUrl;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected $icon;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="action")
@@ -45,11 +57,22 @@ class MessageAction
     /**
      * @return string
      */
-    public function getMessageAction(): string { return $this->messageAction; }
+    public function getUrlText(): string { return $this->urlText; }
 
     /**
      * @return PersistentCollection
      */
     public function getMessages() :PersistentCollection { return $this->messages; }
+
+    /**
+     * @return string
+     */
+    public function getDocumentUrl(): string { return $this->documentUrl; }
+
+    /**
+     * @return string
+     */
+    public function getIcon(): string { return $this->icon; }
+
 
 }
