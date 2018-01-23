@@ -259,9 +259,9 @@ class Message
     public function getPriority(): MessagePriority { return $this->priority; }
 
     /**
-     * @return MessageAction|null
+     * @return MessageAction
      */
-    public function getAction() { return $this->action; }
+    public function getAction(): MessageAction { return $this->action; }
 
 
 }
