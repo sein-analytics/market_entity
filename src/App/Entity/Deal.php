@@ -25,11 +25,11 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
 
     protected $ignoreDbProperties = [
         'bonds' => null, 'pools' => null, 'accounts' => null, 'shelfSpecifics' => null,
-        'bids' => null  ,'triggers' => null, 'fees' => null, 'latestPeriod' => 'null'
+        'bids' => null  ,'triggers' => null, 'fees' => null
     ];
 
     protected $addUcIdToPropName = [
-        'issuer' => null, 'latestPeriod' => null, 'bidType',
+        'issuer' => null, 'bidType',
         'status' => null, 'auctionType' => null, 'user' => null, 'assetType'
     ];
 
@@ -148,12 +148,6 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      * @var ArrayCollection
      **/
     protected $documents;
-
-    /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Period")
-     * @var \App\Entity\Period
-     */
-    protected $latestPeriod;
 
     /** @ORM\Column(type="string", nullable=true) */
     protected $loanDataParser;
@@ -407,20 +401,6 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     {
         $this->_onPropertyChanged('periods', $this->periods, $periods);
         $this->periods = $periods;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLatestPeriod() { return $this->latestPeriod; }
-
-    /**
-     * @param mixed $latestPeriod
-     */
-    public function setLatestPeriod($latestPeriod)
-    {
-        $this->_onPropertyChanged('latestPeriod', $this->latestPeriod, $latestPeriod);
-        $this->latestPeriod = $latestPeriod;
     }
 
     /**
