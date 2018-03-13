@@ -282,6 +282,18 @@ abstract class Loan implements NotifyPropertyChanged
      **/
     protected $zeroBalanceDate;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var number $loanHasBeenModified
+     */
+    protected $loanHasBeenModified;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var number $lengthOfModification
+     */
+    protected $endModPeriod;
+
     /** @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")   */
     protected $bids;
 
@@ -1050,5 +1062,35 @@ abstract class Loan implements NotifyPropertyChanged
      * @return ArrayCollection
      */
     public function getIssues() { return $this->issues; }
+
+    /**
+     * @return number
+     */
+    public function getLoanHasBeenModified(): number { return $this->loanHasBeenModified; }
+
+    /**
+     * @param number $loanHasBeenModified
+     */
+    public function setLoanHasBeenModified(number $loanHasBeenModified)
+    {
+        $this->_onPropertyChanged('loanHasBeenModified', $this->loanHasBeenModified, $loanHasBeenModified);
+        $this->loanHasBeenModified = $loanHasBeenModified;
+    }
+
+    /**
+     * @return number
+     */
+    public function getEndModPeriod(): number { return $this->endModPeriod; }
+
+    /**
+     * @param number $endModPeriod
+     */
+    public function setEndModPeriod(number $endModPeriod)
+    {
+        $this->_onPropertyChanged('endModPeriod', $this->endModPeriod, $endModPeriod);
+        $this->endModPeriod = $endModPeriod;
+    }
+
+
 
 }
