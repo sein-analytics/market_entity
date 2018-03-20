@@ -48,6 +48,12 @@ class Period implements NotifyPropertyChanged
     protected $poolUpdates;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="period")
+     * @var ArrayCollection
+     **/
+    protected $loanUpdates;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="periods")
      * @var \App\Entity\Deal
      **/

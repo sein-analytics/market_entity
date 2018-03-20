@@ -9,6 +9,7 @@
 namespace App\Entity\Update;
 
 use App\Entity\NotifyChangeTrait;
+use App\Entity\Period;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
@@ -38,6 +39,12 @@ class LoanUpdate implements NotifyPropertyChanged
      * @var \App\Entity\Update\PoolUpdate
      **/
     protected $pool;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="loanUpdates")
+     * @var Period
+     **/
+    protected $period;
 
     /** @ORM\Column(type="decimal", precision=14, scale=4) **/
     protected $beginningBalance = 0.0;
@@ -145,8 +152,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return PoolUpdate
      */
-    public function getPool()
-    {
+    public function getPool() {
         return $this->pool;
     }
 
