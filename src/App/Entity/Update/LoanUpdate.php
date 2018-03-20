@@ -58,6 +58,9 @@ class LoanUpdate implements NotifyPropertyChanged
      **/
     protected $dueforDate;
 
+    /** @ORM\Column(type="decimal", precision=7, scale=4, nullable=true) **/
+    protected $currentRate = 0.0;
+
     /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
     protected $monthlyPayment = 0.0;
 
