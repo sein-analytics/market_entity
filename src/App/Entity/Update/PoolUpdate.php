@@ -57,6 +57,9 @@ class PoolUpdate implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
     protected $startingBalance;
 
+    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
+    protected $cumulativeLosses;
+
     /**
      * Period starting gross weighted average coupon
      * @ORM\Column(type="decimal", precision=9, scale=5, nullable=true)

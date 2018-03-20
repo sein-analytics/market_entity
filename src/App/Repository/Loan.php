@@ -180,7 +180,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
                 FROM loans l LEFT JOIN l.ArmAttribute v
                 LEFT JOIN l.Pool p LEFT JOIN p.Deal d INDEX BY l.id WHERE d.id = ?1 ORDER BY l.id
                ';
-        $query = $this->getEntityManager()->createQuery($dql);
+        $query = $this->em->createQuery($dql);
         $query->setParameter(1, $dealId);
         $query->setHint(Query::HINT_FORCE_PARTIAL_LOAD, true);
         $query->setHint(Query::HINT_INCLUDE_META_COLUMNS, true);
