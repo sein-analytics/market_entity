@@ -174,8 +174,8 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
     {
         $dql = 'SELECT
                 partial l.{id, amortization_id, original_balance, current_balance, servicingfee, original_term, amortization_term, remaining_term, io_term,
-                            balloon_period, monthly_payment, initial_rate, loan_has_been_modified, end_mod_period, foreclosure_date, reo_date}
-                partial p.{id}
+                            balloon_period, monthly_payment, initial_rate, loan_has_been_modified, end_mod_period, foreclosure_date, reo_date},
+                partial p.{id},
                 partial v.{id, gross_margin, minimum_rate, maximum_rate, rate_index, fst_rate_adj_period, fst_rate_adj_date, rate_adj_frequency, initial_cap, periodic_cap}
                 FROM loans l LEFT JOIN l.ArmAttribute v
                 LEFT JOIN l.Pool p LEFT JOIN p.Deal d INDEX BY l.id WHERE d.id = ?1 ORDER BY l.id
