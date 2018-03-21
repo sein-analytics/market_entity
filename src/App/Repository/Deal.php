@@ -41,10 +41,12 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         'latest_period_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
     ];
 
-    public function fetchDealObjectByDealId(int $id)
+    public function fetchDealPoolIdsByDealId(int $id)
     {
-        $deal = $this->em->getRepository('App\Entity\Deal')->find($id);
-        return $deal;
+        $sql = "SELECT id FROM Pool Where deal_id = :deal_id";
+        $stmt = $this->em->getConnection()->prepare($sql);
+        $stmt->bindValue('deal_id', $id);
+        return $this->completeIdFetchQuery($stmt);
     }
 
     /**
