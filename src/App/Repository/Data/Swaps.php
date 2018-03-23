@@ -16,7 +16,7 @@ class Swaps extends EntityRepository
 {
     public function fetchSwapRates()
     {
-        $sql = "SELECT * FROM Swap";
+        $sql = "SELECT * FROM Swaps";
         $result = $this->getEntityManager()->getConnection()->fetchAll($sql);
         return $result;
     }

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\Data\Swap")
- * @ORM\Table(name="Swap")
+ * @ORM\Table(name="Swaps")
  */
 class Swaps
 {
