@@ -11,7 +11,7 @@ namespace App\Entity\Data;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Data\Swap")
+ * @ORM\Entity(repositoryClass="\App\Repository\Data\Swaps")
  * @ORM\Table(name="Swaps")
  */
 class Swaps
