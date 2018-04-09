@@ -34,6 +34,13 @@ class LoanTapeTemplate
     protected $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\DealAsset", inversedBy="templates")
+     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id", nullable=true)
+     * @var DealAsset
+     */
+    protected $type;
+
+    /**
      * @ORM\Column(type="json", nullable=false)
      * @var array | null
      *
@@ -89,6 +96,14 @@ class LoanTapeTemplate
     {
         $template_st = json_encode($template);
         $this->template = $template_st;
+    }
+
+    /**
+     * @return DealAsset
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
 

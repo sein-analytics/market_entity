@@ -35,6 +35,11 @@ class DealAsset
     /** @ORM\Column(type="string", nullable=false) **/
     protected $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="type")
+     */
+    protected $templates;
+
     public function __construct()
     {
         $this->deals = new ArrayCollection();
