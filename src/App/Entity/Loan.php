@@ -298,6 +298,21 @@ abstract class Loan implements NotifyPropertyChanged
      */
     protected $endModPeriod;
 
+    /** @ORM\Column(type="string", nullable=true) **/
+    protected $channel;
+
+    /** @ORM\Column(type="datetime", nullable=true) **/
+    protected $lastPaymentDate;
+
+    /** @ORM\Column(type="integer", nullable=true)   */
+    protected $times_30;
+
+    /** @ORM\Column(type="integer", nullable=true)   */
+    protected $times_60;
+
+    /** @ORM\Column(type="integer", nullable=true)   */
+    protected $times_90;
+
     /** @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")   */
     protected $bids;
 
@@ -1095,6 +1110,74 @@ abstract class Loan implements NotifyPropertyChanged
         $this->endModPeriod = $endModPeriod;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getChannel() { return $this->channel; }
 
+    /**
+     * @param mixed $channel
+     */
+    public function setChannel($channel)
+    {
+        $this->_onPropertyChanged('channel', $this->channel, $channel);
+        $this->channel = $channel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastPaymentDate() { return $this->lastPaymentDate; }
+
+    /**
+     * @param mixed $lastPaymentDate
+     */
+    public function setLastPaymentDate($lastPaymentDate)
+    {
+        $this->_onPropertyChanged('lastPaymentDate', $this->lastPaymentDate, $lastPaymentDate);
+        $this->lastPaymentDate = $lastPaymentDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimes30() { return $this->times_30; }
+
+    /**
+     * @param mixed $times_30
+     */
+    public function setTimes30($times_30)
+    {
+        $this->_onPropertyChanged('times_30', $this->times_30, $times_30);
+        $this->times_30 = $times_30;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimes60() { return $this->times_60; }
+
+    /**
+     * @param mixed $times_60
+     */
+    public function setTimes60($times_60)
+    {
+        $this->_onPropertyChanged('times_60', $this->times_60, $times_60);
+        $this->times_60 = $times_60;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimes90() { return $this->times_90; }
+
+    /**
+     * @param mixed $times_90
+     */
+    public function setTimes90($times_90)
+    {
+        $this->_onPropertyChanged('times_90', $this->times_90, $times_90);
+        $this->times_90 = $times_90;
+    }
 
 }
