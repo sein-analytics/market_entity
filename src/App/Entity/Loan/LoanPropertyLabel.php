@@ -181,7 +181,7 @@ class LoanPropertyLabel extends EntityRepository
             if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
                 && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
                 $label = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
-                $properties[self::LABEL] = ucwords(str_replace('_',' ', $label));
+                $row[self::LABEL] = ucwords(str_replace('_',' ', $label));
             } else {
                 $row[self::LABEL] = ucwords(str_replace('_',' ', $properties[self::ENTITY_COLUMN]));
             }

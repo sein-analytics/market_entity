@@ -29,6 +29,11 @@ class LienType
     protected $slug;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="lienPosition")
+     */
+    protected $loans;
+
+    /**
      * @return mixed
      */
     public function getId() { return $this->id; }
