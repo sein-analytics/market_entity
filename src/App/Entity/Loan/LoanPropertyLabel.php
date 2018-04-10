@@ -90,6 +90,7 @@ class LoanPropertyLabel extends EntityRepository
         "significance" => self::DB_DATA,
         "label"     => "id",
         'type'  => 'integer',
+        'id'  => 0
     ];
 
     private $poolProp = [
@@ -98,6 +99,7 @@ class LoanPropertyLabel extends EntityRepository
         "significance" => self::DB_DATA,
         "label"     => "pool_id",
         'type'  => 'integer',
+        'id'  => 1
     ];
 
     private $stateProp = [
@@ -106,6 +108,7 @@ class LoanPropertyLabel extends EntityRepository
         "significance" => "required",
         "label"     => "State",
         'type'  => 'integer',
+        'id'  => 2
     ];
 
     private $msaProp = [
@@ -114,6 +117,7 @@ class LoanPropertyLabel extends EntityRepository
         "significance" => "optional",
         "label"     => "MSA CODE",
         'type'  => 'integer',
+        'id'  => 3
     ];
 
     private $amortizationProp = [
@@ -122,6 +126,7 @@ class LoanPropertyLabel extends EntityRepository
         "significance" => self::DB_DATA,
         "label"     => "amortization_id",
         'type'  => 'integer',
+        'id'  => 4
     ];
 
     private $descriptionProp = [
@@ -129,7 +134,8 @@ class LoanPropertyLabel extends EntityRepository
         "dbName"    => "description_id",
         "significance" => self::DB_DATA,
         'type'  => 'integer',
-        "label"     => "description_id"
+        "label"     => "description_id",
+        'id'  => 5
     ];
 
     protected $dbTypeSanitizer = [];
