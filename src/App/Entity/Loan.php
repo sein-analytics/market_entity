@@ -319,6 +319,12 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type="string", nullable=true) **/
     protected $newVsUsed;
 
+    /** @ORM\Column(type="decimal", precision=8, scale=2, nullable = true) **/
+    protected $reserves;
+
+    /** @ORM\Column(type="decimal", precision=8, scale=2, nullable = true) **/
+    protected $dealerReserve;
+
     /** @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")   */
     protected $bids;
 
@@ -1211,6 +1217,34 @@ abstract class Loan implements NotifyPropertyChanged
     {
         $this->newVsUsed = $newVsUsed;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getReserves() { return $this->reserves; }
+
+    /**
+     * @param mixed $reserves
+     */
+    public function setReserves($reserves)
+    {
+        $this->reserves = $reserves;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDealerReserve() { return $this->dealerReserve; }
+
+    /**
+     * @param mixed $dealerReserve
+     */
+    public function setDealerReserve($dealerReserve)
+    {
+        $this->dealerReserve = $dealerReserve;
+    }
+
+
 
 
 

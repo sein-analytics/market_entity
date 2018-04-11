@@ -88,7 +88,9 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         'times_60' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
         'times_90' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
         'year_built' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'new_vs_used' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
+        'new_vs_used' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'reserves' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        'dealer_reserve' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
 
 
