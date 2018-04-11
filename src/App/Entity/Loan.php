@@ -313,6 +313,12 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type="integer", nullable=true)   */
     protected $times_90;
 
+    /** @ORM\Column(type="integer", nullable=true) **/
+    protected $yearBuilt;
+
+    /** @ORM\Column(type="string", nullable=true) **/
+    protected $newVsUsed;
+
     /** @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")   */
     protected $bids;
 
@@ -1179,5 +1185,33 @@ abstract class Loan implements NotifyPropertyChanged
         $this->_onPropertyChanged('times_90', $this->times_90, $times_90);
         $this->times_90 = $times_90;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getYearBuilt() { return $this->yearBuilt; }
+
+    /**
+     * @param mixed $yearBuilt
+     */
+    public function setYearBuilt($yearBuilt)
+    {
+        $this->yearBuilt = $yearBuilt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewVsUsed() { return $this->newVsUsed; }
+
+    /**
+     * @param mixed $newVsUsed
+     */
+    public function setNewVsUsed($newVsUsed)
+    {
+        $this->newVsUsed = $newVsUsed;
+    }
+
+
 
 }
