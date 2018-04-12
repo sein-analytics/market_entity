@@ -106,5 +106,12 @@ class LoanTapeTemplate
         return $this->type;
     }
 
+    /**
+     * @param string $templateName
+     */
+    public function setTemplateName(string $templateName)
+    {
+        $this->templateName = $templateName;
+    }
 
 }
