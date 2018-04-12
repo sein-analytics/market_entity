@@ -114,4 +114,14 @@ class LoanTapeTemplate
         $this->templateName = $templateName;
     }
 
+    /**
+     * @param DealAsset $type
+     */
+    public function setType(DealAsset $type)
+    {
+        $this->type = $type;
+    }
+
+
+
 }
