@@ -83,7 +83,7 @@ class LoanTapeTemplate
     public function getTemplate()
     {
         if(is_string($this->template)){
-            $templateArray = json_decode($this->template);
+            $templateArray = json_decode($this->template, true);
             return $templateArray;
         }
         return $this->template;
@@ -94,7 +94,7 @@ class LoanTapeTemplate
      */
     public function setTemplate(array $template)
     {
-        $template_st = json_encode($template);
+        $template_st = json_encode($template, JSON_UNESCAPED_SLASHES);
         $this->template = $template_st;
     }
 

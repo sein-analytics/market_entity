@@ -66,6 +66,8 @@ class LoanPropertyLabel extends EntityRepository
 
     const SEARCH_KEY = 'search';
 
+    const BASE_STATE_ID = 51;
+
 
 
     private $propertyLabels = [
@@ -222,8 +224,8 @@ class LoanPropertyLabel extends EntityRepository
                 return $dbProperties;
             }
         }
-        $dbProperties[self::MAPPED_ID_KEY] = 51;
-        $dbProperties[self::STATE_AB_KEY] = 'NA';
+        $dbProperties[self::MAPPED_ID_KEY] = self::BASE_STATE_ID;
+        $dbProperties[self::LABEL] = 'NA';
         return $dbProperties;
     }
 

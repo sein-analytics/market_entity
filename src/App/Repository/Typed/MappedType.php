@@ -21,7 +21,8 @@ class MappedType extends EntityRepository
         'loanType' => 'loanType',
         'propertyType' => 'dwelling',
         'documentationType' => 'documentation',
-        'state' => 'state'
+        'state' => 'state',
+        'lienType' => 'lien'
     ];
 
     /**
