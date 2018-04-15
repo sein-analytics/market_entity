@@ -22,7 +22,9 @@ class MappedType extends EntityRepository
         'propertyType' => 'dwelling',
         'documentationType' => 'documentation',
         'state' => 'state',
-        'lienType' => 'lien'
+        'lienType' => 'lien',
+        'newUsed'   => 'newUsed',
+        'yearBuilt' => 'yearBuilt'
     ];
 
     /**
