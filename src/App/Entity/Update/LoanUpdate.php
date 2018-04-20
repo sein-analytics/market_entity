@@ -17,7 +17,7 @@ use App\Entity\Loan;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Update\LoanUpdate")
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\Table(name="LoanUpdate")
  */
@@ -30,6 +30,7 @@ class LoanUpdate implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="updates")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Loan
      **/
     protected $loan;
@@ -46,10 +47,16 @@ class LoanUpdate implements NotifyPropertyChanged
      **/
     protected $period;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4)
+     * @var float
+     **/
     protected $beginningBalance = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4)
+     * @var float
+     **/
     protected $endingBalance = 0.0;
 
     /**
@@ -58,32 +65,56 @@ class LoanUpdate implements NotifyPropertyChanged
      **/
     protected $dueforDate;
 
-    /** @ORM\Column(type="decimal", precision=7, scale=4, nullable=true) **/
+    /**
+     * @ORM\Column(type="decimal", precision=7, scale=4, nullable=true)
+     * @var float
+     **/
     protected $currentRate = 0.0;
 
     /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
     protected $monthlyPayment = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
     protected $principalPayment = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
     protected $interestPayment = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
     protected $tiPayment = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
     protected $lossAmount = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
     protected $prepaymentAmount = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
-    protected $defaultingAmount;
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
+    protected $defaultingAmount = 0.0;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $delinquencyReason;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     **/
+    protected $delinquencyReason = '';
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -103,45 +134,69 @@ class LoanUpdate implements NotifyPropertyChanged
     /** @ORM\Column(type = "integer", nullable=true) **/
     protected $nextPaymentAdjustmentPeriod;
 
-    /** @ORM\Column(type="integer", nullable=true)  **/
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var float
+     **/
     protected $netRate= 0.0;
 
     /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
     protected $unsupportedIntShortfall;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
     protected $servicingDues = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
-    protected $latePaymentDues;
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
+    protected $latePaymentDues = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
-    protected $recoveries;
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
+    protected $recoveries = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
-    protected $interestShortfall;
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
+    protected $interestShortfall = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=4, nullable=true) **/
-    protected $compensatingInterest;
+    /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
+    protected $compensatingInterest = 0.0;
 
     /** @ORM\Column(type = "integer", nullable=true) **/
     protected $loanDelinquencyStatus;
 
     /**
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @var float
+     **/
+    protected $escrowBalance = 0.0;
+
+    /**
+     * @ORM\Column(type = "string", nullable=true)
+     * @var string
+     **/
+    protected $servicingComments = '';
+
+    /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
     /**
      * @return Loan
      */
-    public function getLoan()
-    {
-        return $this->loan;
-    }
+    public function getLoan() { return $this->loan; }
 
     /**
      * @param Loan $loan
@@ -155,9 +210,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return PoolUpdate
      */
-    public function getPool() {
-        return $this->pool;
-    }
+    public function getPool() { return $this->pool; }
 
     /**
      * @param PoolUpdate $pool
@@ -169,15 +222,12 @@ class LoanUpdate implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getBeginningBalance()
-    {
-        return $this->beginningBalance;
-    }
+    public function getBeginningBalance() : float { return $this->beginningBalance; }
 
     /**
-     * @param mixed $beginningBalance
+     * @param float $beginningBalance
      */
     public function setBeginningBalance($beginningBalance)
     {
@@ -186,17 +236,14 @@ class LoanUpdate implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getEndingBalance()
-    {
-        return $this->endingBalance;
-    }
+    public function getEndingBalance() : float { return $this->endingBalance; }
 
     /**
-     * @param mixed $endingBalance
+     * @param float $endingBalance
      */
-    public function setEndingBalance($endingBalance)
+    public function setEndingBalance(float $endingBalance)
     {
         $this->_onPropertyChanged('endingBalance', $this->endingBalance, $endingBalance);
         $this->endingBalance = $endingBalance;
@@ -205,10 +252,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return \DateTime
      */
-    public function getDueforDate()
-    {
-        return $this->dueforDate;
-    }
+    public function getDueforDate() { return $this->dueforDate; }
 
     /**
      * @param \DateTime $dueforDate
@@ -220,34 +264,28 @@ class LoanUpdate implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getMonthlyPayment()
-    {
-        return $this->monthlyPayment;
-    }
+    public function getMonthlyPayment() : float { return $this->monthlyPayment; }
 
     /**
-     * @param mixed $monthlyPayment
+     * @param float $monthlyPayment
      */
-    public function setMonthlyPayment($monthlyPayment)
+    public function setMonthlyPayment(float $monthlyPayment)
     {
         $this->_onPropertyChanged('monthlyPayment', $this->monthlyPayment, $monthlyPayment);
         $this->monthlyPayment = $monthlyPayment;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getPrincipalPayment()
-    {
-        return $this->principalPayment;
-    }
+    public function getPrincipalPayment() : float { return $this->principalPayment; }
 
     /**
-     * @param mixed $principalPayment
+     * @param float $principalPayment
      */
-    public function setPrincipalPayment($principalPayment)
+    public function setPrincipalPayment(float $principalPayment)
     {
         $this->_onPropertyChanged('principalPayment', $this->principalPayment, $principalPayment);
         $this->principalPayment = $principalPayment;
@@ -256,100 +294,82 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getInterestPayment()
-    {
-        return $this->interestPayment;
-    }
+    public function getInterestPayment() : float { return $this->interestPayment; }
 
     /**
-     * @param mixed $interestPayment
+     * @param float $interestPayment
      */
-    public function setInterestPayment($interestPayment)
+    public function setInterestPayment(float $interestPayment)
     {
         $this->_onPropertyChanged('interestPayment', $this->interestPayment, $interestPayment);
         $this->interestPayment = $interestPayment;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getTiPayment()
-    {
-        return $this->tiPayment;
-    }
+    public function getTiPayment() : float { return $this->tiPayment; }
 
     /**
-     * @param mixed $tiPayment
+     * @param float $tiPayment
      */
-    public function setTiPayment($tiPayment)
+    public function setTiPayment(float $tiPayment)
     {
         $this->_onPropertyChanged('tiPayment', $this->tiPayment, $tiPayment);
         $this->tiPayment = $tiPayment;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getLossAmount()
-    {
-        return $this->lossAmount;
-    }
+    public function getLossAmount() : float { return $this->lossAmount; }
 
     /**
-     * @param mixed $lossAmount
+     * @param float $lossAmount
      */
-    public function setLossAmount($lossAmount)
+    public function setLossAmount(float $lossAmount)
     {
         $this->_onPropertyChanged('lossAmount', $this->lossAmount, $lossAmount);
         $this->lossAmount = $lossAmount;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getPrepaymentAmount()
-    {
-        return $this->prepaymentAmount;
-    }
+    public function getPrepaymentAmount() :float { return $this->prepaymentAmount; }
 
     /**
-     * @param mixed $prepaymentAmount
+     * @param float $prepaymentAmount
      */
-    public function setPrepaymentAmount($prepaymentAmount)
+    public function setPrepaymentAmount(float $prepaymentAmount)
     {
         $this->_onPropertyChanged('prepaymentAmount', $this->prepaymentAmount, $prepaymentAmount);
         $this->prepaymentAmount = $prepaymentAmount;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getDefaultingAmount()
-    {
-        return $this->defaultingAmount;
-    }
+    public function getDefaultingAmount() : float { return $this->defaultingAmount; }
 
     /**
-     * @param mixed $defaultingAmount
+     * @param float $defaultingAmount
      */
-    public function setDefaultingAmount($defaultingAmount)
+    public function setDefaultingAmount(float $defaultingAmount)
     {
         $this->_onPropertyChanged('defaultingAmount', $this->defaultingAmount, $defaultingAmount);
         $this->defaultingAmount = $defaultingAmount;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDelinquencyReason()
-    {
-        return $this->delinquencyReason;
-    }
+    public function getDelinquencyReason() :string { return $this->delinquencyReason; }
 
     /**
-     * @param mixed $delinquencyReason
+     * @param string $delinquencyReason
      */
-    public function setDelinquencyReason($delinquencyReason)
+    public function setDelinquencyReason(string $delinquencyReason)
     {
         $this->_onPropertyChanged('delinquencyReason', $this->delinquencyReason, $delinquencyReason);
         $this->delinquencyReason = $delinquencyReason;
@@ -358,10 +378,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return \DateTime
      */
-    public function getNextRateResetDate()
-    {
-        return $this->nextRateResetDate;
-    }
+    public function getNextRateResetDate() { return $this->nextRateResetDate; }
 
     /**
      * @param \DateTime $nextRateResetDate
@@ -375,10 +392,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getNextPaymentResetDate()
-    {
-        return $this->nextPaymentResetDate;
-    }
+    public function getNextPaymentResetDate() { return $this->nextPaymentResetDate; }
 
     /**
      * @param \DateTime $nextPaymentResetDate
@@ -392,10 +406,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getNextRateAdjustmentPeriod()
-    {
-        return $this->nextRateAdjustmentPeriod;
-    }
+    public function getNextRateAdjustmentPeriod() { return $this->nextRateAdjustmentPeriod; }
 
     /**
      * @param mixed $nextRateAdjustmentPeriod
@@ -409,10 +420,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getNextPaymentAdjustmentPeriod()
-    {
-        return $this->nextPaymentAdjustmentPeriod;
-    }
+    public function getNextPaymentAdjustmentPeriod() { return $this->nextPaymentAdjustmentPeriod; }
 
     /**
      * @param mixed $nextPaymentAdjustmentPeriod
@@ -424,102 +432,84 @@ class LoanUpdate implements NotifyPropertyChanged
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getNetRate()
-    {
-        return $this->netRate;
-    }
+    public function getNetRate() : float { return $this->netRate; }
 
     /**
-     * @param mixed $netRate
+     * @param float $netRate
      */
-    public function setNetRate($netRate)
+    public function setNetRate(float $netRate)
     {
         $this->_onPropertyChanged('netRate', $this->netRate, $netRate);
         $this->netRate = $netRate;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getUnsupportedIntShortfall()
-    {
-        return $this->unsupportedIntShortfall;
-    }
+    public function getUnsupportedIntShortfall() : float { return $this->unsupportedIntShortfall; }
 
     /**
-     * @param mixed $unsupportedIntShortfall
+     * @param float $unsupportedIntShortfall
      */
-    public function setUnsupportedIntShortfall($unsupportedIntShortfall)
+    public function setUnsupportedIntShortfall(float $unsupportedIntShortfall)
     {
         $this->_onPropertyChanged('unsupportedIntShortfall', $this->unsupportedIntShortfall, $unsupportedIntShortfall);
         $this->unsupportedIntShortfall = $unsupportedIntShortfall;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getServicingDues()
-    {
-        return $this->servicingDues;
-    }
+    public function getServicingDues() : float { return $this->servicingDues; }
 
     /**
-     * @param mixed $servicingDues
+     * @param float $servicingDues
      */
-    public function setServicingDues($servicingDues)
+    public function setServicingDues(float $servicingDues)
     {
         $this->_onPropertyChanged('servicingDues', $this->servicingDues, $servicingDues);
         $this->servicingDues = $servicingDues;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getLatePaymentDues()
-    {
-        return $this->latePaymentDues;
-    }
+    public function getLatePaymentDues() :float { return $this->latePaymentDues; }
 
     /**
-     * @param mixed $latePaymentDues
+     * @param float $latePaymentDues
      */
-    public function setLatePaymentDues($latePaymentDues)
+    public function setLatePaymentDues(float $latePaymentDues)
     {
         $this->_onPropertyChanged('latePaymentDues', $this->latePaymentDues, $latePaymentDues);
         $this->latePaymentDues = $latePaymentDues;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getRecoveries()
-    {
-        return $this->recoveries;
-    }
+    public function getRecoveries() : float { return $this->recoveries; }
 
     /**
-     * @param mixed $recoveries
+     * @param float $recoveries
      */
-    public function setRecoveries($recoveries)
+    public function setRecoveries(float $recoveries)
     {
         $this->_onPropertyChanged('recoveries', $this->recoveries, $recoveries);
         $this->recoveries = $recoveries;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getInterestShortfall()
-    {
-        return $this->interestShortfall;
-    }
+    public function getInterestShortfall() : float { return $this->interestShortfall; }
 
     /**
-     * @param mixed $interestShortfall
+     * @param float $interestShortfall
      */
-    public function setInterestShortfall($interestShortfall)
+    public function setInterestShortfall(float $interestShortfall)
     {
         $this->_onPropertyChanged('interestShortfall', $this->interestShortfall, $interestShortfall);
         $this->interestShortfall = $interestShortfall;
@@ -534,9 +524,9 @@ class LoanUpdate implements NotifyPropertyChanged
     }
 
     /**
-     * @param mixed $compensatingInterest
+     * @param float $compensatingInterest
      */
-    public function setCompensatingInterest($compensatingInterest)
+    public function setCompensatingInterest(float $compensatingInterest)
     {
         $this->_onPropertyChanged('compensatingInterest', $this->compensatingInterest, $compensatingInterest);
         $this->compensatingInterest = $compensatingInterest;
@@ -545,10 +535,7 @@ class LoanUpdate implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getLoanDelinquencyStatus()
-    {
-        return $this->loanDelinquencyStatus;
-    }
+    public function getLoanDelinquencyStatus() { return $this->loanDelinquencyStatus; }
 
     /**
      * @param mixed $loanDelinquencyStatus
@@ -558,6 +545,50 @@ class LoanUpdate implements NotifyPropertyChanged
         $this->_onPropertyChanged('loanDelinquencyStatus', $this->loanDelinquencyStatus, $loanDelinquencyStatus);
         $this->loanDelinquencyStatus = $loanDelinquencyStatus;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentRate()
+    {
+        return $this->currentRate;
+    }
+
+    /**
+     * @param mixed $currentRate
+     */
+    public function setCurrentRate($currentRate)
+    {
+        $this->currentRate = $currentRate;
+    }
+
+    /**
+     * @return float
+     */
+    public function getEscrowBalance(): float { return $this->escrowBalance; }
+
+    /**
+     * @param float $escrowBalance
+     */
+    public function setEscrowBalance(float $escrowBalance)
+    {
+        $this->escrowBalance = $escrowBalance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServicingComments() : string { return $this->servicingComments; }
+
+    /**
+     * @param string $servicingComments
+     */
+    public function setServicingComments(string $servicingComments)
+    {
+        $this->servicingComments = $servicingComments;
+    }
+
+
 
 
 }
