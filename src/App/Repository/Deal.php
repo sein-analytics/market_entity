@@ -45,6 +45,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
     public function __construct(EntityManager $em, \Doctrine\Common\Persistence\Mapping\ClassMetadata $class)
     {
         parent::__construct($em, $class);
+        $this->em = $em;
     }
 
     public function fetchDealPoolIdsByDealId(int $id)
