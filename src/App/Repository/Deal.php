@@ -12,6 +12,7 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -40,6 +41,11 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         'views' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'latest_period_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
     ];
+
+    public function __construct(EntityManager $em)
+    {
+        parent::__construct($em, $this->getClassMetadata());
+    }
 
     public function fetchDealPoolIdsByDealId(int $id)
     {
