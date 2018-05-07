@@ -42,9 +42,9 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         'latest_period_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
     ];
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, \Doctrine\Common\Persistence\Mapping\ClassMetadata $class)
     {
-        parent::__construct($em, $this->getClassMetadata());
+        parent::__construct($em, $class);
     }
 
     public function fetchDealPoolIdsByDealId(int $id)
