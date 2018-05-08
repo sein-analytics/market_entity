@@ -15,6 +15,7 @@ use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class Deal extends EntityRepository implements SqlManagerTraitInterface
 {
@@ -42,7 +43,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         'latest_period_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
     ];
 
-    public function __construct(EntityManager $em, \Doctrine\Common\Persistence\Mapping\ClassMetadata $class)
+    public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
         $this->em = $em;
