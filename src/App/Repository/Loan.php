@@ -13,6 +13,8 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 
 class Loan extends EntityRepository implements SqlManagerTraitInterface
@@ -93,6 +95,11 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         'dealer_reserve' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
 
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
 
     /**
      * @param int $dealId

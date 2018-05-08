@@ -14,6 +14,8 @@ use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\EntityManager;
 
 class Pool extends EntityRepository implements SqlManagerTraitInterface
 {
@@ -33,6 +35,12 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
       'is_io_group' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL'],
       'add_reserve_to_credit_support' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL']
     ];
+
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
 
     /**
      * @param int $dealId
