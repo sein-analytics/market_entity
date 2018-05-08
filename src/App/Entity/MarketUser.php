@@ -278,6 +278,11 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 
     public function getId() { return $this->id; }
 
+    /**
+     * @return mixed
+     */
+    public function getUserName() { return $this->userName; }
+
     function addDiligence(DueDiligence $diligence)
     {
         $this->diligence->add($diligence);
