@@ -36,6 +36,8 @@ class BidStatus
         $this->bids = new ArrayCollection();
     }
 
+    public function getId() { return $this->id; }
+
     function addBid(Bid $bid){
         $this->bids->add($bid);
     }
