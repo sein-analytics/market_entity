@@ -429,6 +429,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      */
     public function getImageArn() { return $this->image_arn; }
 
+    public function getEmail() { return $this->email; }
 
 
 }
