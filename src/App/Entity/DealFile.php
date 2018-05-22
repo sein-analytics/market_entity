@@ -135,13 +135,13 @@ class DealFile implements NotifyPropertyChanged
     protected $hasViruses;
 
     /**
-     * @ORMColumn(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var string;
      */
     protected $helloSignId;
 
     /**
-     * @ORMColumn(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var string;
      */
     protected $helloSignPath;
