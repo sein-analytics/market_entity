@@ -32,7 +32,9 @@ class DealFile extends EntityRepository implements SqlManagerTraitInterface
       'local_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
       'virus_scan_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
       'scan_location' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-      'has_viruses' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL']
+      'has_viruses' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+      'hello_sign_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'hello_sign_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
     ];
 
     public function __construct(EntityManager $em, ClassMetadata $class)
