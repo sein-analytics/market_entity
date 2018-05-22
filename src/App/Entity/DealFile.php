@@ -134,6 +134,18 @@ class DealFile implements NotifyPropertyChanged
      */
     protected $hasViruses;
 
+    /**
+     * @ORMColumn(type="string", nullable=true)
+     * @var string;
+     */
+    protected $helloSignId;
+
+    /**
+     * @ORMColumn(type="string", nullable=true)
+     * @var string;
+     */
+    protected $helloSignPath;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
@@ -266,6 +278,14 @@ class DealFile implements NotifyPropertyChanged
     public function getDocType() { return $this->docType; }
 
     /**
+     * @param DocType $docType
+     */
+    public function setDocType(DocType $docType)
+    {
+        $this->docType = $docType;
+    }
+
+    /**
      * @return DocAccess
      */
     public function getDocAccess() { return $this->docAccess; }
@@ -283,6 +303,30 @@ class DealFile implements NotifyPropertyChanged
         $this->scanLocation = $scanLocation;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getHelloSignId() { return $this->helloSignId; }
 
+    /**
+     * @param mixed $helloSignId
+     */
+    public function setHelloSignId($helloSignId)
+    {
+        $this->helloSignId = $helloSignId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelloSignPath(): string { return $this->helloSignPath; }
+
+    /**
+     * @param string $helloSignPath
+     */
+    public function setHelloSignPath(string $helloSignPath)
+    {
+        $this->helloSignPath = $helloSignPath;
+    }
 
 }
