@@ -194,11 +194,7 @@ abstract class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type = "integer", nullable=true) **/
     protected $firstTimeBuyer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Typed\LienType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="lien_position", referencedColumnName="id", nullable=false)
-     * @var LienType
-     **/
+    /** @ORM\Column(type="integer", nullable=false) **/
     protected $lienPosition;
 
     /** @ORM\Column(type="string", nullable=true) **/
