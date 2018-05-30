@@ -32,10 +32,6 @@ class MappedUserType
 
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
     protected $id;
 
 
