@@ -18,10 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PurposeType extends MappedTypeAbstract
 {
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\MappedUserType", mappedBy="purposeType")
-     * @var  ArrayCollection
-     * */
     protected $mappedUserType;
 
     public function __construct()

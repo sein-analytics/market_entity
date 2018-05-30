@@ -16,9 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PropertyType extends MappedTypeAbstract
 {
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\MappedUserType", mappedBy="propertyType")
-     */
     protected $mappedUserType;
 
     function __construct()

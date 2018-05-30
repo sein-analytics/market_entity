@@ -17,9 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
 class LienType extends MappedTypeAbstract
 {
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="lienPosition")
-     */
     protected $mappedUserType;
 
 
