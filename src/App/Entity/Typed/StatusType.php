@@ -16,9 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class StatusType extends MappedTypeAbstract
 {
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\MappedUserType", mappedBy="statusType")
-     */
     protected $mappedUserType;
 
     function __construct()

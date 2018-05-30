@@ -258,7 +258,6 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     protected $templates;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\MappedUserType", mappedBy="user")
      * @var  ArrayCollection
      * */
     protected $mappedTypes;

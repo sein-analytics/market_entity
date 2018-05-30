@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 class MappedUserType
 {
-    /**
+    /*
      * @ORM\Entity(repositoryClass="\App\Repository\MappedUserType")
      * @ORM\Table(name="MappedUserType")
      * @ChangeTrackingPolicy("NOTIFY")
