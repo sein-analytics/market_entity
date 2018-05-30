@@ -16,9 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ArmIndexType extends MappedTypeAbstract
 {
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\MappedUserType", mappedBy="armIndex")
-     */
     protected $mappedUserType;
 
     public function __construct()

@@ -19,14 +19,17 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\MappedUserType")
- * @ORM\Table(name="MappedUserType")
- * @ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
- */
+
 class MappedUserType
 {
+    /**
+     * @ORM\Entity(repositoryClass="\App\Repository\MappedUserType")
+     * @ORM\Table(name="MappedUserType")
+     * @ChangeTrackingPolicy("NOTIFY")
+     * @ORM\HasLifeCycleCallbacks
+     */
+
+
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
     /**
@@ -35,60 +38,22 @@ class MappedUserType
      **/
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="mappedTypes")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @var MarketUser
-     **/
+
     protected $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\ArmIndexType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="arm_index_id", referencedColumnName="id", nullable=false)
-     * @var ArmIndexType
-     */
+
     protected $armIndex;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\LoanType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="loan_type_id", referencedColumnName="id", nullable=false)
-     * @var LoanType
-     */
     protected $loanType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\PropertyType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="property_type_id", referencedColumnName="id", nullable=false)
-     * @var PropertyType
-     */
     protected $propertyType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\PurposeType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="purpose_type_id", referencedColumnName="id", nullable=false)
-     * @var PurposeType
-     */
     protected $purposeType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\OccupancyType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="occupancy_type_id", referencedColumnName="id", nullable=false)
-     * @var OccupancyType
-     */
     protected $occupancyType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\StatusType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="status_type_id", referencedColumnName="id", nullable=false)
-     * @var StatusType
-     */
     protected $statusType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\DocumentationType", inversedBy="mappedUserType")
-     * @ORM\JoinColumn(name="documentation_type_id", referencedColumnName="id", nullable=false)
-     * @var DocumentationType
-     */
     protected $documentationType;
 
     /**
@@ -102,42 +67,42 @@ class MappedUserType
     /**
      * @return MarketUser
      */
-    public function getUser(): MarketUser { return $this->user; }
+    public function getUser() { return $this->user; }
 
     /**
      * @return ArmIndexType
      */
-    public function getArmIndex(): ArmIndexType { return $this->armIndex; }
+    public function getArmIndex() { return $this->armIndex; }
 
     /**
      * @return LoanType
      */
-    public function getLoanType(): LoanType { return $this->loanType; }
+    public function getLoanType() { return $this->loanType; }
 
     /**
      * @return PropertyType
      */
-    public function getPropertyType(): PropertyType { return $this->propertyType; }
+    public function getPropertyType() { return $this->propertyType; }
 
     /**
      * @return PurposeType
      */
-    public function getPurposeType(): PurposeType { return $this->purposeType; }
+    public function getPurposeType() { return $this->purposeType; }
 
     /**
      * @return OccupancyType
      */
-    public function getOccupancyType(): OccupancyType { return $this->occupancyType; }
+    public function getOccupancyType() { return $this->occupancyType; }
 
     /**
      * @return StatusType
      */
-    public function getStatusType(): StatusType { return $this->statusType; }
+    public function getStatusType() { return $this->statusType; }
 
     /**
      * @return DocumentationType
      */
-    public function getDocumentationType(): DocumentationType { return $this->documentationType; }
+    public function getDocumentationType() { return $this->documentationType; }
 
     /**
      * @param MarketUser $user
