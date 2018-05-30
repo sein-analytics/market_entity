@@ -20,6 +20,18 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
+    const ASAP = 'asap';
+
+    const DAILY = 'daily';
+
+    const NOTIFY_OFF = 'off';
+
+    const NOTIFY =[
+        1 => self::ASAP,
+        2 => self::DAILY,
+        3 => self::NOTIFY_OFF
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -102,6 +114,11 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $userSalt;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $notifications;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="user")
@@ -381,6 +398,19 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     }
 
     /**
+     * @param int $int
+     * @return \Exception
+     */
+    public function setNotifications(int $int)
+    {
+        if(array_key_exists($int, self::NOTIFY)){
+            $this->notifications = $int;
+        }else{
+            return new \Exception("Notifications must be either 1, 2 or 3.");
+        }
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getDiligence() { return $this->diligence; }
@@ -431,5 +461,6 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 
     public function getEmail() { return $this->email; }
 
+    public function getNotifications() { return $this->notifications; }
 
 }
