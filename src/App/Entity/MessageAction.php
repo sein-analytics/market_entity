@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\MessageAction")
  * @ORM\Table(name="MessageAction")
  *
  */

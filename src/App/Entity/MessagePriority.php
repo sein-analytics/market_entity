@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\MessagePriority")
  * @ORM\Table(name="MessagePriority")
  *
  */
