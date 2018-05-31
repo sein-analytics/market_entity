@@ -254,14 +254,28 @@ class Message
     public function getStatus(): MessageStatus { return $this->status; }
 
     /**
+     * @param MessageStatus $status
+     */
+    public function setStatus(MessageStatus $status) { $this->status = $status; }
+
+    /**
      * @return MessagePriority
      */
     public function getPriority(): MessagePriority { return $this->priority; }
+
+    /**
+     * @param MessagePriority $priority
+     */
+    public function setPriority(MessagePriority $priority) { $this->priority = $priority; }
 
     /**
      * @return MessageAction
      */
     public function getAction(): MessageAction { return $this->action; }
 
+    /**
+     * @param MessageAction $action
+     */
+    public function setAction(MessageAction $action) { $this->action = $action; }
 
 }
