@@ -125,6 +125,8 @@ class Message
 
     public function __construct()
     {
+        $this->responses = new ArrayCollection();
+        $this->recipients = new ArrayCollection();
     }
 
     public function addRecipient(MarketUser $user)
