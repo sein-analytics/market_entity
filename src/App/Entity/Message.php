@@ -119,6 +119,12 @@ class Message
     protected $action;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $sendStatus;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="messages")
      */
     protected $dueDiligence;
@@ -279,5 +285,17 @@ class Message
      * @param MessageAction $action
      */
     public function setAction(MessageAction $action) { $this->action = $action; }
+
+    /**
+     * @return string
+     */
+    public function getSendStatus(): string { return $this->sendStatus; }
+
+    /**
+     * @param string $sendStatus
+     */
+    public function setSendStatus(string $sendStatus) { $this->sendStatus = $sendStatus; }
+
+
 
 }
