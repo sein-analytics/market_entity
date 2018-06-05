@@ -8,6 +8,7 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\PersistentCollection;
@@ -18,7 +19,7 @@ use Doctrine\ORM\PersistentCollection;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class Message
+class Message implements NotifyPropertyChanged
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
@@ -163,6 +164,7 @@ class Message
      */
     public function setUser(MarketUser $user)
     {
+        $this->_onPropertyChanged('user', $this->user, $user);
         $this->user = $user;
     }
 
@@ -174,7 +176,11 @@ class Message
     /**
      * @param MessageType $type
      */
-    public function setType(MessageType $type) { $this->type = $type; }
+    public function setType(MessageType $type)
+    {
+        $this->_onPropertyChanged('type', $this->type, $type);
+        $this->type = $type;
+    }
 
     /**
      * @return mixed
@@ -184,7 +190,11 @@ class Message
     /**
      * @param mixed $message
      */
-    public function setMessage(string $message) { $this->message = $message; }
+    public function setMessage(string $message)
+    {
+        $this->_onPropertyChanged('message', $this->message, $message);
+        $this->message = $message;
+    }
 
     /**
      * @return \DateTime
@@ -194,7 +204,11 @@ class Message
     /**
      * @param mixed $date
      */
-    public function setDate(\DateTime $date) { $this->date = $date; }
+    public function setDate(\DateTime $date)
+    {
+        $this->_onPropertyChanged('date', $this->date, $date);
+        $this->date = $date;
+    }
 
     /**
      * @return string
@@ -204,7 +218,11 @@ class Message
     /**
      * @param string $subject
      */
-    public function setSubject(string $subject) { $this->subject = $subject; }
+    public function setSubject(string $subject)
+    {
+        $this->_onPropertyChanged('subject', $this->subject, $subject);
+        $this->subject = $subject;
+    }
 
     /**
      * @return PersistentCollection
@@ -219,7 +237,11 @@ class Message
     /**
      * @param mixed $deal
      */
-    public function setDeal(Deal $deal) { $this->deal = $deal; }
+    public function setDeal(Deal $deal)
+    {
+        $this->_onPropertyChanged('deal', $this->deal, $deal);
+        $this->deal = $deal;
+    }
 
     /**
      * @return Loan
@@ -229,7 +251,11 @@ class Message
     /**
      * @param mixed $loan
      */
-    public function setLoan(Loan $loan) { $this->loan = $loan; }
+    public function setLoan(Loan $loan)
+    {
+        $this->_onPropertyChanged('loan', $this->loan, $loan);
+        $this->loan = $loan;
+    }
 
     /**
      * @return MessageOriginator
@@ -239,7 +265,11 @@ class Message
     /**
      * @param MessageOriginator $originator
      */
-    public function setOriginator(MessageOriginator $originator) { $this->originator = $originator; }
+    public function setOriginator(MessageOriginator $originator)
+    {
+        $this->_onPropertyChanged('originator', $this->originator, $originator);
+        $this->originator = $originator;
+    }
 
     /**
      * @return DueDiligence|null
@@ -249,7 +279,11 @@ class Message
     /**
      * @param DueDiligence $dueDiligence
      */
-    public function setDueDiligence(DueDiligence $dueDiligence) { $this->dueDiligence = $dueDiligence; }
+    public function setDueDiligence(DueDiligence $dueDiligence)
+    {
+        $this->_onPropertyChanged('dueDiligence', $this->dueDiligence, $dueDiligence);
+        $this->dueDiligence = $dueDiligence;
+    }
 
     /**
      * @return PersistentCollection
@@ -264,7 +298,11 @@ class Message
     /**
      * @param MessageStatus $status
      */
-    public function setStatus(MessageStatus $status) { $this->status = $status; }
+    public function setStatus(MessageStatus $status)
+    {
+        $this->_onPropertyChanged('status', $this->status, $status);
+        $this->status = $status;
+    }
 
     /**
      * @return MessagePriority
@@ -274,7 +312,11 @@ class Message
     /**
      * @param MessagePriority $priority
      */
-    public function setPriority(MessagePriority $priority) { $this->priority = $priority; }
+    public function setPriority(MessagePriority $priority)
+    {
+        $this->_onPropertyChanged('priority', $this->priority, $priority);
+        $this->priority = $priority;
+    }
 
     /**
      * @return MessageAction
@@ -284,7 +326,11 @@ class Message
     /**
      * @param MessageAction $action
      */
-    public function setAction(MessageAction $action) { $this->action = $action; }
+    public function setAction(MessageAction $action)
+    {
+        $this->_onPropertyChanged('action', $this->action, $action);
+        $this->action = $action;
+    }
 
     /**
      * @return string
@@ -294,7 +340,11 @@ class Message
     /**
      * @param string $sendStatus
      */
-    public function setSendStatus(string $sendStatus) { $this->sendStatus = $sendStatus; }
+    public function setSendStatus(string $sendStatus)
+    {
+        $this->_onPropertyChanged('sendStatus', $this->sendStatus, $sendStatus);
+        $this->sendStatus = $sendStatus;
+    }
 
 
 
