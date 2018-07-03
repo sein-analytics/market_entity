@@ -67,7 +67,7 @@ class DueDiligence
     protected $files;
 
     /**
-     * @ORM\OneTToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
      * @var ArrayCollection
      */
     protected $reviewStatuses;
