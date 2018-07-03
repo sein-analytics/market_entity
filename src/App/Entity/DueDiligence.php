@@ -42,32 +42,53 @@ class DueDiligence
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="dueDiligence")
+     * @var ArrayCollection
      */
     protected $issues;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
-     * @ORM\JoinColumn(name="dd_role_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="dd_role_id", referencedColumnName="id", nullable=false)
+     * @var DueDiligenceRole
      */
     protected $diligenceRole;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceStatus", inversedBy="dueDiligence")
-     * @ORM\JoinColumn(name="dd_status_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="dd_status_id", referencedColumnName="id", nullable=false)
+     * @var DueDiligenceStatus
      */
     protected $status;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
+     * @var ArrayCollection
      */
     protected $files;
+
+    /**
+     * @ORM\OneTToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
+     * @var ArrayCollection
+     */
+    protected $reviewStatuses;
 
     function __construct()
     {
         $this->issues = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->reviewStatuses = new ArrayCollection();
         $this->user = new MarketUser();
         $this->deal = new Deal();
+    }
+
+    public function addReviewToDueDil(DueDilReviewStatus $stat)
+    {
+        $this->reviewStatuses->add($stat);
+    }
+
+    public function addFileToDueDil(DealFile $file)
+    {
+        $this->files->add($file);
     }
 
     public function addFile(DealFile $file)
@@ -111,5 +132,45 @@ class DueDiligence
         $this->deal = $deal;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getIssues() { return $this->issues; }
+
+    /**
+     * @return DueDiligenceRole
+     */
+    public function getDiligenceRole() { return $this->diligenceRole; }
+
+    /**
+     * @param DueDiligenceRole $diligenceRole
+     */
+    public function setDiligenceRole(DueDiligenceRole $diligenceRole)
+    {
+        $this->diligenceRole = $diligenceRole;
+    }
+
+    /**
+     * @return DueDiligenceStatus
+     */
+    public function getStatus() : DueDiligenceStatus { return $this->status; }
+
+    /**
+     * @param DueDiligenceStatus $status
+     */
+    public function setStatus(DueDiligenceStatus $status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFiles() { return $this->files; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReviewStatuses() { return $this->reviewStatuses; }
 
 }

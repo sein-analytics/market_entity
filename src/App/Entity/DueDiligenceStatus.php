@@ -18,7 +18,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class DueDiligenceStatus
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      **/
     protected $id = 0;

@@ -38,6 +38,12 @@ class MessagePriority
     protected $messages;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="priority")
+     * @var PersistentCollection
+     */
+    protected $issues;
+
+    /**
      * @return int
      */
     public function getId() : int { return $this->id; }
@@ -51,5 +57,10 @@ class MessagePriority
      * @return PersistentCollection
      */
     public function getMessages() :PersistentCollection { return $this->messages; }
+
+    /**
+     * @return PersistentCollection
+     */
+    public function getIssues() :PersistentCollection { return $this->issues; }
 
 }

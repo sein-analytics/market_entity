@@ -346,6 +346,12 @@ abstract class Loan implements NotifyPropertyChanged
     protected $files;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="loan")
+     * @var ArrayCollection
+     */
+    protected $reviewStatuses;
+
+    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="loan")
      * @var ArrayCollection  */
     protected $issues;
@@ -359,11 +365,17 @@ abstract class Loan implements NotifyPropertyChanged
         $this->issues = new ArrayCollection();
         $this->files = new ArrayCollection();
         $this->fees = new ArrayCollection();
+        $this->reviewStatuses = new ArrayCollection();
     }
 
     function addIssue(Message $issue)
     {
         $this->issues->add($issue);
+    }
+
+    public function addDueDilReviewStatus(DueDilReviewStatus $status)
+    {
+        $this->reviewStatuses->add($status);
     }
 
     /**
@@ -1239,6 +1251,11 @@ abstract class Loan implements NotifyPropertyChanged
     {
         $this->dealerReserve = $dealerReserve;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getReviewStatuses() { return $this->reviewStatuses; }
 
 
 

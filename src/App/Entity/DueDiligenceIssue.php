@@ -57,6 +57,19 @@ class DueDiligenceIssue
      */
     protected $file;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="issues")
+     * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=false)
+     * @var MessagePriority
+     */
+    protected $priority;
+
+    /** @ORM\Column(type="boolean", nullable=false) */
+    protected $notifySeller = true;
+
+    /** @ORM\Column(type="boolean", nullable=false) */
+    protected $notifyTeam = false;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -125,6 +138,43 @@ class DueDiligenceIssue
      */
     public function setFile(DealFile $file) { $this->file = $file; }
 
+    /**
+     * @return MessagePriority
+     */
+    public function getPriority(): MessagePriority { return $this->priority; }
+
+    /** @param MessagePriority $priority */
+    public function setPriority(MessagePriority $priority)
+    {
+        $this->priority = $priority;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getNotifySeller() :bool { return $this->notifySeller; }
+
+
+    /**
+     * @param bool $notify
+     */
+    public function setNotifySeller(bool $notify)
+    {
+        $this->notifySeller = $notify;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getNotifyTeam() :bool { return $this->notifyTeam; }
+
+    /**
+     * @param bool $notify
+     */
+    public function setNotifyTeam(bool $notify)
+    {
+        $this->notifySeller = $notify;
+    }
 
 
 }
