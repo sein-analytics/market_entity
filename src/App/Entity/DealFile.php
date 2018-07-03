@@ -149,7 +149,7 @@ class DealFile implements NotifyPropertyChanged
     protected $helloSignPath;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssues", mappedBy="file")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
      * @var ArrayCollection
      */
     protected $issues;
