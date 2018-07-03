@@ -36,7 +36,7 @@ class DueDilReviewStatus
     protected $action = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="loanReviewStatus")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="reviewStatus")
      * @var ArrayCollection
      */
     protected $reviewStatuses;
