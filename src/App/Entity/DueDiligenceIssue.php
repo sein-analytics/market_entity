@@ -33,7 +33,7 @@ class DueDiligenceIssue
     protected $dueDiligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App|Entity\DueDilIssueStatus", inversedBy="issues")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDilIssueStatus", inversedBy="issues")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DueDilIssueStatus
      */
