@@ -41,7 +41,7 @@ class DueDiligence
     protected $deal;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBY="dueDiligence")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="dueDiligence")
      */
     protected $issues;
 
