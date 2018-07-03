@@ -47,13 +47,13 @@ class DueDiligence
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
-     * @ORM\JointColumn(name="dd_role_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="dd_role_id", referencedColumnName="id", nullable=true)
      */
     protected $diligenceRole;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceStatus", inversedBy="dueDiligence")
-     * @ORM\JointColumn(name="dd_status_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="dd_status_id", referencedColumnName="id", nullable=true)
      */
     protected $status;
 
