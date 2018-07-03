@@ -45,7 +45,7 @@ class DueDiligenceIssue
     protected $issue = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy=""issue)
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="issue")
      * @var ArrayCollection
      */
     protected $messages;
