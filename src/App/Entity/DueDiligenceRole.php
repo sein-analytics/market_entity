@@ -7,7 +7,6 @@
  */
 
 namespace App\Entity;
-use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -17,10 +16,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class DueDiligenceRole
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
-
     /**
-     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      **/
     protected $id;
@@ -32,14 +30,14 @@ class DueDiligenceRole
     protected $role;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="role")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="diligenceRole")
      * @var ArrayCollection
      */
-    protected $diligence;
+    protected $dueDiligence;
 
     function __construct()
     {
-        $this->diligence = new ArrayCollection();
+        $this->dueDiligence = new ArrayCollection();
     }
 
     /**
@@ -50,9 +48,9 @@ class DueDiligenceRole
         return $this->id;
     }
 
-    function addDiligence(DueDiligence $diligence)
+    function addDueDiligence(DueDiligence $dueDiligence)
     {
-        $this->diligence->add($diligence);
+        $this->dueDiligence->add($dueDiligence);
     }
 
     /**
@@ -62,5 +60,12 @@ class DueDiligenceRole
     {
         return $this->role;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDueDiligence(): ArrayCollection { return $this->dueDiligence; }
+
+
 
 }

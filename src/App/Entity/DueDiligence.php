@@ -25,12 +25,6 @@ class DueDiligence
      **/
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="diligence")
-     * @ORM\JoinColumn(name="due_diligence_role_id", referencedColumnName="id", nullable=false)
-     * @var DueDiligenceRole
-     */
-    protected $role;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="diligence")
@@ -47,44 +41,49 @@ class DueDiligence
     protected $deal;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="dueDiligence")
-     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBY="dueDiligence")
      */
-    protected $messages;
+    protected $issues;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
+     * @ORM\JointColumn(name="dd_role_id", referencedColumnName="id", nullable=true)
+     */
+    protected $diligenceRole;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceStatus", inversedBy="dueDiligence")
+     * @ORM\JointColumn(name="dd_status_id", referencedColumnName="id", nullable=true)
+     */
+    protected $status;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
+     */
+    protected $files;
 
     function __construct()
     {
-        $this->messages = new ArrayCollection();
+        $this->issues = new ArrayCollection();
+        $this->files = new ArrayCollection();
+        $this->user = new MarketUser();
+        $this->deal = new Deal();
     }
 
-    function addMessage(Message $message)
+    public function addFile(DealFile $file)
     {
-        $this->messages->add($message);
+        $this->files->add($file);
+    }
+
+    function addMDueDiligenceIssue(DueDiligenceIssue $issue)
+    {
+        $this->issues->add($issue);
     }
 
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return DueDiligenceRole
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param DueDiligenceRole $role
-     */
-    public function setRole(DueDiligenceRole $role)
-    {
-        $this->role = $role;
-    }
+    public function getId() { return $this->id; }
 
     /**
      * @param MarketUser $user
@@ -97,18 +96,12 @@ class DueDiligence
     /**
      * @return MarketUser
      */
-    public function getUser()
-    {
-        return $this->user;
-    }
+    public function getUser() : MarketUser { return $this->user; }
 
     /**
      * @return Deal
      */
-    public function getDeal()
-    {
-        return $this->deal;
-    }
+    public function getDeal() :Deal { return $this->deal; }
 
     /**
      * @param Deal $deal
@@ -116,14 +109,6 @@ class DueDiligence
     public function setDeal(Deal $deal)
     {
         $this->deal = $deal;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getMessages()
-    {
-        return $this->messages;
     }
 
 

@@ -11,6 +11,8 @@ use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
+
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\DealFile")
  * @ORM\Table(name="DealFile")
@@ -146,13 +148,35 @@ class DealFile implements NotifyPropertyChanged
      */
     protected $helloSignPath;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssues", mappedBy="file")
+     * @var ArrayCollection
+     */
+    protected $issues;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="files")
+     * @var ArrayCollection
+     */
+    protected $diligence;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
         $this->appends = new ArrayCollection();
         $this->docAccess = new ArrayCollection();
+        $this->issues = new ArrayCollection();
+        $this->diligence = new ArrayCollection();
     }
 
+    public function addIssue(DueDiligenceIssue $issue){
+        $this->issues->add($issue);
+    }
+
+    public function addDiligence(DueDiligence $diligence)
+    {
+        $this->diligence->add($diligence);
+    }
     /**
      * @return mixed
      */
@@ -328,5 +352,17 @@ class DealFile implements NotifyPropertyChanged
     {
         $this->helloSignPath = $helloSignPath;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getIssues() { return $this->issues; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDiligence() { return $this->diligence; }
+
+    
 
 }

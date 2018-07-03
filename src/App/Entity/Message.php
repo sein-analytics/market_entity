@@ -126,9 +126,10 @@ class Message implements NotifyPropertyChanged
     protected $sendStatus;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceIssue", inversedBy="messages")
+     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id", nullable=true)
      */
-    protected $dueDiligence;
+    protected $issue;
 
     public function __construct()
     {
@@ -272,17 +273,17 @@ class Message implements NotifyPropertyChanged
     }
 
     /**
-     * @return DueDiligence|null
+     * @return DueDiligenceIssue|null
      */
-    public function getDueDiligence() { return $this->dueDiligence; }
+    public function getIssue() { return $this->issue; }
 
     /**
-     * @param DueDiligence $dueDiligence
+     * @param DueDiligenceIssue $issue
      */
-    public function setDueDiligence(DueDiligence $dueDiligence)
+    public function setIssue(DueDiligenceIssue $issue)
     {
-        $this->_onPropertyChanged('dueDiligence', $this->dueDiligence, $dueDiligence);
-        $this->dueDiligence = $dueDiligence;
+        $this->_onPropertyChanged('issue', $this->issue, $issue);
+        $this->issue = $issue;
     }
 
     /**
