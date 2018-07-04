@@ -33,7 +33,12 @@ class DueDilReviewStatus
     /**
      * @ORM\Column(type="string", nullable=false)
      * @var string  */
-    protected $action = '';
+    protected $plusAction = '';
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string  */
+    protected $minusAction = '';
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="reviewStatus")
@@ -64,7 +69,12 @@ class DueDilReviewStatus
     /**
      * @return string
      */
-    public function getAction(): string { return $this->action; }
+    public function getPlusAction(): string { return $this->plusAction; }
+
+    /**
+     * @return string
+     */
+    public function getMinusAction(): string { return $this->minusAction; }
 
     /**
      * @return ArrayCollection
