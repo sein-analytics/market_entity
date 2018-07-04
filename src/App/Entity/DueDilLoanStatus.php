@@ -17,6 +17,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class DueDilLoanStatus
 {
+    protected $logObject = [
+        'userId' => null,
+        'date' => null,
+        'action' => null
+    ];
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -44,6 +50,76 @@ class DueDilLoanStatus
      * @var DueDilReviewStatus
      */
     protected $reviewStatus;
+
+    /**
+     * @ORM\Column(type="json", nullable=false)
+     */
+    protected $logger;
+
+    public function __construct()
+    {
+        $this->logger = json_encode($this->logObject);
+    }
+
+    /**
+     * @return array
+     */
+    public function getLogObject(): array { return $this->logObject; }
+
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return DueDiligence
+     */
+    public function getDiligence(): DueDiligence { return $this->diligence; }
+
+    /**
+     * @param DueDiligence $diligence
+     */
+    public function setDiligence(DueDiligence $diligence) { $this->diligence = $diligence; }
+
+    /**
+     * @return Loan
+     */
+    public function getLoan(): Loan { return $this->loan; }
+
+    /**
+     * @param Loan $loan
+     */
+    public function setLoan(Loan $loan) { $this->loan = $loan; }
+
+    /**
+     * @return DueDilReviewStatus
+     */
+    public function getReviewStatus(): DueDilReviewStatus { return $this->reviewStatus; }
+
+    /**
+     * @param DueDilReviewStatus $reviewStatus
+     */
+    public function setReviewStatus(DueDilReviewStatus $reviewStatus)
+    {
+        $this->reviewStatus = $reviewStatus;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLogger(): array { return json_decode($this->logger, true); }
+
+    /**
+     * @param array $logger
+     */
+    public function setLogger(array $logger)
+    {
+        $this->logger = json_encode($logger);
+    }
 
 
 }
