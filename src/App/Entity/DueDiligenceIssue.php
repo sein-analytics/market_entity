@@ -70,9 +70,24 @@ class DueDiligenceIssue
     /** @ORM\Column(type="boolean", nullable=false) */
     protected $notifyTeam = false;
 
+    /** @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     **/
+    protected $openDate;
+
+    /** @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     **/
+    protected $closetDate;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->dueDiligence = new DueDiligence();
+        $this->status = new DueDilIssueStatus();
+        $this->priority = new MessagePriority();
+        $this->openDate = new \DateTime();
+        $this->closetDate = new \DateTime();
     }
 
     /**
@@ -176,5 +191,30 @@ class DueDiligenceIssue
         $this->notifySeller = $notify;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getOpenDate(): \DateTime { return $this->openDate; }
+
+    /**
+     * @param \DateTime $openDate
+     */
+    public function setOpenDate(\DateTime $openDate)
+    {
+        $this->openDate = $openDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getClosetDate(): \DateTime { return $this->closetDate; }
+
+    /**
+     * @param \DateTime $closetDate
+     */
+    public function setClosetDate(\DateTime $closetDate)
+    {
+        $this->closetDate = $closetDate;
+    }
 
 }
