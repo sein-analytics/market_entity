@@ -78,7 +78,7 @@ class DueDiligenceIssue
     /** @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $closetDate;
+    protected $closedDate;
 
     public function __construct()
     {
@@ -87,7 +87,7 @@ class DueDiligenceIssue
         $this->status = new DueDilIssueStatus();
         $this->priority = new MessagePriority();
         $this->openDate = new \DateTime();
-        $this->closetDate = new \DateTime();
+        $this->closedDate = new \DateTime();
     }
 
     /**
@@ -207,14 +207,14 @@ class DueDiligenceIssue
     /**
      * @return \DateTime
      */
-    public function getClosetDate(): \DateTime { return $this->closetDate; }
+    public function getClosedDate(): \DateTime { return $this->closedDate; }
 
     /**
-     * @param \DateTime $closetDate
+     * @param \DateTime $closedDate
      */
-    public function setClosetDate(\DateTime $closetDate)
+    public function setClosedDate(\DateTime $closedDate)
     {
-        $this->closetDate = $closetDate;
+        $this->closedDate = $closedDate;
     }
 
 }
