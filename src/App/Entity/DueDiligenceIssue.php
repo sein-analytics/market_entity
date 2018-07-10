@@ -12,7 +12,7 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\DueDiligenceIssue")
  * @ORM\Table(name="DueDiligenceIssue")
  */
 class DueDiligenceIssue

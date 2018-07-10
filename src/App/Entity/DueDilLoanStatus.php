@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\EntityClass="\App\Repository\DueDilLoanStatus")
  * @ORM\Table(name="DueDilLoanStatus")
  */
 class DueDilLoanStatus
@@ -39,7 +39,7 @@ class DueDilLoanStatus
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="reviewStatuses")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="ln_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
     protected $loan;
