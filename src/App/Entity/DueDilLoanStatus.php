@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\EntityClass="\App\Repository\DueDilLoanStatus")
+ * @ORM\Entity(repositoryClass="\App\Repository\DueDilLoanStatus")
  * @ORM\Table(name="DueDilLoanStatus")
  */
 class DueDilLoanStatus
