@@ -215,6 +215,8 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->diligence = new ArrayCollection();
         $this->userFavorites = new ArrayCollection();
         $this->periods = new ArrayCollection();
+        $this->marketUsers = new MarketUser();
+        $this->issuer = new Issuer();
     }
 
     function addMessage(Message $message)
@@ -242,9 +244,9 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     public function getId() { return $this->id; }
 
     /**
-     * @return mixed
+     * @return Issuer
      */
-    public function getIssuer() { return $this->issuer; }
+    public function getIssuer() : Issuer { return $this->issuer; }
 
     /**
      * @param mixed $issuer
