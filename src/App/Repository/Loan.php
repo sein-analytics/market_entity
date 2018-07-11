@@ -12,6 +12,7 @@ use App\Service\QueryManagerTrait;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\SqlManagerTraitInterface;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
@@ -136,8 +137,8 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
             $sql = "SELECT * FROM loans WHERE pool_id IN (?) AND id NOT IN (?) ORDER BY id ASC ";
             $stmt = $this->em->getConnection()->executeQuery($sql,
                 array($ids, $loansId),
-                array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY,
-                    \Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+                array(Connection::PARAM_INT_ARRAY,
+                    Connection::PARAM_INT_ARRAY)
             );
             $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         }

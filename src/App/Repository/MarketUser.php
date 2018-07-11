@@ -90,4 +90,15 @@ class MarketUser extends EntityRepository
         $results = $this->flattenResultArrayByKey($results, 'id');
         return $results;
     }
+
+    public function fetchIssuerUserIdsByIssuerId(int $issuerId, int $exceptId=0)
+    {
+        $sql = "SELECT id FROM MarketUser WHERE issuer_id = ? AND id != ? ORDER BY id ASC ";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindParam(1, $issuerId);
+        $stmt->bindParam(2, $exceptId);
+        $stmt->execute();
+        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        return $result;
+    }
 }
