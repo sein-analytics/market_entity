@@ -99,6 +99,6 @@ class MarketUser extends EntityRepository
         $stmt->bindParam(2, $exceptId);
         $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        return $result;
+        return $this->flattenResultArrayByKey($result, 'id');
     }
 }
