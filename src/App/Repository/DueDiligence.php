@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 
+use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
@@ -16,7 +17,7 @@ use Doctrine\ORM\Query;
 
 class DueDiligence extends EntityRepository
 {
-    use FetchMapperTrait;
+    use FetchMapperTrait, FetchingTrait;
 
     /**
      * @param array $userIds
@@ -27,11 +28,7 @@ class DueDiligence extends EntityRepository
     public function fetchDdIdsByUserIdsDealIds(array $userIds, array $dealIds, array $exceptIds=[0])
     {
         $sql = 'SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)';
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
-            array($userIds, $dealIds, $exceptIds),
-            array(Connection::PARAM_INT_ARRAY,
-                Connection::PARAM_INT_ARRAY)
-        );
+        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $userIds, $dealIds, $exceptIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         if(count($results)){
             return $this->flattenResultArrayByKey($results, 'id');
@@ -64,10 +61,7 @@ class DueDiligence extends EntityRepository
     {
         $sql = 'SELECT id, due_diligence_id, status_id, file_id, open_date, closed_date FROM DueDiligenceIssue ' .
             'WHERE due_diligence_id IN (?) ORDER BY id, due_diligence_id ASC';
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
-            array($ddIds),
-            array(Connection::PARAM_INT_ARRAY)
-        );
+        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $results;
     }
@@ -76,10 +70,15 @@ class DueDiligence extends EntityRepository
     {
         $sql = 'SELECT id as msg_id, loan_id, issue_id, type_id, status_id, priority_id, date, subject, message FROM Message ' .
             'WHERE issue_id IN (?) AND loan_id IN (?)';
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
-            array($issueIds, $loanIds),
-            array(Connection::PARAM_INT_ARRAY, Connection::PARAM_INT_ARRAY)
-        );
+        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $issueIds, $loanIds);
+        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        return $results;
+    }
+
+    public function fetchDdLoanStatusByDdIdLoanId(array $ddIds, $loanIds)
+    {
+        $sql = 'SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)';
+        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds, $loanIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $results;
     }

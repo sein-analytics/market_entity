@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 
@@ -39,6 +40,24 @@ trait FetchingTrait
             array($keys),
             array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
+        return $stmt;
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param string $sql
+     * @param array[] ...$keys
+     * @return \Doctrine\DBAL\Driver\Statement
+     */
+    public function returnMultiIntArraySqlStmt(EntityManager $em, string $sql, array ...$keys)
+    {
+        $intParams = [];
+        $base = array_reduce($keys, function ($result, $item) use(&$intParams) {
+            $result[] = $item;
+            array_push($intParams, Connection::PARAM_INT_ARRAY);
+            return $result;
+        }, []);
+        $stmt = $em->getConnection()->executeQuery($sql, $base, $intParams);
         return $stmt;
     }
 
