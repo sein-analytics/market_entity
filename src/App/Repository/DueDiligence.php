@@ -17,7 +17,7 @@ class DueDiligence extends EntityRepository
 {
     public function fetchDdIdsByUserIdsDealIds(array $userIds, array $dealIds, array $exceptIds=[0])
     {
-        $sql = 'SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?);';
+        $sql = 'SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)';
         $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
             array($userIds, $dealIds, $exceptIds),
             array(Connection::PARAM_INT_ARRAY,

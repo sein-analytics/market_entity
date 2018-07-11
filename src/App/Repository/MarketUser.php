@@ -98,7 +98,7 @@ class MarketUser extends EntityRepository
         $stmt->bindParam(1, $issuerId);
         $stmt->bindParam(2, $exceptId);
         $stmt->execute();
-        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $result;
     }
 }
