@@ -9,12 +9,21 @@
 namespace App\Repository;
 
 
+use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
 class DueDiligence extends EntityRepository
 {
+    use FetchMapperTrait;
+
+    /**
+     * @param array $userIds
+     * @param array $dealIds
+     * @param array $exceptIds
+     * @return array
+     */
     public function fetchDdIdsByUserIdsDealIds(array $userIds, array $dealIds, array $exceptIds=[0])
     {
         $sql = 'SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)';
@@ -24,6 +33,9 @@ class DueDiligence extends EntityRepository
                 Connection::PARAM_INT_ARRAY)
         );
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        if(count($results)){
+            return $this->flattenResultArrayByKey($results, 'id');
+        }
         return $results;
     }
 }
