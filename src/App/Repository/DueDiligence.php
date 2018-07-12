@@ -59,8 +59,9 @@ class DueDiligence extends EntityRepository
      */
     public function fetchDdIssuesDataByDdIds(array  $ddIds)
     {
-        $sql = 'SELECT id, due_diligence_id, status_id, file_id, open_date, closed_date FROM DueDiligenceIssue ' .
-            'WHERE due_diligence_id IN (?) ORDER BY id, due_diligence_id ASC';
+        $sql = 'SELECT DueDiligenceIssue.id AS issueId, due_diligence_id, status_id, file_id, open_date, closed_date, loan_id FROM DueDiligenceIssue ' .
+            'LEFT JOIN DealFile file ON file.id=file_id ' .
+            'WHERE due_diligence_id IN (?) ORDER BY issueId, due_diligence_id ASC';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $results;
@@ -68,7 +69,7 @@ class DueDiligence extends EntityRepository
 
     public function fetchMsgIssuesDataByIssueIdsLoanIds(array $issueIds, array $loanIds)
     {
-        $sql = 'SELECT id as msg_id, loan_id, issue_id, type_id, status_id, priority_id, date, subject, message FROM Message ' .
+        $sql = 'SELECT id AS msg_id, loan_id, issue_id, type_id, status_id, priority_id, date, subject, message FROM Message ' .
             'WHERE issue_id IN (?) AND loan_id IN (?)';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $issueIds, $loanIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
