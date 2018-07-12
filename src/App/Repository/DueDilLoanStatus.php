@@ -16,9 +16,9 @@ class DueDilLoanStatus extends EntityRepository
 {
     public function fetchLoanIdsByDdId(int $ddId)
     {
-        $sql = 'SELECT loan_id, ln_id FROM DueDilLoanStatus ' .
+        $sql = 'SELECT loan_id, ln_id AS id FROM DueDilLoanStatus ' .
                 'LEFT JOIN loans ln ON ln.id = DueDilLoanStatus.ln_id ' .
-              'WHERE dd_id = ? ORDER BY ln.id ASC';
+              'WHERE dd_id = ? ORDER BY id ASC';
         $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindValue(1, $ddId);
         $stmt->execute();
