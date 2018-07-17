@@ -42,8 +42,11 @@ class DueDiligence extends EntityRepository
      */
     public function fetchDealFileDataByDdIds(array $ddIds)
     {
-        $sql = 'SELECT loan_id, deal_file_id, doc_type_id, file_name FROM deal_file_due_diligence ' .
-            'LEFT JOIN DealFile file on file.id = deal_file_due_diligence.deal_file_id ' .
+        $sql = 'SELECT loan_id, deal_file_id, doc_type_id, deal_id, file_name AS fileName, file.user_id, image_arn AS link, ' .
+            'issue AS dealName FROM deal_file_due_diligence ' .
+            'LEFT JOIN DealFile file ON file.id = deal_file_due_diligence.deal_file_id ' .
+            'LEFT JOIN MarketUser user ON user.id = file.user_id ' .
+            'LEFT JOIN Deal deal ON deal.id=deal_id ' .
             'WHERE due_diligence_id IN (?) ORDER BY loan_id, doc_type_id ASC';
         $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
             array($ddIds),
