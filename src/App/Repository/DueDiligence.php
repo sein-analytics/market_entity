@@ -73,7 +73,12 @@ class DueDiligence extends EntityRepository
 
     public function fetchMsgIssuesDataByIssueIdsLoanIds(array $issueIds, array $loanIds)
     {
-        $sql = 'SELECT id AS msg_id, loan_id, issue_id, type_id, status_id, priority_id, date, subject, message FROM Message ' .
+        $sql = 'SELECT Message.id AS msg_id, loan_id, user_id, issue_id, type_id, Message.status_id, priority_id, date AS dated, subject, message, ' .
+            'first_name, last_name, image_arn AS senderPicture, issuer_id, issuer_name As senderCompany, message_status AS status, type FROM Message ' .
+            'LEFT JOIN MarketUser user On user.id=user_id ' .
+            'LEFT JOIN Issuer issuer ON issuer.id=issuer_id ' .
+            'LEFT JOIN MessageStatus msg ON msg.id=Message.status_id ' .
+            'LEFT JOIN MessageType msgType on msgType.id=type_id ' .
             'WHERE issue_id IN (?) AND loan_id IN (?)';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $issueIds, $loanIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
