@@ -59,8 +59,12 @@ class DueDiligence extends EntityRepository
      */
     public function fetchDdIssuesDataByDdIds(array  $ddIds)
     {
-        $sql = 'SELECT DueDiligenceIssue.id AS issueId, due_diligence_id, status_id, file_id, open_date, closed_date, loan_id FROM DueDiligenceIssue ' .
+        $sql = 'SELECT DueDiligenceIssue.id AS issueId, due_diligence_id, status_id, file_id, file_name AS fileName, open_date AS created, ' .
+            'closed_date, doc_type_id, type AS section, issue, status, priority_id, loan_id, message_priority AS significance FROM DueDiligenceIssue ' .
             'LEFT JOIN DealFile file ON file.id=file_id ' .
+            'LEFT JOIN DocType doc on doc.id=doc_type_id ' .
+            'LEFT JOIN DueDilIssueStatus ddstatus on ddstatus.id=status_id ' .
+            'LEFT JOIN MessagePriority priority on priority.id=priority_id ' .
             'WHERE due_diligence_id IN (?) ORDER BY issueId, due_diligence_id ASC';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
