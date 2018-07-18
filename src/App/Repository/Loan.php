@@ -187,7 +187,10 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchLoanIdsIdsByPoolIds(array $poolIds)
     {
-        $sql = "SELECT id, loan_id FROM loans WHERE pool_id IN (?) ORDER BY id ASC";
+        $sql = 'SELECT loans.id, loan_id, status_id, dd_id, user_id, dd_role_id FROM loans ' .
+            'LEFT JOIN DueDilLoanStatus ddStat on ddStat.ln_id = loans.id ' .
+            'LEFT JOIN DueDiligence dd on dd.id=dd_id ' .
+            'WHERE pool_id IN (?) ORDER BY id ASC';
         $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
             array($poolIds), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
