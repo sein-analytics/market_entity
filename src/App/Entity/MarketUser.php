@@ -277,6 +277,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->marketFavorites = new ArrayCollection();
         $this->templates = new ArrayCollection();
         $this->mappedTypes = new ArrayCollection();
+        $this->role = new AclRole();
     }
 
     function addMarketDeal(Deal $deal)
@@ -461,5 +462,12 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     public function getEmail() { return $this->email; }
 
     public function getNotifications() { return $this->notifications; }
+
+    /**
+     * @return AclRole
+     */
+    public function getRole(): AclRole { return $this->role; }
+
+
 
 }
