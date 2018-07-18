@@ -32,6 +32,7 @@ class AclRole
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @var int
      **/
     protected $id;
 
@@ -41,13 +42,24 @@ class AclRole
      */
     protected $users;
 
-    /** @ORM\Column(type="string", nullable=false)   */
+    /** @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
     protected $role;
 
     public function __construct()
     {
-        $this->role = self::$userAclRoles[self::BUYER];
         $this->users = new ArrayCollection();
     }
-    
+
+    /**
+     * @return mixed
+     */
+    public function getId() :int { return $this->id; }
+
+    /**
+     * @return mixed
+     */
+    public function getRole() : string { return $this->role; }
+
 }
