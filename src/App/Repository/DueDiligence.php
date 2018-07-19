@@ -74,6 +74,11 @@ class DueDiligence extends EntityRepository
         return $results;
     }
 
+    /**
+     * @param array $issueIds
+     * @param array $loanIds
+     * @return array
+     */
     public function fetchMsgIssuesDataByIssueIdsLoanIds(array $issueIds, array $loanIds)
     {
         $sql = 'SELECT Message.id AS msg_id, loan_id, user_id, issue_id, type_id, Message.status_id, priority_id, date AS dated, subject, message, ' .
@@ -88,11 +93,32 @@ class DueDiligence extends EntityRepository
         return $results;
     }
 
+    /**
+     * @param array $ddIds
+     * @param $loanIds
+     * @return array
+     */
     public function fetchDdLoanStatusByDdIdLoanId(array $ddIds, $loanIds)
     {
         $sql = 'SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds, $loanIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $results;
+    }
+
+    public function fetchDdLeadUserIdByIssueIdDealId(int $issuerId, int $dealId)
+    {
+        $sql = 'SELECT user_id FROM DueDiligence dd ' .
+            'LEFT JOIN MarketUser users on users.id=user_id ' .
+            'WHERE issuer_id = ? AND dd.dd_role_id=1 AND dd.deal_id=?';
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->bindParam(1, $issuerId);
+        $stmt->bindParam(2, $dealId);
+        $stmt->execute();
+        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        if(array_key_exists('user_id', $result)){
+            return (int)$result['user_id'];
+        }
+        return $result;
     }
 }
