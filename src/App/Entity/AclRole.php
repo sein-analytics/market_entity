@@ -45,7 +45,7 @@ class AclRole
     /** @ORM\Column(type="string", nullable=false)
      * @var string
      */
-    protected $role;
+    protected $role = '';
 
     public function __construct()
     {
