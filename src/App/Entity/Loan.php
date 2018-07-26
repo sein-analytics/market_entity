@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\Loan")
- * @ORM\MappedSuperClass
+ * @ORM\Table(name="loans")
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\DiscriminatorColumn(name="assetClass", type="string")
  * @ORM\DiscriminatorMap({
