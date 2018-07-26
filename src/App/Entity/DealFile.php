@@ -363,6 +363,30 @@ class DealFile implements NotifyPropertyChanged
      */
     public function getDiligence() { return $this->diligence; }
 
-    
+    /**
+     * @return Loan
+     */
+    public function getLoan(): Loan { return $this->loan; }
+
+    /**
+     * @param Loan $loan
+     */
+    public function setLoan(Loan $loan): void
+    {
+        $this->loan = $loan;
+    }
+
+    /**
+     * @return MimeType
+     */
+    public function getMime(): MimeType { return $this->mime; }
+
+    /**
+     * @param MimeType $mime
+     */
+    public function setMime(MimeType $mime): void
+    {
+        $this->mime = $mime;
+    }
 
 }
