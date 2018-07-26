@@ -27,11 +27,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  * })
  *
  */
-abstract class Loan implements NotifyPropertyChanged
+class Loan implements NotifyPropertyChanged
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait;
 
-    abstract public function getAssetAttributes();
+    //abstract public function getAssetAttributes();
 
     const AMORTIZING = 'Amortizing';
     const REVOLVING  = 'Revolving';
@@ -284,13 +284,13 @@ abstract class Loan implements NotifyPropertyChanged
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @var number $loanHasBeenModified
+     * @var int $loanHasBeenModified
      */
     protected $loanHasBeenModified;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @var number $lengthOfModification
+     * @var int $lengthOfModification
      */
     protected $endModPeriod;
 
@@ -1105,12 +1105,12 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return number
      */
-    public function getLoanHasBeenModified(): number { return $this->loanHasBeenModified; }
+    public function getLoanHasBeenModified(): int { return $this->loanHasBeenModified; }
 
     /**
      * @param number $loanHasBeenModified
      */
-    public function setLoanHasBeenModified(number $loanHasBeenModified)
+    public function setLoanHasBeenModified(int $loanHasBeenModified)
     {
         $this->_onPropertyChanged('loanHasBeenModified', $this->loanHasBeenModified, $loanHasBeenModified);
         $this->loanHasBeenModified = $loanHasBeenModified;
@@ -1119,12 +1119,12 @@ abstract class Loan implements NotifyPropertyChanged
     /**
      * @return number
      */
-    public function getEndModPeriod(): number { return $this->endModPeriod; }
+    public function getEndModPeriod(): int { return $this->endModPeriod; }
 
     /**
      * @param number $endModPeriod
      */
-    public function setEndModPeriod(number $endModPeriod)
+    public function setEndModPeriod(int $endModPeriod)
     {
         $this->_onPropertyChanged('endModPeriod', $this->endModPeriod, $endModPeriod);
         $this->endModPeriod = $endModPeriod;
