@@ -33,6 +33,9 @@ class Loan implements NotifyPropertyChanged
 
     //abstract public function getAssetAttributes();
 
+    //Note originally this class was abstract. We removed abstract from definition to facilitate
+    //The creation of a class proxy....
+
     const AMORTIZING = 'Amortizing';
     const REVOLVING  = 'Revolving';
     const PARTIAL    = 'RevolvingToAmortizing';

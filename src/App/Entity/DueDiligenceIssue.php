@@ -42,7 +42,7 @@ class DueDiligenceIssue
     /**
      * @ORM\Column(type="string", nullable=false)
      */
-    protected $issue = '';
+    protected $issue;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="issue")
@@ -65,10 +65,10 @@ class DueDiligenceIssue
     protected $priority;
 
     /** @ORM\Column(type="boolean", nullable=false) */
-    protected $notifySeller = true;
+    protected $notifySeller;
 
     /** @ORM\Column(type="boolean", nullable=false) */
-    protected $notifyTeam = false;
+    protected $notifyTeam;
 
     /** @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
@@ -188,7 +188,7 @@ class DueDiligenceIssue
      */
     public function setNotifyTeam(bool $notify)
     {
-        $this->notifySeller = $notify;
+        $this->notifyTeam = $notify;
     }
 
     /**
