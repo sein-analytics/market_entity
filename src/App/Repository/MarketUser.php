@@ -101,4 +101,17 @@ class MarketUser extends EntityRepository
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $this->flattenResultArrayByKey($result, 'id');
     }
+
+    public function addNewMsgMarketUser(int $msgId, int $userId)
+    {
+        $sql = "INSERT INTO `market_user_message` (`message_id`, `market_user_id`) VALUES (?, ?) ";
+        try{
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindParam(1, $msgId);
+            $stmt->bindParam(2, $userId);
+        } catch (\Exception $e){
+            return $e->getMessage();
+        }
+        return $stmt->execute();
+    }
 }

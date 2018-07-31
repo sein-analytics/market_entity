@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Arr;
 
@@ -143,7 +144,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="user")
-     * @var ArrayCollection
+     * @var null|PersistentCollection
      */
     protected $messages;
 
@@ -265,7 +266,6 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     public function __construct()
     {
         $this->bids = new ArrayCollection();
-        $this->messages = new ArrayCollection();
         $this->logins = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->followers = new ArrayCollection();
@@ -308,11 +308,6 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     function addTemplate(LoanTapeTemplate $template)
     {
         $this->templates->add($template);
-    }
-
-    public function addMessage(Message $message)
-    {
-        $this->messages->add($message);
     }
 
     /**
@@ -474,7 +469,7 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
     public function getRole(): AclRole { return $this->role; }
 
     /**
-     * @return ArrayCollection
+     * @return null|PersistentCollection
      */
     public function getMessages() { return $this->messages; }
 
