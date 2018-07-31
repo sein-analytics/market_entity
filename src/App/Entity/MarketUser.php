@@ -310,6 +310,11 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
         $this->templates->add($template);
     }
 
+    public function addMessage(Message $message)
+    {
+        $this->messages->add($message);
+    }
+
     /**
      * @return mixed
      */
@@ -467,6 +472,11 @@ class MarketUser implements NotifyPropertyChanged, Authenticatable
      * @return AclRole
      */
     public function getRole(): AclRole { return $this->role; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMessages() { return $this->messages; }
 
 
 
