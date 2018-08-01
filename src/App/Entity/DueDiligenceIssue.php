@@ -11,6 +11,8 @@ namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\DueDiligenceIssue")
  * @ORM\Table(name="DueDiligenceIssue")
@@ -46,7 +48,7 @@ class DueDiligenceIssue
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="issue")
-     * @var ArrayCollection
+     * null|PersistentCollection
      */
     protected $messages;
 
@@ -138,9 +140,9 @@ class DueDiligenceIssue
     public function setIssue(string  $issue) { $this->issue = $issue; }
 
     /**
-     * @return ArrayCollection
+     * @return null|PersistentCollection
      */
-    public function getMessages() :ArrayCollection { return $this->messages; }
+    public function getMessages() { return $this->messages; }
 
 
     /**
