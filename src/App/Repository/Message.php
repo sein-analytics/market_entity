@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -26,6 +27,25 @@ class Message extends EntityRepository
         $stmt->execute();
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $this->flattenResultArrayByKey($results, 'message_id');
+    }
+
+    /**
+     * @param int $msgId
+     * @param int $userId
+     * @return bool|string
+     */
+    public function deleteFromMarketUserMessage(int $msgId, int $userId)
+    {
+        $sql = "DELETE FROM market_user_message WHERE message_if = ? AND  market_user_id = ?";
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindValue(1, $msgId);
+            $stmt->bindValue(2, $userId);
+        }catch (DBALException $e){
+            return $e->getMessage();
+        }
+        $stmt->execute();
+        return true;
     }
 
 }
