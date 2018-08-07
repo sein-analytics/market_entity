@@ -36,7 +36,7 @@ class Message extends EntityRepository
      */
     public function deleteFromMarketUserMessage(int $msgId, int $userId)
     {
-        $sql = "DELETE FROM market_user_message WHERE message_if = ? AND  market_user_id = ?";
+        $sql = "DELETE FROM market_user_message WHERE message_id = ? AND  market_user_id = ?";
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
             $stmt->bindValue(1, $msgId);
