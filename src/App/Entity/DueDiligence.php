@@ -63,7 +63,7 @@ class DueDiligence
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
      * @ORM\OneToOne(targetEntity="\App\Entity\Bid", inversedBy="dueDiligence")
-     * @JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
      * @var \App\Entity\Bid
      */
     protected $bid;
