@@ -61,6 +61,14 @@ class DueDiligence
     protected $status;
 
     /**
+     * One Bid should have one DueDiligence entity that references the user who placed the bid.
+     * @OneToOne(targetEntity="\App\Entity\Bid", inversedBy="dueDiligence")
+     * @JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     * @var \App\Entity\Bid
+     */
+    protected $bid;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
      * @var ArrayCollection
      */
@@ -172,5 +180,17 @@ class DueDiligence
      * @return ArrayCollection
      */
     public function getReviewStatuses() { return $this->reviewStatuses; }
+
+    /**
+     * @return Bid|null
+     */
+    public function getBid() { return $this->bid; }
+
+    /**
+     * @param Bid $bid
+     */
+    public function setBid(Bid $bid): void { $this->bid = $bid; }
+
+
 
 }

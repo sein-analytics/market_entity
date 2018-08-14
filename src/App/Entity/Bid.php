@@ -71,6 +71,13 @@ class Bid implements NotifyPropertyChanged
     protected $date;
 
     /**
+     * One Bid should have one DueDiligence entity that references the user who placed the bid.
+     * @OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
+     * @var \App\Entity\DueDiligence|null
+     */
+    protected $dueDiligence;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -236,5 +243,11 @@ class Bid implements NotifyPropertyChanged
         $this->date = $date;
     }
 
-
+    /**
+     * @return DueDiligence|null
+     */
+    public function getDueDiligence(): ?DueDiligence
+    {
+        return $this->dueDiligence;
+    }
 }
