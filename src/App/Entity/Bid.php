@@ -246,8 +246,15 @@ class Bid implements NotifyPropertyChanged
     /**
      * @return DueDiligence|null
      */
-    public function getDueDiligence(): ?DueDiligence
+    public function getDueDiligence(): ?DueDiligence { return $this->dueDiligence; }
+
+    /**
+     * @param DueDiligence $dueDiligence
+     */
+    public function setDueDiligence(DueDiligence $dueDiligence): void
     {
-        return $this->dueDiligence;
+        $this->dueDiligence = $dueDiligence;
     }
+
+
 }
