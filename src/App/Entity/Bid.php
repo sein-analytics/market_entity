@@ -72,7 +72,7 @@ class Bid implements NotifyPropertyChanged
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
-     * @OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
+     * @ORM\OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
      * @var \App\Entity\DueDiligence|null
      */
     protected $dueDiligence;
