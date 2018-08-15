@@ -66,6 +66,13 @@ class DueDiligenceIssue
      */
     protected $priority;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan")
+     * @ORM\JoinColumn(name="loan_id", referenceColumnName="id", nullable=true)
+     * @var Loan
+     */
+    protected $loan;
+
     /** @ORM\Column(type="boolean", nullable=false) */
     protected $notifySeller;
 
@@ -90,6 +97,7 @@ class DueDiligenceIssue
         $this->priority = new MessagePriority();
         $this->openDate = new \DateTime();
         $this->closedDate = new \DateTime();
+        $this->loan = new Loan();
     }
 
     /**
@@ -218,5 +226,17 @@ class DueDiligenceIssue
     {
         $this->closedDate = $closedDate;
     }
+
+    /**
+     * @return Loan
+     */
+    public function getLoan(): Loan { return $this->loan; }
+
+    /**
+     * @param Loan $loan
+     */
+    public function setLoan(Loan $loan): void { $this->loan = $loan; }
+
+
 
 }
