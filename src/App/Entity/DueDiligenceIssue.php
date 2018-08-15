@@ -68,7 +68,7 @@ class DueDiligenceIssue
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Loan")
-     * @ORM\JoinColumn(name="loan_id", referenceColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */
     protected $loan;
