@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -113,5 +114,22 @@ class MarketUser extends EntityRepository
             return $e->getMessage();
         }
         return $stmt->execute();
+    }
+
+    /**
+     * @param int $userId
+     * @return array|bool|string
+     */
+    public function fetchLeaderTeamIdsFromLeaderId(int $userId)
+    {
+        $sql = "select id from MarketUser m1 " .
+            "WHERE m1.issuer_id = (SELECT issuer_id FROM MarketUser WHERE id = ?)";
+        try{
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindValue(1, $userId);
+        } catch (DBALException $e){
+            return $e->getMessage();
+        }
+        return $this->completeIdFetchQuery($stmt);
     }
 }
