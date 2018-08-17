@@ -122,7 +122,7 @@ class MarketUser extends EntityRepository
      */
     public function fetchLeaderTeamIdsFromLeaderId(int $userId)
     {
-        $sql = "select id from MarketUser m1 " .
+        $sql = "SELECT id from MarketUser m1 " .
             "WHERE m1.issuer_id = (SELECT issuer_id FROM MarketUser WHERE id = ?)";
         try{
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
