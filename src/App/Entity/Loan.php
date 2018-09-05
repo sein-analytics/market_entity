@@ -381,6 +381,12 @@ class Loan implements NotifyPropertyChanged
         $this->reviewStatuses->add($status);
     }
 
+    public function addNewIssueToLoan(DueDiligenceIssue $issue)
+    {
+        $issue->setLoan($this);
+        $this->issues->add($issue);
+    }
+
     /**
      * @return mixed
      */
