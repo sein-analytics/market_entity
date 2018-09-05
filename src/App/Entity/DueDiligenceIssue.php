@@ -67,7 +67,7 @@ class DueDiligenceIssue
     protected $priority;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
      * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */

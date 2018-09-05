@@ -355,7 +355,7 @@ class Loan implements NotifyPropertyChanged
     protected $reviewStatuses;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="loan")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="loan", cascade={"persist"})
      * @var ArrayCollection  */
     protected $issues;
 
@@ -1111,7 +1111,7 @@ class Loan implements NotifyPropertyChanged
     public function getLoanHasBeenModified(): int { return $this->loanHasBeenModified; }
 
     /**
-     * @param number $loanHasBeenModified
+     * @param int $loanHasBeenModified
      */
     public function setLoanHasBeenModified(int $loanHasBeenModified)
     {
@@ -1259,9 +1259,5 @@ class Loan implements NotifyPropertyChanged
      * @return mixed
      */
     public function getReviewStatuses() { return $this->reviewStatuses; }
-
-
-
-
 
 }
