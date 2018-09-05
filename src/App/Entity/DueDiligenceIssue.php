@@ -235,7 +235,7 @@ class DueDiligenceIssue
     /**
      * @param Loan $loan
      */
-    public function setLoan(Loan $loan): void { $this->loan = $loan; return; }
+    public function setLoan(Loan $loan) { $this->loan = $loan; }
 
 
 
