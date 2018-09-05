@@ -371,11 +371,6 @@ class Loan implements NotifyPropertyChanged
         $this->reviewStatuses = new ArrayCollection();
     }
 
-    function addIssue(Message $issue)
-    {
-        $this->issues->add($issue);
-    }
-
     public function addDueDilReviewStatus(DueDilReviewStatus $status)
     {
         $this->reviewStatuses->add($status);
