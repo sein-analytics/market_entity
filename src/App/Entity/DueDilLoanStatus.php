@@ -58,7 +58,7 @@ class DueDilLoanStatus
 
     public function __construct()
     {
-        $this->logger = json_encode($this->logObject);
+        $this->logger = $this->logObject;
         $this->loan = new AssetType\Residential();
         $this->diligence = new DueDiligence();
         $this->reviewStatus = new DueDilReviewStatus();
@@ -114,14 +114,14 @@ class DueDilLoanStatus
     /**
      * @return array
      */
-    public function getLogger(): array { return json_decode($this->logger, true); }
+    public function getLogger(): array { return $this->logger; }
 
     /**
      * @param array $logger
      */
     public function setLogger(array $logger)
     {
-        $this->logger = json_encode($logger);
+        $this->logger = $logger;
     }
 
 }
