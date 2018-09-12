@@ -203,9 +203,13 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchLoanIdFromId(int $id)
     {
-        $sql = "SELECT loan_id FROM loans WHERE id = $id";
+        $sql = "SELECT loan_id FROM loans WHERE id = ?";
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $result = $stmt->fetch(Query::HYDRATE_SCALAR);
+        $stmt->bindValue(1, $id);
+        $result = $stmt->execute();
+        $result = $stmt->fetch();
+        if (is_array($result) && array_key_exists('loan_id', $result))
+            return $result['loan_id'];
         return $result;
     }
 
