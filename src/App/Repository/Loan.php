@@ -119,7 +119,8 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
 
     /**
      * @param array $ids
-     * @return array|bool
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchLoansByPoolIds(array $ids)
     {
@@ -197,6 +198,14 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
             array($poolIds), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        return $result;
+    }
+
+    public function fetchLoanIdFromId(int $id)
+    {
+        $sql = "SELECT loan_id FROM loans WHERE id = $id";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $result = $stmt->fetch(Query::HYDRATE_SCALAR);
         return $result;
     }
 
