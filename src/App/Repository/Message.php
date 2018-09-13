@@ -47,5 +47,4 @@ class Message extends EntityRepository
         $stmt->execute();
         return true;
     }
-
 }

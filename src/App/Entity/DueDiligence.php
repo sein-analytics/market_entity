@@ -189,7 +189,7 @@ class DueDiligence
     /**
      * @param Bid $bid
      */
-    public function setBid(Bid $bid): void { $this->bid = $bid; }
+    public function setBid(Bid $bid) { $this->bid = $bid; }
 
 
 
