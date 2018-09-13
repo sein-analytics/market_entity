@@ -371,10 +371,7 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @param Loan $loan
      */
-    public function setLoan(Loan $loan): void
-    {
-        $this->loan = $loan;
-    }
+    public function setLoan(Loan $loan) { $this->loan = $loan; }
 
     /**
      * @return MimeType
