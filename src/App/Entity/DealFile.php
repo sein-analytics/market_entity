@@ -381,9 +381,6 @@ class DealFile implements NotifyPropertyChanged
     /**
      * @param MimeType $mime
      */
-    public function setMime(MimeType $mime): void
-    {
-        $this->mime = $mime;
-    }
+    public function setMime(MimeType $mime) { $this->mime = $mime;  }
 
 }
