@@ -92,14 +92,14 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      *{"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
      * {"format":"Y-m-d\TH:iP"}
      */
-    protected $activeDate;
+    protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * {"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
      * {"format":"Y-m-d\TH:iP"}
      */
-    protected $dateModified;
+    protected $updatedAt;
 
     /** @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="users")   */
     protected $issuer;
