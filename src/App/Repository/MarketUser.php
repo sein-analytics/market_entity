@@ -92,6 +92,20 @@ class MarketUser extends EntityRepository
         return $results;
     }
 
+    public function fetchMarketUserSaltByEmail(string $email)
+    {
+        $sql = "SELECT user_salt FROM MarketUser WHERE email = ? ";
+        try{
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        } catch (\Exception $e){
+            return false;
+        }
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        return $result;
+    }
+
     public function fetchIssuerUserIdsByIssuerId(int $issuerId, int $exceptId=0)
     {
         $sql = "SELECT id FROM MarketUser WHERE issuer_id = ? AND id != ? ORDER BY id ASC ";
