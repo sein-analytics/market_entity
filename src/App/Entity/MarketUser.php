@@ -8,8 +8,13 @@ use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticableContracts;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
+use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use Illuminate\Support\Arr;
+use LaravelDoctrine\ORM\Notifications\Notifiable;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
@@ -17,9 +22,9 @@ use Illuminate\Support\Arr;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class MarketUser implements NotifyPropertyChanged, Authenticatable
+class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanResetPasswordContracts
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use NotifyChangeTrait, CreatePropertiesArrayTrait, Authenticatable, CanResetPassword, Notifiable, Timestamps;
 
     const ASAP = 'asap';
 
