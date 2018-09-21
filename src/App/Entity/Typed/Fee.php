@@ -17,8 +17,6 @@ use App\Entity\Typed\Update\TypedUpdateInterface;
 
 /**
  * @MappedSuperclass
- * @ORM\Entity
- * @ORM\Table(name="Fee")
  * @ORM\DiscriminatorColumn(name="feeClass", type="string")
  * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Fee\BondFee",
  *                        "pool" = "\App\Entity\Typed\Fee\PoolFee",
