@@ -33,6 +33,11 @@ class BasisCount implements NotifyPropertyChanged
     /** @ORM\Column(type="string", nullable=false)   */
     protected $basis;
 
+    /** @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected $formula;
+
     /**
      * @ORM\OneToMany(targetEntity = "\App\Entity\Bond", mappedBy="basisCount")
      * @var ArrayCollection
@@ -59,5 +64,6 @@ class BasisCount implements NotifyPropertyChanged
      */
     public function getUsedBy() { return $this->bonds; }
 
+    public function getFormula() :string  { return $this->formula; }
 
 }
