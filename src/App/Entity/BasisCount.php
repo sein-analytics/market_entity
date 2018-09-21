@@ -16,7 +16,6 @@ use Doctrine\ORM\PersistentCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="DealFile")
- * @ChangeTrackingPolicy("NOTIFY")
  *
  */
 class BasisCount implements NotifyPropertyChanged
