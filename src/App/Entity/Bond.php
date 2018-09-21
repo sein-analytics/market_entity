@@ -69,8 +69,8 @@ class Bond implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=6, scale=5) **/
     protected $currCreditSupport = 0;
 
-    /** @ORM\Column(name="bondBasis", type="string", nullable=true) **/
-    protected $bondBasis;
+    /** @ORM\ManyToOne(targetEntity="\App\Entity\BasisCount", inversedBy="bonds") **/
+    protected $basisCount;
 
     /** @ORM\Column(name="floatingIndex", type="string", nullable=true)**/
     protected $floatingIndex;
@@ -370,18 +370,18 @@ class Bond implements NotifyPropertyChanged
     /**
      * @return mixed
      */
-    public function getBondBasis()
+    public function getBasisCount()
     {
-        return $this->bondBasis;
+        return $this->basisCount;
     }
 
     /**
-     * @param mixed $bondBasis
+     * @param mixed $basisCount
      */
-    public function setBondBasis($bondBasis)
+    public function setBasisCount($basisCount)
     {
-        $this->_onPropertyChanged('bondBasis', $this->bondBasis, $bondBasis);
-        $this->bondBasis = $bondBasis;
+        $this->_onPropertyChanged('basisCount', $this->basisCount, $basisCount);
+        $this->basisCount = $basisCount;
     }
 
     /**
