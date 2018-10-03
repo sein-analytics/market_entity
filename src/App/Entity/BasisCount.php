@@ -22,6 +22,26 @@ class BasisCount implements NotifyPropertyChanged
 {
     use NotifyChangeTrait;
 
+    const BASE_360 = 360;
+
+    const BASE_364 = 364;
+
+    const BASE_365 = 365;
+
+    const BASE_366 = 366;
+
+    const BASE_30 = 30;
+
+    const DAY_COUNT_FACTOR = 'dayCountFactor';
+
+    const COUPON_FACTOR = 'couponFactor';
+
+    private static $bases = [
+        self::BASE_360 => null,
+        self::BASE_364 => null,
+        self::BASE_365 => null,
+    ];
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -33,7 +53,7 @@ class BasisCount implements NotifyPropertyChanged
     /** @ORM\Column(type="string", nullable=false)   */
     protected $basis;
 
-    /** @ORM\Column(type="string", nullable=false)
+    /** @ORM\Column(type="json", nullable=false)
      * @var string
      */
     protected $formula;
@@ -47,6 +67,83 @@ class BasisCount implements NotifyPropertyChanged
     public function __construct()
     {
         $this->bonds = new ArrayCollection();
+    }
+
+    /**
+     * @param \DateTime $startDate
+     * @param \DateTime $thruDate
+     * @return float|int
+     */
+    public function calculate30_360DayCountFactor(\DateTime $startDate, \DateTime $thruDate)
+    {
+        $factor = $this->factorNumerator($thruDate->diff($startDate)) / self::BASE_360;
+        return $factor;
+    }
+
+    /**
+     * @param \DateTime $startDate
+     * @param \DateTime $thruDate
+     * @param int $freq
+     * @return float|int
+     */
+    public function calculate30_360CouponFactor(\DateTime $startDate, \DateTime $thruDate, int $freq=0)
+    {
+        $factor = $this->factorNumerator($startDate->diff($thruDate)) / self::BASE_360;
+        return $factor;
+    }
+
+    /**
+     * @param \DateTime $startDate
+     * @param \DateTime $thruDate
+     * @param \DateTime $couponDate
+     * @param int $frequency
+     * @return float|int
+     */
+    public function calculateActual_actualDayCountFactor(\DateTime $startDate, \DateTime $thruDate, \DateTime $couponDate, int $frequency)
+    {
+        $factor = $thruDate->diff($startDate)->days / ($frequency * $couponDate->diff($startDate)->days);
+        return $factor;
+    }
+
+    /**
+     * @param \DateTime $startDate
+     * @param \DateTime $couponDate
+     * @param int $frequency
+     * @return float|int
+     */
+    public function calculateActual_actualCouponFactor(\DateTime $startDate, \DateTime $couponDate, int $frequency)
+    {
+        $factor = $couponDate->diff($startDate)->days / ($frequency * $couponDate->diff($startDate)->days);
+        return $factor;
+    }
+
+    /**
+     * @param \DateInterval $diff
+     * @return float|int
+     */
+    public function factorNumerator(\DateInterval $diff)
+    {
+        return (self::BASE_360 * $diff->y + self::BASE_30 * $diff->m + $diff->d);
+    }
+
+    /**
+     * @param \DateTime $startDate
+     * @param \DateTime $thruDate
+     * @param \DateTime $couponDate
+     * @param int $base
+     * @param string $calcType
+     * @return bool|float|int
+     */
+    public function calculateActual_fixedDayCount(\DateTime $startDate, \DateTime $thruDate, \DateTime $couponDate, int $base, string $calcType)
+    {
+        if ($calcType !== self::DAY_COUNT_FACTOR && $calcType !== self::COUPON_FACTOR)
+            return false;
+        if (!array_key_exists($base ,self::$bases))
+            return false;
+        if ($calcType === self::DAY_COUNT_FACTOR)
+            return $thruDate->diff($startDate)->days / $base;
+        elseif ($calcType == self::COUPON_FACTOR)
+            return $couponDate->diff($startDate)->days / $base;
     }
 
     /**
