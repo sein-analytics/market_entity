@@ -134,7 +134,7 @@ class BasisCount implements NotifyPropertyChanged
      * @param string $calcType
      * @return bool|float|int
      */
-    public function calculateActual_fixedDayCount(\DateTime $startDate, \DateTime $thruDate, \DateTime $couponDate, int $base, string $calcType)
+    public function calculateActual_fixedFactors(\DateTime $startDate, \DateTime $thruDate, \DateTime $couponDate, int $base, string $calcType)
     {
         if ($calcType !== self::DAY_COUNT_FACTOR && $calcType !== self::COUPON_FACTOR)
             return false;
