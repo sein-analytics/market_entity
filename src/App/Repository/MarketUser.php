@@ -13,7 +13,9 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
+use Illuminate\Support\Facades\Log;
 
 class MarketUser extends EntityRepository
 {
@@ -21,16 +23,42 @@ class MarketUser extends EntityRepository
 
     /**
      * @param $userId
-     * @return array
+     * @return array|string
      */
     function fetchUserMarketDealIds(int $userId)
     {
         $sql = "SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?";
-        $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        } catch (\Exception $exception){
+            return $exception->getMessage();
+        }
         $stmt->bindValue(1, $userId);
-        $stmt->execute();
+        try{
+            $stmt->execute();
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         return $this->flattenResultArrayByKey($results, 'deal_id');
+    }
+
+    public function fetchUserWatchlistDealIds(int $userId)
+    {
+        $sql = "SELECT favorite_deal_id FROM user_favorite_deals WHERE  user_id = ?";
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        } catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+        $stmt->bindValue(1, $userId);
+        try{
+            $stmt->execute();
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        return $this->flattenResultArrayByKey($results, 'favorite_deal_id');
     }
 
     /**
@@ -46,12 +74,16 @@ class MarketUser extends EntityRepository
 
     /**
      * @param int $userId
-     * @return int
+     * @return int|string
      */
     public function fetchIssuerIdByUserId(int $userId)
     {
         $sql = "SELECT issuer_id FROM MarketUser WHERE  id = ?";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
         $stmt->bindValue(1, $userId);
         $result = (int)$stmt->fetch(Query::HYDRATE_ARRAY)[$userId];
         return $result;
@@ -59,14 +91,22 @@ class MarketUser extends EntityRepository
 
     /**
      * @param int $id
-     * @return array
+     * @return array|string
      */
     public function fetchUserDataForBidByUserId(int $id)
     {
         $sql = "SELECT CONCAT(first_name, ' ', last_name) AS first_last, id, user_name, issuer_id  FROM MarketUser WHERE  id = ?";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
         $stmt->bindValue(1, $id);
-        $stmt->execute();
+        try {
+            $stmt->execute();
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
         return $result;
     }
@@ -101,7 +141,11 @@ class MarketUser extends EntityRepository
             return false;
         }
         $stmt->bindParam(1, $email);
-        $stmt->execute();
+        try {
+            $stmt->execute();
+        } catch (\Exception $exception){
+            return $exception->getMessage();
+        }
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
         return $result;
     }
