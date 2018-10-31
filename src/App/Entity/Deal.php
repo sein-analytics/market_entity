@@ -234,9 +234,9 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->getMarketUsers()->add($user);
     }
 
-    function addUserFavorites(MarketUser $user){
-        $this->userFavorites->add($user);
-    }
+    function addUserFavorites(MarketUser $user){ $this->userFavorites->add($user); }
+
+    function removeUserFromUserFavorites(int $userId) { $this->userFavorites->remove($userId); }
 
     /**
      * @return mixed

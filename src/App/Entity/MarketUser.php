@@ -290,9 +290,12 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
         $this->marketDeals->add($deal);
     }
 
-    function addMarketFavorites(Deal $deal){
-        $this->marketFavorites->add($deal);
-    }
+    function addMarketFavorites(Deal $deal){ $this->marketFavorites->add($deal); }
+
+    /**
+     * @param int $dealId
+     */
+    function removeDealFromMarketFavorites(int $dealId) { $this->marketFavorites->remove($dealId); }
 
     function addMappedType(MappedUserType $type){
         $this->mappedTypes->add($this);
