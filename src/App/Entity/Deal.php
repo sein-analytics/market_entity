@@ -202,7 +202,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     protected $userFavorites;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating, mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $ratings;
