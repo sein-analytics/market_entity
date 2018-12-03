@@ -26,7 +26,7 @@ class RatingCode
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBY="ratingCode")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="ratingCode")
      * @var ArrayCollection
      */
     protected $ratings;
