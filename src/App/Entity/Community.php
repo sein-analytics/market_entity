@@ -8,7 +8,7 @@
 
 namespace App\Entity;
 
-use App\Entity\MarketUser;
+use \App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 /**
@@ -44,6 +44,9 @@ class Community
     /** @ORM\Column(type="string", nullable=false)  */
     protected $name;
 
+    /** @ORM\Column(type="text", nullable=false)  */
+    protected $description;
+
     public function __construct()
     {
         $this->users  = new ArrayCollection();
@@ -75,5 +78,36 @@ class Community
      * @return string
      */
     public function getName() { return $this->name; }
+
+    /**
+     * @return \App\Entity\MarketUser
+     */
+    public function getOwner(): MarketUser { return $this->owner; }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription() { return $this->description; }
+
+    /**
+     * @param MarketUser $owner
+     */
+    public function setOwner(MarketUser $owner)
+    {
+        if ($this->owner)
+            return;
+        $this->owner = $owner;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name) { $this->name = $name; }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description) { $this->description = $description;}
+
 
 }
