@@ -13,7 +13,6 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticableContracts;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
-use Illuminate\Support\Arr;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 
 /**
@@ -199,9 +198,28 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     protected $dealVolume = 0;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Rating", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="user")
+     * @var ArrayCollection
      **/
     protected $ratings;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Community", mappedBy="users")
+     * @var ArrayCollection
+     */
+    protected $communities;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Community", mappedBy="owner")
+     * @var ArrayCollection
+     */
+    protected $myCommunities;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="rater")
+     * @var ArrayCollection
+     **/
+    protected $rated;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser")
@@ -282,7 +300,11 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
         $this->marketFavorites = new ArrayCollection();
         $this->templates = new ArrayCollection();
         $this->mappedTypes = new ArrayCollection();
+        $this->rated = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
         $this->role = new AclRole();
+        $this->communities = new ArrayCollection();
+        $this->myCommunities = new ArrayCollection();
     }
 
     function addMarketDeal(Deal $deal)
@@ -304,7 +326,35 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     }
 
     function addMappedType(MappedUserType $type){
-        $this->mappedTypes->add($this);
+        $this->mappedTypes->add($type);
+    }
+
+    function addUserCommunity(Community $community){
+        $this->communities->add($community);
+    }
+
+    function removeCommunity(Community $community)
+    {
+        if (! $this->communities->contains($community))
+            return;
+        $this->communities->removeElement($community);
+        $community->removeUserFromCommunity($this);
+    }
+
+    function addUserToMyCommunity(Community $community, MarketUser $user)
+    {
+        if(! $this->myCommunities->contains($community)
+            || $community->getUsers()->contains($user))
+            return;
+        $community->addUserToCommunity($user);
+    }
+
+    function removeUserFromMyCommunity(Community $community, $user)
+    {
+        if(!$this->myCommunities->contains($community) ||
+            !$community->getUsers()->contains($user))
+            return;
+        $community->removeUserFromCommunity($user);
     }
 
     public function getId() { return $this->id; }
@@ -322,6 +372,14 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     function addTemplate(LoanTapeTemplate $template)
     {
         $this->templates->add($template);
+    }
+
+    function addRated(Rating  $rating){
+        $this->rated->add($rating);
+    }
+
+    function addRatings(Rating $rating){
+        $this->ratings->add($rating);
     }
 
     /**
@@ -486,6 +544,26 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      * @return null|PersistentCollection
      */
     public function getMessages() { return $this->messages; }
+
+    /**
+     * @return mixed
+     */
+    public function getRatings() { return $this->ratings; }
+
+    /**
+     * @return mixed
+     */
+    public function getRated() { return $this->rated; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCommunities() { return $this->communities; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMyCommunities() { return $this->myCommunities; }
 
 
 

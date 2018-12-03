@@ -26,37 +26,42 @@ class Rating
      **/
     protected $id;
 
-    /** @ORM\Column(type="decimal", precision=5, scale=3, nullable=false) **/
-    protected $rating;
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\RatingCode", inversedBy="ratings")
+     * @var RatingCode
+     */
+    protected $ratingCode;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="ratings") **/
-    protected $users;
+    /** @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="rated") **/
+    protected $rater;
+
+    /** @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="ratings") **/
+    protected $user;
+
+    /** @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="ratings") **/
+    protected $deal;
     
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
-
-    function addUser(MarketUser $user){
-        $this->users->add($user);
-    }
+    public function __construct() {}
 
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
     /**
-     * @return ArrayCollection
+     * @return MarketUser
      */
-    public function getUsers()
-    {
-        return $this->users;
-    }
+    public function getUser() : MarketUser { return $this->user; }
 
+    /**
+     * @return mixed
+     */
+    public function getRatingCode() { return $this->ratingCode; }
+
+    /**
+     * @return MarketUser
+     */
+    public function getRater() :MarketUser { return $this->rater; }
 
 
 }

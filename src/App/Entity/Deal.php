@@ -201,6 +201,12 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     protected $userFavorites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Rating, mappedBy="deal")
+     * @var ArrayCollection
+     */
+    protected $ratings;
+
     /** @ORM\Column(type="integer", nullable=true)   */
     protected $views;
 
@@ -217,6 +223,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->periods = new ArrayCollection();
         $this->marketUsers = new MarketUser();
         $this->issuer = new Issuer();
+        $this->ratings = new ArrayCollection();
     }
 
     function addMessage(Message $message)
@@ -232,6 +239,13 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     function addMarketUser(MarketUser $user)
     {
         $this->getMarketUsers()->add($user);
+    }
+
+    function addRating(Rating $rating)
+    {
+        if ($this->ratings->contains($rating))
+            return;
+        $this->ratings->add($rating);
     }
 
     function addUserFavorites(MarketUser $user){ $this->userFavorites->add($user); }
@@ -492,6 +506,11 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
     }
 
     public function getViews() { return $this->views; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getRatings() {  return $this->ratings; }
 
 
 }
