@@ -41,7 +41,7 @@ class Community
      */
     protected $owner;
 
-    /** @ORM\Column(type="string", nullable=false)  */
+    /** @ORM\Column(type="string", length=35, unique=true, nullable=false)  */
     protected $name;
 
     /** @ORM\Column(type="text", nullable=false)  */
