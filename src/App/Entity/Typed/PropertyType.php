@@ -22,4 +22,14 @@ class PropertyType extends MappedTypeAbstract
     {
         parent::__construct();
     }
+
+    /** @ORM\Column(type="string", nullable=false)  */
+    protected $typeMain  = '';
+
+    /**
+     * @return string
+     */
+    public function getTypeMain() { return $this->typeMain; }
+
+
 }
