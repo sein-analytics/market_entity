@@ -88,6 +88,12 @@ class Loan implements NotifyPropertyChanged
     protected $armAttributes;
 
     /**
+     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\CommAttribute", mappedBy="loan")
+     * @var \App\Entity\Loan\ArmAttribute
+     */
+    protected $commAttributes;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
      * @ORM\JoinColumn(name="pool_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Pool
