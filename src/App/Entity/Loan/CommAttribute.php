@@ -15,7 +15,7 @@ use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\ArmAttribute")
+ * @ORM\Entity(repositoryClass="\App\Repository\Loan\CommAttribute")
  * @ORM\Table(name="CommAttribute")
  * @ChangeTrackingPolicy("NOTIFY")
  */
