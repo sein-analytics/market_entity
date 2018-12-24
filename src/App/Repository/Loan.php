@@ -59,7 +59,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         'original_ltv' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
         'original_cltv' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'appraised_value' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
-        'credit_score' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NOT NULL'],
+        'credit_score' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
         'front_dti' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'back_dti' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'number_of_borrowers' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],

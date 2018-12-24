@@ -181,7 +181,7 @@ class Loan implements NotifyPropertyChanged
     protected $appraisedValue;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=false)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      **/
     protected $creditScore;
 
