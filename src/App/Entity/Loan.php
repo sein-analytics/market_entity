@@ -112,7 +112,7 @@ class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=true) **/
     protected $issuanceBalance;
 
-    /** @ORM\Column(type="decimal", precision=10, scale=6, nullable=false) **/
+    /** @ORM\Column(type="decimal", precision=10, scale=6, nullable=true) **/
     protected $initialRate;
 
     /** @ORM\Column(type="integer", nullable=true) **/
@@ -169,7 +169,7 @@ class Loan implements NotifyPropertyChanged
     protected $originalLtv;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=false)
+     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
      *
      **/
     protected $originalCltv;
@@ -192,7 +192,7 @@ class Loan implements NotifyPropertyChanged
     protected $frontDti;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=false)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      * @var number
      **/
     protected $backDti;
