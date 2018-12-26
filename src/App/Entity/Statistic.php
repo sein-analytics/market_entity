@@ -27,7 +27,9 @@ class Statistic implements NotifyPropertyChanged
      **/
     protected $id;
 
-    /** @ORM\OneToOne(targetEntity="\App\Entity\Deal", inversedBy="stats")
+    /**
+     * @ORM\OneToOne(targetEntity="\App\Entity\Deal", inversedBy="stats")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Deal
      **/
     protected $deal;

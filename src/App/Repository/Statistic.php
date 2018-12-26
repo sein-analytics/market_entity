@@ -24,22 +24,22 @@ class Statistic extends EntityRepository implements SqlManagerTraitInterface
     static $table = [
       'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
       'deal_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'states' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'summary_states' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'ltv' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'summary_ltv' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'balance' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'summary_balance' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'rate' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'summary_rate' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'loan_type' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'property_type' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'occupancy' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'maturity' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'summary_maturity' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'credit' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'summary_credit' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL'],
-      'filter_data' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NOT NULL']
+      'states' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'summary_states' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'ltv' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'summary_ltv' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'balance' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'summary_balance' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'rate' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'summary_rate' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'loan_type' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'property_type' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'occupancy' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'maturity' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'summary_maturity' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'credit' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'summary_credit' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+      'filter_data' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
     ];
 
     public function __construct(EntityManager $em, ClassMetadata $class)

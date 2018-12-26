@@ -237,8 +237,8 @@ class Loan implements NotifyPropertyChanged
     protected $zip;
 
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $assetAttributes = '';
+    /** @ORM\Column(type="json", nullable=true) **/
+    protected $assetAttributes;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Data\Cbsa", inversedBy="loans")

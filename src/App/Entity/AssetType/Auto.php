@@ -5,10 +5,6 @@ use App\Entity\Loan;
 class Auto extends Loan
 {
 
-
-
-    protected $assetAttributes = array();
-
     /**
      * @return Loan\ArmAttribute
      */
@@ -25,10 +21,19 @@ class Auto extends Loan
         $this->armAttributes = $armAttributes;
     }
 
+    public function setAssetAttributes(array $assetAttributes)
+    {
+        $string = json_encode($assetAttributes);
+        $this->_onPropertyChanged('assetAttributes', $this->assetAttributes, $string);
+        $this->assetAttributes = $string;
+    }
+
 
     public function getAssetAttributes()
     {
-        $attributes = serialize($this->assetAttributes);
-        return $attributes;
+        if (is_string($this->assetAttributes)){
+            return json_decode($this->assetAttributes, true);
+        }
+        return $this->assetAttributes;
     }
 }

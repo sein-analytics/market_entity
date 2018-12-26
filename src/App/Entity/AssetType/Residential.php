@@ -9,11 +9,18 @@ namespace App\Entity\AssetType;
 use App\Entity\Loan;
 class Residential extends Loan
 {
-    protected $assetAttributes = array();
-    
     public function getAssetAttributes()
     {
-        $attributes = serialize($this->assetAttributes);
-        return $attributes;
+        if (is_string($this->assetAttributes)){
+            return json_decode($this->assetAttributes, true);
+        }
+        return $this->assetAttributes;
+    }
+
+    public function setAssetAttributes(array $assetAttributes)
+    {
+        $string = json_encode($assetAttributes);
+        $this->_onPropertyChanged('assetAttributes', $this->assetAttributes, $string);
+        $this->assetAttributes = $string;
     }
 }
