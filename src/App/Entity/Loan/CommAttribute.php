@@ -57,6 +57,9 @@ class CommAttribute implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
     protected $debtYieldRatio;
 
+    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
+    protected $vacancyRate;
+
     /**
      * @return mixed
      */
@@ -159,5 +162,20 @@ class CommAttribute implements NotifyPropertyChanged
         $this->_onPropertyChanged('debtYieldRatio', $this->debtYieldRatio, $debtYieldRatio);
         $this->debtYieldRatio = $debtYieldRatio;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getVacancyRate() { return $this->vacancyRate; }
+
+    /**
+     * @param mixed $vacancyRate
+     */
+    public function setVacancyRate($vacancyRate)
+    {
+        $this->_onPropertyChanged('vacancyRate', $this->vacancyRate, $vacancyRate);
+        $this->vacancyRate = $vacancyRate;
+    }
+
 
 }

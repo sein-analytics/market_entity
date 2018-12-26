@@ -27,7 +27,8 @@ class CommAttribute extends EntityRepository implements SqlManagerTraitInterface
         'net_worth_to_loan' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'profit_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'loan_to_cost_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'debt_yield_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
+        'debt_yield_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        'vacancy_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
 
     /**
