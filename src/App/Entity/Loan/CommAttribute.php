@@ -60,6 +60,15 @@ class CommAttribute implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
     protected $vacancyRate;
 
+    /** @ORM\Column(type="integer", nullable=true)   */
+    protected $lockoutPeriod;
+
+    /**
+     * @ORM\Column(type = "datetime", nullable=true)
+     * @var \DateTime
+     **/
+    protected $defeasanceDate;
+
     /**
      * @return mixed
      */
@@ -176,6 +185,36 @@ class CommAttribute implements NotifyPropertyChanged
         $this->_onPropertyChanged('vacancyRate', $this->vacancyRate, $vacancyRate);
         $this->vacancyRate = $vacancyRate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLockoutPeriod() { return $this->lockoutPeriod; }
+
+    /**
+     * @param mixed $lockoutPeriod
+     */
+    public function setLockoutPeriod($lockoutPeriod)
+    {
+        $this->_onPropertyChanged('lockoutPeriod', $this->lockoutPeriod, $lockoutPeriod);
+        $this->lockoutPeriod = $lockoutPeriod;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDefeasanceDate() {  return $this->defeasanceDate; }
+
+    /**
+     * @param \DateTime $defeasanceDate
+     */
+    public function setDefeasanceDate(\DateTime $defeasanceDate)
+    {
+        $this->_onPropertyChanged('defeasanceDate', $this->defeasanceDate, $defeasanceDate);
+        $this->defeasanceDate = $defeasanceDate;
+    }
+
+
 
 
 }

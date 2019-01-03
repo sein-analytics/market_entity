@@ -93,7 +93,10 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         'year_built' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
         'new_vs_used' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'reserves' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'dealer_reserve' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
+        'dealer_reserve' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        'prepay_penalty_term' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        'prepay_penalty' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        'prepay_step_down' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
     ];
 
     public function __construct(EntityManager $em, ClassMetadata $class)

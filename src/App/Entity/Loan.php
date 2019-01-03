@@ -330,6 +330,17 @@ class Loan implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=8, scale=2, nullable = true) **/
     protected $dealerReserve;
 
+    /** @ORM\Column(type="integer", nullable=true)   */
+    protected $prepayPenaltyTerm;
+
+    /** @ORM\Column(type="decimal", precision=8, scale=2, nullable = true) **/
+    protected $prepayPenalty;
+
+    /** @ORM\Column(type="json", nullable=true)
+     * @var array
+     **/
+    protected $prepayStepDown;
+
     /** @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")   */
     protected $bids;
 
@@ -1266,5 +1277,49 @@ class Loan implements NotifyPropertyChanged
      * @return mixed
      */
     public function getReviewStatuses() { return $this->reviewStatuses; }
+
+    /**
+     * @return mixed
+     */
+    public function getPrepayPenaltyTerm() { return $this->prepayPenaltyTerm; }
+
+    /**
+     * @param mixed $prepayPenaltyTerm
+     */
+    public function setPrepayPenaltyTerm($prepayPenaltyTerm)
+    {
+        $this->_onPropertyChanged('prepayPenaltyTerm', $this->prepayPenaltyTerm, $prepayPenaltyTerm);
+        $this->prepayPenaltyTerm = $prepayPenaltyTerm;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrepayPenalty(){  return $this->prepayPenalty; }
+
+    /**
+     * @param mixed $prepayPenalty
+     */
+    public function setPrepayPenalty($prepayPenalty)
+    {
+        $this->_onPropertyChanged('prepayPenalty', $this->prepayPenalty, $prepayPenalty);
+        $this->prepayPenalty = $prepayPenalty;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPrepayStepDown(): array { return $this->prepayStepDown; }
+
+    /**
+     * @param array $prepayStepDown
+     */
+    public function setPrepayStepDown(array $prepayStepDown)
+    {
+        $string = json_encode($prepayStepDown);
+        $this->_onPropertyChanged('prepayStepDown', $this->prepayStepDown, $string);
+        $this->prepayStepDown = $prepayStepDown;
+    }
+
 
 }
