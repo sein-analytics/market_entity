@@ -34,6 +34,13 @@ class CommAttribute extends EntityRepository implements SqlManagerTraitInterface
         'cap_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
 
+    public function fetchCommAttributeIdsByLoanIds(array $loanIds)
+    {
+        $sql = "SELECT id FROM CommAttribute Where loan_id in (?)";
+        $stmt = $this->returnInArraySqlStmt($this->em, $loanIds, $sql);
+        return $this->completeIdFetchQuery($stmt);
+    }
+
     /**
      * @return bool|int
      */
