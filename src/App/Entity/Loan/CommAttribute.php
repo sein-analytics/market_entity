@@ -69,6 +69,9 @@ class CommAttribute implements NotifyPropertyChanged
      **/
     protected $defeasanceDate;
 
+    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
+    protected $capRate;
+
     /**
      * @return mixed
      */
@@ -214,7 +217,19 @@ class CommAttribute implements NotifyPropertyChanged
         $this->defeasanceDate = $defeasanceDate;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCapRate() { return $this->capRate; }
 
+    /**
+     * @param mixed $capRate
+     */
+    public function setCapRate($capRate)
+    {
+        $this->_onPropertyChanged('capRate', $this->capRate, $capRate);
+        $this->capRate = $capRate;
+    }
 
 
 }

@@ -30,7 +30,8 @@ class CommAttribute extends EntityRepository implements SqlManagerTraitInterface
         'debt_yield_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'vacancy_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'lockout_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'defeasance_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL']
+        'defeasance_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        'cap_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
 
     /**
