@@ -87,9 +87,9 @@ trait QueryManagerTrait
         return $sqlInsertLine;
     }
 
-    public function buildInsertElementStatement(array $data){
+    public function buildInsertElementStatement(array $data, $ensureSize=true){
         $size = count(self::$table);
-        if(count($data) !== $size){
+        if(count($data) !== $size &&  $ensureSize){
             return ['message' => 'Insert array size is wrong'];
         }
         reset(self::$table);
