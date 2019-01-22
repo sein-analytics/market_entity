@@ -42,7 +42,7 @@ class CommAttribute implements NotifyPropertyChanged
     /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
     protected $dscr;
 
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
+    /** @ORM\Column(type="decimal", precision=16, scale=4, nullable=true) **/
     protected $noi;
 
     /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
