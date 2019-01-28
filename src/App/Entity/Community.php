@@ -47,6 +47,9 @@ class Community
     /** @ORM\Column(type="text", nullable=false)  */
     protected $description;
 
+    /** @ORM\Column(type="datetime", nullable=true) **/
+    protected $dateCreated;
+
     public function __construct()
     {
         $this->users  = new ArrayCollection();
@@ -89,6 +92,8 @@ class Community
      */
     public function getDescription() { return $this->description; }
 
+    public function getDateCreated() { return $this->dateCreated; }
+
     /**
      * @param MarketUser $owner
      */
@@ -107,7 +112,9 @@ class Community
     /**
      * @param mixed $description
      */
-    public function setDescription($description) { $this->description = $description;}
+    public function setDescription($description) { $this->description = $description; }
+
+    public function setDateCreated(\DateTime $dateCreated) { $this->dateCreated = $dateCreated; }
 
 
 }
