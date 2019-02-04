@@ -47,8 +47,13 @@ class Community
     /** @ORM\Column(type="text", nullable=false)  */
     protected $description;
 
-    /** @ORM\Column(type="datetime", nullable=true) **/
+    /** @ORM\Column(type="datetime", nullable=false) **/
     protected $dateCreated;
+
+    /** @ORM\Column(type="datetime", nullable=false, options={"default":"0"}) **/
+    protected $isPrimaryGroup;
+
+    // @ORM\Column(type="boolean", options={"default":"0"}
 
     public function __construct()
     {
@@ -95,6 +100,11 @@ class Community
     public function getDateCreated() { return $this->dateCreated; }
 
     /**
+     * @return mixed
+     */
+    public function getisPrimaryGroup() { return $this->isPrimaryGroup; }
+
+    /**
      * @param MarketUser $owner
      */
     public function setOwner(MarketUser $owner)
@@ -116,5 +126,9 @@ class Community
 
     public function setDateCreated(\DateTime $dateCreated) { $this->dateCreated = $dateCreated; }
 
+    /**
+     * @param bool $isPrimaryGroup
+     */
+    public function setIsPrimaryGroup(bool $isPrimaryGroup) { $this->isPrimaryGroup = $isPrimaryGroup; }
 
 }
