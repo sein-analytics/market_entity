@@ -50,7 +50,7 @@ class Community
     /** @ORM\Column(type="datetime", nullable=false) **/
     protected $dateCreated;
 
-    /** @ORM\Column(type="datetime", nullable=false, options={"default":"0"}) **/
+    /** @ORM\Column(type="boolean", nullable=false, options={"default":"0"}) **/
     protected $isPrimaryGroup;
 
     // @ORM\Column(type="boolean", options={"default":"0"}
