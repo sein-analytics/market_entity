@@ -129,23 +129,22 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
     {
         $sql = "SELECT loans.*, ArmAttribute.gross_margin, ArmAttribute.minimum_rate, ArmAttribute.maximum_rate, ArmAttribute.rate_index, ".
             "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
-            " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap ".
-            "FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
+            " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap, lnState.abbreviation AS state ".
+            "FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id LEFT JOIN  State lnState ON  lnState.id = loans.state_id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
         $armLoans = $this->fetchByIntArray($this->em, $ids, $sql);
-        $noArms = [];
+        $loansId = [];
         if(count($armLoans) > 0){
-            $loansId = [];
             foreach ($armLoans as $loan){
                 array_push($loansId, $loan['id']);
             }
-            $sql = "SELECT * FROM loans WHERE pool_id IN (?) AND id NOT IN (?) ORDER BY id ASC ";
-            $stmt = $this->em->getConnection()->executeQuery($sql,
-                array($ids, $loansId),
-                array(Connection::PARAM_INT_ARRAY,
-                    Connection::PARAM_INT_ARRAY)
-            );
-            $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         }
+        $sql = "SELECT loans.*, lnState.abbreviation AS state FROM loans LEFT JOIN State lnState ON lnState.id=loans.state_id WHERE pool_id IN (?) AND loans.id NOT IN (?) ORDER BY loans.id ASC";
+        $stmt = $this->em->getConnection()->executeQuery($sql,
+            array($ids, $loansId),
+            array(Connection::PARAM_INT_ARRAY,
+                Connection::PARAM_INT_ARRAY)
+        );
+        $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $results = array_merge($noArms, $armLoans);
         return $results;
     }
