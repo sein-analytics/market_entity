@@ -512,5 +512,8 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function getRatings() {  return $this->ratings; }
 
-
+    /**
+     * @return mixed
+     */
+    public function getAssetType() : DealAsset { return $this->assetType; }
 }
