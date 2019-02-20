@@ -516,4 +516,16 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      * @return mixed
      */
     public function getAssetType() : DealAsset { return $this->assetType; }
+
+    /**
+     * @return DealStatus
+     */
+    public function getStatus(): DealStatus { return $this->status; }
+
+    /**
+     * @param DealStatus $status
+     */
+    public function setStatus(DealStatus $status)  { $this->status = $status; }
+
+
 }
