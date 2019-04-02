@@ -324,6 +324,13 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
         return [];
     }
 
+    public function setPasswordAttribute($password)
+    {
+        if(!empty($password)){
+            $this->password = bcrypt($password);
+        }
+    }
+
     function addMarketDeal(Deal $deal)
     {
         $this->marketDeals->add($deal);
