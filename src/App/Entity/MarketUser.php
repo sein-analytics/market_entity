@@ -14,6 +14,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticableContracts;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
@@ -21,7 +22,7 @@ use LaravelDoctrine\ORM\Notifications\Notifiable;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanResetPasswordContracts
+class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanResetPasswordContracts, JWTSubject
 {
     use NotifyChangeTrait, CreatePropertiesArrayTrait, Authenticatable, CanResetPassword, Notifiable, Timestamps;
 
@@ -307,6 +308,22 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
         $this->myCommunities = new ArrayCollection();
     }
 
+    /**
+     * @return int
+     */
+    public  function getJWTIdentifier()
+    {
+        return $this->getId();
+    }
+
+    /**
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     function addMarketDeal(Deal $deal)
     {
         $this->marketDeals->add($deal);
@@ -357,6 +374,9 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
         $community->removeUserFromCommunity($user);
     }
 
+    /**
+     * @return int
+     */
     public function getId() { return $this->id; }
 
     /**

@@ -21,6 +21,9 @@
 		"laravel-doctrine/migrations": "1.1.10",
 		"laravel-doctrine/extensions": "~1.0.14",
 		"gedmo/doctrine-extensions": "^2.4",
-		"ext-json": "*"
-	}
+		"ext-json": "*",
+		"tymon/jwt-auth": "1.0.*"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
 }
