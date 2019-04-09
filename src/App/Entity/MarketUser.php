@@ -264,6 +264,11 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     protected $token;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $authyToken;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="marketUsers")
      *
      * @var ArrayCollection
@@ -435,6 +440,8 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     public function setAuthPassword($password) { $this->password = $password; }
 
+    public function setAuthyToken ($authyToken) { $this->authyToken = $authyToken; }
+
     /**
      * @return mixed
      */
@@ -582,6 +589,8 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     public function getRated() { return $this->rated; }
 
+    public function getAuthyToken() { return $this->authyToken; }
+
     /**
      * @return ArrayCollection
      */
@@ -592,6 +601,17 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     public function getMyCommunities() { return $this->myCommunities; }
 
-
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'organization' => $this->getIssuer()->getIssuerName(),
+            'name' => $this->getFirstName() . " " . $this->getLastName(),
+            'picture' => $this->getImageArn(),
+            'username' => $this->getUserName(),
+            'access_token' => $this->getRememberToken(),
+            'authy_token' => $this->getAuthyToken()
+        ];
+    }
 
 }
