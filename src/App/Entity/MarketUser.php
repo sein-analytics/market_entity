@@ -189,7 +189,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     protected $specialities;
 
-    /** @ORM\Column(type="bigint", nullable=false) **/
+    /** @ORM\Column(type="bigint", nullable=false, unique=true) **/
     protected $authyId = 0;
 
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
@@ -610,7 +610,8 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
             'picture' => $this->getImageArn(),
             'username' => $this->getUserName(),
             'access_token' => $this->getRememberToken(),
-            'authy_token' => $this->getAuthyToken()
+            'authy_token' => $this->getAuthyToken(),
+            'authy_id'  => $this->getAuthyId()
         ];
     }
 
