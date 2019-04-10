@@ -259,12 +259,12 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     protected $marketFavorites;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $token;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $authyToken;
 
