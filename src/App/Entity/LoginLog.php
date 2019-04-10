@@ -30,30 +30,28 @@ class LoginLog implements NotifyPropertyChanged
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="logins")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\MarketUser
      **/
     protected $user;
 
-    /** @ORM\Column(type="string")   */
+    /** @ORM\Column(type="string", nullable=false)   */
     protected $ip;
 
-    /** @ORM\Column(type="string")   */
+    /** @ORM\Column(type="string", nullable=false)   */
     protected $userName;
 
-    /** @ORM\Column(type="string")   */
-    protected $password;
-
-    /** @ORM\Column(type="string")   */
+    /** @ORM\Column(type="string", nullable=false)   */
     protected $mobileConfirmation;
 
-    /** @ORM\Column(type="date")   */
+    /** @ORM\Column(type="date", nullable=false)   */
     protected $startTime;
 
-    /** @ORM\Column(type="date")   */
+    /** @ORM\Column(type="date", nullable=false)   */
     protected $endTime;
 
-    /** @ORM\Column(type="integer")   */
-    protected $sessionDuration;
+    /** @ORM\Column(type="integer", nullable=false)   */
+    protected $sessionDuration = 0;
 
     /**
      * @return mixed
@@ -114,22 +112,6 @@ class LoginLog implements NotifyPropertyChanged
         $this->userName = $userName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param mixed $password
-     */
-    public function setPassword($password)
-    {
-        $this->_onPropertyChanged('password', $this->password, $password);
-        $this->password = $password;
-    }
 
     /**
      * @return mixed
