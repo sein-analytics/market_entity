@@ -601,7 +601,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     public function getMyCommunities() { return $this->myCommunities; }
 
-    public function toArray()
+    public function loginToArray()
     {
         return [
             'id' => $this->getId(),
@@ -611,7 +611,8 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
             'username' => $this->getUserName(),
             'access_token' => $this->getRememberToken(),
             'authy_token' => $this->getAuthyToken(),
-            'authy_id'  => $this->getAuthyId()
+            'authy_id'  => $this->getAuthyId(),
+            'role' => $this->getRole()->getId()
         ];
     }
 
