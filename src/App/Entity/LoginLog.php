@@ -41,7 +41,7 @@ class LoginLog implements NotifyPropertyChanged
     /** @ORM\Column(type="string", nullable=false)   */
     protected $userName;
 
-    /** @ORM\Column(type="string", nullable=false)   */
+    /** @ORM\Column(type="string", nullable=true)   */
     protected $mobileConfirmation;
 
     /** @ORM\Column(type="date", nullable=false)   */
