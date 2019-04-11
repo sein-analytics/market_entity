@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\LoginLog")
  * @ORM\Table(name="LoginLog")
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
@@ -41,17 +41,17 @@ class LoginLog implements NotifyPropertyChanged
     /** @ORM\Column(type="string", nullable=false)   */
     protected $userName;
 
-    /** @ORM\Column(type="string", nullable=true)   */
+    /** @ORM\Column(type="string", nullable=true, unique=true)   */
     protected $mobileConfirmation;
 
-    /** @ORM\Column(type="date", nullable=false)   */
+    /** @ORM\Column(type="datetime", nullable=false)   */
     protected $startTime;
 
-    /** @ORM\Column(type="date", nullable=false)   */
+    /** @ORM\Column(type="datetime", nullable=false)   */
     protected $endTime;
 
-    /** @ORM\Column(type="integer", nullable=false)   */
-    protected $sessionDuration = 0;
+    /** @ORM\Column(type="time", nullable=false)   */
+    protected $sessionDuration = '00:00:00';
 
     /**
      * @return mixed
@@ -139,9 +139,9 @@ class LoginLog implements NotifyPropertyChanged
     }
 
     /**
-     * @param mixed $startTime
+     * @param \DateTime $startTime
      */
-    public function setStartTime($startTime)
+    public function setStartTime(\DateTime $startTime)
     {
         $this->_onPropertyChanged('startTime', $this->startTime, $startTime);
         $this->startTime = $startTime;
@@ -156,9 +156,9 @@ class LoginLog implements NotifyPropertyChanged
     }
 
     /**
-     * @param mixed $endTime
+     * @param \DateTime $endTime
      */
-    public function setEndTime($endTime)
+    public function setEndTime(\DateTime $endTime)
     {
         $this->_onPropertyChanged('endTime', $this->endTime, $endTime);
         $this->endTime = $endTime;
@@ -170,15 +170,6 @@ class LoginLog implements NotifyPropertyChanged
     public function getSessionDuration()
     {
         return $this->sessionDuration;
-    }
-
-    /**
-     * @param mixed $sessionDuration
-     */
-    public function setSessionDuration($sessionDuration)
-    {
-        $this->_onPropertyChanged('sessionDuration', $this->sessionDuration, $sessionDuration);
-        $this->sessionDuration = $sessionDuration;
     }
 
 }
