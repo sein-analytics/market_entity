@@ -9,6 +9,22 @@ use Doctrine\ORM\Query;
 
 class LoginLog extends EntityRepository
 {
+    const INSERT_STMT = '';
+
+    const ID_KEY = 'id';
+
+    const IP_KEY = 'ip';
+
+    const EMAIL_KEY = 'email';
+
+    const TOKEN_KEY = 'token';
+
+    const START_KEY = 'start_time';
+
+    const END_KEY = 'end_time';
+
+    const BASE_DUR = '00:00:00';
+
     /**
      * @param int $id
      * @return array|DBALException|\Exception
@@ -80,6 +96,47 @@ class LoginLog extends EntityRepository
             return $stmt;
         $stmt->bindValue(1, $id);
         return $this->executeStmt($stmt);
+    }
+
+    /**
+     * @param array $credentialsArr
+     * @return bool|DBALException|\Exception
+     */
+    function insertNewLoginLog(array $credentialsArr)
+    {
+        $sql = "INSERT INTO LoginLog (`id`, `user_id`, `user_name`, `mobile_confirmation`, `start_time`, `end_time`, `session_duration`) VALUES ";
+        if (!($credentials = $this->doesArrayHaveRequiredInputs($credentialsArr)))
+            return ['message' => "Missing required keys in the credentials array"];
+        $sql .= '(' . 0 . ',' . $credentials[self::ID_KEY] . ',' . $credentials[self::EMAIL_KEY] . ',';
+        $sql .= $credentials[self::TOKEN_KEY] . ',' . $credentials[self::START_KEY] . ',';
+        $sql .= $credentials[self::END_KEY] . ',' . self::BASE_DUR . ');';
+        $stmt = $this->prepareSql($sql);
+        return $this->executeStmt($stmt);
+    }
+
+    /**
+     * @param array $credentials
+     * @return array|bool
+     */
+    function doesArrayHaveRequiredInputs(array $credentials)
+    {
+        if(!array_key_exists(self::ID_KEY, $credentials))
+            return false;
+        if(!array_key_exists(self::TOKEN_KEY, $credentials))
+            return false;
+        if(!array_key_exists(self::IP_KEY, $credentials))
+            return false;
+        if(!array_key_exists(self::EMAIL_KEY, $credentials))
+            return false;
+        if(!array_key_exists(self::END_KEY, $credentials)
+            || !$credentials[self::END_KEY] instanceof \DateTime)
+            return false;
+        if(!array_key_exists(self::START_KEY, $credentials)
+            || !$credentials[self::START_KEY] instanceof \DateTime)
+            return false;
+        $credentials[self::START_KEY] = $credentials[self::START_KEY]->format('Y-m-d H:i:s');
+        $credentials[self::END_KEY] = $credentials[self::END_KEY]->format('Y-m-d H:i:s');
+        return $credentials;
     }
 
     /**
