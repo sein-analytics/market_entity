@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\ORM\EntityRepository;
@@ -9,6 +10,8 @@ use Doctrine\ORM\Query;
 
 class LoginLog extends EntityRepository
 {
+    use FetchMapperTrait;
+
     const INSERT_STMT = '';
 
     const ID_KEY = 'id';
@@ -37,7 +40,9 @@ class LoginLog extends EntityRepository
         $stmt->bindValue(1, $id);
         if(!($stmt = $this->executeStmt($stmt)))
             return $stmt;
-        return $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        if (is_array($result))
+            return $this->flattenResultArrayByKey($result, self::IP_KEY);
     }
 
     /**
