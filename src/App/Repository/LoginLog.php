@@ -43,6 +43,7 @@ class LoginLog extends EntityRepository
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         if (is_array($result))
             return $this->flattenResultArrayByKey($result, self::IP_KEY);
+        return $result;
     }
 
     /**
