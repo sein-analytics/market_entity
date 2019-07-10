@@ -4,8 +4,10 @@
 namespace App\Entity\Loan;
 
 use App\Entity\Loan;
+use App\Entity\MarketUser;
 use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,9 +31,27 @@ class SaleAttribute implements NotifyPropertyChanged
      **/
     protected $loan;
 
-    /** @var float  */
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="boughtLoans")
+     * @var ArrayCollection
+     */
+    protected $buyers;
+
+    /**
+     * @var float
+     * @ORM\Column(type="decimal", precision=6, scale=5, nullable = true)
+     */
     protected $availability = 1.0;
 
+    public function __construct()
+    {
+        $this->buyers = new ArrayCollection();
+    }
+
+    public function addBuyer(MarketUser $marketUser)
+    {
+        $this->buyers->add($marketUser);
+    }
     /**
      * @return int|null
      */

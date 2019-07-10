@@ -276,6 +276,12 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     protected $marketDeals;
 
     /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan\SaleAttribute", mappedBy="buyers")
+     * @var PersistentCollection
+     */
+    protected $boughtLoans;
+
+    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="user")
      * @var \App\Entity\DueDiligence
      */
