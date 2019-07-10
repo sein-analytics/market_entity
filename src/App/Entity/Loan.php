@@ -89,9 +89,15 @@ class Loan implements NotifyPropertyChanged
 
     /**
      * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\CommAttribute", mappedBy="loan")
-     * @var \App\Entity\Loan\ArmAttribute
+     * @var \App\Entity\Loan\CommAttribute
      */
     protected $commAttributes;
+
+    /**
+     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\SaleAttribute", mappedBy="loan")
+     * @var \App\Entity\Loan\SaleAttribute
+     */
+    protected $saleAttributes;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
@@ -1320,6 +1326,21 @@ class Loan implements NotifyPropertyChanged
         $this->_onPropertyChanged('prepayStepDown', $this->prepayStepDown, $string);
         $this->prepayStepDown = $prepayStepDown;
     }
+
+    /**
+     * @return Loan\ArmAttribute|null
+     */
+    public function getArmAttributes() { return $this->armAttributes; }
+
+    /**
+     * @return Loan\CommAttribute|null
+     */
+    public function getCommAttributes() { return $this->commAttributes; }
+
+    /**
+     * @return Loan\SaleAttribute|null
+     */
+    public function getSaleAttributes() { return $this->saleAttributes; }
 
 
 }
