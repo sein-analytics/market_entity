@@ -20,6 +20,13 @@ class SaleAttribute extends EntityRepository implements SqlManagerTraitInterface
         'availability' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 1.0],
     ];
 
+    public function fetchSaleAttributeIdsByLoanIds(array $loanIds)
+    {
+        $sql = "SELECT id FROM SaleAttribute Where loan_id in (?)";
+        $stmt = $this->returnInArraySqlStmt($this->em, $loanIds, $sql);
+        return $this->completeIdFetchQuery($stmt);
+    }
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('');
