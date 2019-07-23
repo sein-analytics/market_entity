@@ -87,6 +87,28 @@ trait QueryManagerTrait
         return $sqlInsertLine;
     }
 
+    public function buildUpdateElementStatement(array $data, string $tableName, int $id)
+    {
+        $size = count(self::$table); $counter = 0; $updateStmt = "UPDATE $tableName";
+        reset(self::$table);
+        foreach (self::$table as $colName => $properties){
+            if (!array_key_exists($counter, $data)){
+                $counter++;
+                continue;
+            }
+            $value = $data[$counter];
+            $typeResult = $this->isTypeMappingCorrect(gettype($value), $colName, $properties);
+            if(is_array($typeResult))
+                return $typeResult;
+            $value = $this->quoteStringValue($value, $properties);
+            $value = $this->boolToIntValue($value);
+            $updateStmt .= PHP_EOL . 'SET ' . $colName . '=' . $value . (($counter < $size -1) ? ',' : '');
+            $counter++;
+        }
+        $updateStmt .= PHP_EOL . "WHERE id = $id";
+        return $updateStmt;
+    }
+
     public function buildInsertElementStatement(array $data, $ensureSize=true){
         $size = count(self::$table);
         if(count($data) !== $size &&  $ensureSize){
