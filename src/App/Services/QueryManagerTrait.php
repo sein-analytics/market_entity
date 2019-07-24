@@ -102,10 +102,10 @@ trait QueryManagerTrait
                 return $typeResult;
             $value = $this->quoteStringValue($value, $properties);
             $value = $this->boolToIntValue($value);
-            $updateStmt .= PHP_EOL . 'SET ' . $colName . '=' . $value . (($counter < $size -1) ? ',' : '');
+            $updateStmt .= PHP_EOL . 'SET ' . $colName . ' = ' . $value . (($counter < $size -1) ? ',' : '');
             $counter++;
         }
-        $updateStmt .= PHP_EOL . "WHERE id = $id";
+        $updateStmt .= PHP_EOL . " WHERE id = $id";
         return $updateStmt;
     }
 
