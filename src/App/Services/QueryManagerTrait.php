@@ -105,7 +105,7 @@ trait QueryManagerTrait
             $updateStmt .= PHP_EOL . $colName . ' = ' . $value . (($counter < $size -1) ? ',' : '');
             $counter++;
         }
-        $updateStmt .= PHP_EOL . " WHERE id = $id";
+        $updateStmt .= PHP_EOL . " WHERE id = $id;";
         return $updateStmt;
     }
 
