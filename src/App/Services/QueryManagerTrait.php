@@ -89,7 +89,7 @@ trait QueryManagerTrait
 
     public function buildUpdateElementStatement(array $data, string $tableName, int $id)
     {
-        $size = count(self::$table); $counter = 0; $updateStmt = "UPDATE $tableName";
+        $size = count(self::$table); $counter = 0; $updateStmt = "UPDATE $tableName SET ";
         reset(self::$table);
         foreach (self::$table as $colName => $properties){
             if (!array_key_exists($counter, $data)){
@@ -102,7 +102,7 @@ trait QueryManagerTrait
                 return $typeResult;
             $value = $this->quoteStringValue($value, $properties);
             $value = $this->boolToIntValue($value);
-            $updateStmt .= PHP_EOL . 'SET ' . $colName . ' = ' . $value . (($counter < $size -1) ? ',' : '');
+            $updateStmt .= PHP_EOL . $colName . ' = ' . $value . (($counter < $size -1) ? ',' : '');
             $counter++;
         }
         $updateStmt .= PHP_EOL . " WHERE id = $id";
