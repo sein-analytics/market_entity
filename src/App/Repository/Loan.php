@@ -13,6 +13,7 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
@@ -115,7 +116,11 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         $sql = "SELECT * FROM Pool WHERE deal_id IN (?)";
         $results = $this->fetchByIntArray($this->em, array($dealId), $sql);
         if(count($results) > 0){
-            $results = $this->fetchLoansByPoolIds(array($results[0]['id']));
+            try{
+                $results = $this->fetchLoansByPoolIds(array($results[0]['id']));
+            } catch (DBALException $e){
+                return ['message' => $e->getMessage()];
+            }
         }
         return $results;
     }
