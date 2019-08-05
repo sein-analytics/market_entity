@@ -85,7 +85,9 @@ class Bid extends EntityRepository
         $stmt->bindValue('deal_id', $dealId);
         $temp = $stmt->execute();
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
-        if (count($result) === 1 && array_key_exists('price', $result)){
+        if (is_array($result)
+            && count($result) === 1
+            && array_key_exists('price', $result)){
             return (float)$result['price'];
         }else{
             return 0.00;
