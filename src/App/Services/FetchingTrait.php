@@ -29,6 +29,20 @@ trait FetchingTrait
     }
 
     /**
+     * @param string $key
+     * @param array $array
+     * @return array
+     */
+    public function array_value_recursive(string $key, array $array)
+    {
+        $val = [];
+        array_walk_recursive($array, function ($v, $k) use($key, &$val) {
+            if ($k == $key) array_push($val, $v);
+        });
+        return $val;
+    }
+
+    /**
      * @param EntityManager $em
      * @param array $keys
      * @param string $sql

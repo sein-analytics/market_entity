@@ -116,8 +116,9 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         $sql = "SELECT * FROM Pool WHERE deal_id IN (?)";
         $results = $this->fetchByIntArray($this->em, array($dealId), $sql);
         if(count($results) > 0){
+            $poolIds = $this->array_value_recursive('id', $results);
             try{
-                $results = $this->fetchLoansByPoolIds(array($results[0]['id']));
+                $results = $this->fetchLoansByPoolIds($poolIds);
             } catch (DBALException $e){
                 return ['message' => $e->getMessage()];
             }
@@ -134,8 +135,15 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
     {
         $sql = "SELECT loans.*, ArmAttribute.gross_margin, ArmAttribute.minimum_rate, ArmAttribute.maximum_rate, ArmAttribute.rate_index, ".
             "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
-            " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap, lnState.abbreviation AS state ".
-            "FROM loans INNER JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id LEFT JOIN  State lnState ON  lnState.id = loans.state_id WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
+            " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap, lnState.abbreviation AS state, ".
+            " SaleAttribute.availability, CommAttribute.dscr, CommAttribute.noi, CommAttribute.net_worth_to_loan, CommAttribute.profit_ratio, CommAttribute.loan_to_cost_ratio, ".
+            "CommAttribute.debt_yield_ratio, CommAttribute.vacancy_rate, CommAttribute.lockout_period, CommAttribute.defeasance_date, CommAttribute.cap_rate ".
+            "FROM loans ".
+            "LEFT JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id " .
+            "LEFT JOIN SaleAttribute ON SaleAttribute.loan_id = loans.id " .
+            "LEFT JOIN CommAttribute ON CommAttribute.loan_id = loans.id " .
+            "LEFT JOIN  State lnState ON  lnState.id = loans.state_id " .
+            "WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
         $armLoans = $this->fetchByIntArray($this->em, $ids, $sql);
         $loansId = [];
         if(count($armLoans) > 0){
