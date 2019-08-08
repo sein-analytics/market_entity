@@ -59,9 +59,9 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
 
     public function fetchDealBidTypeIdByDealId(int $id)
     {
-        $sql = "SELECT bid_type_id FROM Deal Where id = :id";
+        $sql = "SELECT bid_type_id FROM Deal Where id = ?";
         $stmt = $this->em->getConnection()->prepare($sql);
-        $stmt->bindValue('id', $id);
+        $stmt->bindValue(1, $id);
         return $this->completeIdFetchQuery($stmt);
     }
 
