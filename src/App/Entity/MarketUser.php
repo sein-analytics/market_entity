@@ -142,6 +142,12 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     protected $logins;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="user")
+     * @var ArrayCollection
+     */
+    protected $stips;
+
+    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="user")
      * @var ArrayCollection
      */
@@ -302,6 +308,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     {
         $this->bids = new ArrayCollection();
         $this->logins = new ArrayCollection();
+        $this->stips = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->following = new ArrayCollection();
@@ -606,6 +613,22 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      * @return ArrayCollection
      */
     public function getMyCommunities() { return $this->myCommunities; }
+
+    public function addLogin(LoginLog $login)
+    {
+        $this->logins->add($login);
+        $this->_onPropertyChanged('logins', $this->logins, $this->logins);
+    }
+
+    public function getLogins() :ArrayCollection { return $this->logins; }
+
+    public function addStip (UserStip $stip)
+    {
+        $this->stips->add($stip);
+        $this->_onPropertyChanged('stips', $this->stips, $this->stips);
+    }
+
+    public function getStips() :ArrayCollection { return $this->stips; }
 
     public function loginToArray()
     {

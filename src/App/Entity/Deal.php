@@ -207,6 +207,12 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     protected $ratings;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="deal")
+     * @var ArrayCollection
+     */
+    protected $stips;
+
     /** @ORM\Column(type="integer", nullable=true)   */
     protected $views;
 
@@ -224,6 +230,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         $this->marketUsers = new MarketUser();
         $this->issuer = new Issuer();
         $this->ratings = new ArrayCollection();
+        $this->stips = new ArrayCollection();
     }
 
     function addMessage(Message $message)
@@ -246,6 +253,11 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
         if ($this->ratings->contains($rating))
             return;
         $this->ratings->add($rating);
+    }
+
+    function addStips(UserStip $stip)
+    {
+        $this->stips->add($stip);
     }
 
     function addUserFavorites(MarketUser $user){ $this->userFavorites->add($user); }
@@ -526,6 +538,8 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      * @param DealStatus $status
      */
     public function setStatus(DealStatus $status)  { $this->status = $status; }
+
+    public function getStips() :ArrayCollection { return $this->stips; }
 
 
 }
