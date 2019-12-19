@@ -23,5 +23,7 @@
 		"gedmo/doctrine-extensions": "^2.4",
 		"ext-json": "*",
 		"tymon/jwt-auth": "1.0.*"
-	}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
 }
