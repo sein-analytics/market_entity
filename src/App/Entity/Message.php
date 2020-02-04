@@ -19,9 +19,9 @@ use Doctrine\ORM\PersistentCollection;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class Message implements NotifyPropertyChanged
+class Message extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -165,8 +165,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setUser(MarketUser $user)
     {
-        $this->_onPropertyChanged('user', $this->user, $user);
-        $this->user = $user;
+        $this->implementChange($this,'user', $this->user, $user);
     }
 
     /**
@@ -179,8 +178,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setType(MessageType $type)
     {
-        $this->_onPropertyChanged('type', $this->type, $type);
-        $this->type = $type;
+        $this->implementChange($this,'type', $this->type, $type);
     }
 
     /**
@@ -193,8 +191,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setMessage(string $message)
     {
-        $this->_onPropertyChanged('message', $this->message, $message);
-        $this->message = $message;
+        $this->implementChange($this,'message', $this->message, $message);
     }
 
     /**
@@ -207,8 +204,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setDate(\DateTime $date)
     {
-        $this->_onPropertyChanged('date', $this->date, $date);
-        $this->date = $date;
+        $this->implementChange($this,'date', $this->date, $date);
     }
 
     /**
@@ -221,8 +217,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setSubject(string $subject)
     {
-        $this->_onPropertyChanged('subject', $this->subject, $subject);
-        $this->subject = $subject;
+        $this->implementChange($this,'subject', $this->subject, $subject);
     }
 
     /**
@@ -240,8 +235,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setDeal(Deal $deal)
     {
-        $this->_onPropertyChanged('deal', $this->deal, $deal);
-        $this->deal = $deal;
+        $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
@@ -254,8 +248,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setLoan(Loan $loan)
     {
-        $this->_onPropertyChanged('loan', $this->loan, $loan);
-        $this->loan = $loan;
+        $this->implementChange($this,'loan', $this->loan, $loan);
     }
 
     /**
@@ -268,8 +261,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setOriginator(MessageOriginator $originator)
     {
-        $this->_onPropertyChanged('originator', $this->originator, $originator);
-        $this->originator = $originator;
+        $this->implementChange($this,'originator', $this->originator, $originator);
     }
 
     /**
@@ -282,8 +274,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setIssue(DueDiligenceIssue $issue)
     {
-        $this->_onPropertyChanged('issue', $this->issue, $issue);
-        $this->issue = $issue;
+        $this->implementChange($this,'issue', $this->issue, $issue);
     }
 
     /**
@@ -301,8 +292,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setStatus(MessageStatus $status)
     {
-        $this->_onPropertyChanged('status', $this->status, $status);
-        $this->status = $status;
+        $this->implementChange($this,'status', $this->status, $status);
     }
 
     /**
@@ -315,8 +305,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setPriority(MessagePriority $priority)
     {
-        $this->_onPropertyChanged('priority', $this->priority, $priority);
-        $this->priority = $priority;
+        $this->implementChange($this,'priority', $this->priority, $priority);
     }
 
     /**
@@ -329,8 +318,7 @@ class Message implements NotifyPropertyChanged
      */
     public function setAction(MessageAction $action)
     {
-        $this->_onPropertyChanged('action', $this->action, $action);
-        $this->action = $action;
+        $this->implementChange($this,'action', $this->action, $action);
     }
 
     /**
@@ -343,10 +331,8 @@ class Message implements NotifyPropertyChanged
      */
     public function setSendStatus(string $sendStatus)
     {
-        $this->_onPropertyChanged('sendStatus', $this->sendStatus, $sendStatus);
-        $this->sendStatus = $sendStatus;
+        $this->implementChange($this,'sendStatus', $this->sendStatus, $sendStatus);
     }
-
 
 
 }

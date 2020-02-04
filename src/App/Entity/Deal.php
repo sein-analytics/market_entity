@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\App;
  * @ORM\Table(name="Deal")
  * @ChangeTrackingPolicy("NOTIFY")
  */
-class Deal extends DealAbstract implements NotifyPropertyChanged
+class Deal extends DealAbstract
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     protected $ignoreDbProperties = [
         'bonds' => null, 'pools' => null, 'accounts' => null, 'shelfSpecifics' => null,
@@ -288,8 +288,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setIssuer(Issuer $issuer)
     {
-        $this->_onPropertyChanged('issuer', $this->issuer, $issuer);
-        $this->issuer = $issuer;
+        $this->implementChange($this,'issuer', $this->issuer, $issuer);
     }
 
     /**
@@ -302,8 +301,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setIssue($issue)
     {
-        $this->_onPropertyChanged('issue', $this->issue, $issue);
-        $this->issue = $issue;
+        $this->implementChange($this,'issue', $this->issue, $issue);
     }
 
     /**
@@ -316,8 +314,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setClosingDate(\DateTime $closingDate)
     {
-        $this->_onPropertyChanged('closingDate', $this->closingDate, $closingDate);
-        $this->closingDate = $closingDate;
+        $this->implementChange($this,'closingDate', $this->closingDate, $closingDate);
     }
 
     /**
@@ -330,8 +327,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setCutOffDate(\DateTime$cutOffDate)
     {
-        $this->_onPropertyChanged('cutOffDate', $this->cutOffDate, $cutOffDate);
-        $this->cutOffDate = $cutOffDate;
+        $this->implementChange($this,'cutOffDate', $this->cutOffDate, $cutOffDate);
     }
 
     /**
@@ -344,8 +340,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setPaymentDay($paymentDay)
     {
-        $this->_onPropertyChanged('paymentDay', $this->paymentDay, $paymentDay);
-        $this->paymentDay = $paymentDay;
+        $this->implementChange($this,'paymentDay', $this->paymentDay, $paymentDay);
     }
 
     /**
@@ -358,8 +353,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setOriginalBalance($originalBalance)
     {
-        $this->_onPropertyChanged('originalBalance', $this->originalBalance, $originalBalance);
-        $this->originalBalance = $originalBalance;
+        $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
@@ -372,8 +366,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setPriorOC($priorOC)
     {
-        $this->_onPropertyChanged('priorOC', $this->priorOC, $priorOC);
-        $this->priorOC = $priorOC;
+        $this->implementChange($this,'priorOC', $this->priorOC, $priorOC);
     }
 
     /**
@@ -386,8 +379,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setCashflowEngine($cashflowEngine)
     {
-        $this->_onPropertyChanged('cashflowEngine', $this->cashflowEngine, $cashflowEngine);
-        $this->cashflowEngine = $cashflowEngine;
+        $this->implementChange($this,'cashflowEngine', $this->cashflowEngine, $cashflowEngine);
     }
 
     /**
@@ -400,8 +392,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setCallFormular($callFormular)
     {
-        $this->_onPropertyChanged('callFormular', $this->callFormular, $callFormular);
-        $this->callFormular = $callFormular;
+        $this->implementChange($this,'callFormular', $this->callFormular, $callFormular);
     }
 
     /**
@@ -414,8 +405,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setPools($pools)
     {
-        $this->_onPropertyChanged('pools', $this->pools, $pools);
-        $this->pools = $pools;
+        $this->implementChange($this,'pools', $this->pools, $pools);
     }
 
     /**
@@ -428,8 +418,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setBonds($bonds)
     {
-        $this->_onPropertyChanged('bonds', $this->bonds, $bonds);
-        $this->bonds = $bonds;
+        $this->implementChange($this,'bonds', $this->bonds, $bonds);
     }
 
     /**
@@ -442,8 +431,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setPeriods($periods)
     {
-        $this->_onPropertyChanged('periods', $this->periods, $periods);
-        $this->periods = $periods;
+        $this->implementChange($this,'periods', $this->periods, $periods);
     }
 
     /**
@@ -456,8 +444,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setLatestPeriod($latestPeriod)
      {
-         $this->_onPropertyChanged('latestPeriod', $this->latestPeriod, $latestPeriod);
-         $this->latestPeriod = $latestPeriod;
+         $this->implementChange($this,'latestPeriod', $this->latestPeriod, $latestPeriod);
      }
 
     /**
@@ -470,8 +457,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setLoanDataParser($loanDataParser)
     {
-        $this->_onPropertyChanged('loanDataParser', $this->loanDataParser, $loanDataParser);
-        $this->loanDataParser = $loanDataParser;
+        $this->implementChange($this,'loanDataParser', $this->loanDataParser, $loanDataParser);
     }
 
     /**
@@ -484,8 +470,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setUser(MarketUser $user)
     {
-        $this->_onPropertyChanged('user', $this->user, $user);
-        $this->user = $user;
+        $this->implementChange($this,'user', $this->user, $user);
     }
 
     /**
@@ -513,7 +498,7 @@ class Deal extends DealAbstract implements NotifyPropertyChanged
      */
     public function setViews($views)
     {
-        $this->_onPropertyChanged('views', $this->views, $views);
+        $this->implementChange($this,'views', $this->views, $views);
         $this->views = $views;
     }
 

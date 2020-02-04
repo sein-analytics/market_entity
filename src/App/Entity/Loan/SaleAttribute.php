@@ -3,6 +3,7 @@
 
 namespace App\Entity\Loan;
 
+use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Entity\MarketUser;
 use App\Entity\NotifyChangeTrait;
@@ -17,9 +18,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="SaleAttribute")
  * @ChangeTrackingPolicy("NOTIFY")
  */
-class SaleAttribute implements NotifyPropertyChanged
+class SaleAttribute extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;

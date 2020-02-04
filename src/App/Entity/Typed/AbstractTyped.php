@@ -7,18 +7,19 @@
 namespace App\Entity\Typed;
 
 
+use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 
- abstract class AbstractTyped implements NotifyPropertyChanged, TypedInterface
+ abstract class AbstractTyped extends DomainObject
+     implements  TypedInterface
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /** @return ArrayCollection */
     abstract public function getMappedEntities();
@@ -206,8 +207,7 @@ use App\Entity\Period;
         if(is_null($constant)){
             throw new \Exception("Could not find constant: self::CALC_{$calculationType} in AbstractType");
         }
-        $this->_onPropertyChanged('calculationType', $this->calculationType, $constant);
-        $this->calculationType = $calculationType;
+        $this->implementChange($this,'calculationType', $this->calculationType, $constant);
     }
 
     /**
@@ -229,8 +229,7 @@ use App\Entity\Period;
         if(is_null($constant)){
             throw new \Exception("Could not find constant: self::CALC_AT_{$calculateAt} AbstractType");
         }
-        $this->_onPropertyChanged('calculateAt', $this->calculateAt, $constant);
-        $this->calculateAt = $calculateAt;
+        $this->implementChange($this,'calculateAt', $this->calculateAt, $constant);
     }
 
     /**
@@ -270,8 +269,7 @@ use App\Entity\Period;
      */
     public function setFixed($fixed)
     {
-        $this->_onPropertyChanged('fixed', $this->fixed, $fixed);
-        $this->fixed = $fixed;
+        $this->implementChange($this,'fixed', $this->fixed, $fixed);
     }
 
     /**
@@ -290,8 +288,7 @@ use App\Entity\Period;
         if(is_array($formula)){
             $formula = serialize($formula);
         }
-        $this->_onPropertyChanged('formula', $this->formula, $formula);
-        $this->formula = $formula;
+        $this->implementChange($this,'formula', $this->formula, $formula);
     }
 
     /**
@@ -315,8 +312,7 @@ use App\Entity\Period;
      */
     public function setLoansCount($loansCount)
     {
-        $this->_onPropertyChanged('loansCount', $this->loansCount, $loansCount);
-        $this->loansCount = $loansCount;
+        $this->implementChange($this,'loansCount', $this->loansCount, $loansCount);
     }
 
     /**
@@ -332,8 +328,7 @@ use App\Entity\Period;
      */
     public function setPoolsCount($poolsCount)
     {
-        $this->_onPropertyChanged('poolsCount', $this->poolsCount, $poolsCount);
-        $this->poolsCount = $poolsCount;
+        $this->implementChange($this,'poolsCount', $this->poolsCount, $poolsCount);
     }
 
     /**
@@ -349,8 +344,7 @@ use App\Entity\Period;
      */
     public function setUpdatesCount($updatesCount)
     {
-        $this->_onPropertyChanged('updatesCount', $this->updatesCount, $updatesCount);
-        $this->updatesCount = $updatesCount;
+        $this->implementChange($this,'updatesCount', $this->updatesCount, $updatesCount);
     }
 
 

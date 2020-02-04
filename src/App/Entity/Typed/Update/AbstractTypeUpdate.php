@@ -6,6 +6,7 @@
 
 namespace App\Entity\Typed\Update;
 
+use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
@@ -17,7 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @MappedSuperClass
  * @ChangeTrackingPolicy("NOTIFY")
  * */
-abstract class AbstractTypeUpdate implements NotifyPropertyChanged, TypedUpdateInterface
+abstract class AbstractTypeUpdate extends DomainObject
+    implements TypedUpdateInterface
 {
     use NotifyChangeTrait;
     
@@ -44,8 +46,7 @@ abstract class AbstractTypeUpdate implements NotifyPropertyChanged, TypedUpdateI
      */
     public function setIsHistory($isHistory)
     {
-        $this->_onPropertyChanged('isHistory', $this->isHistory, $isHistory);
-        $this->isHistory = $isHistory;
+        $this->implementChange($this,'isHistory', $this->isHistory, $isHistory);
     }
 
     /**
@@ -61,8 +62,7 @@ abstract class AbstractTypeUpdate implements NotifyPropertyChanged, TypedUpdateI
      */
     public function setUpdateStatus($updateStatus)
     {
-        $this->_onPropertyChanged('updateStatus', $this->updateStatus, $updateStatus);
-        $this->updateStatus = $updateStatus;
+        $this->implementChange($this,'updateStatus', $this->updateStatus, $updateStatus);
     }
 
 }

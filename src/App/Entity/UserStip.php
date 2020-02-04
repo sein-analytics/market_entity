@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class UserStip implements NotifyPropertyChanged
+class UserStip extends DomainObject
 {
     use NotifyChangeTrait;
 
@@ -57,8 +57,7 @@ class UserStip implements NotifyPropertyChanged
     public function setStips(array $stips)
     {
         $string = json_encode($stips);
-        $this->_onPropertyChanged('stips', $this->stips, $string);
-        $this->stips = $string;
+        $this->implementChange($this,'stips', $this->stips, $string);
     }
 
     /**

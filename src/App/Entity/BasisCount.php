@@ -18,9 +18,8 @@ use Doctrine\ORM\PersistentCollection;
  * @ORM\Table(name="BasisCount")
  *
  */
-class BasisCount implements NotifyPropertyChanged
+class BasisCount extends DomainObject
 {
-    use NotifyChangeTrait;
 
     const BASE_360 = 360;
 

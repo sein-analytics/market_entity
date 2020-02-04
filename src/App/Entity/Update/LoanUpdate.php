@@ -8,6 +8,7 @@
 
 namespace App\Entity\Update;
 
+use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use App\Entity\Period;
 use App\Service\CreatePropertiesArrayTrait;
@@ -21,9 +22,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\Table(name="LoanUpdate")
  */
-class LoanUpdate implements NotifyPropertyChanged
+class LoanUpdate extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;
@@ -203,8 +204,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setLoan(Loan $loan)
     {
-        $this->_onPropertyChanged('loan', $this->loan, $loan);
-        $this->loan = $loan;
+        $this->implementChange($this,'loan', $this->loan, $loan);
     }
 
     /**
@@ -217,8 +217,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setPool(PoolUpdate $pool)
     {
-        $this->_onPropertyChanged('pool', $this->pool, $pool);
-        $this->pool = $pool;
+        $this->implementChange($this,'pool', $this->pool, $pool);
     }
 
     /**
@@ -231,8 +230,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setBeginningBalance($beginningBalance)
     {
-        $this->_onPropertyChanged('beginningBalance', $this->beginningBalance, $beginningBalance);
-        $this->beginningBalance = $beginningBalance;
+        $this->implementChange($this,'beginningBalance', $this->beginningBalance, $beginningBalance);
     }
 
     /**
@@ -245,8 +243,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setEndingBalance(float $endingBalance)
     {
-        $this->_onPropertyChanged('endingBalance', $this->endingBalance, $endingBalance);
-        $this->endingBalance = $endingBalance;
+        $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
@@ -259,8 +256,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setDueforDate(\DateTime $dueforDate)
     {
-        $this->_onPropertyChanged('dueforDate', $this->dueforDate, $dueforDate);
-        $this->dueforDate = $dueforDate;
+        $this->implementChange($this,'dueforDate', $this->dueforDate, $dueforDate);
     }
 
     /**
@@ -273,8 +269,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setMonthlyPayment(float $monthlyPayment)
     {
-        $this->_onPropertyChanged('monthlyPayment', $this->monthlyPayment, $monthlyPayment);
-        $this->monthlyPayment = $monthlyPayment;
+        $this->implementChange($this,'monthlyPayment', $this->monthlyPayment, $monthlyPayment);
     }
 
     /**
@@ -287,8 +282,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setPrincipalPayment(float $principalPayment)
     {
-        $this->_onPropertyChanged('principalPayment', $this->principalPayment, $principalPayment);
-        $this->principalPayment = $principalPayment;
+        $this->implementChange($this,'principalPayment', $this->principalPayment, $principalPayment);
     }
 
     /**
@@ -301,8 +295,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setInterestPayment(float $interestPayment)
     {
-        $this->_onPropertyChanged('interestPayment', $this->interestPayment, $interestPayment);
-        $this->interestPayment = $interestPayment;
+        $this->implementChange($this,'interestPayment', $this->interestPayment, $interestPayment);
     }
 
     /**
@@ -315,8 +308,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setTiPayment(float $tiPayment)
     {
-        $this->_onPropertyChanged('tiPayment', $this->tiPayment, $tiPayment);
-        $this->tiPayment = $tiPayment;
+        $this->implementChange($this,'tiPayment', $this->tiPayment, $tiPayment);
     }
 
     /**
@@ -329,8 +321,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setLossAmount(float $lossAmount)
     {
-        $this->_onPropertyChanged('lossAmount', $this->lossAmount, $lossAmount);
-        $this->lossAmount = $lossAmount;
+        $this->implementChange($this,'lossAmount', $this->lossAmount, $lossAmount);
     }
 
     /**
@@ -343,8 +334,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setPrepaymentAmount(float $prepaymentAmount)
     {
-        $this->_onPropertyChanged('prepaymentAmount', $this->prepaymentAmount, $prepaymentAmount);
-        $this->prepaymentAmount = $prepaymentAmount;
+        $this->implementChange($this,'prepaymentAmount', $this->prepaymentAmount, $prepaymentAmount);
     }
 
     /**
@@ -357,8 +347,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setDefaultingAmount(float $defaultingAmount)
     {
-        $this->_onPropertyChanged('defaultingAmount', $this->defaultingAmount, $defaultingAmount);
-        $this->defaultingAmount = $defaultingAmount;
+        $this->implementChange($this,'defaultingAmount', $this->defaultingAmount, $defaultingAmount);
     }
 
     /**
@@ -371,8 +360,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setDelinquencyReason(string $delinquencyReason)
     {
-        $this->_onPropertyChanged('delinquencyReason', $this->delinquencyReason, $delinquencyReason);
-        $this->delinquencyReason = $delinquencyReason;
+        $this->implementChange($this,'delinquencyReason', $this->delinquencyReason, $delinquencyReason);
     }
 
     /**
@@ -385,8 +373,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setNextRateResetDate(\DateTime $nextRateResetDate)
     {
-        $this->_onPropertyChanged('nextRateResetDate', $this->nextRateResetDate, $nextRateResetDate);
-        $this->nextRateResetDate = $nextRateResetDate;
+        $this->implementChange($this,'nextRateResetDate', $this->nextRateResetDate, $nextRateResetDate);
     }
 
     /**
@@ -399,8 +386,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setNextPaymentResetDate(\DateTime $nextPaymentResetDate)
     {
-        $this->_onPropertyChanged('nextPaymentResetDate', $this->nextPaymentResetDate, $nextPaymentResetDate);
-        $this->nextPaymentResetDate = $nextPaymentResetDate;
+        $this->implementChange($this,'nextPaymentResetDate', $this->nextPaymentResetDate, $nextPaymentResetDate);
     }
 
     /**
@@ -413,8 +399,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setNextRateAdjustmentPeriod($nextRateAdjustmentPeriod)
     {
-        $this->_onPropertyChanged('nextRateAdjustmentPeriod', $this->nextRateAdjustmentPeriod, $nextRateAdjustmentPeriod);
-        $this->nextRateAdjustmentPeriod = $nextRateAdjustmentPeriod;
+        $this->implementChange($this,'nextRateAdjustmentPeriod', $this->nextRateAdjustmentPeriod, $nextRateAdjustmentPeriod);
     }
 
     /**
@@ -427,8 +412,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setNextPaymentAdjustmentPeriod($nextPaymentAdjustmentPeriod)
     {
-        $this->_onPropertyChanged('nextPaymentAdjustmentPeriod', $this->nextPaymentAdjustmentPeriod, $nextPaymentAdjustmentPeriod);
-        $this->nextPaymentAdjustmentPeriod = $nextPaymentAdjustmentPeriod;
+        $this->implementChange($this,'nextPaymentAdjustmentPeriod', $this->nextPaymentAdjustmentPeriod, $nextPaymentAdjustmentPeriod);
     }
 
     /**
@@ -441,8 +425,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setNetRate(float $netRate)
     {
-        $this->_onPropertyChanged('netRate', $this->netRate, $netRate);
-        $this->netRate = $netRate;
+        $this->implementChange($this,'netRate', $this->netRate, $netRate);
     }
 
     /**
@@ -455,8 +438,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setUnsupportedIntShortfall(float $unsupportedIntShortfall)
     {
-        $this->_onPropertyChanged('unsupportedIntShortfall', $this->unsupportedIntShortfall, $unsupportedIntShortfall);
-        $this->unsupportedIntShortfall = $unsupportedIntShortfall;
+        $this->implementChange($this,'unsupportedIntShortfall', $this->unsupportedIntShortfall, $unsupportedIntShortfall);
     }
 
     /**
@@ -469,8 +451,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setServicingDues(float $servicingDues)
     {
-        $this->_onPropertyChanged('servicingDues', $this->servicingDues, $servicingDues);
-        $this->servicingDues = $servicingDues;
+        $this->implementChange($this,'servicingDues', $this->servicingDues, $servicingDues);
     }
 
     /**
@@ -483,8 +464,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setLatePaymentDues(float $latePaymentDues)
     {
-        $this->_onPropertyChanged('latePaymentDues', $this->latePaymentDues, $latePaymentDues);
-        $this->latePaymentDues = $latePaymentDues;
+        $this->implementChange($this,'latePaymentDues', $this->latePaymentDues, $latePaymentDues);
     }
 
     /**
@@ -497,8 +477,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setRecoveries(float $recoveries)
     {
-        $this->_onPropertyChanged('recoveries', $this->recoveries, $recoveries);
-        $this->recoveries = $recoveries;
+        $this->implementChange($this,'recoveries', $this->recoveries, $recoveries);
     }
 
     /**
@@ -511,8 +490,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setInterestShortfall(float $interestShortfall)
     {
-        $this->_onPropertyChanged('interestShortfall', $this->interestShortfall, $interestShortfall);
-        $this->interestShortfall = $interestShortfall;
+        $this->implementChange($this,'interestShortfall', $this->interestShortfall, $interestShortfall);
     }
 
     /**
@@ -528,8 +506,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setCompensatingInterest(float $compensatingInterest)
     {
-        $this->_onPropertyChanged('compensatingInterest', $this->compensatingInterest, $compensatingInterest);
-        $this->compensatingInterest = $compensatingInterest;
+        $this->implementChange($this,'compensatingInterest', $this->compensatingInterest, $compensatingInterest);
     }
 
     /**
@@ -542,8 +519,7 @@ class LoanUpdate implements NotifyPropertyChanged
      */
     public function setLoanDelinquencyStatus($loanDelinquencyStatus)
     {
-        $this->_onPropertyChanged('loanDelinquencyStatus', $this->loanDelinquencyStatus, $loanDelinquencyStatus);
-        $this->loanDelinquencyStatus = $loanDelinquencyStatus;
+        $this->implementChange($this,'loanDelinquencyStatus', $this->loanDelinquencyStatus, $loanDelinquencyStatus);
     }
 
     /**
@@ -587,8 +563,6 @@ class LoanUpdate implements NotifyPropertyChanged
     {
         $this->servicingComments = $servicingComments;
     }
-
-
 
 
 }

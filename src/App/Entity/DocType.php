@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DocType
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id

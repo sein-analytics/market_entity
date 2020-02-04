@@ -88,10 +88,7 @@ class CommAttribute extends DomainObject
      */
     public function setLoan(Loan $loan)
     {
-        if ($loan !== $this->loan) {
-            $this->_onPropertyChanged('loan', $this->loan, $loan);
-            $this->loan = $loan;
-        }
+        $this->implementChange($this, 'loan', $this->loan, $loan);
     }
 
     /**
@@ -104,10 +101,7 @@ class CommAttribute extends DomainObject
      */
     public function setDscr($dscr)
     {
-        if ($dscr !== $this->dscr) {
-            $this->_onPropertyChanged('dscr', $this->dscr, $dscr);
-            $this->dscr = $dscr;
-        }
+        $this->implementChange($this, 'dscr', $this->dscr, $dscr);
     }
 
     /**
@@ -121,10 +115,6 @@ class CommAttribute extends DomainObject
     public function setNoi($noi)
     {
         $this->implementChange($this, 'noi', $this->noi, $noi);
-        /**if ($noi !== $this->noi) {
-            $this->_onPropertyChanged('noi', $this->noi, $noi);
-            $this->noi = $noi;
-        } **/
     }
 
     /**
@@ -137,10 +127,7 @@ class CommAttribute extends DomainObject
      */
     public function setNetWorthToLoan($netWorthToLoan)
     {
-        if ($netWorthToLoan !== $this->netWorthToLoan) {
-            $this->_onPropertyChanged('netWorthToLoan', $this->netWorthToLoan, $netWorthToLoan);
-            $this->netWorthToLoan = $netWorthToLoan;
-        }
+        $this->implementChange($this, 'netWorthToLoan', $this->netWorthToLoan, $netWorthToLoan);
     }
 
     /**
@@ -153,8 +140,7 @@ class CommAttribute extends DomainObject
      */
     public function setProfitRatio($profitRatio)
     {
-        $this->_onPropertyChanged('profitRatio', $this->profitRatio, $profitRatio);
-        $this->profitRatio = $profitRatio;
+        $this->implementChange($this, 'profitRatio', $this->profitRatio, $profitRatio);
     }
 
     /**
@@ -167,8 +153,7 @@ class CommAttribute extends DomainObject
      */
     public function setLoanToCostRatio($loanToCostRatio)
     {
-        $this->_onPropertyChanged('loanToCostRatio', $this->loanToCostRatio, $loanToCostRatio);
-        $this->loanToCostRatio = $loanToCostRatio;
+        $this->implementChange($this, 'loanToCostRatio', $this->loanToCostRatio, $loanToCostRatio);
     }
 
     /**
@@ -181,8 +166,7 @@ class CommAttribute extends DomainObject
      */
     public function setDebtYieldRatio($debtYieldRatio)
     {
-        $this->_onPropertyChanged('debtYieldRatio', $this->debtYieldRatio, $debtYieldRatio);
-        $this->debtYieldRatio = $debtYieldRatio;
+        $this->implementChange($this, 'debtYieldRatio', $this->debtYieldRatio, $debtYieldRatio);
     }
 
     /**
@@ -195,8 +179,7 @@ class CommAttribute extends DomainObject
      */
     public function setVacancyRate($vacancyRate)
     {
-        $this->_onPropertyChanged('vacancyRate', $this->vacancyRate, $vacancyRate);
-        $this->vacancyRate = $vacancyRate;
+        $this->implementChange($this, 'vacancyRate', $this->vacancyRate, $vacancyRate);
     }
 
     /**
@@ -209,8 +192,7 @@ class CommAttribute extends DomainObject
      */
     public function setLockoutPeriod($lockoutPeriod)
     {
-        $this->_onPropertyChanged('lockoutPeriod', $this->lockoutPeriod, $lockoutPeriod);
-        $this->lockoutPeriod = $lockoutPeriod;
+        $this->implementChange($this, 'lockoutPeriod', $this->lockoutPeriod, $lockoutPeriod);
     }
 
     /**
@@ -223,8 +205,7 @@ class CommAttribute extends DomainObject
      */
     public function setDefeasanceDate(\DateTime $defeasanceDate)
     {
-        $this->_onPropertyChanged('defeasanceDate', $this->defeasanceDate, $defeasanceDate);
-        $this->defeasanceDate = $defeasanceDate;
+        $this->implementChange($this,'defeasanceDate', $this->defeasanceDate, $defeasanceDate);
     }
 
     /**
@@ -237,8 +218,7 @@ class CommAttribute extends DomainObject
      */
     public function setCapRate($capRate)
     {
-        $this->_onPropertyChanged('capRate', $this->capRate, $capRate);
-        $this->capRate = $capRate;
+        $this->implementChange($this, 'capRate', $this->capRate, $capRate);
     }
 
 

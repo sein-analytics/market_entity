@@ -21,7 +21,6 @@ class CreditCard extends Loan
     public function setAssetAttributes(array $assetAttributes)
     {
         $string = json_encode($assetAttributes);
-        $this->_onPropertyChanged('assetAttributes', $this->assetAttributes, $string);
-        $this->assetAttributes = $string;
+        $this->implementChange($this,'assetAttributes', $this->assetAttributes, $string);
     }
 }

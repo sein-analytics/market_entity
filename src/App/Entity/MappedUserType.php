@@ -30,7 +30,7 @@ class MappedUserType
      */
 
 
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     protected $id;
 

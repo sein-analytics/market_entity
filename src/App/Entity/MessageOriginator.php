@@ -19,7 +19,7 @@ use Doctrine\ORM\PersistentCollection;
  */
 class MessageOriginator
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id

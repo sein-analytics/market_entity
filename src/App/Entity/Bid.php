@@ -115,10 +115,7 @@ class Bid extends DomainObject
      */
     public function setDeal(Deal $deal)
     {
-        if ($deal !== $this->deal) {
-            $this->_onPropertyChanged('deal', $this->deal, $deal);
-            $this->deal = $deal;
-        }
+        $this->implementChange($this, 'deal', $this->deal, $deal);
     }
 
     /**
@@ -164,10 +161,7 @@ class Bid extends DomainObject
      */
     public function setEffectiveBalance(float $effectiveBalance)
     {
-        if ($effectiveBalance !== $this->effectiveBalance) {
-            $this->_onPropertyChanged('effectiveBalance', $this->effectiveBalance, $effectiveBalance);
-            $this->effectiveBalance = $effectiveBalance;
-        }
+        $this->implementChange($this, 'effectiveBalance', $this->effectiveBalance, $effectiveBalance);
     }
 
     /**
@@ -183,10 +177,7 @@ class Bid extends DomainObject
      */
     public function setProportionalBalance($proportionalBalance)
     {
-        if ($proportionalBalance !== $this->proportionalBalance) {
-            $this->_onPropertyChanged('proportionalBalance', $this->proportionalBalance, $proportionalBalance);
-            $this->proportionalBalance = $proportionalBalance;
-        }
+        $this->implementChange($this, 'proportionalBalance', $this->proportionalBalance, $proportionalBalance);
     }
 
     /**
@@ -210,10 +201,7 @@ class Bid extends DomainObject
      */
     public function setLoans(ArrayCollection $loans)
     {
-        if ($loans !== $this->loans) {
-            $this->_onPropertyChanged('loan', $this->loans, $loans);
-            $this->loans = $loans;
-        }
+        $this->implementChange($this, 'loan', $this->loans, $loans);
     }
 
     /**
@@ -229,10 +217,7 @@ class Bid extends DomainObject
      */
     public function setStatus(BidStatus $status)
     {
-        if ($status !== $this->status) {
-            $this->_onPropertyChanged('status', $this->status, $status);
-            $this->status = $status;
-        }
+        $this->implementChange($this, 'status', $this->status, $status);
     }
 
     /**
@@ -248,10 +233,7 @@ class Bid extends DomainObject
      */
     public function setDate(\DateTime $date)
     {
-        if ($date !== $this->date) {
-            $this->_onPropertyChanged('date', $this->date, $date);
-            $this->date = $date;
-        }
+        $this->implementChange($this, 'date', $this->date, $date);
     }
 
     /**

@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LoanTapeTemplate
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

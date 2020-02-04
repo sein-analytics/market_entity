@@ -128,8 +128,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setDeal(Deal $deal)
     {
-        $this->_onPropertyChanged('deal', $this->deal, $deal);
-        $this->deal = $deal;
+        $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
@@ -169,8 +168,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setLatestUpdate(TypedUpdateInterface $latestUpdate)
     {
-        $this->_onPropertyChanged('latestUpdate', $this->latestUpdate, $latestUpdate);
-        $this->latestUpdate = $latestUpdate;
+        $this->implementChange($this,'latestUpdate', $this->latestUpdate, $latestUpdate);
     }
     
     /**
@@ -197,8 +195,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setShelfDesignation($shelfDesignation)
     {
-        $this->_onPropertyChanged('shelfDesignation', $this->shelfDesignation, $shelfDesignation);
-        $this->shelfDesignation = $shelfDesignation;
+        $this->implementChange($this,'shelfDesignation', $this->shelfDesignation, $shelfDesignation);
     }
 
     /**
@@ -214,8 +211,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setRateType($rateType)
     {
-        $this->_onPropertyChanged('rateType', $this->rateType, $rateType);
-        $this->rateType = $rateType;
+        $this->implementChange($this,'rateType', $this->rateType, $rateType);
     }
 
     /**
@@ -231,8 +227,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setFixedRate($fixedRate)
     {
-        $this->_onPropertyChanged('fixedRate', $this->fixedRate, $fixedRate);
-        $this->fixedRate = $fixedRate;
+        $this->implementChange($this,'fixedRate', $this->fixedRate, $fixedRate);
     }
 
     /**
@@ -248,8 +243,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setRateFormula($rateFormula)
     {
-        $this->_onPropertyChanged('rateFormula', $this->rateFormula, $rateFormula);
-        $this->rateFormula = $rateFormula;
+        $this->implementChange($this,'rateFormula', $this->rateFormula, $rateFormula);
     }
 
     /**
@@ -265,8 +259,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setDirectToBond($directToBond)
     {
-        $this->_onPropertyChanged('directToBond', $this->directToBond, $directToBond);
-        $this->directToBond = $directToBond;
+        $this->implementChange($this,'directToBond', $this->directToBond, $directToBond);
     }
 
     /**
@@ -282,8 +275,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setRateIndex($rateIndex)
     {
-        $this->_onPropertyChanged('rateIndex', $this->rateIndex, $rateIndex);
-        $this->rateIndex = $rateIndex;
+        $this->implementChange($this,'rateIndex', $this->rateIndex, $rateIndex);
     }
 
     /**
@@ -299,8 +291,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setIndexMaturity($indexMaturity)
     {
-        $this->_onPropertyChanged('indexMaturity', $this->indexMaturity, $indexMaturity);
-        $this->indexMaturity = $indexMaturity;
+        $this->implementChange($this,'indexMaturity', $this->indexMaturity, $indexMaturity);
     }
 
     /**
@@ -316,8 +307,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setBasis($basis)
     {
-        $this->_onPropertyChanged('basis', $this->basis, $basis);
-        $this->basis = $basis;
+        $this->implementChange($this,'basis', $this->basis, $basis);
     }
 
     /**
@@ -333,8 +323,7 @@ abstract class ShelfSpecific extends AbstractTyped
      */
     public function setOriginalBalance($originalBalance)
     {
-        $this->_onPropertyChanged('originalBalance', $this->originalBalance, $originalBalance);
-        $this->originalBalance = $originalBalance;
+        $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
 

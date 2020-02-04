@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\NotifyPropertyChanged;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Illuminate\Auth\Authenticatable;
@@ -22,9 +20,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanResetPasswordContracts, JWTSubject
+class MarketUser
+    extends DomainObject
+    implements AuthenticableContracts, CanResetPasswordContracts, JWTSubject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait, Authenticatable, CanResetPassword, Notifiable, Timestamps;
+    use CreatePropertiesArrayTrait, Authenticatable, CanResetPassword, Notifiable, Timestamps;
 
     const ASAP = 'asap';
 
@@ -471,8 +471,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     public function setStatus(UserStatus $status)
     {
-        $this->_onPropertyChanged('status', $this->status, $status);
-        $this->status = $status;
+        $this->implementChange($this,'status', $this->status, $status);
     }
 
     public function setIssuer(Issuer $issuer) { $this->issuer =  $issuer; }
@@ -488,8 +487,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     public function setFailedAttempts($failedAttempts)
     {
-        $this->_onPropertyChanged('failedAttempts', $this->failedAttempts, $failedAttempts);
-        $this->failedAttempts = $failedAttempts;
+        $this->implementChange($this,'failedAttempts', $this->failedAttempts, $failedAttempts);
     }
 
     public function addFollower(MarketUser $follower)
@@ -512,8 +510,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
      */
     public function setAuthyId($authyId)
     {
-        $this->_onPropertyChanged('authyId', $this->authyId, $authyId);
-        $this->authyId = $authyId;
+        $this->implementChange($this,'authyId', $this->authyId, $authyId);
     }
 
     /**
@@ -617,7 +614,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     public function addLogin(LoginLog $login)
     {
         $this->logins->add($login);
-        $this->_onPropertyChanged('logins', $this->logins, $this->logins);
+        $this->implementChange($this,'logins', $this->logins, $this->logins);
     }
 
     public function getLogins() :ArrayCollection { return $this->logins; }
@@ -625,7 +622,7 @@ class MarketUser implements NotifyPropertyChanged, AuthenticableContracts, CanRe
     public function addStip (UserStip $stip)
     {
         $this->stips->add($stip);
-        $this->_onPropertyChanged('stips', $this->stips, $this->stips);
+        $this->implementChange($this,'stips', $this->stips, $this->stips);
     }
 
     public function getStips() :ArrayCollection { return $this->stips; }

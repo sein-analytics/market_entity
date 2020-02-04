@@ -2,6 +2,7 @@
 namespace App\Entity\Loan;
 
 
+use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
@@ -14,9 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="ArmAttribute")
  * @ChangeTrackingPolicy("NOTIFY")
  */
-class ArmAttribute implements NotifyPropertyChanged
+class ArmAttribute extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     protected $ignoreDbProperties = [];
 
@@ -94,8 +95,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setLoan(Loan $loan)
     {
-        $this->_onPropertyChanged('loan', $this->loan, $loan);
-        $this->loan = $loan;
+        $this->implementChange($this,'loan', $this->loan, $loan);
     }
 
     /**
@@ -111,8 +111,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setGrossMargin($grossMargin)
     {
-        $this->_onPropertyChanged('grossMargin', $this->grossMargin, $grossMargin);
-        $this->grossMargin = $grossMargin;
+        $this->implementChange($this,'grossMargin', $this->grossMargin, $grossMargin);
     }
 
     /**
@@ -128,8 +127,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setMinimumRate($minimumRate)
     {
-        $this->_onPropertyChanged('minimumRate', $this->minimumRate, $minimumRate);
-        $this->minimumRate = $minimumRate;
+        $this->implementChange($this,'minimumRate', $this->minimumRate, $minimumRate);
     }
 
     /**
@@ -145,8 +143,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setMaximumRate($maximumRate)
     {
-        $this->_onPropertyChanged('maximumRate', $this->maximumRate, $maximumRate);
-        $this->maximumRate = $maximumRate;
+        $this->implementChange($this,'maximumRate', $this->maximumRate, $maximumRate);
     }
 
     /**
@@ -162,8 +159,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setRateIndex($rateIndex)
     {
-        $this->_onPropertyChanged('rateIndex', $this->rateIndex, $rateIndex);
-        $this->rateIndex = $rateIndex;
+        $this->implementChange($this,'rateIndex', $this->rateIndex, $rateIndex);
     }
 
     /**
@@ -179,8 +175,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setFstRateAdjPeriod($fstRateAdjPeriod)
     {
-        $this->_onPropertyChanged('fstRateAdjPeriod', $this->fstRateAdjPeriod, $fstRateAdjPeriod);
-        $this->fstRateAdjPeriod = $fstRateAdjPeriod;
+        $this->implementChange($this,'fstRateAdjPeriod', $this->fstRateAdjPeriod, $fstRateAdjPeriod);
     }
 
     /**
@@ -196,8 +191,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setFstRateAdjDate($fstRateAdjDate)
     {
-        $this->_onPropertyChanged('fstRateAdjDate', $this->fstRateAdjDate, $fstRateAdjDate);
-        $this->fstRateAdjDate = $fstRateAdjDate;
+        $this->implementChange($this,'fstRateAdjDate', $this->fstRateAdjDate, $fstRateAdjDate);
     }
 
     /**
@@ -213,8 +207,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setFstPmntAdjPeriod($fstPmntAdjPeriod)
     {
-        $this->_onPropertyChanged('fstPmntAdjPeriod', $this->fstPmntAdjPeriod, $fstPmntAdjPeriod);
-        $this->fstPmntAdjPeriod = $fstPmntAdjPeriod;
+        $this->implementChange($this,'fstPmntAdjPeriod', $this->fstPmntAdjPeriod, $fstPmntAdjPeriod);
     }
 
     /**
@@ -230,8 +223,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setFstPmtAdjDate($fstPmntAdjDate)
     {
-        $this->_onPropertyChanged('fstPmntAdjDate', $this->fstPmntAdjDate, $fstPmntAdjDate);
-        $this->fstPmntAdjDate = $fstPmntAdjDate;
+        $this->implementChange($this,'fstPmntAdjDate', $this->fstPmntAdjDate, $fstPmntAdjDate);
     }
 
     /**
@@ -247,8 +239,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setRateAdjFrequency($rateAdjFrequency)
     {
-        $this->_onPropertyChanged('rateAdjFrequency', $this->rateAdjFrequency, $rateAdjFrequency);
-        $this->rateAdjFrequency = $rateAdjFrequency;
+        $this->implementChange($this,'rateAdjFrequency', $this->rateAdjFrequency, $rateAdjFrequency);
     }
 
     /**
@@ -264,8 +255,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setPeriodicCap($periodicCap)
     {
-        $this->_onPropertyChanged('periodicCap', $this->periodicCap, $periodicCap);
-        $this->periodicCap = $periodicCap;
+        $this->implementChange($this,'periodicCap', $this->periodicCap, $periodicCap);
     }
 
     /**
@@ -281,8 +271,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setInitialCap($initialCap)
     {
-        $this->_onPropertyChanged('initialCap', $this->initialCap, $initialCap);
-        $this->initialCap = $initialCap;
+        $this->implementChange($this,'initialCap', $this->initialCap, $initialCap);
     }
 
     /**
@@ -298,8 +287,7 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setPmntAdjFrequency($pmntAdjFrequency)
     {
-        $this->_onPropertyChanged('pmntAdjFrequency', $this->pmntAdjFrequency, $pmntAdjFrequency);
-        $this->pmntAdjFrequency = $pmntAdjFrequency;
+        $this->implementChange($this,'pmntAdjFrequency', $this->pmntAdjFrequency, $pmntAdjFrequency);
     }
 
     /**
@@ -315,7 +303,6 @@ class ArmAttribute implements NotifyPropertyChanged
      */
     public function setPmntIncreaseCap($pmntIncreaseCap)
     {
-        $this->_onPropertyChanged('pmntIncreaseCap', $this->pmntIncreaseCap, $pmntIncreaseCap);
-        $this->pmntIncreaseCap = $pmntIncreaseCap;
+        $this->implementChange($this,'pmntIncreaseCap', $this->pmntIncreaseCap, $pmntIncreaseCap);
     }
 }

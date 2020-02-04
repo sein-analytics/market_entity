@@ -16,7 +16,7 @@ use Doctrine\ORM\PersistentCollection;
  */
 class Issuer
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     protected $ignoreDbProperties = [
         'deals' => null,

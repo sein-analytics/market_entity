@@ -9,7 +9,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\NotifyPropertyChanged;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,9 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Statistic")
  * @ChangeTrackingPolicy("NOTIFY")
  */
-class Statistic implements NotifyPropertyChanged
+class Statistic extends DomainObject
 {
-    use NotifyChangeTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -130,8 +128,7 @@ class Statistic implements NotifyPropertyChanged
      */
     public function setDeal(Deal $deal)
     {
-        $this->_onPropertyChanged('deal', $this->deal, $deal);
-        $this->deal = $deal;
+        $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
@@ -145,8 +142,7 @@ class Statistic implements NotifyPropertyChanged
     public function setStates(array $states)
     {
         $json_string = json_encode($states);
-        $this->_onPropertyChanged('states', $this->states, $json_string);
-        $this->states = $json_string;
+        $this->implementChange($this,'states', $this->states, $json_string);
     }
 
     /**
@@ -160,8 +156,7 @@ class Statistic implements NotifyPropertyChanged
     public function setSummaryStates(array $summaryStates)
     {
         $json_string = json_encode($summaryStates);
-        $this->_onPropertyChanged('summaryStates', $this->summaryStates, $json_string);
-        $this->summaryStates = $json_string;
+        $this->implementChange($this,'summaryStates', $this->summaryStates, $json_string);
     }
 
     /**
@@ -174,8 +169,7 @@ class Statistic implements NotifyPropertyChanged
      */
     public function setLtv(string $ltv)
     {
-        $this->_onPropertyChanged('ltv', $this->ltv, $ltv);
-        $this->ltv = $ltv;
+        $this->implementChange($this,'ltv', $this->ltv, $ltv);
     }
 
     /**
@@ -189,8 +183,7 @@ class Statistic implements NotifyPropertyChanged
     public function setSummaryLtv(array $summaryLtv)
     {
         $json_string = json_encode($summaryLtv);
-        $this->_onPropertyChanged('summaryLtv', $this->summaryLtv, $json_string);
-        $this->summaryLtv = $json_string;
+        $this->implementChange($this,'summaryLtv', $this->summaryLtv, $json_string);
     }
 
     /**
@@ -204,8 +197,7 @@ class Statistic implements NotifyPropertyChanged
     public function setBalance(array $balance)
     {
         $string = json_encode($balance);
-        $this->_onPropertyChanged('balance', $this->balance, $string);
-        $this->balance = $string;
+        $this->implementChange($this,'balance', $this->balance, $string);
     }
 
     /**
@@ -219,8 +211,7 @@ class Statistic implements NotifyPropertyChanged
     public function setSummaryBalance(array $summaryBalance)
     {
         $json_string = json_encode($summaryBalance);
-        $this->_onPropertyChanged('summaryBalance', $this->summaryBalance, $json_string);
-        $this->summaryBalance = $json_string;
+        $this->implementChange($this,'summaryBalance', $this->summaryBalance, $json_string);
     }
 
     /**
@@ -234,8 +225,7 @@ class Statistic implements NotifyPropertyChanged
     public function setRate(array $rate)
     {
         $string = json_encode($rate);
-        $this->_onPropertyChanged('rate', $this->rate, $string);
-        $this->rate = $string;
+        $this->implementChange($this,'rate', $this->rate, $string);
     }
 
     /**
@@ -249,8 +239,7 @@ class Statistic implements NotifyPropertyChanged
     public function setSummaryRate(array $summaryRate)
     {
         $json_string = json_encode($summaryRate);
-        $this->_onPropertyChanged('summaryRate', $this->summaryRate, $json_string);
-        $this->summaryRate = $json_string;
+        $this->implementChange($this,'summaryRate', $this->summaryRate, $json_string);
     }
 
     /**
@@ -264,8 +253,7 @@ class Statistic implements NotifyPropertyChanged
     public function setLoanType(array $loanType)
     {
         $string = json_encode($loanType);
-        $this->_onPropertyChanged('loanType', $this->loanType, $string);
-        $this->loanType = $string;
+        $this->implementChange($this,'loanType', $this->loanType, $string);
     }
 
     /**
@@ -279,8 +267,7 @@ class Statistic implements NotifyPropertyChanged
     public function setPropertyType(array $propertyType)
     {
         $json_string = json_encode($propertyType);
-        $this->_onPropertyChanged('propertyType', $this->propertyType, $json_string);
-        $this->propertyType = $json_string;
+        $this->implementChange($this,'propertyType', $this->propertyType, $json_string);
     }
 
     /**
@@ -294,8 +281,7 @@ class Statistic implements NotifyPropertyChanged
     public function setOccupancy(array $occupancy)
     {
         $json_string = json_encode($occupancy);
-        $this->_onPropertyChanged('occupancy', $this->occupancy, $json_string);
-        $this->occupancy = $json_string;
+        $this->implementChange($this,'occupancy', $this->occupancy, $json_string);
     }
 
     /**
@@ -309,8 +295,7 @@ class Statistic implements NotifyPropertyChanged
     public function setMaturity(array $maturity)
     {
         $json_string = json_encode($maturity);
-        $this->_onPropertyChanged('maturity', $this->maturity, $json_string);
-        $this->maturity = $json_string;
+        $this->implementChange($this,'maturity', $this->maturity, $json_string);
     }
 
     /**
@@ -324,8 +309,7 @@ class Statistic implements NotifyPropertyChanged
     public function setSummaryMaturity(array $summaryMaturity)
     {
         $json_string = json_encode($summaryMaturity);
-        $this->_onPropertyChanged('summaryMaturity', $this->summaryMaturity, $json_string);
-        $this->summaryMaturity = $json_string;
+        $this->implementChange($this,'summaryMaturity', $this->summaryMaturity, $json_string);
     }
 
     /**
@@ -339,8 +323,7 @@ class Statistic implements NotifyPropertyChanged
     public function setCredit(array $credit)
     {
         $json_string = json_encode($credit);
-        $this->_onPropertyChanged('credit', $this->credit, $json_string);
-        $this->credit = $json_string;
+        $this->implementChange($this,'credit', $this->credit, $json_string);
     }
 
     /**
@@ -354,8 +337,7 @@ class Statistic implements NotifyPropertyChanged
     public function setSummaryCredit(array $summaryCredit)
     {
         $json_string = json_encode($summaryCredit);
-        $this->_onPropertyChanged('summaryCredit', $this->summaryCredit, $json_string);
-        $this->summaryCredit = $json_string;
+        $this->implementChange($this, 'summaryCredit', $this->summaryCredit, $json_string);
     }
 
     /**
@@ -369,8 +351,7 @@ class Statistic implements NotifyPropertyChanged
     public function setFilterData(array $filterData)
     {
         $json_string = json_encode($filterData);
-        $this->_onPropertyChanged('filterData', $this->filterData, $json_string);
-        $this->filterData = $json_string;
+        $this->implementChange($this, 'filterData', $this->filterData, $json_string);
     }
 
 

@@ -24,7 +24,7 @@ abstract class DomainObject implements NotifyPropertyChanged
         }
     }
 
-    protected function implementChange($classObject, $propName, $oldValue, $newValue) {
+    protected function implementChange(DomainObject $classObject, $propName, $oldValue, $newValue) {
         if ($oldValue !== $this) {
             $this->_onPropertyChanged($propName, $oldValue, $newValue);
             $classObject->$propName = $newValue;

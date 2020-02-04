@@ -8,6 +8,7 @@
 
 namespace App\Entity\Update;
 
+use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\NotifyPropertyChanged;
@@ -19,9 +20,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Delinquency")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
-class Delinquency implements NotifyPropertyChanged
+class Delinquency extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") **/
     protected $id;
@@ -161,8 +162,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setPoolUpdate(PoolUpdate $poolUpdate)
     {
-        $this->_onPropertyChanged('poolUpdate', $this->poolUpdate, $poolUpdate);
-        $this->poolUpdate = $poolUpdate;
+        $this->implementChange($this,'poolUpdate', $this->poolUpdate, $poolUpdate);
     }
 
     /**
@@ -178,8 +178,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq30Balance($dq30Balance)
     {
-        $this->_onPropertyChanged('dq30Balance', $this->dq30Balance, $dq30Balance);
-        $this->dq30Balance = $dq30Balance;
+        $this->implementChange($this,'dq30Balance', $this->dq30Balance, $dq30Balance);
     }
 
     /**
@@ -195,8 +194,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq30Loans($dq30Loans)
     {
-        $this->_onPropertyChanged('dq30Loans', $this->dq30Loans, $dq30Loans);
-        $this->dq30Loans = $dq30Loans;
+        $this->implementChange($this,'dq30Loans', $this->dq30Loans, $dq30Loans);
     }
 
     /**
@@ -212,8 +210,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq60Balance($dq60Balance)
     {
-        $this->_onPropertyChanged('dq60Balance', $this->dq60Balance, $dq60Balance);
-        $this->dq60Balance = $dq60Balance;
+        $this->implementChange($this,'dq60Balance', $this->dq60Balance, $dq60Balance);
     }
 
     /**
@@ -229,8 +226,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq60Loans($dq60Loans)
     {
-        $this->_onPropertyChanged('dq60Loans', $this->dq60Loans, $dq60Loans);
-        $this->dq60Loans = $dq60Loans;
+        $this->implementChange($this,'dq60Loans', $this->dq60Loans, $dq60Loans);
     }
 
     /**
@@ -246,8 +242,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq90Balance($dq90Balance)
     {
-        $this->_onPropertyChanged('dq90Balance', $this->dq90Balance, $dq90Balance);
-        $this->dq90Balance = $dq90Balance;
+        $this->implementChange($this,'dq90Balance', $this->dq90Balance, $dq90Balance);
     }
 
     /**
@@ -263,8 +258,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq90Loans($dq90Loans)
     {
-        $this->_onPropertyChanged('dq90Loans', $this->dq90Loans, $dq90Loans);
-        $this->dq90Loans = $dq90Loans;
+        $this->implementChange($this,'dq90Loans', $this->dq90Loans, $dq90Loans);
     }
 
     /**
@@ -280,8 +274,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq120Balance($dq120Balance)
     {
-        $this->_onPropertyChanged('dq120Balance', $this->dq120Balance, $dq120Balance);
-        $this->dq120Balance = $dq120Balance;
+        $this->implementChange($this,'dq120Balance', $this->dq120Balance, $dq120Balance);
     }
 
     /**
@@ -297,8 +290,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq120Loans($dq120Loans)
     {
-        $this->_onPropertyChanged('dq120Loans', $this->dq120Loans, $dq120Loans);
-        $this->dq120Loans = $dq120Loans;
+        $this->implementChange($this,'dq120Loans', $this->dq120Loans, $dq120Loans);
     }
 
     /**
@@ -314,8 +306,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq150Balance($dq150Balance)
     {
-        $this->_onPropertyChanged('dq150Balance', $this->dq150Balance, $dq150Balance);
-        $this->dq150Balance = $dq150Balance;
+        $this->implementChange($this,'dq150Balance', $this->dq150Balance, $dq150Balance);
     }
 
     /**
@@ -331,8 +322,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq150Loans($dq150Loans)
     {
-        $this->_onPropertyChanged('dq150Loans', $this->dq150Loans, $dq150Loans);
-        $this->dq150Loans = $dq150Loans;
+        $this->implementChange($this,'dq150Loans', $this->dq150Loans, $dq150Loans);
     }
 
     /**
@@ -348,8 +338,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq180Balance($dq180Balance)
     {
-        $this->_onPropertyChanged('dq180Balance', $this->dq180Balance, $dq180Balance);
-        $this->dq180Balance = $dq180Balance;
+        $this->implementChange($this,'dq180Balance', $this->dq180Balance, $dq180Balance);
     }
 
     /**
@@ -365,8 +354,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setDq180Loans($dq180Loans)
     {
-        $this->_onPropertyChanged('dq180Loans', $this->dq180Loans, $dq180Loans);
-        $this->dq180Loans = $dq180Loans;
+        $this->implementChange($this,'dq180Loans', $this->dq180Loans, $dq180Loans);
     }
 
     /**
@@ -382,8 +370,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setReoLoans($reoLoans)
     {
-        $this->_onPropertyChanged('reoLoans', $this->reoLoans, $reoLoans);
-        $this->reoLoans = $reoLoans;
+        $this->implementChange($this,'reoLoans', $this->reoLoans, $reoLoans);
     }
 
     /**
@@ -399,8 +386,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setReoBalance($reoBalance)
     {
-        $this->_onPropertyChanged('reoBalance', $this->reoBalance, $reoBalance);
-        $this->reoBalance = $reoBalance;
+        $this->implementChange($this,'reoBalance', $this->reoBalance, $reoBalance);
     }
 
     /**
@@ -416,8 +402,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setForeclosureBalance($foreclosureBalance)
     {
-        $this->_onPropertyChanged('foreclosureBalance', $this->foreclosureBalance, $foreclosureBalance);
-        $this->foreclosureBalance = $foreclosureBalance;
+        $this->implementChange($this,'foreclosureBalance', $this->foreclosureBalance, $foreclosureBalance);
     }
 
     /**
@@ -433,8 +418,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setForeclosureLoans($foreclosureLoans)
     {
-        $this->_onPropertyChanged('foreclosureLoans', $this->foreclosureLoans, $foreclosureLoans);
-        $this->foreclosureLoans = $foreclosureLoans;
+        $this->implementChange($this,'foreclosureLoans', $this->foreclosureLoans, $foreclosureLoans);
     }
 
     /**
@@ -450,8 +434,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setBankruptcyBalance($bankruptcyBalance)
     {
-        $this->_onPropertyChanged('bankruptcyBalance', $this->bankruptcyBalance, $bankruptcyBalance);
-        $this->bankruptcyBalance = $bankruptcyBalance;
+        $this->implementChange($this,'bankruptcyBalance', $this->bankruptcyBalance, $bankruptcyBalance);
     }
 
     /**
@@ -467,10 +450,7 @@ class Delinquency implements NotifyPropertyChanged
      */
     public function setBankruptcyLoans($bankruptcyLoans)
     {
-        $this->_onPropertyChanged('bankruptcyLoans', $this->bankruptcyLoans, $bankruptcyLoans);
-        $this->bankruptcyLoans = $bankruptcyLoans;
+        $this->implementChange($this,'bankruptcyLoans', $this->bankruptcyLoans, $bankruptcyLoans);
     }
-
-
 
 }

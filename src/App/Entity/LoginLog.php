@@ -77,10 +77,7 @@ class LoginLog extends DomainObject
      */
     public function setUser(MarketUser $user)
     {
-        if ($user !== $this->user){
-            $this->_onPropertyChanged('user', $this->user, $user);
-            $this->user = $user;
-        }
+        $this->implementChange($this,'user', $this->user, $user);
     }
 
     /**
@@ -96,10 +93,7 @@ class LoginLog extends DomainObject
      */
     public function setIp($ip)
     {
-        if ($ip !== $this->ip) {
-            $this->_onPropertyChanged('ip', $this->ip, $ip);
-            $this->ip = $ip;
-        }
+        $this->implementChange($this, 'ip', $this->ip, $ip);
     }
 
     /**
@@ -115,10 +109,7 @@ class LoginLog extends DomainObject
      */
     public function setUserName($userName)
     {
-        if ($userName !== $this->userName){
-            $this->_onPropertyChanged('userName', $this->userName, $userName);
-            $this->userName = $userName;
-        }
+        $this->implementChange($this,'userName', $this->userName, $userName);
     }
 
 
@@ -135,10 +126,6 @@ class LoginLog extends DomainObject
      */
     public function setMobileConfirmation($mobileConfirmation)
     {
-        /** if ($mobileConfirmation !== $this->mobileConfirmation) {
-            $this->_onPropertyChanged('mobileConfirmation', $this->mobileConfirmation, $mobileConfirmation);
-            $this->mobileConfirmation = $mobileConfirmation;
-        }**/
         $this->implementChange($this, 'mobileConfirmation', $this->mobileConfirmation, $mobileConfirmation);
     }
 
@@ -155,10 +142,7 @@ class LoginLog extends DomainObject
      */
     public function setStartTime(\DateTime $startTime)
     {
-        if ($startTime !== $this->startTime) {
-            $this->_onPropertyChanged('startTime', $this->startTime, $startTime);
-            $this->startTime = $startTime;
-        }
+        $this->implementChange($this,'startTime', $this->startTime, $startTime);
     }
 
     /**
@@ -174,10 +158,7 @@ class LoginLog extends DomainObject
      */
     public function setEndTime(\DateTime $endTime)
     {
-        if ($endTime !== $this->endTime) {
-            $this->_onPropertyChanged('endTime', $this->endTime, $endTime);
-            $this->endTime = $endTime;
-        }
+        $this->implementChange($this, 'endTime', $this->endTime, $endTime);
     }
 
     /**
@@ -203,7 +184,5 @@ class LoginLog extends DomainObject
     {
         $this->lastSeen = $lastSeen;
     }
-
-
 
 }

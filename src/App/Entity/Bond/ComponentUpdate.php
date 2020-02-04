@@ -5,6 +5,7 @@
  */
 
 namespace App\Entity\Bond;
+use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,9 +16,8 @@ use App\Entity\Update\BondUpdate;
  * @ORM\Table(name="ComponentUpdate")
  *
  */
-class ComponentUpdate implements NotifyPropertyChanged
+class ComponentUpdate extends DomainObject
 {
-    use NotifyChangeTrait;
 
     /**
      * @ORM\Id @ORM\GeneratedValue

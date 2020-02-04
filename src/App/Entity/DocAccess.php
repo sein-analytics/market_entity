@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class DocAccess
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

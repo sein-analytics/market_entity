@@ -27,9 +27,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  * })
  *
  */
-class Loan implements NotifyPropertyChanged
+class Loan extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     //abstract public function getAssetAttributes();
 
@@ -420,8 +420,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setLoanId($loanId)
     {
-        $this->_onPropertyChanged('loanId', $this->loanId, $loanId);
-        $this->loanId = $loanId;
+        $this->implementChange($this,'loanId', $this->loanId, $loanId);
     }
 
     /**
@@ -434,8 +433,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setPool(Pool $pool)
     {
-        $this->_onPropertyChanged('pool', $this->pool, $pool);
-        $this->pool = $pool;
+        $this->implementChange($this,'pool', $this->pool, $pool);
     }
 
     /**
@@ -448,8 +446,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setOriginalBalance($originalBalance)
     {
-        $this->_onPropertyChanged('originalBalance', $this->originalBalance, $originalBalance);
-        $this->originalBalance = $originalBalance;
+        $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
@@ -462,8 +459,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setCurrentBalance($currentBalance)
     {
-        $this->_onPropertyChanged('currentBalance', $this->currentBalance, $currentBalance);
-        $this->currentBalance = $currentBalance;
+        $this->implementChange($this,'currentBalance', $this->currentBalance, $currentBalance);
     }
 
     /**
@@ -476,8 +472,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setMonthlyPayment($monthlyPayment)
     {
-        $this->_onPropertyChanged('monthlyPayment', $this->monthlyPayment, $monthlyPayment);
-        $this->monthlyPayment = $monthlyPayment;
+        $this->implementChange($this,'monthlyPayment', $this->monthlyPayment, $monthlyPayment);
     }
 
     /**
@@ -490,8 +485,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setIssuanceBalance($issuanceBalance)
     {
-        $this->_onPropertyChanged('issuanceBalance', $this->issuanceBalance, $issuanceBalance);
-        $this->issuanceBalance = $issuanceBalance;
+        $this->implementChange($this,'issuanceBalance', $this->issuanceBalance, $issuanceBalance);
     }
 
     /**
@@ -504,8 +498,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setInitialRate($initialRate)
     {
-        $this->_onPropertyChanged('initialRate', $this->initialRate, $initialRate);
-        $this->initialRate = $initialRate;
+        $this->implementChange($this,'initialRate', $this->initialRate, $initialRate);
     }
 
     /**
@@ -518,8 +511,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setCurrentRate($currentRate)
     {
-        $this->_onPropertyChanged('currentRate', $this->currentRate, $currentRate);
-        $this->currentRate = $currentRate;
+        $this->implementChange($this,'currentRate', $this->currentRate, $currentRate);
     }
 
     /**
@@ -532,8 +524,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setOriginationDate(\DateTime $originationDate)
     {
-        $this->_onPropertyChanged('originationDate', $this->originationDate, $originationDate);
-        $this->originationDate = $originationDate;
+        $this->implementChange($this,'originationDate', $this->originationDate, $originationDate);
     }
 
     /**
@@ -546,8 +537,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setCurrentDueforDate(\DateTime $currentDueforDate)
     {
-        $this->_onPropertyChanged('currentDueforDate', $this->currentDueforDate, $currentDueforDate);
-        $this->currentDueforDate = $currentDueforDate;
+        $this->implementChange($this,'currentDueforDate', $this->currentDueforDate, $currentDueforDate);
     }
 
     /**
@@ -560,8 +550,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setFirstPaymentDate(\DateTime $firstPaymentDate)
     {
-        $this->_onPropertyChanged('firstPaymentDate', $this->firstPaymentDate, $firstPaymentDate);
-        $this->firstPaymentDate = $firstPaymentDate;
+        $this->implementChange($this,'firstPaymentDate', $this->firstPaymentDate, $firstPaymentDate);
     }
 
     /**
@@ -574,8 +563,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setLoanStatus($loanStatus)
     {
-        $this->_onPropertyChanged('loanStatus', $this->loanStatus, $loanStatus);
-        $this->loanStatus = $loanStatus;
+        $this->implementChange($this,'loanStatus', $this->loanStatus, $loanStatus);
     }
 
     /**
@@ -588,8 +576,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setFinalDueforDate(\DateTime $finalDueforDate)
     {
-        $this->_onPropertyChanged('finalDueforDate', $this->finalDueforDate, $finalDueforDate);
-        $this->finalDueforDate = $finalDueforDate;
+        $this->implementChange($this,'finalDueforDate', $this->finalDueforDate, $finalDueforDate);
     }
 
     /**
@@ -602,8 +589,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setOriginalTerm($originalTerm)
     {
-        $this->_onPropertyChanged('originalTerm', $this->originalTerm, $originalTerm);
-        $this->originalTerm = $originalTerm;
+        $this->implementChange($this,'originalTerm', $this->originalTerm, $originalTerm);
     }
 
     /**
@@ -616,8 +602,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setRemainingTerm($remainingTerm)
     {
-        $this->_onPropertyChanged('remainingTerm', $this->remainingTerm, $remainingTerm);
-        $this->remainingTerm = $remainingTerm;
+        $this->implementChange($this,'remainingTerm', $this->remainingTerm, $remainingTerm);
     }
 
     /**
@@ -630,8 +615,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setAmortizationTerm($amortizationTerm)
     {
-        $this->_onPropertyChanged('amortizationTerm', $this->amortizationTerm, $amortizationTerm);
-        $this->amortizationTerm = $amortizationTerm;
+        $this->implementChange($this,'amortizationTerm', $this->amortizationTerm, $amortizationTerm);
     }
 
     /**
@@ -644,8 +628,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setIoTerm($ioTerm)
     {
-        $this->_onPropertyChanged('ioTerm', $this->ioTerm, $ioTerm);
-        $this->ioTerm = $ioTerm;
+        $this->implementChange($this,'ioTerm', $this->ioTerm, $ioTerm);
     }
 
     /**
@@ -658,8 +641,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setBalloonPeriod($balloonPeriod)
     {
-        $this->_onPropertyChanged('balloonPeriod', $this->balloonPeriod, $balloonPeriod);
-        $this->balloonPeriod = $balloonPeriod;
+        $this->implementChange($this,'balloonPeriod', $this->balloonPeriod, $balloonPeriod);
     }
 
     /**
@@ -672,8 +654,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setOriginalLtv($originalLtv)
     {
-        $this->_onPropertyChanged('originalLtv', $this->originalLtv, $originalLtv);
-        $this->originalLtv = $originalLtv;
+        $this->implementChange($this,'originalLtv', $this->originalLtv, $originalLtv);
     }
 
     /**
@@ -686,8 +667,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setOriginalCltv($originalCltv)
     {
-        $this->_onPropertyChanged('originalCltv', $this->originalCltv, $originalCltv);
-        $this->originalCltv = $originalCltv;
+        $this->implementChange($this,'originalCltv', $this->originalCltv, $originalCltv);
     }
 
     /**
@@ -700,8 +680,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setAppraisedValue($appraisedValue)
     {
-        $this->_onPropertyChanged('appraisedValue', $this->appraisedValue, $appraisedValue);
-        $this->appraisedValue = $appraisedValue;
+        $this->implementChange($this,'appraisedValue', $this->appraisedValue, $appraisedValue);
     }
 
     /**
@@ -714,8 +693,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setCreditScore($creditScore)
     {
-        $this->_onPropertyChanged('creditScore', $this->creditScore, $creditScore);
-        $this->creditScore = $creditScore;
+        $this->implementChange($this,'creditScore', $this->creditScore, $creditScore);
     }
 
     /**
@@ -728,8 +706,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setFrontDti($frontDti)
     {
-        $this->_onPropertyChanged('frontDti', $this->frontDti, $frontDti);
-        $this->frontDti = $frontDti;
+        $this->implementChange($this,'frontDti', $this->frontDti, $frontDti);
     }
 
     /**
@@ -742,8 +719,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setBackDti($backDti)
     {
-        $this->_onPropertyChanged('backDti', $this->backDti, $backDti);
-        $this->backDti = $backDti;
+        $this->implementChange($this,'backDti', $this->backDti, $backDti);
     }
 
     /**
@@ -756,8 +732,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setNumberOfBorrowers($numberOfBorrowers)
     {
-        $this->_onPropertyChanged('numberOfBorrowers', $this->numberOfBorrowers, $numberOfBorrowers);
-        $this->numberOfBorrowers = $numberOfBorrowers;
+        $this->implementChange($this,'numberOfBorrowers', $this->numberOfBorrowers, $numberOfBorrowers);
     }
 
     /**
@@ -770,8 +745,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setFirstTimeBuyer($firstTimeBuyer)
     {
-        $this->_onPropertyChanged('firstTimeBuyer', $this->firstTimeBuyer, $firstTimeBuyer);
-        $this->firstTimeBuyer = $firstTimeBuyer;
+        $this->implementChange($this,'firstTimeBuyer', $this->firstTimeBuyer, $firstTimeBuyer);
     }
 
     /**
@@ -784,8 +758,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setLienPosition($lienPosition)
     {
-        $this->_onPropertyChanged('lienPosition', $this->lienPosition, $lienPosition);
-        $this->lienPosition = $lienPosition;
+        $this->implementChange($this,'lienPosition', $this->lienPosition, $lienPosition);
     }
 
     /**
@@ -798,8 +771,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setNoteType($noteType)
     {
-        $this->_onPropertyChanged('noteType', $this->noteType, $noteType);
-        $this->noteType = $noteType;
+        $this->implementChange($this,'noteType', $this->noteType, $noteType);
     }
 
     /**
@@ -812,8 +784,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setLoanType($loanType)
     {
-        $this->_onPropertyChanged('loanType', $this->loanType, $loanType);
-        $this->loanType = $loanType;
+        $this->implementChange($this,'loanType', $this->loanType, $loanType);
     }
 
     /**
@@ -826,8 +797,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setDocumentation($documentation)
     {
-        $this->_onPropertyChanged('documentation', $this->documentation, $documentation);
-        $this->documentation = $documentation;
+        $this->implementChange($this,'documentation', $this->documentation, $documentation);
     }
 
     /**
@@ -840,8 +810,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setPurpose($purpose)
     {
-        $this->_onPropertyChanged('purpose', $this->purpose, $purpose);
-        $this->purpose = $purpose;
+        $this->implementChange($this,'purpose', $this->purpose, $purpose);
     }
 
     /**
@@ -854,8 +823,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setOccupancy($occupancy)
     {
-        $this->_onPropertyChanged('occupancy', $this->occupancy, $occupancy);
-        $this->occupancy = $occupancy;
+        $this->implementChange($this,'occupancy', $this->occupancy, $occupancy);
     }
 
     /**
@@ -868,8 +836,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setDwelling($dwelling)
     {
-        $this->_onPropertyChanged('dwelling', $this->dwelling, $dwelling);
-        $this->dwelling = $dwelling;
+        $this->implementChange($this,'dwelling', $this->dwelling, $dwelling);
     }
 
     /**
@@ -882,8 +849,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setAddress($address)
     {
-        $this->_onPropertyChanged('address', $this->address, $address);
-        $this->address = $address;
+        $this->implementChange($this,'address', $this->address, $address);
     }
 
     /**
@@ -897,8 +863,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setState($state)
     {
-        $this->_onPropertyChanged('state', $this->state, $state);
-        $this->state = $state;
+        $this->implementChange($this,'state', $this->state, $state);
     }
 
     /**
@@ -911,8 +876,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setCity($city)
     {
-        $this->_onPropertyChanged('city', $this->city, $city);
-        $this->city = $city;
+        $this->implementChange($this,'city', $this->city, $city);
     }
 
     /**
@@ -925,8 +889,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setZip($zip)
     {
-        $this->_onPropertyChanged('zip', $this->zip, $zip);
-        $this->zip = $zip;
+        $this->implementChange($this,'zip', $this->zip, $zip);
     }
 
     /**
@@ -939,8 +902,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setMsaCode($msaCode)
     {
-        $this->_onPropertyChanged('msaCode', $this->msaCode, $msaCode);
-        $this->msaCode = $msaCode;
+        $this->implementChange($this,'msaCode', $this->msaCode, $msaCode);
     }
 
     /**
@@ -953,8 +915,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setPaymentString($paymentString)
     {
-        $this->_onPropertyChanged('paymentString', $this->paymentString, $paymentString);
-        $this->paymentString = $paymentString;
+        $this->implementChange($this,'paymentString', $this->paymentString, $paymentString);
     }
 
     /**
@@ -967,8 +928,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setServicingfee($servicingfee)
     {
-        $this->_onPropertyChanged('servicingfee', $this->servicingfee, $servicingfee);
-        $this->servicingfee = $servicingfee;
+        $this->implementChange($this,'servicingfee', $this->servicingfee, $servicingfee);
     }
 
     /**
@@ -981,8 +941,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setLpmiFee($lpmiFee)
     {
-        $this->_onPropertyChanged('lpmiFee', $this->lpmiFee, $lpmiFee);
-        $this->lpmiFee = $lpmiFee;
+        $this->implementChange($this,'lpmiFee', $this->lpmiFee, $lpmiFee);
     }
 
     /**
@@ -995,8 +954,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setMiCoverage($miCoverage)
     {
-        $this->_onPropertyChanged('miCoverage', $this->miCoverage, $miCoverage);
-        $this->miCoverage = $miCoverage;
+        $this->implementChange($this,'miCoverage', $this->miCoverage, $miCoverage);
     }
 
     /**
@@ -1013,8 +971,7 @@ class Loan implements NotifyPropertyChanged
         if(!array_key_exists(ucfirst(strtolower($amortization)), self::$amortTypes)){
             throw new \Exception("An amortization type: $amortization does not exist.");
         }
-        $this->_onPropertyChanged('amortization', $this->amortization, $amortization);
-        $this->amortization = $amortization;
+        $this->implementChange($this,'amortization', $this->amortization, $amortization);
     }
 
     /**
@@ -1044,8 +1001,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setForeclosureDate(\DateTime $foreclosureDate)
     {
-        $this->_onPropertyChanged('foreclosureDate', $this->foreclosureDate, $foreclosureDate);
-        $this->foreclosureDate = $foreclosureDate;
+        $this->implementChange($this,'foreclosureDate', $this->foreclosureDate, $foreclosureDate);
     }
 
     /**
@@ -1058,8 +1014,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setBankruptcyDate(\DateTime $bankruptcyDate)
     {
-        $this->_onPropertyChanged('bankruptcyDate', $this->bankruptcyDate, $bankruptcyDate);
-        $this->bankruptcyDate = $bankruptcyDate;
+        $this->implementChange($this,'bankruptcyDate', $this->bankruptcyDate, $bankruptcyDate);
     }
 
     /**
@@ -1072,8 +1027,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setReoDate(\DateTime $reoDate)
     {
-        $this->_onPropertyChanged('reoDate', $this->reoDate, $reoDate);
-        $this->reoDate = $reoDate;
+        $this->implementChange($this,'reoDate', $this->reoDate, $reoDate);
     }
 
     /**
@@ -1086,8 +1040,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setZeroBalanceDate(\DateTime $zeroBalanceDate)
     {
-        $this->_onPropertyChanged('zeroBalanceDate', $this->zeroBalanceDate, $zeroBalanceDate);
-        $this->zeroBalanceDate = $zeroBalanceDate;
+        $this->implementChange($this,'zeroBalanceDate', $this->zeroBalanceDate, $zeroBalanceDate);
     }
 
     /**
@@ -1110,8 +1063,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setSeasoning($seasoning)
     {
-        $this->_onPropertyChanged('seasoning', $this->seasoning, $seasoning);
-        $this->seasoning = $seasoning;
+        $this->implementChange($this,'seasoning', $this->seasoning, $seasoning);
     }
 
     /**
@@ -1139,8 +1091,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setLoanHasBeenModified(int $loanHasBeenModified)
     {
-        $this->_onPropertyChanged('loanHasBeenModified', $this->loanHasBeenModified, $loanHasBeenModified);
-        $this->loanHasBeenModified = $loanHasBeenModified;
+        $this->implementChange($this,'loanHasBeenModified', $this->loanHasBeenModified, $loanHasBeenModified);
     }
 
     /**
@@ -1153,8 +1104,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setEndModPeriod(int $endModPeriod)
     {
-        $this->_onPropertyChanged('endModPeriod', $this->endModPeriod, $endModPeriod);
-        $this->endModPeriod = $endModPeriod;
+        $this->implementChange($this,'endModPeriod', $this->endModPeriod, $endModPeriod);
     }
 
     /**
@@ -1167,8 +1117,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setChannel($channel)
     {
-        $this->_onPropertyChanged('channel', $this->channel, $channel);
-        $this->channel = $channel;
+        $this->implementChange($this,'channel', $this->channel, $channel);
     }
 
     /**
@@ -1181,8 +1130,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setLastPaymentDate($lastPaymentDate)
     {
-        $this->_onPropertyChanged('lastPaymentDate', $this->lastPaymentDate, $lastPaymentDate);
-        $this->lastPaymentDate = $lastPaymentDate;
+        $this->implementChange($this,'lastPaymentDate', $this->lastPaymentDate, $lastPaymentDate);
     }
 
     /**
@@ -1195,8 +1143,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setTimes30($times_30)
     {
-        $this->_onPropertyChanged('times_30', $this->times_30, $times_30);
-        $this->times_30 = $times_30;
+        $this->implementChange($this,'times_30', $this->times_30, $times_30);
     }
 
     /**
@@ -1209,8 +1156,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setTimes60($times_60)
     {
-        $this->_onPropertyChanged('times_60', $this->times_60, $times_60);
-        $this->times_60 = $times_60;
+        $this->implementChange($this,'times_60', $this->times_60, $times_60);
     }
 
     /**
@@ -1223,8 +1169,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setTimes90($times_90)
     {
-        $this->_onPropertyChanged('times_90', $this->times_90, $times_90);
-        $this->times_90 = $times_90;
+        $this->implementChange($this,'times_90', $this->times_90, $times_90);
     }
 
     /**
@@ -1294,8 +1239,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setPrepayPenaltyTerm($prepayPenaltyTerm)
     {
-        $this->_onPropertyChanged('prepayPenaltyTerm', $this->prepayPenaltyTerm, $prepayPenaltyTerm);
-        $this->prepayPenaltyTerm = $prepayPenaltyTerm;
+        $this->implementChange($this,'prepayPenaltyTerm', $this->prepayPenaltyTerm, $prepayPenaltyTerm);
     }
 
     /**
@@ -1308,8 +1252,7 @@ class Loan implements NotifyPropertyChanged
      */
     public function setPrepayPenalty($prepayPenalty)
     {
-        $this->_onPropertyChanged('prepayPenalty', $this->prepayPenalty, $prepayPenalty);
-        $this->prepayPenalty = $prepayPenalty;
+        $this->implementChange($this,'prepayPenalty', $this->prepayPenalty, $prepayPenalty);
     }
 
     /**
@@ -1323,8 +1266,7 @@ class Loan implements NotifyPropertyChanged
     public function setPrepayStepDown(array $prepayStepDown)
     {
         $string = json_encode($prepayStepDown);
-        $this->_onPropertyChanged('prepayStepDown', $this->prepayStepDown, $string);
-        $this->prepayStepDown = $prepayStepDown;
+        $this->implementChange($this,'prepayStepDown', $this->prepayStepDown, $string);
     }
 
     /**

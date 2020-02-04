@@ -75,8 +75,7 @@ class TriggerUpdate extends AbstractTypeUpdate
      * @param Period $period
      */
     public function setPeriod(Period $period) {
-        $this->_onPropertyChanged('period', $this->period, $period);
-        $this->period = $period;
+        $this->implementChange($this,'period', $this->period, $period);
     }
 
     /**
@@ -104,24 +103,21 @@ class TriggerUpdate extends AbstractTypeUpdate
      * @param Trigger $trigger
      */
     public function setTrigger(Trigger $trigger) {
-        $this->_onPropertyChanged('trigger', $this->trigger, $trigger);
-        $this->trigger = $trigger;
+        $this->implementChange($this,'trigger', $this->trigger, $trigger);
     }
 
     /**
      * @param number $threshold
      */
     public function setThreshold($threshold) {
-        $this->_onPropertyChanged('threshold', $this->threshold, $threshold);
-        $this->threshold = $threshold;
+        $this->implementChange($this,'threshold', $this->threshold, $threshold);
     }
 
     /**
      * @param number $actual
      */
     public function setActual($actual) {
-        $this->_onPropertyChanged('actual', $this->actual, $actual);
-        $this->actual = $actual;
+        $this->implementChange($this,'actual', $this->actual, $actual);
     }
 
     /**
@@ -133,8 +129,7 @@ class TriggerUpdate extends AbstractTypeUpdate
         if(is_null($constant)){
             throw new \Exception("Could not find constant: self::TRIGGER_RESULT{$triggerResult} in TriggerUpdate");
         }
-        $this->_onPropertyChanged('triggerResult', $this->triggerResult, $constant);
-        $this->triggerResult = $constant;
+        $this->implementChange($this,'triggerResult', $this->triggerResult, $constant);
     }
 
 

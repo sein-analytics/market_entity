@@ -8,11 +8,11 @@
 
 namespace App\Entity\Update;
 
+use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use App\Entity\Bond;
 use App\Entity\Period;
@@ -24,9 +24,9 @@ use App\Entity\Period;
  * @ORM\Table(name="BondUpdate")
  * @ChangeTrackingPolicy("NOTIFY")
  */
-class BondUpdate implements NotifyPropertyChanged
+class BondUpdate extends DomainObject
 {   
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -161,8 +161,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setBond(Bond $bond)
     {
-        $this->_onPropertyChanged('bond', $this->bond, $bond);
-        $this->bond = $bond;
+        $this->implementChange($this,'bond', $this->bond, $bond);
     }
 
     /**
@@ -178,8 +177,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setStartingBalance($startingBalance)
     {
-        $this->_onPropertyChanged('startingBalance', $this->startingBalance, $startingBalance);
-        $this->startingBalance = $startingBalance;
+        $this->implementChange($this,'startingBalance', $this->startingBalance, $startingBalance);
     }
 
     /**
@@ -195,8 +193,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setEndingBalance($endingBalance)
     {
-        $this->_onPropertyChanged('endingBalance', $this->endingBalance, $endingBalance);
-        $this->endingBalance = $endingBalance;
+        $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
@@ -212,8 +209,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setReportDate(\DateTime $reportDate)
     {
-        $this->_onPropertyChanged('reportDate', $this->reportDate, $reportDate);
-        $this->reportDate = $reportDate;
+        $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }
 
     /**
@@ -229,8 +225,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setCalculatedInterest($calculatedInterest)
     {
-        $this->_onPropertyChanged('calculatedInterest', $this->calculatedInterest, $calculatedInterest);
-        $this->calculatedInterest = $calculatedInterest;
+        $this->implementChange($this,'calculatedInterest', $this->calculatedInterest, $calculatedInterest);
     }
 
     /**
@@ -246,8 +241,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setInterestPaid($interestPaid)
     {
-        $this->_onPropertyChanged('interestPaid', $this->interestPaid, $interestPaid);
-        $this->interestPaid = $interestPaid;
+        $this->implementChange($this,'interestPaid', $this->interestPaid, $interestPaid);
     }
 
     /**
@@ -263,8 +257,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setScheduledPrincipalPayment($scheduledPrincipalPayment)
     {
-        $this->_onPropertyChanged('scheduledPrincipalPayment', $this->scheduledPrincipalPayment, $scheduledPrincipalPayment);
-        $this->scheduledPrincipalPayment = $scheduledPrincipalPayment;
+        $this->implementChange($this,'scheduledPrincipalPayment', $this->scheduledPrincipalPayment, $scheduledPrincipalPayment);
     }
 
     /**
@@ -280,8 +273,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setPrincipalPaid($principalPaid)
     {
-        $this->_onPropertyChanged('principalPaid', $this->principalPaid, $principalPaid);
-        $this->principalPaid = $principalPaid;
+        $this->implementChange($this,'principalPaid', $this->principalPaid, $principalPaid);
     }
 
     /**
@@ -297,8 +289,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setUnscheduledPrincipalPayment($unscheduledPrincipalPayment)
     {
-        $this->_onPropertyChanged('unscheduledPrincipalPayment', $this->unscheduledPrincipalPayment, $unscheduledPrincipalPayment);
-        $this->unscheduledPrincipalPayment = $unscheduledPrincipalPayment;
+        $this->implementChange($this,'unscheduledPrincipalPayment', $this->unscheduledPrincipalPayment, $unscheduledPrincipalPayment);
     }
 
     /**
@@ -314,8 +305,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setPrincipalLoss($principalLoss)
     {
-        $this->_onPropertyChanged('principalLoss', $this->principalLoss, $principalLoss);
-        $this->principalLoss = $principalLoss;
+        $this->implementChange($this,'principalLoss', $this->principalLoss, $principalLoss);
     }
 
     /**
@@ -331,8 +321,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setInterestLoss($interestLoss)
     {
-        $this->_onPropertyChanged('interestLoss', $this->interestLoss, $interestLoss);
-        $this->interestLoss = $interestLoss;
+        $this->implementChange($this,'interestLoss', $this->interestLoss, $interestLoss);
     }
 
     /**
@@ -348,8 +337,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setUnpaidInterest($unpaidInterest)
     {
-        $this->_onPropertyChanged('unpaidInterest', $this->unpaidInterest, $unpaidInterest);
-        $this->unpaidInterest = $unpaidInterest;
+        $this->implementChange($this,'unpaidInterest', $this->unpaidInterest, $unpaidInterest);
     }
 
     /**
@@ -365,8 +353,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setDeferredInterest($deferredInterest)
     {
-        $this->_onPropertyChanged('deferredInterest', $this->deferredInterest, $deferredInterest);
-        $this->deferredInterest = $deferredInterest;
+        $this->implementChange($this,'deferredInterest', $this->deferredInterest, $deferredInterest);
     }
 
     /**
@@ -382,8 +369,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setInterestCarry($interestCarry)
     {
-        $this->_onPropertyChanged('interestCarry', $this->interestCarry, $interestCarry);
-        $this->interestCarry = $interestCarry;
+        $this->implementChange($this,'interestCarry', $this->interestCarry, $interestCarry);
     }
 
     /**
@@ -399,8 +385,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setCumulativeRealizedLosses($cumulativeRealizedLosses)
     {
-        $this->_onPropertyChanged('cumulativeRealizedLosses', $this->cumulativeRealizedLosses, $cumulativeRealizedLosses);
-        $this->cumulativeRealizedLosses = $cumulativeRealizedLosses;
+        $this->implementChange($this,'cumulativeRealizedLosses', $this->cumulativeRealizedLosses, $cumulativeRealizedLosses);
     }
 
     /**
@@ -416,8 +401,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setBondFactor($bondFactor)
     {
-        $this->_onPropertyChanged('bondFactor', $this->bondFactor, $bondFactor);
-        $this->bondFactor = $bondFactor;
+        $this->implementChange($this,'bondFactor', $this->bondFactor, $bondFactor);
     }
 
     /**
@@ -433,8 +417,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setCurrentOC($currentOC)
     {
-        $this->_onPropertyChanged('currentOC', $this->currentOC, $currentOC);
-        $this->currentOC = $currentOC;
+        $this->implementChange($this,'currentOC', $this->currentOC, $currentOC);
     }
 
     /**
@@ -450,8 +433,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setInterestShortfall($interestShortfall)
     {
-        $this->_onPropertyChanged('interestShortfall', $this->interestShortfall, $interestShortfall);
-        $this->interestShortfall = $interestShortfall;
+        $this->implementChange($this,'interestShortfall', $this->interestShortfall, $interestShortfall);
     }
 
     /**
@@ -467,8 +449,7 @@ class BondUpdate implements NotifyPropertyChanged
      */
     public function setUnsupportedIntShortfall($unsupportedIntShortfall)
     {
-        $this->_onPropertyChanged('unsupportedIntShortfall', $this->unsupportedIntShortfall, $unsupportedIntShortfall);
-        $this->unsupportedIntShortfall = $unsupportedIntShortfall;
+        $this->implementChange($this,'unsupportedIntShortfall', $this->unsupportedIntShortfall, $unsupportedIntShortfall);
     }
 
     /**

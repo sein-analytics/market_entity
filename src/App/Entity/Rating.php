@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rating
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

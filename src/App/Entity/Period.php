@@ -19,9 +19,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\ChangeTrackingPolicy("NOTIFY")
  *
  */
-class Period implements NotifyPropertyChanged
+class Period extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
     protected $id;
@@ -115,8 +115,7 @@ class Period implements NotifyPropertyChanged
     /** @param int $periodIndex */
     public function setPeriodIndex ($periodIndex)
     {
-        $this->_onPropertyChanged('periodIndex', $this->periodIndex, $periodIndex);
-        $this->periodIndex = $periodIndex;
+        $this->implementChange($this, 'periodIndex', $this->periodIndex, $periodIndex);
     }
 
     /**
@@ -132,8 +131,7 @@ class Period implements NotifyPropertyChanged
      */
     public function setReportDate (\DateTime $reportDate)
     {
-        $this->_onPropertyChanged('reportDate', $this->reportDate, $reportDate);
-        $this->reportDate = $reportDate;
+        $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }
 
     /**

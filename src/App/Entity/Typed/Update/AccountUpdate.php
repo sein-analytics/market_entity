@@ -86,8 +86,7 @@ class AccountUpdate extends AbstractTypeUpdate
      * @param Period $period
      */
     public function setPeriod(Period $period) {
-        $this->_onPropertyChanged('period', $this->period, $period);
-        $this->period = $period;
+        $this->implementChange($this,'period', $this->period, $period);
     }
 
     /**
@@ -136,56 +135,49 @@ class AccountUpdate extends AbstractTypeUpdate
      * @param Account $account
      */
     public function setAccount(Account $account) {
-        $this->_onPropertyChanged('account', $this->account, $account);
-        $this->account = $account;
+        $this->implementChange($this,'account', $this->account, $account);
     }
 
     /**
      * @param double $beginningBalance
      */
     public function setBeginningBalance($beginningBalance) {
-        $this->_onPropertyChanged('beginningBalance', $this->beginningBalance, $beginningBalance);
-        $this->beginningBalance = $beginningBalance;
+        $this->implementChange($this,'beginningBalance', $this->beginningBalance, $beginningBalance);
     }
 
     /**
      * @param double $accountWithdrawals
      */
     public function setAccountWithdrawals($accountWithdrawals) {
-        $this->_onPropertyChanged('accountWithdrawals', $this->accountWithdrawals, $accountWithdrawals);
-        $this->accountWithdrawals = $accountWithdrawals;
+        $this->implementChange($this,'accountWithdrawals', $this->accountWithdrawals, $accountWithdrawals);
     }
 
     /**
      * @param double $accountDeposits
      */
     public function setAccountDeposits($accountDeposits) {
-        $this->_onPropertyChanged('accountDeposits', $this->accountDeposits, $accountDeposits);
-        $this->accountDeposits = $accountDeposits;
+        $this->implementChange($this,'accountDeposits', $this->accountDeposits, $accountDeposits);
     }
 
     /**
      * @param double $endingBalance
      */
     public function setEndingBalance($endingBalance) {
-        $this->_onPropertyChanged('endingBalance', $this->endingBalance, $endingBalance);
-        $this->endingBalance = $endingBalance;
+        $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
      * @param double $shortfall
      */
     public function setShortfall($shortfall) {
-        $this->_onPropertyChanged('shortfall', $this->shortfall, $shortfall);
-        $this->shortfall = $shortfall;
+        $this->implementChange($this,'shortfall', $this->shortfall, $shortfall);
     }
 
     /**
      * @param number $requiredAmount
      */
     public function setRequiredAmount($requiredAmount) {
-        $this->_onPropertyChanged('requiredAmount', $this->requiredAmount, $requiredAmount);
-        $this->requiredAmount = $requiredAmount;
+        $this->implementChange($this,'requiredAmount', $this->requiredAmount, $requiredAmount);
     }
     
 }

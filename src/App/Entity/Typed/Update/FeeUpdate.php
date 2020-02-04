@@ -76,8 +76,7 @@ class FeeUpdate extends AbstractTypeUpdate
      * @param Period $period
      */
     public function setPeriod(Period $period) {
-        $this->_onPropertyChanged('period', $this->period, $period);
-        $this->period = $period;
+        $this->implementChange($this,'period', $this->period, $period);
     }
 
     /** @return number $amountDue */
@@ -108,32 +107,27 @@ class FeeUpdate extends AbstractTypeUpdate
 
     /** @param number $amountDue */
     public function setAmountDue($amountDue) {
-        $this->_onPropertyChanged('amountDue', $this->amountDue, $amountDue);
-        $this->amountDue = $amountDue;
+        $this->implementChange($this,'amountDue', $this->amountDue, $amountDue);
     }
 
     /** @param double $amountPaid */
     public function setAmountPaid($amountPaid) {
-        $this->_onPropertyChanged('amountPaid', $this->amountPaid, $amountPaid);
-        $this->amountPaid = $amountPaid;
+        $this->implementChange($this,'amountPaid', $this->amountPaid, $amountPaid);
     }
 
     /** @param double $currentAmountUnpaid */
     public function setCurrentAmountUnpaid($currentAmountUnpaid) {
-        $this->_onPropertyChanged('currentAmountUnpaid', $this->currentAmountUnpaid, $currentAmountUnpaid);
-        $this->currentAmountUnpaid = $currentAmountUnpaid;
+        $this->implementChange($this,'currentAmountUnpaid', $this->currentAmountUnpaid, $currentAmountUnpaid);
     }
 
     /** @param double $cumulativeAmountUnpaid */
     public function setCumulativeAmountUnpaid($cumulativeAmountUnpaid) {
-        $this->_onPropertyChanged('cumulativeAmountUnpaid', $this->cumulativeAmountUnpaid, $cumulativeAmountUnpaid);
-        $this->cumulativeAmountUnpaid = $cumulativeAmountUnpaid;
+        $this->implementChange($this,'cumulativeAmountUnpaid', $this->cumulativeAmountUnpaid, $cumulativeAmountUnpaid);
     }
 
     /** @param double $unpaidAmountReimbursed */
     public function setUnpaidReimbursed($unpaidAmountReimbursed) {
-        $this->_onPropertyChanged('unpaidAmountReimbursed', $this->unpaidAmountReimbursed, $unpaidAmountReimbursed);
-        $this->unpaidAmountReimbursed = $unpaidAmountReimbursed;
+        $this->implementChange($this,'unpaidAmountReimbursed', $this->unpaidAmountReimbursed, $unpaidAmountReimbursed);
     }
 
     /**

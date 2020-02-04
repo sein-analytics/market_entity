@@ -19,9 +19,9 @@ use Doctrine\ORM\PersistentCollection;
  * @ChangeTrackingPolicy("NOTIFY")
  *
  */
-class DealFile implements NotifyPropertyChanged
+class DealFile extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     protected $ignoreDbProperties = [
         'appends' => null,
@@ -192,8 +192,7 @@ class DealFile implements NotifyPropertyChanged
      */
     public function setDeal(Deal $deal)
     {
-        $this->_onPropertyChanged('deal', $this->deal, $deal);
-        $this->deal = $deal;
+        $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
@@ -206,8 +205,7 @@ class DealFile implements NotifyPropertyChanged
      */
     public function setFileName(string $fileName)
     {
-        $this->_onPropertyChanged('fileName', $this->fileName, $fileName);
-        $this->fileName = $fileName;
+        $this->implementChange($this,'fileName', $this->fileName, $fileName);
     }
 
     /**
@@ -220,8 +218,7 @@ class DealFile implements NotifyPropertyChanged
      */
     public function setFileSize(int $fileSize)
     {
-        $this->_onPropertyChanged('fileSize', $this->fileSize, $fileSize);
-        $this->fileSize = $fileSize;
+        $this->implementChange($this,'fileSize', $this->fileSize, $fileSize);
     }
 
     /**
@@ -234,8 +231,7 @@ class DealFile implements NotifyPropertyChanged
      */
     public function setMimeType(MimeType $mime)
     {
-        $this->_onPropertyChanged('mime', $this->mime, $mime);
-        $this->mime = $mime;
+        $this->implementChange($this,'mime', $this->mime, $mime);
     }
 
     /**
@@ -248,8 +244,7 @@ class DealFile implements NotifyPropertyChanged
      */
     public function setLocalPath(string $localPath)
     {
-        $this->_onPropertyChanged('localPath', $this->localPath, $localPath);
-        $this->localPath = $localPath;
+        $this->implementChange($this,'localPath', $this->localPath, $localPath);
     }
 
     /**

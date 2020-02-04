@@ -17,9 +17,9 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class Pool implements NotifyPropertyChanged
+class Pool extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     protected $ignoreDbProperties = [
         'bonds' => null, 'loans' => null, 'accounts' => null, 'specifics' => null,
@@ -149,8 +149,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setDeal($deal)
     {
-        $this->_onPropertyChanged('deal', $this->deal, $deal);
-        $this->deal = $deal;
+        $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
@@ -215,8 +214,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setBondsCount($bondsCount)
     {
-        $this->_onPropertyChanged('bondsCount', $this->bondsCount, $bondsCount);
-        $this->bondsCount = $bondsCount;
+        $this->implementChange($this,'bondsCount', $this->bondsCount, $bondsCount);
     }
 
     /**
@@ -232,8 +230,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setBondsTotalBalance($bondsTotalBalance)
     {
-        $this->_onPropertyChanged('bondsTotalBalance', $this->bondsTotalBalance, $bondsTotalBalance);
-        $this->bondsTotalBalance = $bondsTotalBalance;
+        $this->implementChange($this,'bondsTotalBalance', $this->bondsTotalBalance, $bondsTotalBalance);
     }
 
     /**
@@ -249,8 +246,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setLoanTotalBalance($loanTotalBalance)
     {
-        $this->_onPropertyChanged('loanTotalBalance', $this->loanTotalBalance, $loanTotalBalance);
-        $this->loanTotalBalance = $loanTotalBalance;
+        $this->implementChange($this,'loanTotalBalance', $this->loanTotalBalance, $loanTotalBalance);
     }
 
     /**
@@ -266,8 +262,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setLoansCount($loansCount)
     {
-        $this->_onPropertyChanged('loansCount', $this->loansCount, $loansCount);
-        $this->loansCount = $loansCount;
+        $this->implementChange($this,'loansCount', $this->loansCount, $loansCount);
     }
 
     /**
@@ -283,8 +278,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setOriginalBalance($originalBalance)
     {
-        $this->_onPropertyChanged('originalBalance', $this->originalBalance, $originalBalance);
-        $this->originalBalance = $originalBalance;
+        $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
@@ -300,8 +294,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setPoolStructure($poolStructure)
     {
-        $this->_onPropertyChanged('poolStructure', $this->poolStructure, $poolStructure);
-        $this->poolStructure = $poolStructure;
+        $this->implementChange($this,'poolStructure', $this->poolStructure, $poolStructure);
     }
 
     /**
@@ -314,8 +307,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setIsCrossed(bool $isCrossed)
     {
-        $this->_onPropertyChanged('isCrossed', $this->isCrossed, $isCrossed);
-        $this->isCrossed = $isCrossed;
+        $this->implementChange($this,'isCrossed', $this->isCrossed, $isCrossed);
     }
 
     /**
@@ -328,8 +320,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setIsPogroup(bool $isPogroup)
     {
-        $this->_onPropertyChanged('isPogroup', $this->isPogroup, $isPogroup);
-        $this->isPogroup = $isPogroup;
+        $this->implementChange($this,'isPogroup', $this->isPogroup, $isPogroup);
     }
 
     /**
@@ -342,8 +333,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setIsIoGroup(bool $isIoGroup)
     {
-        $this->_onPropertyChanged('isIoGroup', $this->isIoGroup, $isIoGroup);
-        $this->isIoGroup = $isIoGroup;
+        $this->implementChange($this,'isIoGroup', $this->isIoGroup, $isIoGroup);
     }
 
     /**
@@ -356,8 +346,7 @@ class Pool implements NotifyPropertyChanged
      */
     public function setAddReserveToCreditSupport(bool $addReserveToCreditSupport)
     {
-        $this->_onPropertyChanged('addReserveToCreditSupport', $this->addReserveToCreditSupport, $addReserveToCreditSupport);
-        $this->addReserveToCreditSupport = $addReserveToCreditSupport;
+        $this->implementChange($this,'addReserveToCreditSupport', $this->addReserveToCreditSupport, $addReserveToCreditSupport);
     }
     
     

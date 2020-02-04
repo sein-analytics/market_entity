@@ -124,8 +124,7 @@ abstract class Trigger extends AbstractTyped
      */
     public function setLatestUpdate(TypedUpdateInterface $latestUpdate)
     {
-        $this->_onPropertyChanged('latestUpdate', $this->latestUpdate, $latestUpdate);
-        $this->latestUpdate = $latestUpdate;
+        $this->implementChange($this,'latestUpdate', $this->latestUpdate, $latestUpdate);
     }
 
     /**

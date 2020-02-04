@@ -114,8 +114,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      * @param Period $period
      */
     public function setPeriod(Period $period) {
-        $this->_onPropertyChanged('period', $this->period, $period);
-        $this->period = $period;
+        $this->implementChange($this,'period', $this->period, $period);
     }
 
     /**
@@ -123,8 +122,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setShelfSpecific(ShelfSpecific $shelfSpecific)
     {
-        $this->_onPropertyChanged('shelfSpecific', $this->shelfSpecific, $shelfSpecific);
-        $this->shelfSpecific = $shelfSpecific;
+        $this->implementChange($this,'shelfSpecific', $this->shelfSpecific, $shelfSpecific);
     }
 
     /**
@@ -140,8 +138,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setAmountDue($amountDue)
     {
-        $this->_onPropertyChanged('amountDue', $this->amountDue, $amountDue);
-        $this->amountDue = $amountDue;
+        $this->implementChange($this,'amountDue', $this->amountDue, $amountDue);
     }
 
     /**
@@ -157,8 +154,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setAmountPaid($amountPaid)
     {
-        $this->_onPropertyChanged('amountPaid', $this->amountPaid, $amountPaid);
-        $this->amountPaid = $amountPaid;
+        $this->implementChange($this,'amountPaid', $this->amountPaid, $amountPaid);
     }
 
     /**
@@ -174,8 +170,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setCurrentAmountUnpaid($currentAmountUnpaid)
     {
-        $this->_onPropertyChanged('currentAmountUnpaid', $this->currentAmountUnpaid, $currentAmountUnpaid);
-        $this->currentAmountUnpaid = $currentAmountUnpaid;
+        $this->implementChange($this,'currentAmountUnpaid', $this->currentAmountUnpaid, $currentAmountUnpaid);
     }
 
     /**
@@ -191,8 +186,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setCumulativeAmountUnpaid($cumulativeAmountUnpaid)
     {
-        $this->_onPropertyChanged('cumulativeAmountUnpaid', $this->cumulativeAmountUnpaid, $cumulativeAmountUnpaid);
-        $this->cumulativeAmountUnpaid = $cumulativeAmountUnpaid;
+        $this->implementChange($this,'cumulativeAmountUnpaid', $this->cumulativeAmountUnpaid, $cumulativeAmountUnpaid);
     }
 
     /**
@@ -208,8 +202,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setBeginningBalance($beginningBalance)
     {
-        $this->_onPropertyChanged('beginningBalance', $this->beginningBalance, $beginningBalance);
-        $this->beginningBalance = $beginningBalance;
+        $this->implementChange($this,'beginningBalance', $this->beginningBalance, $beginningBalance);
     }
 
     /**
@@ -225,8 +218,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setEndingBalance($endingBalance)
     {
-        $this->_onPropertyChanged('endingBalance', $this->endingBalance, $endingBalance);
-        $this->endingBalance = $endingBalance;
+        $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
@@ -242,8 +234,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setInterestRate($interestRate)
     {
-        $this->_onPropertyChanged('interestRate', $this->interestRate, $interestRate);
-        $this->interestRate = $interestRate;
+        $this->implementChange($this,'interestRate', $this->interestRate, $interestRate);
     }
 
     /**
@@ -259,8 +250,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setDeferredAmount($deferredAmount)
     {
-        $this->_onPropertyChanged('deferredAmount', $this->deferredAmount, $deferredAmount);
-        $this->deferredAmount = $deferredAmount;
+        $this->implementChange($this,'deferredAmount', $this->deferredAmount, $deferredAmount);
     }
 
     /**
@@ -276,8 +266,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setCalculatedInterest($calculatedInterest)
     {
-        $this->_onPropertyChanged('calculatedInterest', $this->calculatedInterest, $calculatedInterest);
-        $this->calculatedInterest = $calculatedInterest;
+        $this->implementChange($this,'calculatedInterest', $this->calculatedInterest, $calculatedInterest);
     }
 
     /**
@@ -293,8 +282,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setInterestPaid($interestPaid)
     {
-        $this->_onPropertyChanged('interestPaid', $this->interestPaid, $interestPaid);
-        $this->interestPaid = $interestPaid;
+        $this->implementChange($this,'interestPaid', $this->interestPaid, $interestPaid);
     }
 
     /**
@@ -310,8 +298,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
      */
     public function setUnpaidInterest($unpaidInterest)
     {
-        $this->_onPropertyChanged('unpaidInterest', $this->unpaidInterest, $unpaidInterest);
-        $this->unpaidInterest = $unpaidInterest;
+        $this->implementChange($this,'unpaidInterest', $this->unpaidInterest, $unpaidInterest);
     }
     
 

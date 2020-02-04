@@ -8,6 +8,7 @@
 
 namespace App\Entity\Update;
 
+use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,9 +22,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="PoolUpdate", indexes={@ORM\Index(name="period_pool_idx", columns={"period_id", "pool_id"})})
  * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
-class PoolUpdate implements NotifyPropertyChanged
+class PoolUpdate extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") **/
     protected $id;
@@ -192,8 +193,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setPool(Pool $pool)
     {
-        $this->_onPropertyChanged('pool', $this->pool, $pool);
-        $this->pool = $pool;
+        $this->implementChange($this,'pool', $this->pool, $pool);
     }
 
     /**
@@ -209,8 +209,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setPeriod(Period $period)
     {
-        $this->_onPropertyChanged('period', $this->period, $period);
-        $this->period = $period;
+        $this->implementChange($this,'period', $this->period, $period);
     }
 
     /**
@@ -249,8 +248,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setReportDate(\DateTime $reportDate)
     {
-        $this->_onPropertyChanged('reportDate', $this->reportDate, $reportDate);
-        $this->reportDate = $reportDate;
+        $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }
 
     /**
@@ -266,8 +264,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setEndingBalance($endingBalance)
     {
-        $this->_onPropertyChanged('endingBalance', $this->endingBalance, $endingBalance);
-        $this->endingBalance = $endingBalance;
+        $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
@@ -283,8 +280,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setStartingBalance($startingBalance)
     {
-        $this->_onPropertyChanged('startingBalance', $this->startingBalance, $startingBalance);
-        $this->startingBalance = $startingBalance;
+        $this->implementChange($this,'startingBalance', $this->startingBalance, $startingBalance);
     }
 
     /**
@@ -300,8 +296,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setGroupGrossWac($groupGrossWac)
     {
-        $this->_onPropertyChanged('groupGrossWac', $this->groupGrossWac, $groupGrossWac);
-        $this->groupGrossWac = $groupGrossWac;
+        $this->implementChange($this,'groupGrossWac', $this->groupGrossWac, $groupGrossWac);
     }
 
     /**
@@ -317,8 +312,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setScheduledPrincipal($scheduledPrincipal)
     {
-        $this->_onPropertyChanged('scheduledPrincipal', $this->scheduledPrincipal, $scheduledPrincipal);
-        $this->scheduledPrincipal = $scheduledPrincipal;
+        $this->implementChange($this,'scheduledPrincipal', $this->scheduledPrincipal, $scheduledPrincipal);
     }
 
     /**
@@ -334,8 +328,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setInterestCollections($interestCollections)
     {
-        $this->_onPropertyChanged('interestCollections', $this->interestCollections, $interestCollections);
-        $this->interestCollections = $interestCollections;
+        $this->implementChange($this,'interestCollections', $this->interestCollections, $interestCollections);
     }
 
     /**
@@ -351,8 +344,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setLiquidations($liquidations)
     {
-        $this->_onPropertyChanged('liquidations', $this->liquidations, $liquidations);
-        $this->liquidations = $liquidations;
+        $this->implementChange($this,'liquidations', $this->liquidations, $liquidations);
     }
 
     /**
@@ -368,8 +360,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setRecoveries($recoveries)
     {
-        $this->_onPropertyChanged('recoveries', $this->recoveries, $recoveries);
-        $this->recoveries = $recoveries;
+        $this->implementChange($this,'recoveries', $this->recoveries, $recoveries);
     }
 
     /**
@@ -385,8 +376,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setPrepayedBalance($prepayedBalance)
     {
-        $this->_onPropertyChanged('prepayedBalance', $this->prepayedBalance, $prepayedBalance);
-        $this->prepayedBalance = $prepayedBalance;
+        $this->implementChange($this,'prepayedBalance', $this->prepayedBalance, $prepayedBalance);
     }
 
     /**
@@ -402,8 +392,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setPrepayedLoans($prepayedLoans)
     {
-        $this->_onPropertyChanged('prepayedLoans', $this->prepayedLoans, $prepayedLoans);
-        $this->prepayedLoans = $prepayedLoans;
+        $this->implementChange($this,'prepayedLoans', $this->prepayedLoans, $prepayedLoans);
     }
 
     /**
@@ -419,8 +408,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setBondRegularPrincipalCalc($bondRegularPrincipalCalc)
     {
-        $this->_onPropertyChanged('bondRegularPrincipalCalc', $this->bondRegularPrincipalCalc, $bondRegularPrincipalCalc);
-        $this->bondRegularPrincipalCalc = $bondRegularPrincipalCalc;
+        $this->implementChange($this,'bondRegularPrincipalCalc', $this->bondRegularPrincipalCalc, $bondRegularPrincipalCalc);
     }
 
     /**
@@ -436,8 +424,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setUnscheduledPrincipalCalc($unscheduledPrincipalCalc)
     {
-        $this->_onPropertyChanged('unscheduledPrincipalCalc', $this->unscheduledPrincipalCalc, $unscheduledPrincipalCalc);
-        $this->unscheduledPrincipalCalc = $unscheduledPrincipalCalc;
+        $this->implementChange($this,'unscheduledPrincipalCalc', $this->unscheduledPrincipalCalc, $unscheduledPrincipalCalc);
     }
 
     /**
@@ -453,8 +440,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setBondInterestPayments($bondInterestPayments)
     {
-        $this->_onPropertyChanged('bondInterestPayments', $this->bondInterestPayments, $bondInterestPayments);
-        $this->bondInterestPayments = $bondInterestPayments;
+        $this->implementChange($this,'bondInterestPayments', $this->bondInterestPayments, $bondInterestPayments);
     }
 
     /**
@@ -470,8 +456,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setRegularPrincipalPaid($regularPrincipalPaid)
     {
-        $this->_onPropertyChanged('regularPrincipalPaid', $this->regularPrincipalPaid, $regularPrincipalPaid);
-        $this->regularPrincipalPaid = $regularPrincipalPaid;
+        $this->implementChange($this,'regularPrincipalPaid', $this->regularPrincipalPaid, $regularPrincipalPaid);
     }
 
     /**
@@ -487,8 +472,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setUnscheduledPrincipalPaid($unscheduledPrincipalPaid)
     {
-        $this->_onPropertyChanged('unscheduledPrincipalPaid', $this->unscheduledPrincipalPaid, $unscheduledPrincipalPaid);
-        $this->unscheduledPrincipalPaid = $unscheduledPrincipalPaid;
+        $this->implementChange($this,'unscheduledPrincipalPaid', $this->unscheduledPrincipalPaid, $unscheduledPrincipalPaid);
     }
 
     /**
@@ -504,8 +488,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setUpdateStatus($updateStatus)
     {
-        $this->_onPropertyChanged('updateStatus', $this->updateStatus, $updateStatus);
-        $this->updateStatus = $updateStatus;
+        $this->implementChange($this,'updateStatus', $this->updateStatus, $updateStatus);
     }
 
     /**
@@ -521,8 +504,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setGroupNetWac($groupNetWac)
     {
-        $this->_onPropertyChanged('groupNetWac', $this->groupNetWac, $groupNetWac);
-        $this->groupNetWac = $groupNetWac;
+        $this->implementChange($this,'groupNetWac', $this->groupNetWac, $groupNetWac);
     }
 
     /**
@@ -538,8 +520,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setReceivablesCount($receivablesCount)
     {
-        $this->_onPropertyChanged('receivablesCount', $this->receivablesCount, $receivablesCount);
-        $this->receivablesCount = $receivablesCount;
+        $this->implementChange($this,'receivablesCount', $this->receivablesCount, $receivablesCount);
     }
 
     /**
@@ -555,8 +536,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setGroupSeniorPct($groupSeniorPct)
     {
-        $this->_onPropertyChanged('groupSeniorPct', $this->groupSeniorPct, $groupSeniorPct);
-        $this->groupSeniorPct = $groupSeniorPct;
+        $this->implementChange($this,'groupSeniorPct', $this->groupSeniorPct, $groupSeniorPct);
     }
 
     /**
@@ -572,8 +552,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setGroupSubPct($groupSubPct)
     {
-        $this->_onPropertyChanged('groupSubPct', $this->groupSubPct, $groupSubPct);
-        $this->groupSubPct = $groupSubPct;
+        $this->implementChange($this,'groupSubPct', $this->groupSubPct, $groupSubPct);
     }
 
     /**
@@ -589,8 +568,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setIsHistory($isHistory)
     {
-        $this->_onPropertyChanged('isHistory', $this->isHistory, $isHistory);
-        $this->isHistory = $isHistory;
+        $this->implementChange($this,'isHistory', $this->isHistory, $isHistory);
     }
 
     /**
@@ -606,8 +584,7 @@ class PoolUpdate implements NotifyPropertyChanged
      */
     public function setDelinquency(Delinquency $delinquency)
     {
-        $this->_onPropertyChanged('delinquency', $this->delinquency, $delinquency);
-        $this->delinquency = $delinquency;
+        $this->implementChange($this,'delinquency', $this->delinquency, $delinquency);
     }
 
 

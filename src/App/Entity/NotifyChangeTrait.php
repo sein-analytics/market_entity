@@ -13,13 +13,13 @@ trait NotifyChangeTrait
 {
     private $_listener=[];
 
-    public function addPropertyChangedListener(PropertyChangedListener $listener)
+    public function addPropertyChangedListenerDep(PropertyChangedListener $listener)
     {
         $this->_listener[] = $listener;
     }
 
 
-    public function _onPropertyChanged($propName, $oldValue, $newValue)
+    public function _onPropertyChangedDep($propName, $oldValue, $newValue)
     {
         if ($this->_listener){
             foreach ($this->_listener as $listener){

@@ -18,9 +18,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\HasLifecycleCallbacks
  *
  */
-class Bond implements NotifyPropertyChanged
+class Bond extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     const SOLVE_FOR_YIELD = 1;
     const SOLVE_FOR_PRICE = 2;
@@ -191,8 +191,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setPool($pool)
     {
-        $this->_onPropertyChanged('pool', $this->pool, $pool);
-        $this->pool = $pool;
+        $this->implementChange($this,'pool', $this->pool, $pool);
     }
 
     /**
@@ -208,8 +207,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setDeal($deal)
     {
-        $this->_onPropertyChanged('deal', $this->deal, $deal);
-        $this->deal = $deal;
+        $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
@@ -225,8 +223,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setCusip($cusip)
     {
-        $this->_onPropertyChanged('cusip', $this->cusip, $cusip);
-        $this->cusip = $cusip;
+        $this->implementChange($this,'cusip', $this->cusip, $cusip);
     }
 
     /**
@@ -242,8 +239,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setClassName($className)
     {
-        $this->_onPropertyChanged('className', $this->className, $className);
-        $this->className = $className;
+        $this->implementChange($this,'className', $this->className, $className);
     }
 
     /**
@@ -259,8 +255,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setOriginalBalance($originalBalance)
     {
-        $this->_onPropertyChanged('originalBalance', $this->originalBalance, $originalBalance);
-        $this->originalBalance = $originalBalance;
+        $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
@@ -276,8 +271,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setCurrentBalance($currentBalance)
     {
-        $this->_onPropertyChanged('currentBalance', $this->currentBalance, $currentBalance);
-        $this->currentBalance = $currentBalance;
+        $this->implementChange($this,'currentBalance', $this->currentBalance, $currentBalance);
     }
 
     /**
@@ -295,8 +289,7 @@ class Bond implements NotifyPropertyChanged
     {
         if(is_array($rateFormula))
             $rateFormula = serialize($rateFormula);
-        $this->_onPropertyChanged('rateFormula', $this->rateFormula, $rateFormula);
-        $this->rateFormula = $rateFormula;
+        $this->implementChange($this,'rateFormula', $this->rateFormula, $rateFormula);
     }
 
     /**
@@ -312,8 +305,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setScheduledMaturityDate($scheduledMaturityDate)
     {
-        $this->_onPropertyChanged('scheduledMaturityDate', $this->scheduledMaturityDate, $scheduledMaturityDate);
-        $this->scheduledMaturityDate = $scheduledMaturityDate;
+        $this->implementChange($this,'scheduledMaturityDate', $this->scheduledMaturityDate, $scheduledMaturityDate);
     }
 
     /**
@@ -329,8 +321,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setFixedRate($fixedRate)
     {
-        $this->_onPropertyChanged('fixedRate', $this->fixedRate, $fixedRate);
-        $this->fixedRate = $fixedRate;
+        $this->implementChange($this,'fixedRate', $this->fixedRate, $fixedRate);
     }
 
     /**
@@ -346,8 +337,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setOrigCreditSupport($origCreditSupport)
     {
-        $this->_onPropertyChanged('origCreditSupport', $this->origCreditSupport, $origCreditSupport);
-        $this->origCreditSupport = $origCreditSupport;
+        $this->implementChange($this,'origCreditSupport', $this->origCreditSupport, $origCreditSupport);
     }
 
     /**
@@ -363,8 +353,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setCurrCreditSupport($currCreditSupport)
     {
-        $this->_onPropertyChanged('currCreditSupport', $this->currCreditSupport, $currCreditSupport);
-        $this->currCreditSupport = $currCreditSupport;
+        $this->implementChange($this,'currCreditSupport', $this->currCreditSupport, $currCreditSupport);
     }
 
     /**
@@ -380,8 +369,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setBasisCount($basisCount)
     {
-        $this->_onPropertyChanged('basisCount', $this->basisCount, $basisCount);
-        $this->basisCount = $basisCount;
+        $this->implementChange($this,'basisCount', $this->basisCount, $basisCount);
     }
 
     /**
@@ -397,8 +385,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setFloatingIndex($floatingIndex)
     {
-        $this->_onPropertyChanged('floatingIndex', $this->floatingIndex, $floatingIndex);
-        $this->floatingIndex = $floatingIndex;
+        $this->implementChange($this,'floatingIndex', $this->floatingIndex, $floatingIndex);
     }
 
     /**
@@ -414,8 +401,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setIndexMaturity($indexMaturity)
     {
-        $this->_onPropertyChanged('indexMaturity', $this->indexMaturity, $indexMaturity);
-        $this->indexMaturity = $indexMaturity;
+        $this->implementChange($this,'indexMaturity', $this->indexMaturity, $indexMaturity);
     }
 
     /**
@@ -432,8 +418,7 @@ class Bond implements NotifyPropertyChanged
     public function setSpreadArray($spreadArray)
     {
         $spread = serialize($spreadArray);
-        $this->_onPropertyChanged('spreadArray', $this->spreadArray, $spread);
-        $this->spreadArray = $spread;
+        $this->implementChange($this,'spreadArray', $this->spreadArray, $spread);
     }
 
     /**
@@ -449,8 +434,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setLegalFinal($legalFinal)
     {
-        $this->_onPropertyChanged('legalFinal', $this->legalFinal, $legalFinal);
-        $this->legalFinal = $legalFinal;
+        $this->implementChange($this,'legalFinal', $this->legalFinal, $legalFinal);
     }
 
     /**
@@ -466,8 +450,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setIsIoBond($isIoBond)
     {
-        $this->_onPropertyChanged('isIoBond', $this->isIoBond, $isIoBond);
-        $this->isIoBond = $isIoBond;
+        $this->implementChange($this,'isIoBond', $this->isIoBond, $isIoBond);
     }
 
     /**
@@ -483,8 +466,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setIsPoBond($isPoBond)
     {
-        $this->_onPropertyChanged('isPoBond', $this->isPoBond, $isPoBond);
-        $this->isPoBond = $isPoBond;
+        $this->implementChange($this,'isPoBond', $this->isPoBond, $isPoBond);
     }
 
     /**
@@ -500,8 +482,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setIsComponent($isComponent)
     {
-        $this->_onPropertyChanged('isComponent', $this->isComponent, $isComponent);
-        $this->isComponent = $isComponent;
+        $this->implementChange($this,'isComponent', $this->isComponent, $isComponent);
     }
 
     /**
@@ -551,8 +532,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setUpdateCount($updateCount)
     {
-        $this->_onPropertyChanged('updateCount', $this->updateCount, $updateCount);
-        $this->updateCount = $updateCount;
+        $this->implementChange($this,'updateCount', $this->updateCount, $updateCount);
     }
 
     /**
@@ -568,8 +548,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setLatestUpdate(BondUpdate $latestUpdate)
     {
-        $this->_onPropertyChanged('latestUpdate', $this->latestUpdate, $latestUpdate);
-        $this->latestUpdate = $latestUpdate;
+        $this->implementChange($this,'latestUpdate', $this->latestUpdate, $latestUpdate);
     }
 
     /**
@@ -585,8 +564,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setFeeCount($feeCount)
     {
-        $this->_onPropertyChanged('feeCount', $this->feeCount, $feeCount);
-        $this->feeCount = $feeCount;
+        $this->implementChange($this,'feeCount', $this->feeCount, $feeCount);
     }
 
     /**
@@ -602,8 +580,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setTriggerCount($triggerCount)
     {
-        $this->_onPropertyChanged('triggerCount', $this->triggerCount, $triggerCount);
-        $this->triggerCount = $triggerCount;
+        $this->implementChange($this,'triggerCount', $this->triggerCount, $triggerCount);
     }
 
     /**
@@ -619,8 +596,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setShelfSpecificCount($shelfSpecificCount)
     {
-        $this->_onPropertyChanged('shelfSpecificCount', $this->shelfSpecificCount, $shelfSpecificCount);
-        $this->shelfSpecificCount = $shelfSpecificCount;
+        $this->implementChange($this,'shelfSpecificCount', $this->shelfSpecificCount, $shelfSpecificCount);
     }
 
     /**
@@ -636,8 +612,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setAccountCount($accountCount)
     {
-        $this->_onPropertyChanged('accountCount', $this->accountCount, $accountCount);
-        $this->accountCount = $accountCount;
+        $this->implementChange($this,'accountCount', $this->accountCount, $accountCount);
     }
 
     /**
@@ -653,8 +628,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setMoodysRating($moodysRating)
     {
-        $this->_onPropertyChanged('moodysRating', $this->moodysRating, $moodysRating);
-        $this->moodysRating = $moodysRating;
+        $this->implementChange($this,'moodysRating', $this->moodysRating, $moodysRating);
     }
 
     /**
@@ -670,8 +644,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setSpRating($spRating)
     {
-        $this->_onPropertyChanged('spRating', $this->spRating, $spRating);
-        $this->spRating = $spRating;
+        $this->implementChange($this,'spRating', $this->spRating, $spRating);
     }
 
     /**
@@ -687,8 +660,7 @@ class Bond implements NotifyPropertyChanged
      */
     public function setFitchRating($fitchRating)
     {
-        $this->_onPropertyChanged('fitchRating', $this->fitchRating, $fitchRating);
-        $this->fitchRating = $fitchRating;
+        $this->implementChange($this,'fitchRating', $this->fitchRating, $fitchRating);
     }
 
     /**
@@ -704,7 +676,6 @@ class Bond implements NotifyPropertyChanged
      */
     public function setDbrsRating($dbrsRating)
     {
-        $this->_onPropertyChanged('dbrsRating', $this->dbrsRating, $dbrsRating);
-        $this->dbrsRating = $dbrsRating;
+        $this->implementChange($this,'dbrsRating', $this->dbrsRating, $dbrsRating);
     }
 }

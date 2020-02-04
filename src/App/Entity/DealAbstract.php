@@ -2,7 +2,7 @@
 namespace App\Entity;
 
 
-abstract class DealAbstract
+abstract class DealAbstract extends DomainObject
 {
     const PLAIN_AUCTION             = "AUCTION";
 

@@ -96,8 +96,7 @@ abstract class Fee extends AbstractTyped
     /**  @param number $periodTotalFees */
     public function setPeriodTotalFees ($periodTotalFees)
     {
-        $this->_onPropertyChanged('periodTotalFees', $this->periodTotalFees, $periodTotalFees);
-        $this->periodTotalFees = $periodTotalFees;
+        $this->implementChange($this,'periodTotalFees', $this->periodTotalFees, $periodTotalFees);
     }
 
     public function getDeal ()
@@ -142,8 +141,7 @@ abstract class Fee extends AbstractTyped
      */
     public function setLatestUpdate(TypedUpdateInterface $latestUpdate)
     {
-        $this->_onPropertyChanged('latestUpdate', $this->latestUpdate, $latestUpdate);
-        $this->latestUpdate = $latestUpdate;
+        $this->implementChange($this,'latestUpdate', $this->latestUpdate, $latestUpdate);
     }
 
     /**
@@ -170,22 +168,19 @@ abstract class Fee extends AbstractTyped
     /** @param \App\Entity\Deal $deal */
     public function setDeal (Deal $deal)
     {
-        $this->_onPropertyChanged('deal', $this->deal, $deal);
-        $this->deal = $deal;
+        $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /** @param integer $isDealFee */
     public function setIsDealFee ($isDealFee)
     {
-        $this->_onPropertyChanged('isDealFee', $this->isDealFee, $isDealFee);
-        $this->isDealFee = $isDealFee;
+        $this->implementChange($this,'isDealFee', $this->isDealFee, $isDealFee);
     }
 
     public function setIsInterestRateHedgeFee ($isFeeHedge)
     {
         if ($isFeeHedge == 0 || $isFeeHedge == 1){
-            $this->_onPropertyChanged('isFeeHedge', $this->isFeeHedge, $isFeeHedge);
-            $this->isFeeHedge = $isFeeHedge;
+            $this->implementChange($this,'isFeeHedge', $this->isFeeHedge, $isFeeHedge);
         }else
             throw new \Exception(
                 "Variable isInterestRateHedgeFee can only be either 1 or 0: $isFeeHedge was given");
