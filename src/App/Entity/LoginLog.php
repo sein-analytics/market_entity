@@ -18,9 +18,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ChangeTrackingPolicy("NOTIFY")
  * @ORM\HasLifeCycleCallbacks
  */
-class LoginLog implements NotifyPropertyChanged
+class LoginLog extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -53,6 +53,9 @@ class LoginLog implements NotifyPropertyChanged
     /** @ORM\Column(type="time", nullable=false)   */
     protected $sessionDuration = '00:00:00';
 
+    /** @ORM\Column(type="time")   */
+    protected $lastSeen = '00:00:00';
+
     /**
      * @return mixed
      */
@@ -74,8 +77,10 @@ class LoginLog implements NotifyPropertyChanged
      */
     public function setUser(MarketUser $user)
     {
-        $this->_onPropertyChanged('user', $this->user, $user);
-        $this->user = $user;
+        if ($user !== $this->user){
+            $this->_onPropertyChanged('user', $this->user, $user);
+            $this->user = $user;
+        }
     }
 
     /**
@@ -91,8 +96,10 @@ class LoginLog implements NotifyPropertyChanged
      */
     public function setIp($ip)
     {
-        $this->_onPropertyChanged('ip', $this->ip, $ip);
-        $this->ip = $ip;
+        if ($ip !== $this->ip) {
+            $this->_onPropertyChanged('ip', $this->ip, $ip);
+            $this->ip = $ip;
+        }
     }
 
     /**
@@ -108,8 +115,10 @@ class LoginLog implements NotifyPropertyChanged
      */
     public function setUserName($userName)
     {
-        $this->_onPropertyChanged('userName', $this->userName, $userName);
-        $this->userName = $userName;
+        if ($userName !== $this->userName){
+            $this->_onPropertyChanged('userName', $this->userName, $userName);
+            $this->userName = $userName;
+        }
     }
 
 
@@ -126,8 +135,11 @@ class LoginLog implements NotifyPropertyChanged
      */
     public function setMobileConfirmation($mobileConfirmation)
     {
-        $this->_onPropertyChanged('mobileConfirmation', $this->mobileConfirmation, $mobileConfirmation);
-        $this->mobileConfirmation = $mobileConfirmation;
+        /** if ($mobileConfirmation !== $this->mobileConfirmation) {
+            $this->_onPropertyChanged('mobileConfirmation', $this->mobileConfirmation, $mobileConfirmation);
+            $this->mobileConfirmation = $mobileConfirmation;
+        }**/
+        $this->implementChange($this, 'mobileConfirmation', $this->mobileConfirmation, $mobileConfirmation);
     }
 
     /**
@@ -143,8 +155,10 @@ class LoginLog implements NotifyPropertyChanged
      */
     public function setStartTime(\DateTime $startTime)
     {
-        $this->_onPropertyChanged('startTime', $this->startTime, $startTime);
-        $this->startTime = $startTime;
+        if ($startTime !== $this->startTime) {
+            $this->_onPropertyChanged('startTime', $this->startTime, $startTime);
+            $this->startTime = $startTime;
+        }
     }
 
     /**
@@ -160,8 +174,10 @@ class LoginLog implements NotifyPropertyChanged
      */
     public function setEndTime(\DateTime $endTime)
     {
-        $this->_onPropertyChanged('endTime', $this->endTime, $endTime);
-        $this->endTime = $endTime;
+        if ($endTime !== $this->endTime) {
+            $this->_onPropertyChanged('endTime', $this->endTime, $endTime);
+            $this->endTime = $endTime;
+        }
     }
 
     /**
@@ -171,5 +187,23 @@ class LoginLog implements NotifyPropertyChanged
     {
         return $this->sessionDuration;
     }
+
+    /**
+     * @return string
+     */
+    public function getLastSeen()
+    {
+        return $this->lastSeen;
+    }
+
+    /**
+     * @param \DateTime $lastSeen
+     */
+    public function setLastSeen(\DateTime $lastSeen)
+    {
+        $this->lastSeen = $lastSeen;
+    }
+
+
 
 }

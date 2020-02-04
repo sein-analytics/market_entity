@@ -47,7 +47,7 @@ class Loan implements NotifyPropertyChanged
     protected static $amortTypes = array(
         self::AMORTIZING => 'Amortizing',
         self::REVOLVING  =>  'Revolving',
-        self::AMORTIZING => 'Amortizing',
+        //self::AMORTIZING => 'Amortizing',
     );
 
     protected static $descriptions = array(

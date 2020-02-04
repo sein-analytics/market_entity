@@ -8,6 +8,7 @@
 
 namespace App\Entity\Loan;
 
+use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
@@ -19,9 +20,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="CommAttribute")
  * @ChangeTrackingPolicy("NOTIFY")
  */
-class CommAttribute implements NotifyPropertyChanged
+class CommAttribute extends DomainObject
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     protected $ignoreDbProperties = [];
 
@@ -87,8 +88,10 @@ class CommAttribute implements NotifyPropertyChanged
      */
     public function setLoan(Loan $loan)
     {
-        $this->_onPropertyChanged('loan', $this->loan, $loan);
-        $this->loan = $loan;
+        if ($loan !== $this->loan) {
+            $this->_onPropertyChanged('loan', $this->loan, $loan);
+            $this->loan = $loan;
+        }
     }
 
     /**
@@ -101,8 +104,10 @@ class CommAttribute implements NotifyPropertyChanged
      */
     public function setDscr($dscr)
     {
-        $this->_onPropertyChanged('dscr', $this->dscr, $dscr);
-        $this->dscr = $dscr;
+        if ($dscr !== $this->dscr) {
+            $this->_onPropertyChanged('dscr', $this->dscr, $dscr);
+            $this->dscr = $dscr;
+        }
     }
 
     /**
@@ -115,8 +120,11 @@ class CommAttribute implements NotifyPropertyChanged
      */
     public function setNoi($noi)
     {
-        $this->_onPropertyChanged('noi', $this->noi, $noi);
-        $this->noi = $noi;
+        $this->implementChange($this, 'noi', $this->noi, $noi);
+        /**if ($noi !== $this->noi) {
+            $this->_onPropertyChanged('noi', $this->noi, $noi);
+            $this->noi = $noi;
+        } **/
     }
 
     /**
@@ -129,8 +137,10 @@ class CommAttribute implements NotifyPropertyChanged
      */
     public function setNetWorthToLoan($netWorthToLoan)
     {
-        $this->_onPropertyChanged('netWorthToLoan', $this->netWorthToLoan, $netWorthToLoan);
-        $this->netWorthToLoan = $netWorthToLoan;
+        if ($netWorthToLoan !== $this->netWorthToLoan) {
+            $this->_onPropertyChanged('netWorthToLoan', $this->netWorthToLoan, $netWorthToLoan);
+            $this->netWorthToLoan = $netWorthToLoan;
+        }
     }
 
     /**
