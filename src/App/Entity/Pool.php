@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\Pool")
  * @ORM\Table(name="Pool")

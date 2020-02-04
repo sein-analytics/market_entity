@@ -13,6 +13,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
