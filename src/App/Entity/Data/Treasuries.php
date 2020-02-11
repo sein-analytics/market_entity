@@ -1,20 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ac1189
- * Date: 3/13/18
- * Time: 10:00 AM
- */
+
 
 namespace App\Entity\Data;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Data\Swaps")
- * @ORM\Table(name="Swaps")
+ * @ORM\Entity(repositoryClass="\App\Repository\Data\Treasuries")
+ * @ORM\Table(name="Treasuries")
  */
-class Swaps
+class Treasuries
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -28,7 +22,7 @@ class Swaps
      **/
     protected $name;
 
-    /** @ORM\Column(type="decimal", precision=9, scale=6, nullable = false) **/
+    /** @ORM\Column(type="decimal", precision=9, scale=6, nullable = true) **/
     protected $value;
 
     /**
@@ -53,5 +47,4 @@ class Swaps
     {
         $this->value = $value;
     }
-
 }
