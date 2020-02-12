@@ -6,12 +6,10 @@ namespace App\Repository\Data;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class Treasuries extends EntityRepository
+class Treasuries extends Rates
 {
-    public function fetchRates()
+    public function fetchTreasuryRates()
     {
-        $sql = "SELECT * FROM Treasuries";
-        $result = $this->getEntityManager()->getConnection()->fetchAll($sql);
-        return $result;
+        return $this->fetchRates('Treasuries');
     }
 }

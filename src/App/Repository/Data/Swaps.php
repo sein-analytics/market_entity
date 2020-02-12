@@ -12,12 +12,10 @@ namespace App\Repository\Data;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-class Swaps extends EntityRepository
+class Swaps extends Rates
 {
     public function fetchSwapRates()
     {
-        $sql = "SELECT * FROM Swaps";
-        $result = $this->getEntityManager()->getConnection()->fetchAll($sql);
-        return $result;
+        return $this->fetchRates('Swaps');
     }
 }
