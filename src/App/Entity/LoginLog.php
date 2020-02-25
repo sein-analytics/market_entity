@@ -53,7 +53,7 @@ class LoginLog extends DomainObject
     /** @ORM\Column(type="time", nullable=false)   */
     protected $sessionDuration = '00:00:00';
 
-    /** @ORM\Column(type="time")   */
+    /** @ORM\Column(type="datetime", nullable=false)   */
     protected $lastSeen = '00:00:00';
 
     /**

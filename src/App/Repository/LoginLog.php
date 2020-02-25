@@ -28,6 +28,8 @@ class LoginLog extends EntityRepository
 
     const BASE_DUR = '00:00:00';
 
+    const LAST_SEEN_KEY = 'last_seen';
+
     /**
      * @param int $id
      * @return array|DBALException|\Exception
@@ -110,12 +112,12 @@ class LoginLog extends EntityRepository
      */
     function insertNewLoginLog(array $credentialsArr)
     {
-        $sql = "INSERT INTO LoginLog (`id`, `user_id`, `ip`, `user_name`, `mobile_confirmation`, `start_time`, `end_time`, `session_duration`) VALUES";
+        $sql = "INSERT INTO LoginLog (`id`, `user_id`, `ip`, `user_name`, `mobile_confirmation`, `start_time`, `end_time`, `session_duration`, `last_seen`) VALUES";
         if (!($credentials = $this->doesArrayHaveRequiredInputs($credentialsArr)))
             return ['message' => "Missing required keys in the credentials array"];
         $sql .= '(' . 0 . ',' . $credentials[self::ID_KEY] . ',' . '"' . $credentials[self::IP_KEY] . '"' . ',' . '"' . $credentials[self::EMAIL_KEY];
         $sql .= '"' . ',' . $credentials[self::TOKEN_KEY] . ',' . '"' . $credentials[self::START_KEY] . '"' .',';
-        $sql .= '"'. $credentials[self::END_KEY] . '"' . ',' . '"' . self::BASE_DUR . '"' . ');';
+        $sql .= '"'. $credentials[self::END_KEY] . '"' . ',' . '"' . self::BASE_DUR . '"' . '"' . $credentials[self::START_KEY] . '"' . ');';
         $stmt = $this->prepareSql($sql);
         return $this->executeStmt($stmt);
     }
