@@ -117,7 +117,7 @@ class LoginLog extends EntityRepository
             return ['message' => "Missing required keys in the credentials array"];
         $sql .= '(' . 0 . ',' . $credentials[self::ID_KEY] . ',' . '"' . $credentials[self::IP_KEY] . '"' . ',' . '"' . $credentials[self::EMAIL_KEY];
         $sql .= '"' . ',' . $credentials[self::TOKEN_KEY] . ',' . '"' . $credentials[self::START_KEY] . '"' .',';
-        $sql .= '"'. $credentials[self::END_KEY] . '"' . ',' . '"' . self::BASE_DUR . '"' . '"' . $credentials[self::START_KEY] . '"' . ');';
+        $sql .= '"'. $credentials[self::END_KEY] . '"' . ',' . '"' . self::BASE_DUR . '"' . ',' . '"' . $credentials[self::START_KEY] . '"' . ');';
         $stmt = $this->prepareSql($sql);
         return $this->executeStmt($stmt);
     }
