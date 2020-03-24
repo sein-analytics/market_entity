@@ -18,7 +18,7 @@
 	},
 	"require": {
 		"laravel/framework": "^7.0",
-		"laravel-doctrine/extensions": "1.2.0",
+		"laravel-doctrine/extensions": "^1.2",
 		"gedmo/doctrine-extensions": "^2.4",
 		"ext-json": "*",
 		"tymon/jwt-auth": "1.0.*"
