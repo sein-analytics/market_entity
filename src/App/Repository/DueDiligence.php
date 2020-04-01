@@ -30,6 +30,7 @@ class DueDiligence extends EntityRepository
         $sql = 'SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $userIds, $dealIds, $exceptIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         if(count($results)){
             return $this->flattenResultArrayByKey($results, 'id');
         }
@@ -53,6 +54,7 @@ class DueDiligence extends EntityRepository
             array(Connection::PARAM_INT_ARRAY)
         );
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $results;
     }
 
@@ -71,6 +73,7 @@ class DueDiligence extends EntityRepository
             'WHERE due_diligence_id IN (?) ORDER BY issueId, due_diligence_id ASC';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $results;
     }
 
@@ -90,6 +93,7 @@ class DueDiligence extends EntityRepository
             'WHERE issue_id IN (?) AND loan_id IN (?)';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $issueIds, $loanIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $results;
     }
 
@@ -103,6 +107,7 @@ class DueDiligence extends EntityRepository
         $sql = 'SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds, $loanIds);
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $results;
     }
 

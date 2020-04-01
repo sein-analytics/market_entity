@@ -159,6 +159,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         );
         $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $results = array_merge($noArms, $armLoans);
+        $stmt->closeCursor();
         return $results;
     }
 
@@ -182,6 +183,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         $sql = "SELECT id, loan_id FROM loans WHERE id IN (?) ORDER BY id ASC";
         $stmt = $this->returnInArraySqlStmt($this->em, $loanIds, $sql);
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         $data = [];
         foreach ($result as $dbData){
             $data[$dbData['loan_id']] = (int)$dbData['id'];
@@ -213,6 +215,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
             array($poolIds), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -223,6 +226,7 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         $stmt->bindValue(1, $id);
         $result = $stmt->execute();
         $result = $stmt->fetch();
+        $stmt->closeCursor();
         if (is_array($result) && array_key_exists('loan_id', $result))
             return $result['loan_id'];
         return $result;

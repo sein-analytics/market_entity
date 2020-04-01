@@ -27,6 +27,7 @@ class BidStatus extends EntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $temp = $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         if(!$result) { throw new \Exception("Could not fetch BidStatus data", 400); }
         return $this->idToStatusMapper($result);
     }
