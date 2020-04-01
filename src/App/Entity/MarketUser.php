@@ -276,6 +276,11 @@ class MarketUser
     protected $authyToken;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $rememberToken;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="marketUsers")
      *
      * @var ArrayCollection
