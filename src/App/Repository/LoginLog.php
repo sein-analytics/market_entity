@@ -36,7 +36,7 @@ class LoginLog extends EntityRepository
      */
     function fetchIpsByUserId(int $id)
     {
-        $sql = "SELECT ip FROM LoginLog WHERE mobile_confirmation IS NOT NULL AND session_duration = 0 AND user_id=?";
+        $sql = "SELECT ip FROM LoginLog WHERE mobile_confirmation IS NOT NULL AND user_id=?";
         if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
             return $stmt;
         $stmt->bindValue(1, $id);
