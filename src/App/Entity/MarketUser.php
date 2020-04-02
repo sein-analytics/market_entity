@@ -492,7 +492,7 @@ class MarketUser
      * @param $failedAttempts
      * @throws \Exception
      */
-    public function setFailedAttempts($failedAttempts)
+    public function setFailedAttempts(FailedLogin $failedAttempts)
     {
         $this->implementChange($this,'failedAttempts', $this->failedAttempts, $failedAttempts);
     }
