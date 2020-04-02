@@ -25,6 +25,7 @@ class DealStatus extends EntityRepository
             ->prepare($sql);
         $result = $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         if(!$result) { throw new \Exception("Could not fetch DealStatus data", 400); }
         return $this->idToStatusMapper($result);
     }

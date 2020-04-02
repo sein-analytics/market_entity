@@ -62,8 +62,9 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         $sql = "SELECT bid_type_id FROM Deal Where id = ?";
         $stmt = $this->em->getConnection()->prepare($sql);
         $stmt->bindValue(1, $id);
-        $result = $stmt->execute();
+        $stmt->execute();
         $result = $stmt->fetchAll();
+        $stmt->closeCursor();
         if (is_array($result))
             return (int)$result[0]['bid_type_id'];
         return 'No results to return';
@@ -113,10 +114,11 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
                 \Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $this->flattenResultArrayByKey($result, 'id');
     }
 
-        /**
+    /**
      * @param int $id
      * @return bool
      */
@@ -125,6 +127,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         $sql = "DELETE FROM Deal WHERE id = $id";
         $stmt = $this->em->getConnection()->executeQuery($sql);
         $result = $stmt->execute();
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -137,6 +140,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         $sql = "DELETE FROM deal_market_user WHERE deal_id = $dealId";
         $stmt = $this->em->getConnection()->executeQuery($sql);
         $result = $stmt->execute();
+        $stmt->closeCursor();
         return $result;
     }
 

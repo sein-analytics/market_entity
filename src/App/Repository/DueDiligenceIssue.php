@@ -40,6 +40,7 @@ class DueDiligenceIssue extends EntityRepository
             return false;
         }
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $result;
     }
 }

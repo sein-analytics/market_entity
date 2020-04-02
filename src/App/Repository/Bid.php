@@ -71,6 +71,7 @@ class Bid extends EntityRepository
         $stmt->bindValue('deal_id', $dealId);
         $temp = $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -101,6 +102,7 @@ class Bid extends EntityRepository
         $stmt->bindValue(1, $userId);
         $result = $stmt->execute();
         $result = $stmt->fetchAll();
+        $stmt->closeCursor();
         return $this->flattenResultArrayByKey($result, 'deal_id');
     }
 }

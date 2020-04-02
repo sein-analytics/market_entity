@@ -26,6 +26,7 @@ class DueDilLoanStatus extends EntityRepository
         $stmt->bindValue(1, $ddId);
         $stmt->execute();
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $results;
     }
 }

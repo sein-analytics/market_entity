@@ -40,6 +40,7 @@ class MarketUser extends EntityRepository
             return $exception->getMessage();
         }
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $this->flattenResultArrayByKey($results, 'deal_id');
     }
 
@@ -58,6 +59,7 @@ class MarketUser extends EntityRepository
             return $exception->getMessage();
         }
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $this->flattenResultArrayByKey($results, 'favorite_deal_id');
     }
 
@@ -86,6 +88,7 @@ class MarketUser extends EntityRepository
         }
         $stmt->bindValue(1, $userId);
         $result = (int)$stmt->fetch(Query::HYDRATE_ARRAY)[$userId];
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -108,6 +111,7 @@ class MarketUser extends EntityRepository
             return $exception->getMessage();
         }
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -147,6 +151,7 @@ class MarketUser extends EntityRepository
             return $exception->getMessage();
         }
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -158,6 +163,7 @@ class MarketUser extends EntityRepository
         $stmt->bindParam(2, $exceptId);
         $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $this->flattenResultArrayByKey($result, 'id');
     }
 

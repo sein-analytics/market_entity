@@ -26,6 +26,7 @@ class Message extends EntityRepository
         $stmt->bindValue(1, $userId);
         $stmt->execute();
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $stmt->closeCursor();
         return $this->flattenResultArrayByKey($results, 'message_id');
     }
 
