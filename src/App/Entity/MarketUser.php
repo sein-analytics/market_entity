@@ -330,6 +330,7 @@ class MarketUser
         $this->role = new AclRole();
         $this->communities = new ArrayCollection();
         $this->myCommunities = new ArrayCollection();
+        $this->failedAttempts = new FailedLogin();
     }
 
     /**
@@ -483,9 +484,9 @@ class MarketUser
     public function setIssuer(Issuer $issuer) { $this->issuer =  $issuer; }
 
     /**
-     * @return mixed
+     * @return FailedLogin
      */
-    public function getFailedAttempts(){ return $this->failedAttempts; }
+    public function getFailedAttempts(): FailedLogin { return $this->failedAttempts; }
 
     /**
      * @param $failedAttempts
