@@ -18,6 +18,7 @@ use Doctrine\ORM\Query;
 use Illuminate\Support\Facades\Log;
 
 class MarketUser extends EntityRepository
+implements FailedLoginInterface
 {
     use FetchingTrait, FetchMapperTrait;
 
@@ -195,5 +196,16 @@ class MarketUser extends EntityRepository
             return $e->getMessage();
         }
         return $this->completeIdFetchQuery($stmt);
+    }
+
+    public function updateUserFailAttempts(int $id, int $userId)
+    {
+        if (array_key_exists($id, self::UPDATE_FAIL_ID)){
+            $sql = "UPDATE MarketUser SET failed_attempt_id=$id WHERE id=$userId";
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->execute();
+            return true;
+        }
+        return false;
     }
 }
