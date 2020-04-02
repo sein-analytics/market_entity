@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\FailedLogin")
  * @ORM\Table(name="FailedLogin")
  */
 class FailedLogin
@@ -19,6 +19,7 @@ class FailedLogin
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @var int
      **/
     protected $id;
 
@@ -30,4 +31,24 @@ class FailedLogin
      * @var ArrayCollection
      */
     protected $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId() { return $this->id; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
+    }
+
+
 }
