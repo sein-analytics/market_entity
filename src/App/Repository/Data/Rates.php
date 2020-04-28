@@ -47,12 +47,14 @@ abstract class Rates extends EntityRepository
         array_walk($dbData, function ($item, $key) use(&$labels, &$rates) {
             if (array_key_exists(self::NAME_KEY, $item))
                 array_push($labels, $item[self::NAME_KEY]);
-            if (array_key_exists(self::VALUE_KEY, $item))
+            if (array_key_exists(self::VALUE_KEY, $item)){
+                $float = (float)$item[self::VALUE_KEY];
                 array_push($rates,
-                    number_format(self::MULT * (float)$item[self::VALUE_KEY],
+                    number_format(self::MULT * $float,
                         self::DEC_PLACES, '.', ','
                     )
                 );
+            }
         });
         return [
             $name => [
