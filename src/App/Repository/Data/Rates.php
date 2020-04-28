@@ -80,11 +80,16 @@ abstract class Rates extends EntityRepository
         if (!array_key_exists(self::RATES_KEY, $swaps[strtolower(self::SWAPS_KEY)])
             && !array_key_exists(self::RATES_KEY, $swaps[strtolower(self::YIELDS_KEY)]))
             return false;
+        $labels = $swaps[strtolower(self::SWAPS_KEY)][self::LABELS_KEY];
+        $yld_label = strtolower(self::YIELDS_KEY);
+        $swaps_label = strtolower(self::SWAPS_KEY);
+        $bd1 = $yields[strtolower(self::YIELDS_KEY)][self::RATES_KEY];
+        $bd2 = $swaps[strtolower(self::SWAPS_KEY)][self::RATES_KEY];
         return [
-            self::LABELS_KEY => $swaps[strtolower(self::SWAPS_KEY)][self::LABELS_KEY],
+            self::LABELS_KEY => $labels,
             self::RATES_KEY => [
-                strtolower(self::YIELDS_KEY) => $yields[strtolower(self::YIELDS_KEY)][self::RATES_KEY],
-                strtolower(self::SWAPS_KEY) => $swaps[strtolower(self::SWAPS_KEY)][self::RATES_KEY]
+                $yld_label => $bd1,
+                $swaps_label => $bd2
             ]
         ];
     }
