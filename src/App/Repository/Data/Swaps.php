@@ -16,6 +16,6 @@ class Swaps extends Rates
 {
     public function fetchSwapRates()
     {
-        return $this->fetchRates('Swaps');
+        return $this->fetchRates(self::SWAPS_KEY);
     }
 }

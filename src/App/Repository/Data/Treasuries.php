@@ -8,8 +8,9 @@ use Doctrine\ORM\Query;
 
 class Treasuries extends Rates
 {
+
     public function fetchTreasuryRates()
     {
-        return $this->fetchRates('Treasuries');
+        return $this->fetchRates(self::YIELDS_KEY);
     }
 }
