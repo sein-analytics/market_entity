@@ -196,4 +196,36 @@ class MarketUser extends EntityRepository
         }
         return $this->completeIdFetchQuery($stmt);
     }
+
+    public function updateRememberTokenById(string $token, int $id)
+    {
+        $sql = "UPDATE `MarketUser` SET `remember_token`=$token WHere id=$id";
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        } catch (\Exception $exception){
+            return false;
+        }
+        try {
+            $stmt->execute();
+        }catch (\Exception $exception){
+            return  false;
+        }
+        return true;
+    }
+
+    public function fetchUserIdByToken(string $token)
+    {
+        $sql = "SELECT id FROM MarketUser where remember_token=$token";
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        } catch (\Exception $exception){
+            return false;
+        }
+        try {
+            $stmt->execute();
+        }catch (\Exception $exception){
+            return  false;
+        }
+        return $stmt->fetch([Query::HYDRATE_SCALAR]);
+    }
 }
