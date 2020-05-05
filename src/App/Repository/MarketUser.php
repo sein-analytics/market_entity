@@ -230,4 +230,22 @@ class MarketUser extends EntityRepository
         }
         return $stmt->fetch([Query::HYDRATE_SCALAR]);
     }
+
+    public function updateAuthyTokenById(string $token, int $id)
+    {
+        $sql = "UPDATE `MarketUser` SET `authy_token`= ? WHere id= ?";
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindParam(1, $token);
+            $stmt->bindParam(2, $id);
+        } catch (\Exception $exception){
+            return false;
+        }
+        try {
+            $stmt->execute();
+        }catch (\Exception $exception){
+            return  false;
+        }
+        return true;
+    }
 }
