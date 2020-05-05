@@ -447,13 +447,13 @@ class MarketUser
      */
     public function getAuthIdentifier() { return $this->userName; }
 
-    public function getRememberTokenName() { return 'token'; }
+    public function getRememberTokenName() { return 'rememberToken'; }
 
-    public function getRememberToken() { return $this->token; }
+    public function getRememberToken() { return $this->rememberToken; }
 
     public function setRememberToken($value)
     {
-        $this->token = $value;
+        $this->rememberToken = $value;
     }
 
     /**
