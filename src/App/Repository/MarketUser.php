@@ -199,9 +199,11 @@ class MarketUser extends EntityRepository
 
     public function updateRememberTokenById(string $token, int $id)
     {
-        $sql = "UPDATE `MarketUser` SET `remember_token`=$token WHere id=$id";
+        $sql = "UPDATE `MarketUser` SET `remember_token`= ? WHere id= ?";
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindParam(1, $token);
+            $stmt->bindParam(2, $id);
         } catch (\Exception $exception){
             return false;
         }
