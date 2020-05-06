@@ -128,7 +128,7 @@ class LoginLog extends EntityRepository
         $sql = 'Update LoginLog set `last_seen`=? WHERE `user_id`=? AND mobile_confirmation IS NOT NULL';
         if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
             return $stmt;
-        $stmt->bindValue(1, $lastSeen);
+        $stmt->bindValue(1, $lastSeen->format('Y-m-d H:i:s'));
         $stmt->bindValue(2, $userId);
         return $this->executeStmt($stmt);
     }
