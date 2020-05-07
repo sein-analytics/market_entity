@@ -87,7 +87,7 @@ class LoginLog extends EntityRepository
      */
     function updateSessionDurationByUserId(int $id)
     {
-        $sql = "UPDATE LoginLog SET `session_duration`= TIMEDIFF(end_time, start_time) WHERE user_id =? AND mobile_confirmation IS NOT NULL";
+        $sql = "UPDATE LoginLog SET `session_duration`= TIMEDIFF(start_time, end_time) WHERE user_id =? AND mobile_confirmation IS NOT NULL";
         if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
             return $stmt;
         $stmt->bindValue(1, $id);
