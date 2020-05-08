@@ -277,7 +277,7 @@ class MarketUser
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $rememberToken;
 
