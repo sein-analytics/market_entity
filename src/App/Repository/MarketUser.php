@@ -67,7 +67,7 @@ class MarketUser extends EntityRepository
      * @param int $userId
      * @param int $dealId
      * @param $sql
-     * @return \Exception
+     * @return bool|\Exception
      */
     protected function completeWatchlistSql(int $userId, int $dealId, $sql)
     {
@@ -83,6 +83,7 @@ class MarketUser extends EntityRepository
         }catch (\Exception $exception){
             return $exception;
         }
+        return true;
     }
 
     /**
@@ -98,7 +99,7 @@ class MarketUser extends EntityRepository
     /**
      * @param int $userId
      * @param int $dealId
-     * @return \Exception
+     * @return bool|\Exception
      */
     public function addDealToUserWatchlist(int $userId, int $dealId) {
         $sql = "INSERT INTO user_favorite_deals (`user_id`, `favorite_deal_id`) VALUES (?,?)";
