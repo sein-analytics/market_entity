@@ -46,6 +46,8 @@ class MarketUser
      */
     protected $id;
 
+    public $incrementing = false;
+
     /**
      * @ORM\Column(type="string", nullable=false, unique=true)
      */

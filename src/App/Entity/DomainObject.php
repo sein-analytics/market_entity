@@ -6,8 +6,9 @@ namespace App\Entity;
 
 use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\Persistence\PropertyChangedListener;
+use Illuminate\Database\Eloquent\Model;
 
-abstract class DomainObject implements NotifyPropertyChanged
+abstract class DomainObject extends Model implements NotifyPropertyChanged
 {
     private $listeners = [];
 
