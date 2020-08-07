@@ -64,6 +64,48 @@ class MarketUser extends EntityRepository
     }
 
     /**
+     * @param int $userId
+     * @param int $dealId
+     * @param $sql
+     * @return \Exception
+     */
+    protected function completeWatchlistSql(int $userId, int $dealId, $sql)
+    {
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        } catch (\Exception $exception){
+            return $exception;
+        }
+        $stmt->bindParam(1, $userId);
+        $stmt->bindParam(2, $dealId);
+        try {
+            $stmt->execute();
+        }catch (\Exception $exception){
+            return $exception;
+        }
+    }
+
+    /**
+     * @param int $userId
+     * @param int $dealId
+     * @return bool|\Exception
+     */
+    public function removeDealFromUserWatchlist(int $userId, int $dealId) {
+        $sql = "DELETE FROM user_favorite_deals WHERE user_id=? AND `favorite_deal_id`=?";
+        return $this->completeWatchlistSql($userId, $dealId, $sql);
+    }
+
+    /**
+     * @param int $userId
+     * @param int $dealId
+     * @return \Exception
+     */
+    public function addDealToUserWatchlist(int $userId, int $dealId) {
+        $sql = "INSERT INTO user_favorite_deals (`user_id`, `favorite_deal_id`) VALUES (?,?)";
+        return $this->completeWatchlistSql($userId, $dealId, $sql);
+    }
+
+    /**
      * @param array $ids
      * @return array|bool
      */
