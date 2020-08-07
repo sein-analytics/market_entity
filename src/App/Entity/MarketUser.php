@@ -25,7 +25,7 @@ class MarketUser
     extends DomainObject
     implements AuthenticableContracts, CanResetPasswordContracts, JWTSubject
 {
-    use CreatePropertiesArrayTrait, Authenticatable, CanResetPassword, Notifiable, Timestamps;
+    use CreatePropertiesArrayTrait, Authenticatable, CanResetPassword, Notifiable;
 
     const ASAP = 'asap';
 
