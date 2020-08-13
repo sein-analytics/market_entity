@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Driver\Statement;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -23,6 +24,14 @@ class Bid extends EntityRepository
 {
     use FetchMapperTrait, FetchingTrait;
     const BID_DEAL = "deal_id";
+    const DD_STATUS = 4;
+    const LOI_STATUS_1 = 3;
+    const LOI_STATUS_2 = 7;
+    const MLPA_STATUS_1 = 5;
+    const MLPA_STATUS_2 = 10;
+    const DD_KEY = 'dd';
+    const LOI_KEY = 'loi';
+    const MLPA_KEY = 'mlpa';
 
     /**
      * @param array $dealIds
@@ -104,5 +113,60 @@ class Bid extends EntityRepository
         $result = $stmt->fetchAll();
         $stmt->closeCursor();
         return $this->flattenResultArrayByKey($result, 'deal_id');
+    }
+
+    function fetchDealDdCount (int $dealId)
+    {
+        $status = self::DD_STATUS;
+        $key = self::DD_KEY;
+        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE deal_id = :deal_id AND status_id = $status";
+        return $this->returnRequestedCount($dealId, $sql, $key);
+    }
+
+    /**
+     * @param int $dealId
+     * @return \Exception|int
+     */
+    function fetchDealLoiCount (int $dealId)
+    {
+        $st1 = self::LOI_STATUS_1;
+        $st2 = self::LOI_STATUS_2;
+        $key = self::LOI_KEY;
+        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id = :deal_id";
+        return $this->returnRequestedCount($dealId, $sql, $key);
+    }
+
+    /**
+     * @param int $dealId
+     * @return \Exception|int
+     */
+    function fetchDealMlpaCount (int $dealId)
+    {
+        $st1 = self::MLPA_STATUS_1;
+        $st2 = self::MLPA_STATUS_2;
+        $key = self::MLPA_KEY;
+        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id = :deal_id";
+        return $this->returnRequestedCount($dealId, $sql, $key);
+    }
+
+    /**
+     * @param int $dealId
+     * @param string $sql
+     * @param string $key
+     * @return \Exception|int
+     */
+    protected function returnRequestedCount(int $dealId, string $sql, string $key)
+    {
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $temp = $stmt->execute();
+        } catch (\Exception $exception) {
+            return $exception;
+        }
+        $stmt->bindValue('deal_id', $dealId);
+        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        if (array_key_exists($key, $result))
+            return (int)$result[$key];
+        return 0;
     }
 }
