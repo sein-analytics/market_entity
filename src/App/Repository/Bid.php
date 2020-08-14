@@ -29,9 +29,13 @@ class Bid extends EntityRepository
     const LOI_STATUS_2 = 7;
     const MLPA_STATUS_1 = 5;
     const MLPA_STATUS_2 = 10;
-    const DD_KEY = 'dd';
+    // Any modifications to the keys below should be reflected in methods
+    // that call the activity count methods below
+    const DD_KEY = 'dueDiligence';
     const LOI_KEY = 'loi';
     const MLPA_KEY = 'mlpa';
+
+    private $keepCountKey = false;
 
     /**
      * @param array $dealIds
@@ -115,8 +119,14 @@ class Bid extends EntityRepository
         return $this->flattenResultArrayByKey($result, 'deal_id');
     }
 
-    function fetchDealDdCount (int $dealId)
+    /**
+     * @param int $dealId
+     * @param bool $keepKey
+     * @return \Exception|int
+     */
+    function fetchDealDdCount (int $dealId, bool $keepKey=false)
     {
+        $this->keepCountKey = $keepKey;
         $status = self::DD_STATUS;
         $key = self::DD_KEY;
         $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE deal_id = :deal_id AND status_id = $status";
@@ -125,26 +135,30 @@ class Bid extends EntityRepository
 
     /**
      * @param int $dealId
+     * @param bool $keepKey
      * @return \Exception|int
      */
-    function fetchDealLoiCount (int $dealId)
+    function fetchDealLoiCount (int $dealId, bool $keepKey= false)
     {
         $st1 = self::LOI_STATUS_1;
         $st2 = self::LOI_STATUS_2;
         $key = self::LOI_KEY;
+        $this->keepCountKey = $keepKey;
         $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id = :deal_id";
         return $this->returnRequestedCount($dealId, $sql, $key);
     }
 
     /**
      * @param int $dealId
+     * @param bool $keepKey
      * @return \Exception|int
      */
-    function fetchDealMlpaCount (int $dealId)
+    function fetchDealMlpaCount (int $dealId, bool $keepKey=false)
     {
         $st1 = self::MLPA_STATUS_1;
         $st2 = self::MLPA_STATUS_2;
         $key = self::MLPA_KEY;
+        $this->keepCountKey = $keepKey;
         $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id = :deal_id";
         return $this->returnRequestedCount($dealId, $sql, $key);
     }
@@ -165,8 +179,12 @@ class Bid extends EntityRepository
         }
         $stmt->bindValue('deal_id', $dealId);
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
-        if (array_key_exists($key, $result))
+        if (array_key_exists($key, $result)
+            && $this->keepCountKey === false)
             return (int)$result[$key];
+        elseif (array_key_exists($key, $result)
+            && $this->keepCountKey === true)
+            return $result;
         return 0;
     }
 }
