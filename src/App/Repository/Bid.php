@@ -173,11 +173,11 @@ class Bid extends EntityRepository
     {
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindValue('deal_id', $dealId);
             $temp = $stmt->execute();
         } catch (\Exception $exception) {
             return $exception;
         }
-        $stmt->bindValue('deal_id', $dealId);
         $result = $stmt->fetch(Query::HYDRATE_ARRAY);
         if (array_key_exists($key, $result)
             && $this->keepCountKey === false)
