@@ -28,7 +28,7 @@ class AclRole extends EntityRepository
         try{
             $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
             $stmt->bindValue(1, $userId);
-        } catch (DBALException $e){
+        } catch (\Exception $e){
             return $e->getMessage();
         }
         return $this->completeIdFetchQuery($stmt);
