@@ -20,7 +20,7 @@ class GroupChat
     /**
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", unique=true)
-     *
+     * @var string
      */
     protected $uuid;
 
@@ -47,6 +47,70 @@ class GroupChat
      * @var ArrayCollection
      */
     protected $chats;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Community", inversedBy="groupChats")
+     * @var Community|null
+     */
+    protected $community;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroupName(): string
+    {
+        return $this->groupName;
+    }
+
+    /**
+     * @return MarketUser
+     */
+    public function getUser(): MarketUser
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrivate(): bool
+    {
+        return $this->isPrivate;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChats(): ArrayCollection
+    {
+        return $this->chats;
+    }
+
+    /**
+     * @return Community|null
+     */
+    public function getCommunity(): ?Community
+    {
+        return $this->community;
+    }
+
+
 
 
 }

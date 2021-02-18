@@ -50,14 +50,37 @@ class Community
     /** @ORM\Column(type="datetime", nullable=false) **/
     protected $dateCreated;
 
-    /** @ORM\Column(type="boolean", nullable=false, options={"default":"0"}) **/
+    /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
+     * @var bool
+     */
     protected $isPrimaryGroup;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="community")
+     * @var ArrayCollection
+     */
+    protected $groupChats;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $avatar;
+
+    /**
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string", unique=true)
+     * @var string
+     */
+    protected $uuid;
 
     // @ORM\Column(type="boolean", options={"default":"0"}
 
     public function __construct()
     {
         $this->users  = new ArrayCollection();
+        $this->groupChats = new ArrayCollection();
     }
 
     public function addUserToCommunity(MarketUser $user){
@@ -100,9 +123,28 @@ class Community
     public function getDateCreated() { return $this->dateCreated; }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getisPrimaryGroup() { return $this->isPrimaryGroup; }
+    public function isPrimaryGroup(): bool
+    {
+        return $this->isPrimaryGroup;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getGroupChats(): ArrayCollection
+    {
+        return $this->groupChats;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
 
     /**
      * @param MarketUser $owner
@@ -112,6 +154,14 @@ class Community
         if ($this->owner)
             return;
         $this->owner = $owner;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**
