@@ -63,7 +63,7 @@ class Community
     protected $groupChats;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $avatar;
