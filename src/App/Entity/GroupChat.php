@@ -19,7 +19,7 @@ class GroupChat
 
     /**
      * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\Column(type="string", unique=true)
      *
      */
     protected $uuid;
@@ -43,7 +43,7 @@ class GroupChat
     protected $isPrivate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Chat", inversedBy="group")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="group")
      * @var ArrayCollection
      */
     protected $chats;
