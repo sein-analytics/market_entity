@@ -38,7 +38,7 @@ class Chat
     protected $group;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="blob")
      * @var string
      */
     protected $message;
