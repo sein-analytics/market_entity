@@ -26,7 +26,7 @@ class Chat
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketEntity", inversedBy="chatRecipient")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chatRecipient")
      * @var MarketUser|null
      */
     protected $recipient;
