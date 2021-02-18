@@ -18,7 +18,7 @@ class GroupChat
     protected $id;
 
     /**
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="uuid", unique=true)
      *
      */
