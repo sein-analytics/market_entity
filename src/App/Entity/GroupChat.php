@@ -31,7 +31,7 @@ class GroupChat
     protected $groupName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketEntity", inversedBy="groupChats")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="groupChats")
      * @var MarketUser
      */
     protected $user;

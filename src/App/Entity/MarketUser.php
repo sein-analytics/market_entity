@@ -352,6 +352,7 @@ class MarketUser
         $this->communities = new ArrayCollection();
         $this->myCommunities = new ArrayCollection();
         $this->failedAttempts = new FailedLogin();
+        parent::__construct();
     }
 
     /**
