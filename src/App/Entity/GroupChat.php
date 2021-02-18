@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
- * @ORM\Table(name="Chat")
+ * @ORM\Table(name="ChatGroup")
  */
 class GroupChat
 {
