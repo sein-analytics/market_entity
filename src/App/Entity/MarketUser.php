@@ -309,6 +309,24 @@ class MarketUser
     protected $templates;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="user")
+     * @var ArrayCollection
+     */
+    protected $chats;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="recipient")
+     * @var MarketUser
+     */
+    protected $chatRecipient;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="user")
+     * @var ArrayCollection
+     */
+    protected $groupChats;
+
+    /**
      * @var  ArrayCollection
      * */
     protected $mappedTypes;
