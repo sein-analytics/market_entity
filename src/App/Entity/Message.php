@@ -68,7 +68,7 @@ class Message extends DomainObject
      *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
-     * @var PersistentCollection
+     * @var PersistentCollection|null
      */
     protected $responses;
 
@@ -135,6 +135,7 @@ class Message extends DomainObject
     {
         $this->responses = new ArrayCollection();
         $this->recipients = new ArrayCollection();
+        parent::__construct();
     }
 
     public function addRecipient(MarketUser $user)
@@ -221,9 +222,9 @@ class Message extends DomainObject
     }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|null
      */
-    public function getResponses() : PersistentCollection { return $this->responses; }
+    public function getResponses() : ?PersistentCollection { return $this->responses; }
 
     /**
      * @return Deal

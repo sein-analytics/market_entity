@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity
@@ -56,85 +57,82 @@ class Chat
     protected $attachments;
 
     /**
-     * @return mixed
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Chat")
+     * @ORM\JoinTable(name="chat_replies",
+     *      joinColumns={@ORM\JoinColumn(name="chat_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
+     *     )
+     * @var PersistentCollection|ArrayCollection
      */
-    public function getId()
+    protected $chatReplies;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->chatReplies = new ArrayCollection();
     }
 
     /**
+     * @return mixed
+     */
+    public function getId() { return $this->id; }
+
+    /**
+     * @return PersistentCollection|ArrayCollection
+     */
+    public function getChatReplies()  { return $this->chatReplies; }
+
+    public function addChatReply(Chat $chat){
+        $this->chatReplies->add($chat);
+    }
+    /**
      * @return MarketUser
      */
-    public function getUser(): MarketUser
-    {
-        return $this->user;
-    }
+    public function getUser(): MarketUser { return $this->user; }
 
     /**
      * @param MarketUser $user
      */
-    public function setUser(MarketUser $user): void
-    {
-        $this->user = $user;
-    }
+    public function setUser(MarketUser $user): void { $this->user = $user; }
 
     /**
      * @return MarketUser|null
      */
-    public function getRecipients(): ?MarketUser
-    {
-        return $this->recipient;
-    }
+    public function getRecipient(): ?MarketUser { return $this->recipient; }
 
     /**
      * @param MarketUser $recipient
      */
-    public function setRecipients(MarketUser $recipient): void
-    {
-        $this->recipient = $recipient;
-    }
+    public function setRecipient(MarketUser $recipient): void { $this->recipient = $recipient; }
 
     /**
      * @return GroupChat|null
      */
-    public function getGroup(): ?GroupChat
-    {
-        return $this->group;
-    }
+    public function getGroup(): ?GroupChat { return $this->group; }
 
     /**
      * @param GroupChat $group
      */
-    public function setGroup(GroupChat $group): void
-    {
-        $this->group = $group;
-    }
+    public function setGroup(GroupChat $group): void { $this->group = $group; }
 
     /**
      * @return string
      */
-    public function getMessage(): string
-    {
-        return $this->message;
-    }
+    public function getMessage(): string { return $this->message; }
 
     /**
      * @param string $message
      */
-    public function setMessage(string $message): void
-    {
-        $this->message = $message;
-    }
+    public function setMessage(string $message): void { $this->message = $message; }
+
+    /**
+     * @return \DateTime
+     */
+    public function getMessageDate(): \DateTime { return $this->messageDate; }
 
     /**
      * @return array|null
      */
-    public function getAttachments(): ? array
-    {
-        return $this->attachments;
-    }
-
+    public function getAttachments(): ? array { return $this->attachments; }
 
 
 }
