@@ -64,6 +64,12 @@ class GroupChat
     protected $community;
 
     /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
+     * @var ChatTracker
+     */
+    protected $chatId;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
      * @var PersistentCollection|null
      */
@@ -113,6 +119,11 @@ class GroupChat
      * @return PersistentCollection|null
      */
     public function getMembers(): ?PersistentCollection { return $this->members; }
+
+    /**
+     * @return ChatTracker
+     */
+    public function getChatId(): ChatTracker { return $this->chatId; }
 
     /**
      * @param string $uuid

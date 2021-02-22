@@ -66,6 +66,12 @@ class Chat
      */
     protected $chatReplies;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatTracker", inversedBy="chats")
+     * @var ChatTracker
+     */
+    protected $chatId;
+
     public function __construct()
     {
         $this->chatReplies = new ArrayCollection();
@@ -133,6 +139,11 @@ class Chat
      * @return array|null
      */
     public function getAttachments(): ? array { return $this->attachments; }
+
+    /**
+     * @return ChatTracker
+     */
+    public function getChatId(): ChatTracker { return $this->chatId; }
 
 
 }
