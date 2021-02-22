@@ -67,7 +67,7 @@ class GroupChat
      * @ORM\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
      * @var ChatTracker
      */
-    protected $chatId;
+    protected $tracker;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
@@ -123,7 +123,7 @@ class GroupChat
     /**
      * @return ChatTracker
      */
-    public function getChatId(): ChatTracker { return $this->chatId; }
+    public function getTracker(): ChatTracker { return $this->tracker; }
 
     /**
      * @param string $uuid
