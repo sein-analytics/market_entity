@@ -54,8 +54,19 @@ class Issuer
     /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
     protected $outstanding;
 
-    /** @ORM\Column(type="string", nullable=false) **/
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
     protected $mainContact;
+
+    /**
+     * Each Issuer has One main contact - Unidirectional
+     * @ORM\OneToOne(targetEntity="\App\Entity\MarketUser")
+     * @JoinColumn(name="contact_id", referencedColumnName="id")
+     * @var MarketUser
+     */
+    protected $contactId;
 
     /** @ORM\Column(type="string", nullable=false, unique=true) **/
     protected $phone;
@@ -79,12 +90,21 @@ class Issuer
     public function getDeals() : PersistentCollection { return $this->deals; }
 
     /**
+     * @return \DateTime
+     */
+    public function getApprovedDate() : \DateTime { return $this->approvedDate; }
+
+    /**
+     * @return MarketUser
+     */
+    public function getContactId(): MarketUser { return $this->contactId; }
+
+
+
+    /**
      * @return PersistentCollection
      */
-    public function getUsers()
-    {
-        return $this->users;
-    }
+    public function getUsers() { return $this->users; }
 
     /**
      * @return string
@@ -95,11 +115,6 @@ class Issuer
      * @param string $issuerName
      */
     public function setIssuerName(string $issuerName) { $this->issuerName = $issuerName; }
-
-    /**
-     * @return \DateTime
-     */
-    public function getApprovedDate() : \DateTime { return $this->approvedDate; }
 
     /**
      * @param \DateTime $approvedDate
