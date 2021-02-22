@@ -70,7 +70,7 @@ class Chat
      * @ORM\ManyToOne(targetEntity="\App\Entity\ChatTracker", inversedBy="chats")
      * @var ChatTracker
      */
-    protected $chatId;
+    protected $tracker;
 
     public function __construct()
     {
@@ -143,7 +143,7 @@ class Chat
     /**
      * @return ChatTracker
      */
-    public function getChatId(): ChatTracker { return $this->chatId; }
+    public function getChatId(): ChatTracker { return $this->tracker; }
 
 
 }
