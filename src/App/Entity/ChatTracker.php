@@ -28,7 +28,7 @@ class ChatTracker
     protected $uuid;
 
     /**
-     * @ORM\OneToOne (targetEntity="\App\Entity\GroupChat", mappedBy="chatId")
+     * @ORM\OneToOne (targetEntity="\App\Entity\GroupChat", mappedBy="tracker")
      * @var GroupChat|null
      */
     protected $group;
