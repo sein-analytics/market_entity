@@ -63,7 +63,7 @@ class Issuer
     /**
      * Each Issuer has One main contact - Unidirectional
      * @ORM\OneToOne(targetEntity="\App\Entity\MarketUser")
-     * @JoinColumn(name="contact_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
      * @var MarketUser
      */
     protected $contactId;
