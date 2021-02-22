@@ -34,6 +34,12 @@ class GroupChat
     protected $groupName;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $imageUrl;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="groupChats")
      * @var MarketUser
      */
@@ -79,6 +85,11 @@ class GroupChat
     public function getGroupName(): string { return $this->groupName; }
 
     /**
+     * @return string
+     */
+    public function getImageUrl(): string { return $this->imageUrl; }
+
+    /**
      * @return MarketUser
      */
     public function getUser(): MarketUser { return $this->user; }
@@ -112,6 +123,11 @@ class GroupChat
      * @param string $groupName
      */
     public function setGroupName(string $groupName): void { $this->groupName = $groupName; }
+
+    /**
+     * @param string $imageUrl
+     */
+    public function setImageUrl(string $imageUrl): void { $this->imageUrl = $imageUrl; }
 
     /**
      * @param MarketUser $user
