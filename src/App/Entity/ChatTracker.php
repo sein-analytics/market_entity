@@ -34,7 +34,7 @@ class ChatTracker
     protected $group;
 
     /**
-     * @ORM\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="chatId")
+     * @ORM\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="tracker")
      * @var PersistentCollection
      */
     protected $chats;
