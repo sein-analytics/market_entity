@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\Chat")
  * @ORM\Table(name="Chat")
  */
 class Chat
@@ -31,6 +31,13 @@ class Chat
      * @var MarketUser|null
      */
     protected $recipient;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
+     * @var MarketUser
+     */
+    protected $contact;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\GroupChat", inversedBy="chats")
@@ -109,6 +116,16 @@ class Chat
      * @param MarketUser $recipient
      */
     public function setRecipient(MarketUser $recipient): void { $this->recipient = $recipient; }
+
+    /**
+     * @return MarketUser
+     */
+    public function getContact(): MarketUser { return $this->contact; }
+
+    /**
+     * @param MarketUser $contact
+     */
+    public function setContact(MarketUser $contact): void { $this->contact = $contact; }
 
     /**
      * @return GroupChat|null
