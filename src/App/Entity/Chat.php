@@ -80,7 +80,7 @@ class Chat
     protected $tracker;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatStatus", inversedBy="chats")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatStatus", inversedBy="chats", options={"default":"1"})
      * @var ChatStatus
      */
     protected $status;
