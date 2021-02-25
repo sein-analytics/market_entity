@@ -79,6 +79,12 @@ class Chat
      */
     protected $tracker;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatStatus", inversedBy="chats")
+     * @var ChatStatus
+     */
+    protected $status;
+
     public function __construct()
     {
         $this->chatReplies = new ArrayCollection();
@@ -162,5 +168,24 @@ class Chat
      */
     public function getChatId(): ChatTracker { return $this->tracker; }
 
+    /**
+     * @return ChatTracker
+     */
+    public function getTracker(): ChatTracker { return $this->tracker; }
+
+    /**
+     * @param ChatTracker $tracker
+     */
+    public function setTracker(ChatTracker $tracker): void { $this->tracker = $tracker; }
+
+    /**
+     * @return ChatStatus
+     */
+    public function getStatus(): ChatStatus { return $this->status; }
+
+    /**
+     * @param ChatStatus $status
+     */
+    public function setStatus(ChatStatus $status): void { $this->status = $status; }
 
 }
