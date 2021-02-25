@@ -8,7 +8,7 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Str;
 class Chat extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait;
@@ -17,7 +17,7 @@ class Chat extends EntityRepository
 
     protected $callGroupTrackIds = 'call UserGroupChatTrackerIds(:userId)';
 
-    protected $callChatDataByTrackId = 'call ChatDataFromTrackerId(:trackerId)';
+    protected $callChatDataByTrackId = 'call ChatDataFromTrackerId(:trackerId, :tempDb, :offsetNum)';
 
     /**
      * @param int $userId
@@ -43,10 +43,11 @@ class Chat extends EntityRepository
         );
     }
 
-    public function fetchChatDataByTrackerId(int $trackerId)
+    public function fetchChatDataByTrackerId(int $trackerId, int $offset=0)
     {
+        $uuid = 'dbName-' . Str::uuid()->getHex()->toString();
         return json_decode(
-            json_encode(DB::select($this->getCallChatDataByTrackId(), [$trackerId])),
+            json_encode(DB::select($this->getCallChatDataByTrackId(), [$trackerId, $uuid, $offset])),
             true
         );
     }
