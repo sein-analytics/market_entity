@@ -39,7 +39,7 @@ class ChatStatus
     /**
      * @return string
      */
-    public function getUuid(): string { return $this->uuid; }
+    public function getStatus(): string { return $this->status; }
 
     /**
      * @return PersistentCollection
