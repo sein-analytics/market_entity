@@ -17,6 +17,8 @@ class Chat extends EntityRepository
 
     protected $callGroupTrackIds = 'call UserGroupChatTrackerIds(:userId)';
 
+    protected $callChatDataByTrackId = 'call ChatDataFromTrackerId(:trackerId)';
+
     /**
      * @param int $userId
      * @return mixed
@@ -41,6 +43,14 @@ class Chat extends EntityRepository
         );
     }
 
+    public function fetchChatDataByTrackerId(int $trackerId)
+    {
+        return json_decode(
+            json_encode(DB::select($this->getCallChatDataByTrackId(), [$trackerId])),
+            true
+        );
+    }
+
     /**
      * @return string
      */
@@ -51,6 +61,9 @@ class Chat extends EntityRepository
      */
     public function getCallGroupTrackIds(): string { return $this->callGroupTrackIds; }
 
-
+    /**
+     * @return string
+     */
+    public function getCallChatDataByTrackId(): string { return $this->callChatDataByTrackId; }
 
 }
