@@ -23,7 +23,7 @@ class ChatStatus
      * @ORM\Column(type="string", unique=true)
      * @var string
      */
-    protected $uuid;
+    protected $status;
 
     /**
      * @ORM\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="status")
