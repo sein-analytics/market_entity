@@ -19,16 +19,17 @@ class Chat extends EntityRepository
 
     protected $callChatDataByTrackId = 'call ChatDataFromTrackerId(:trackerId, :tempDb, :offsetNum)';
 
+    protected $callChatGroupUsersByGroupId = 'call ChatGroupUsersByGroupId(:groupId)';
+
+    protected $callChatGroupDataFromGroupId = 'call ChatGroupDataFromGroupId(:groupId)';
+
     /**
      * @param int $userId
      * @return mixed
      */
     public function fetchUserContactChatTrackerIds(int $userId)
     {
-        return json_decode(
-            json_encode(DB::select($this->getCallContactTrackIds(), [$userId])),
-            true
-        );
+        return $this->executeProcedure([$userId], $this->getCallContactTrackIds());
     }
 
     /**
@@ -37,17 +38,28 @@ class Chat extends EntityRepository
      */
     public function fetchUserGroupChatTrackerIds(int $userId)
     {
-        return json_decode(
-            json_encode(DB::select($this->getCallGroupTrackIds(), [$userId])),
-            true
-        );
+        return $this->executeProcedure([$userId], $this->getCallGroupTrackIds());
     }
 
     public function fetchChatDataByTrackerId(int $trackerId, int $offset=0)
     {
         $uuid = 'dbName-' . Str::uuid()->getHex()->toString();
+        return $this->executeProcedure([$trackerId, $uuid, $offset],
+            $this->getCallChatDataByTrackId());
+    }
+
+    public function fetchChatGroupUsersByGroupId(int $groupId){
+        return $this->executeProcedure([$groupId], $this->getCallChatGroupUsersByGroupId());
+    }
+
+    public function fetchChatGroupData(int $groupId){
+        return $this->executeProcedure([$groupId], $this->getCallChatGroupDataFromGroupId());
+    }
+
+    protected function executeProcedure(array $params, string $procedure)
+    {
         return json_decode(
-            json_encode(DB::select($this->getCallChatDataByTrackId(), [$trackerId, $uuid, $offset])),
+            json_encode(DB::select($procedure, $params)),
             true
         );
     }
@@ -66,5 +78,16 @@ class Chat extends EntityRepository
      * @return string
      */
     public function getCallChatDataByTrackId(): string { return $this->callChatDataByTrackId; }
+
+    /**
+     * @return string
+     */
+    public function getCallChatGroupUsersByGroupId(): string { return $this->callChatGroupUsersByGroupId; }
+
+    /**
+     * @return string
+     */
+    public function getCallChatGroupDataFromGroupId(): string { return $this->callChatGroupDataFromGroupId; }
+
 
 }
