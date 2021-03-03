@@ -107,7 +107,10 @@ class MarketUser
     /** @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="users")   */
     protected $issuer;
 
-    /** @ORM\Column(type="string", unique=true)   */
+    /**
+     * @ORM\Column(type="string", unique=true)
+     * @var string
+     */
     protected $emailConfirmHash;
 
     /**
@@ -642,6 +645,12 @@ class MarketUser
      * @return ArrayCollection
      */
     public function getMyCommunities() { return $this->myCommunities; }
+
+    /**
+     * @return string
+     */
+    public function getEmailConfirmHash(): string { return $this->emailConfirmHash; }
+
 
     public function addLogin(LoginLog $login)
     {
