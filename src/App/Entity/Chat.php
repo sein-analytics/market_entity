@@ -85,6 +85,12 @@ class Chat
      */
     protected $status;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @var bool
+     */
+    protected $isGroup;
+
     public function __construct()
     {
         $this->chatReplies = new ArrayCollection();
@@ -187,5 +193,16 @@ class Chat
      * @param ChatStatus $status
      */
     public function setStatus(ChatStatus $status): void { $this->status = $status; }
+
+    /**
+     * @return bool
+     */
+    public function isGroup(): bool { return $this->isGroup; }
+
+    /**
+     * @param bool $isGroup
+     */
+    public function setIsGroup(bool $isGroup): void { $this->isGroup = $isGroup; }
+
 
 }
