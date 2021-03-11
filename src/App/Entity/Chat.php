@@ -86,7 +86,7 @@ class Chat
     protected $status;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
      * @var bool
      */
     protected $isGroup;
