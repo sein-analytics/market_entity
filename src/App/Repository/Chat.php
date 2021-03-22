@@ -23,9 +23,9 @@ class Chat extends EntityRepository
 
     protected $callChatGroupDataFromGroupId = 'call ChatGroupDataFromGroupId(:groupId)';
 
-    protected $callNoChatUserIds = 'NoChatUserIds(:userId, :chatUserIds)';
+    protected $callNoChatUserIds = 'call NoChatUserIds(:userId, :chatUserIds)';
 
-    protected $callUserDataForChat = 'UserDataForChat(:userId)';
+    protected $callUserDataForChat = 'call UserDataForChat(:userId)';
 
     /**
      * @param int $userId
@@ -61,13 +61,13 @@ class Chat extends EntityRepository
     }
 
     public function fetchContactIdsWithNoChats(int $userId, array $chatUserIds) {
-        return $this->executeProcedure([$userId, implode(',', $chatUserIds)],
+        return $this->executeProcedure([$userId, implode(', ', $chatUserIds)],
             $this->getCallNoChatUserIds()
         );
     }
 
     public function fetchChatDataForUserIds(array $userIds) {
-        return $this->executeProcedure([implode(',', $userIds)],
+        return $this->executeProcedure([implode(', ', $userIds)],
             $this->getCallUserDataForChat()
         );
     }
