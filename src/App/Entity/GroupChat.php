@@ -53,7 +53,7 @@ class GroupChat
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="group")
-     * @var PersistentCollection|null
+     * @var PersistentCollection|ArrayCollection
      */
     protected $chats;
 
@@ -71,9 +71,40 @@ class GroupChat
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
-     * @var PersistentCollection|null
+     * @var PersistentCollection|ArrayCollection
      */
     protected $members;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\GroupChat")
+     * @ORM\JoinTable (name="chat_group_groups",
+     *     joinColumns={@ORM\JoinColumn(name="group_id", referenceColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="attached_group", referenceColumnName="id")}
+     *     )
+     * @var PersistentCollection|ArrayCollection
+     */
+    protected $groups;
+
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+        $this->members = new ArrayCollection();
+        $this->chats = new ArrayCollection();
+    }
+
+    public function addToGroup($groupMember)
+    {
+        if ($groupMember instanceof MarketUser)
+            $this->getMembers()->add($groupMember);
+        elseif ($groupMember instanceof GroupChat)
+            $this->getGroups()->add($groupMember);
+        else
+            return false;
+    }
+
+    public function addChat(Chat $chat){
+        $this->getChats()->add($chat);
+    }
 
     /**
      * @return int
@@ -106,9 +137,9 @@ class GroupChat
     public function isPrivate(): bool { return $this->isPrivate; }
 
     /**
-     * @return PersistentCollection|null
+     * @return PersistentCollection|ArrayCollection
      */
-    public function getChats(): ?PersistentCollection { return $this->chats; }
+    public function getChats() { return $this->chats; }
 
     /**
      * @return Community|null
@@ -116,9 +147,14 @@ class GroupChat
     public function getCommunity(): ?Community { return $this->community; }
 
     /**
-     * @return PersistentCollection|null
+     * @return PersistentCollection|ArrayCollection
      */
-    public function getMembers(): ?PersistentCollection { return $this->members; }
+    public function getMembers() { return $this->members; }
+
+    /**
+     * @return ArrayCollection|PersistentCollection
+     */
+    public function getGroups() { return $this->groups; }
 
     /**
      * @return ChatTracker

@@ -8,6 +8,7 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 class Chat extends EntityRepository
 {
@@ -115,5 +116,25 @@ class Chat extends EntityRepository
      */
     public function getCallUserDataForChat(): string { return $this->callUserDataForChat; }
 
+    /**
+     * @param string $uuid
+     * @return array|false|mixed|string
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function fetchUserTrackerIdByUuid (string $uuid)
+    {
+        $sql = "SELECT id FROM ChatTracker WHERE uuid = ?";
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindValue(1, $uuid);
+            return $stmt->fetchNumeric();
+        }catch (\Exception $exception){
+            $msg = "Error fetching id for uuid: " . $exception->getMessage();
+            Log::critical($msg);
+            return $msg;
+        }
+    }
 
+    public function createChatTrackerForUuid (string $uuid)
+    {}
 }
