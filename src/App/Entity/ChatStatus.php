@@ -13,7 +13,7 @@ class ChatStatus
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
     protected $id;
