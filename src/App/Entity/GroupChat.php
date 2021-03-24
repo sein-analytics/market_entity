@@ -78,8 +78,8 @@ class GroupChat
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\GroupChat")
      * @ORM\JoinTable (name="chat_group_groups",
-     *     joinColumns={@ORM\JoinColumn(name="group_id", referenceColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="attached_group", referenceColumnName="id")}
+     *     joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="attached_group", referencedColumnName="id")}
      *     )
      * @var PersistentCollection|ArrayCollection
      */
