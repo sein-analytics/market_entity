@@ -10,8 +10,11 @@ namespace App\Service;
 
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use Illuminate\Support\Facades\Log;
+use function Lambdish\phunctional\{each};
 
 trait FetchingTrait
 {
@@ -46,7 +49,7 @@ trait FetchingTrait
      * @param EntityManager $em
      * @param array $keys
      * @param string $sql
-     * @return \Doctrine\DBAL\Driver\Statement
+     * @return Statement
      */
     public function returnInArraySqlStmt(EntityManager $em, array $keys, string $sql)
     {
@@ -61,7 +64,7 @@ trait FetchingTrait
      * @param EntityManager $em
      * @param string $sql
      * @param array[] ...$keys
-     * @return \Doctrine\DBAL\Driver\Statement
+     * @return Statement
      */
     public function returnMultiIntArraySqlStmt(EntityManager $em, string $sql, array ...$keys)
     {
@@ -72,6 +75,55 @@ trait FetchingTrait
             return $result;
         }, []);
         $stmt = $em->getConnection()->executeQuery($sql, $base, $intParams);
+        return $stmt;
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param string $sql
+     * @param array $orderedParams
+     * @return Statement|\Exception
+     */
+    public function buildStmtFromSql(EntityManager $em, string $sql, array $orderedParams = [])
+    {
+        try {
+            return $this->bindStatementParamValues(
+                $em->getConnection()->prepare($sql), $orderedParams);
+        } catch (\Exception $exception){
+            Log::critical("Attempt to build sql statement $sql returned error: {$exception->getMessage()}");
+            return $exception;
+        }
+    }
+
+    /**
+     * @param Statement $stmt
+     * @param string $fetchMethod
+     * @return mixed|\Exception
+     */
+    public function executeStatementFetchMethod(Statement $stmt, string $fetchMethod)
+    {
+        if (!method_exists($stmt, $fetchMethod)){
+            $msg = "Method $fetchMethod does not exist in Doctrine\DBAL\Statement";
+            Log::warning($msg);
+            return new \Exception($msg);
+        }
+        try {
+            return $stmt->{$fetchMethod}();
+        } catch (\Exception $exception){
+            Log::critical("Error executing statement with error: {$exception->getMessage()}");
+            return $exception;
+        }
+    }
+
+    private function bindStatementParamValues(Statement $stmt, array $orderedParams = [])
+    {
+        if (count($orderedParams) === 0)
+            return $stmt;
+        $counter = 1;
+        each(function ($param) use($stmt, &$counter){
+            $stmt->bindValue($counter, $param);
+            $counter++;
+        }, $orderedParams);
         return $stmt;
     }
 
