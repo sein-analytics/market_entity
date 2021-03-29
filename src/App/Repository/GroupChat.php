@@ -8,6 +8,8 @@ use App\Repository\RepositoryException;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class GroupChat extends ChatAbstract
 {
@@ -19,6 +21,23 @@ class GroupChat extends ChatAbstract
     protected $selectFromChatGroupByUserIdSql = "SELECT ? FROM ChatGroup WHERE user_id = ?";
 
     protected $selectIdFromChatGroupByUuidSql = "SELECT id FROM ChatGroup WHERE uuid = ?";
+
+    protected $callUniqueGroupIdByUserIds = 'call UniqueGroupIdByUserIds(:userId, :chatUserIds, :tempDb1, :tempDb2)';
+
+    public function fetchUniqueGroupIdByUserIds(array $userIds, int $userId)
+    {
+        if (!in_array($userId, $userIds))
+            array_push($userIds, $userIds);
+        return json_decode(
+            json_encode(DB::select($this->callUniqueGroupIdByUserIds,
+                [ $userId, implode(', ', $userIds),
+                  'dbName' . Str::uuid()->getHex()->toString(),
+                  'dbName' . Str::uuid()->getHex()->toString()
+                ])
+            ),
+            true
+        );
+    }
 
     public function addUsersToChatGroup(int $groupId, array $userIds)
     {}

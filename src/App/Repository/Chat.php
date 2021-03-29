@@ -48,7 +48,7 @@ class Chat extends EntityRepository
 
     public function fetchChatDataByTrackerId(int $trackerId, int $offset=0)
     {
-        $uuid = 'dbName-' . Str::uuid()->getHex()->toString();
+        $uuid = 'dbName' . Str::uuid()->getHex()->toString();
         return $this->executeProcedure([$trackerId, $uuid, $offset],
             $this->getCallChatDataByTrackId());
     }
