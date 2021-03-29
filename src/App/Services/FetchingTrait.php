@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use App\Repository\RepositoryException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManager;
@@ -18,6 +19,9 @@ use function Lambdish\phunctional\{each};
 
 trait FetchingTrait
 {
+    /** @var RepositoryException */
+    protected $repoException;
+
     /**
      * @param EntityManager $em
      * @param array $keys
@@ -108,6 +112,9 @@ trait FetchingTrait
             return new \Exception($msg);
         }
         try {
+            if ($fetchMethod !== 'execute'){
+                $stmt->execute();
+            }
             return $stmt->{$fetchMethod}();
         } catch (\Exception $exception){
             Log::critical("Error executing statement with error: {$exception->getMessage()}");
@@ -120,11 +127,59 @@ trait FetchingTrait
         if (count($orderedParams) === 0)
             return $stmt;
         $counter = 1;
-        each(function ($param) use($stmt, &$counter){
+        each(function ($param) use(&$stmt, &$counter){
             $stmt->bindValue($counter, $param);
             $counter++;
         }, $orderedParams);
         return $stmt;
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param string $sql
+     * @param string $fetchMethod
+     * @param array $orderedParams
+     * @return mixed|\Exception
+     */
+    private function buildAndExecuteFromSql(EntityManager $em, string $sql,
+                                            string $fetchMethod, array $orderedParams)
+    {
+        if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams) ) instanceof \Exception)
+            return $stmt;
+        return $this->executeStatementFetchMethod($stmt, $fetchMethod);
+    }
+
+    /**
+     * @param string $targetStr
+     * @param string $method
+     * @param string $class
+     * @return string
+     */
+    public function unrecognizableTargetMsg(string $targetStr, string $method, string $class) :string
+    {
+        return "Unrecognizable target type $targetStr in call to $method in class $class";
+    }
+
+    /**
+     * @param string $conditional
+     * @param string $method
+     * @param string $class
+     * @return string
+     */
+    public function unrecognizableConditionMsg(string $conditional, string $method, string $class) :string
+    {
+        return "Unrecognizable condition variable type $conditional in call to $method in class $class";
+    }
+
+    /**
+     * @return RepositoryException
+     */
+    public function getRepoException() : RepositoryException
+    {
+        if (! $this->repoException instanceof RepositoryException){
+            $this->repoException = new RepositoryException();
+        }
+        return $this->repoException;
     }
 
 }
