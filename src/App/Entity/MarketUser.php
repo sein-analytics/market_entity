@@ -110,6 +110,8 @@ class MarketUser
     /**
      * @ORM\Column(type="string", unique=true)
      * @var string
+     *
+     * This doubles as the users uuid
      */
     protected $emailConfirmHash;
 

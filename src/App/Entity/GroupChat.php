@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\GroupChat")
  * @ORM\Table(name="ChatGroup")
  */
 class GroupChat
@@ -28,7 +28,7 @@ class GroupChat
     protected $uuid;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, options={"default":"group_chat"})
      * @var string
      */
     protected $groupName;

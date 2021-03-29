@@ -17,4 +17,13 @@ interface DbalStatementInterface
     const FETCH_ALL_KEY_VAL_MTHD = 'fetchAllKeyValue';
 
     const FETCH_ALL_ASSO_IND_MTHD = 'fetchAllAssociativeIndexed';
+
+    const QUERY_JUST_ID = 'id';
+
+    const QUERY_ALL = '*';
+
+    const UUID_COND = 'uuid';
+
+    const USER_ID_COND = 'user_id';
+
 }
