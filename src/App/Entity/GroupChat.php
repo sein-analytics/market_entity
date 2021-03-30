@@ -70,7 +70,6 @@ class GroupChat
     protected $tracker;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
      * @var PersistentCollection|ArrayCollection
      */
     protected $members;
