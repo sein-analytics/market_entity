@@ -74,19 +74,8 @@ class GroupChat
      */
     protected $members;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\GroupChat")
-     * @ORM\JoinTable (name="chat_group_groups",
-     *     joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="attached_group", referencedColumnName="id")}
-     *     )
-     * @var PersistentCollection|ArrayCollection
-     */
-    protected $groups;
-
     public function __construct()
     {
-        $this->groups = new ArrayCollection();
         $this->members = new ArrayCollection();
         $this->chats = new ArrayCollection();
     }
@@ -95,10 +84,6 @@ class GroupChat
     {
         if ($groupMember instanceof MarketUser)
             $this->getMembers()->add($groupMember);
-        elseif ($groupMember instanceof GroupChat)
-            $this->getGroups()->add($groupMember);
-        else
-            return false;
     }
 
     public function addChat(Chat $chat){
@@ -150,10 +135,6 @@ class GroupChat
      */
     public function getMembers() { return $this->members; }
 
-    /**
-     * @return ArrayCollection|PersistentCollection
-     */
-    public function getGroups() { return $this->groups; }
 
     /**
      * @return ChatTracker
