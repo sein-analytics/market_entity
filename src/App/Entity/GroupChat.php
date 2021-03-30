@@ -71,7 +71,7 @@ class GroupChat
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
-     * @JoinTable(name="chat_group_market_users")
+     * @ORM\JoinTable(name="chat_group_market_users")
      * @var PersistentCollection|ArrayCollection
      */
     protected $members;
