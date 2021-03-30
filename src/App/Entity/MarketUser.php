@@ -331,7 +331,7 @@ class MarketUser
      */
     protected $groupChats;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\GroupChat", mappedBy="members")  */
+    /**   */
     protected $chatGroupMemberships;
 
     /**
