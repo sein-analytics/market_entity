@@ -14,8 +14,9 @@ use Doctrine\ORM\PersistentCollection;
 class ChatTracker
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      * @var int
      **/
     protected $id;
