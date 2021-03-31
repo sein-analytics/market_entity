@@ -16,7 +16,7 @@ class ChatTracker
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", columnDefinition="INT AUTO_INCREMENT UNIQUE")
      * @var int
      **/
     protected $id;
