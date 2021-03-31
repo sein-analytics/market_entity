@@ -10,7 +10,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticableContracts;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
-use LaravelDoctrine\Extensions\Timestamps\Timestamps;
+//use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
