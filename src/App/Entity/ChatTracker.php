@@ -4,19 +4,21 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\ChatTracker")
  * @ORM\Table(name="ChatTracker")
+ * @ChangeTrackingPolicy("NOTIFY")
  */
 class ChatTracker
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer", columnDefinition="INT AUTO_INCREMENT UNIQUE")
+     * @ORM\Column(name="id", type="integer")
      * @var int
      **/
     protected $id;
