@@ -15,8 +15,9 @@ class GroupChat
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     *
      * @var int
      **/
     protected $id;
