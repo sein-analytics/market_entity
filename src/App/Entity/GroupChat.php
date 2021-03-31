@@ -15,7 +15,7 @@ class GroupChat
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="Identity")
      * @ORM\Column(type="integer")
      *
      **/
