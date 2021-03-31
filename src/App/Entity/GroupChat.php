@@ -14,7 +14,8 @@ use Doctrine\ORM\PersistentCollection;
 class GroupChat
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
