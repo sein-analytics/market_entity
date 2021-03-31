@@ -4,14 +4,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\ChatTracker")
  * @ORM\Table(name="ChatTracker")
- * @ChangeTrackingPolicy("NOTIFY")
  */
 class ChatTracker
 {
@@ -24,7 +22,6 @@ class ChatTracker
     protected $id;
 
     /**
-     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", unique=true)
      * @var string
      */
