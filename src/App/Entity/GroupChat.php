@@ -16,13 +16,12 @@ class GroupChat
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
      *
      **/
     protected $id;
 
     /**
-     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", unique=true)
      * @var string
      */
