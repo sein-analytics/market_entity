@@ -9,6 +9,7 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityRepository;
+use Illuminate\Support\Str;
 
 class ChatTracker extends ChatAbstract
 {
@@ -41,17 +42,12 @@ class ChatTracker extends ChatAbstract
             $uuid, get_class($this), 'addNewChatTrackerForUuid')) instanceof \Exception)
             return $valid;
         $em = $this->getEntityManager();
+        $trackerUuid = Str::uuid()->getHex()->toString();
         if (($result = $this->buildAndExecuteFromSql(
-            $em, $this->selectIdFromTrackerSql, self::FETCH_ONE_MTHD, [$uuid])) instanceof \Exception)
+                $em, $this->insertIntoTrackerSql, self::EXECUTE_MTHD, [$trackerUuid])) instanceof \Exception)
             return $result;
-        if (!$result){
-            if (($result = $this->buildAndExecuteFromSql(
-                $em, $this->insertIntoTrackerSql, self::EXECUTE_MTHD, [$uuid])) instanceof \Exception)
-                return $result;
-            return $this->buildAndExecuteFromSql(
-                $em, $this->selectIdFromTrackerSql, self::FETCH_ONE_MTHD, [$uuid]);
-        }
-        return $result;
+        return $this->buildAndExecuteFromSql(
+            $em, $this->selectIdFromTrackerSql, self::FETCH_ONE_MTHD, [$trackerUuid]);
     }
 
 }

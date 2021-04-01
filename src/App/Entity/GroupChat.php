@@ -19,7 +19,7 @@ class GroupChat
      * @ORM\Column(name="id", type="integer")
      *
      **/
-    protected $id;
+    protected $id=null;
 
     /**
      * @ORM\Column(type="string", unique=true)
@@ -61,13 +61,13 @@ class GroupChat
      * @ORM\ManyToOne(targetEntity="\App\Entity\Community", inversedBy="groupChats")
      * @var Community|null
      */
-    protected $community;
+    protected $community=null;
 
     /**
      * @ORM\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
-     * @var ChatTracker
+     * @var ChatTracker|null
      */
-    protected $tracker;
+    protected $tracker=null;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
@@ -141,7 +141,7 @@ class GroupChat
     /**
      * @return ChatTracker
      */
-    public function getTracker(): ChatTracker { return $this->tracker; }
+    public function getTracker(): ?ChatTracker { return $this->tracker; }
 
     /**
      * @param string $uuid
@@ -173,6 +173,10 @@ class GroupChat
      */
     public function setCommunity(?Community $community): void { $this->community = $community; }
 
+    /**
+     * @param ChatTracker|null $tracker
+     */
+    public function setTracker(?ChatTracker $tracker): void { $this->tracker = $tracker; }
 
 
 }

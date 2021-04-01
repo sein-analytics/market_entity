@@ -4,6 +4,7 @@
 namespace App\Repository;
 
 use App\Repository\Chat\ChatAbstract;
+use App\Repository\Chat\ChatGroupInterface;
 use App\Repository\RepositoryException;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class GroupChat extends ChatAbstract
+    implements ChatGroupInterface
 {
     use FetchingTrait, FetchMapperTrait;
 
@@ -27,7 +29,7 @@ class GroupChat extends ChatAbstract
     public function fetchUniqueGroupIdByUserIds(array $userIds, int $userId)
     {
         if (!in_array($userId, $userIds))
-            array_push($userIds, $userIds);
+            array_push($userIds, $userId);
         return json_decode(
             json_encode(DB::select($this->callUniqueGroupIdByUserIds,
                 [ $userId, implode(', ', $userIds),
@@ -42,8 +44,18 @@ class GroupChat extends ChatAbstract
     public function addUsersToChatGroup(int $groupId, array $userIds)
     {}
 
-    public function insertNewUserGroupByUserId(array $params, int $user)
+    public function removeUserFromChatGroup()
+    {}
+
+    public function insertNewChatGroupReturnId(array $params)
     {
+        unset($params[self::GROUP_ID_KEY]);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertIntoChatGroupSql,
+            self::EXECUTE_MTHD,
+            array_values($params)
+        );
     }
 
     /**
@@ -52,60 +64,81 @@ class GroupChat extends ChatAbstract
      */
     public function fetchGroupIdByGroupUuid(string $uuid)
     {
-        if (($sql = $this->attemptSqlBuild(self::UUID_COND, self::QUERY_JUST_ID))
-            instanceof \Exception
-        )
-            return $sql;
         return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(), $sql, self::FETCH_ONE_MTHD, [$uuid]);
+            $this->getEntityManager(),
+            self::FETCH_CHAT_GROUP_DATA_SQL[self::GROUP_ID_BY_UUID],
+            self::FETCH_ONE_MTHD,
+            [$uuid]
+        );
     }
 
     /**
-     * @param int $user
-     * @param string $option
+     * @param string $uuid
      * @return \Exception|mixed
      */
-    public function fetchGroupDetailByUserId(int $user, string $option=self::QUERY_JUST_ID)
+    public function fetchGroupDataByGroupUuid(string $uuid)
     {
-        if (($sql = $this->attemptSqlBuild(self::USER_ID_COND, $option))
-            instanceof \Exception
-        )
-            return $sql;
         return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(), $sql,
-            ($option === self::QUERY_JUST_ID ? self::FETCH_ONE_MTHD : self::FETCH_ASSO_MTHD),[$user]);
+            $this->getEntityManager(),
+            self::FETCH_CHAT_GROUP_DATA_SQL[self::GROUP_ALL_BY_UUID],
+            self::FETCH_ASSO_MTHD,
+            [$uuid]
+        );
     }
 
     /**
-     * @param string $target
-     * @param string $conditional
-     * @return \Exception|string
+     * @param int $userId
+     * @return \Exception|mixed
      */
-    private function attemptSqlBuild(string $target, string $conditional)
+    public function fetchGroupIdByUserId(int $userId)
     {
-        try {
-            return $this->buildSelectFromSql($target, $conditional);
-        } catch (\Exception $exception){
-            return $exception;
-        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::FETCH_CHAT_GROUP_DATA_SQL[self::GROUP_ID_BY_USER_ID],
+            self::FETCH_ONE_MTHD,
+            [$userId]
+        );
     }
 
     /**
-     * @param string $target
-     * @param string $conditional
-     * @return string
-     * @throws \App\Repository\RepositoryException
+     * @param int $userId
+     * @return \Exception|mixed
      */
-    protected function buildSelectFromSql(string $target, string $conditional)
+    public function fetchGroupDataByUserId(int $userId)
     {
-        if ($target !== self::QUERY_ALL && $target !== self::QUERY_JUST_ID)
-            throw $this->getRepoException()::generalIssueError($this->unrecognizableTargetMsg(
-                $target, 'buildSelectFromSql' ,get_class($this))
-            );
-        if ($conditional !== self::UUID_COND && $conditional !== self::USER_ID_COND)
-            throw $this->getRepoException()::generalIssueError($this->unrecognizableConditionMsg(
-                $conditional, 'buildSelectFromSql', get_class($this))
-            );
-        return "SELECT $target FROM ChatGroup WHERE $conditional = ?";
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::FETCH_CHAT_GROUP_DATA_SQL[self::GROUP_ALL_BY_USER_ID],
+            self::FETCH_ASSO_MTHD,
+            [$userId]
+        );
     }
+
+    public function updateChatGroupByUuid(string $uuid, string $field, $value)
+    {
+        if (!array_key_exists($field, self::GROUP_CHAT_UPDATES_SQL_BY_UUID))
+            throw $this->getRepoException()::generalIssueError("Property $field cannot be updated or does not exist");
+        if(($id = $this->fetchGroupIdByGroupUuid($uuid)) instanceof \Exception)
+            return $id;
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::GROUP_CHAT_UPDATES_SQL_BY_UUID[$field],
+            self::EXECUTE_MTHD,
+            [$value, $uuid]
+        );
+    }
+
+    public function updateChatGroupById(int $id, string $field, $value)
+    {
+        if (!array_key_exists($field, self::GROUP_CHAT_UPDATES_SQL_BY_ID))
+            throw $this->getRepoException()::generalIssueError("Property $field cannot be updated or does not exist");
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::GROUP_CHAT_UPDATES_SQL_BY_ID[$field],
+            self::EXECUTE_MTHD,
+            [$value, $id]
+        );
+    }
+
+
 }
