@@ -4,13 +4,15 @@
 namespace App\Repository;
 
 
+use App\Repository\Chat\ChatAbstract;
+use App\Repository\Chat\ChatInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
-use Doctrine\ORM\EntityRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-class Chat extends EntityRepository
+class Chat extends ChatAbstract
+    implements ChatInterface
 {
     use FetchingTrait, FetchMapperTrait;
 
@@ -27,6 +29,20 @@ class Chat extends EntityRepository
     protected $callNoChatUserIds = 'call NoChatUserIds(:userId, :chatUserIds)';
 
     protected $callUserDataForChat = 'call UserDataForChat(:userId)';
+
+    private $insertIntoChatSql = "insert into Chat value (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    public function insertNewChat(array $params)
+    {
+        if (array_key_exists(self::QRY_ID_KEY, $params))
+            unset($params[self::QRY_ID_KEY]);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertIntoChatSql,
+            self::EXECUTE_MTHD,
+            array_values($params)
+        );
+    }
 
     /**
      * @param int $userId

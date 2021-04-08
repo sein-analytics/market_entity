@@ -28,19 +28,21 @@ class Chat
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chatRecipient")
+     * @ORM\JoinColumn(name="recipient_id", referencedColumnName="id", nullable=true)
      * @var MarketUser|null
      */
     protected $recipient;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id", nullable=true)
      * @var MarketUser
      */
     protected $contact;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\GroupChat", inversedBy="chats")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true)
      * @var GroupChat|null
      */
     protected $group;

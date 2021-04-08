@@ -59,12 +59,14 @@ class GroupChat
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Community", inversedBy="groupChats")
+     * @ORM\JoinColumn(name="community_id", referencedColumnName="id", nullable=true)
      * @var Community|null
      */
     protected $community=null;
 
     /**
      * @ORM\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
+     * @ORM\JoinColumn(name="tracker_id", referencedColumnName="id", nullable=true)
      * @var ChatTracker|null
      */
     protected $tracker=null;
