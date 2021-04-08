@@ -9,20 +9,22 @@ use App\Repository\RepositoryException;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use function Lambdish\phunctional\{each};
 
 class GroupChat extends ChatAbstract
     implements ChatGroupInterface
 {
     use FetchingTrait, FetchMapperTrait;
 
-    protected $insertIntoChatGroupSql = "insert into ChatGroup (`id`, `user_id`, `uuid`, `group_name`, `is_private`,".
+    private $insertIntoChatGroupSql = "insert into ChatGroup (`id`, `user_id`, `uuid`, `group_name`, `is_private`,".
                 "`community_id`, `image_url`, `tracker_id`) value (NULL, ?, ?, ?, ?, ?, ?, ?)";
 
-    protected $selectFromChatGroupByUserIdSql = "SELECT ? FROM ChatGroup WHERE user_id = ?";
+    private $insertGroupUsersSqlBase = 'insert into chat_group_market_users (`group_chat_id`, `market_user_id`) ';
 
-    protected $selectIdFromChatGroupByUuidSql = "SELECT id FROM ChatGroup WHERE uuid = ?";
+    private $deleteGroupUsersSqlBase = 'DELETE from chat_group_market_users WHERE `market_user_id` = ? and `group_chat_id` = ?';
 
     protected $callUniqueGroupIdByUserIds = 'call UniqueGroupIdByUserIds(:userId, :chatUserIds, :tempDb1, :tempDb2)';
 
@@ -42,19 +44,66 @@ class GroupChat extends ChatAbstract
     }
 
     public function addUsersToChatGroup(int $groupId, array $userIds)
-    {}
+    {
+        $base = $this->insertGroupUsersSqlBase;
+        if (count($userIds) == 1)
+            $sql = $base . "VALUE (" . (int)$groupId . ', ' . (int)$userIds[0] . ');';
+        else{
+            $sql = $base . 'VALUES ';
+            $count = 1;
+            each(function ($userId) use(&$sql, &$count, $groupId, $userIds) {
+                $sql = $sql . PHP_EOL . "(" . (int)$groupId . ', ' . (int)$userId . ')' . ($count === count($userIds) ? ';' : ',');
+                $count++;
+            }, $userIds);
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            []
+        );
+    }
 
-    public function removeUserFromChatGroup()
-    {}
+    public function removeUserFromChatGroup(int $groupId, array $userIds)
+    {
+        $result = true;
+        each(function ($userId) use($groupId, &$result) {
+            if(($result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->deleteGroupUsersSqlBase,
+                self::EXECUTE_MTHD,
+                [$userId, $groupId]
+            )) instanceof \Exception){
+                return $result;
+            }
+        }, $userIds);
+        return $result;
+    }
 
     public function insertNewChatGroupReturnId(array $params)
     {
         unset($params[self::GROUP_ID_KEY]);
-        return $this->buildAndExecuteFromSql(
+        $result = $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->insertIntoChatGroupSql,
             self::EXECUTE_MTHD,
             array_values($params)
+        );
+        if ($result instanceof \Exception)
+            return $result;
+        return $this->fetchGroupIdByGroupUuid($params[self::GROUP_UUID_KEY]);
+
+    }
+
+    public function fetchGroupDataByGroupId(int $groupId, string $sqlName)
+    {
+        if (!array_key_exists($sqlName, self::FETCH_CHAT_GROUP_DATA_BY_GROUP_ID_SQL))
+            throw $this->getRepoException()::generalIssueError("Property $sqlName does not exist");
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::FETCH_CHAT_GROUP_DATA_BY_GROUP_ID_SQL[$sqlName][self::SQL_KEY],
+            self::FETCH_CHAT_GROUP_DATA_BY_GROUP_ID_SQL[$sqlName][self::COL_METHOD_KEY],
+            [$groupId]
         );
     }
 
@@ -112,6 +161,21 @@ class GroupChat extends ChatAbstract
             self::FETCH_ASSO_MTHD,
             [$userId]
         );
+    }
+
+    public function fetchGroupMemberIdsByGroupId(int $groupId)
+    {
+        $sql = 'SELECT market_user_id AS id FROM chat_group_market_users WHERE group_chat_id = ?';
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$groupId]
+        );
+        if ($result instanceof \Exception)
+            return $result;
+        return $this->flattenResultArrayByKey($result, self::GROUP_ID_KEY);
+
     }
 
     public function updateChatGroupByUuid(string $uuid, string $field, $value)
