@@ -32,6 +32,10 @@ class Chat extends ChatAbstract
 
     private $insertIntoChatSql = "insert into Chat value (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+    /**
+     * @param array $params
+     * @return \Exception|mixed
+     */
     public function insertNewChat(array $params)
     {
         if (array_key_exists(self::QRY_ID_KEY, $params))
@@ -62,6 +66,11 @@ class Chat extends ChatAbstract
         return $this->executeProcedure([$userId], $this->getCallGroupTrackIds());
     }
 
+    /**
+     * @param int $trackerId
+     * @param int $offset
+     * @return mixed
+     */
     public function fetchChatDataByTrackerId(int $trackerId, int $offset=0)
     {
         $uuid = 'dbName' . Str::uuid()->getHex()->toString();
@@ -69,23 +78,63 @@ class Chat extends ChatAbstract
             $this->getCallChatDataByTrackId());
     }
 
+    /**
+     * @param int $groupId
+     * @return mixed
+     */
     public function fetchChatGroupUsersByGroupId(int $groupId){
         return $this->executeProcedure([$groupId], $this->getCallChatGroupUsersByGroupId());
     }
 
+    /**
+     * @param int $groupId
+     * @return mixed
+     */
     public function fetchChatGroupData(int $groupId){
         return $this->executeProcedure([$groupId], $this->getCallChatGroupDataFromGroupId());
     }
 
+    /**
+     * @param int $userId
+     * @param array $chatUserIds
+     * @return mixed
+     */
     public function fetchContactIdsWithNoChats(int $userId, array $chatUserIds) {
         return $this->executeProcedure([$userId, implode(', ', $chatUserIds)],
             $this->getCallNoChatUserIds()
         );
     }
 
+    /**
+     * @param array $userIds
+     * @return mixed
+     */
     public function fetchChatDataForUserIds(array $userIds) {
         return $this->executeProcedure([implode(', ', $userIds)],
             $this->getCallUserDataForChat()
+        );
+    }
+
+    /**
+     * @param int $userId
+     * @param int $contactId
+     * @return \Exception|mixed
+     */
+    public function fetchTrackerIdForUserContact(int $userId, int $contactId)
+    {
+        if (($result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::TRACKER_BY_CONTACT_AND_USER_ID,
+            self::FETCH_ONE_MTHD,
+            [$contactId, $userId]
+        )) !== null){
+            return $result;
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::TRACKER_BY_CONTACT_AND_REC_ID,
+            self::FETCH_ONE_MTHD,
+            [$contactId, $userId]
         );
     }
 

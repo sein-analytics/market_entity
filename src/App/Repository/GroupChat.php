@@ -28,6 +28,11 @@ class GroupChat extends ChatAbstract
 
     protected $callUniqueGroupIdByUserIds = 'call UniqueGroupIdByUserIds(:userId, :chatUserIds, :tempDb1, :tempDb2)';
 
+    /**
+     * @param array $userIds
+     * @param int $userId
+     * @return mixed
+     */
     public function fetchUniqueGroupIdByUserIds(array $userIds, int $userId)
     {
         if (!in_array($userId, $userIds))
@@ -43,6 +48,11 @@ class GroupChat extends ChatAbstract
         );
     }
 
+    /**
+     * @param int $groupId
+     * @param array $userIds
+     * @return \Exception|mixed
+     */
     public function addUsersToChatGroup(int $groupId, array $userIds)
     {
         $base = $this->insertGroupUsersSqlBase;
@@ -64,6 +74,11 @@ class GroupChat extends ChatAbstract
         );
     }
 
+    /**
+     * @param int $groupId
+     * @param array $userIds
+     * @return bool|\Exception|mixed
+     */
     public function removeUserFromChatGroup(int $groupId, array $userIds)
     {
         $result = true;
@@ -80,6 +95,10 @@ class GroupChat extends ChatAbstract
         return $result;
     }
 
+    /**
+     * @param array $params
+     * @return \Exception|string
+     */
     public function insertNewChatGroupReturnId(array $params)
     {
         unset($params[self::GROUP_ID_KEY]);
@@ -95,6 +114,12 @@ class GroupChat extends ChatAbstract
 
     }
 
+    /**
+     * @param int $groupId
+     * @param string $sqlName
+     * @return \Exception|mixed
+     * @throws \App\Repository\RepositoryException
+     */
     public function fetchGroupDataByGroupId(int $groupId, string $sqlName)
     {
         if (!array_key_exists($sqlName, self::FETCH_CHAT_GROUP_DATA_BY_GROUP_ID_SQL))
@@ -163,6 +188,10 @@ class GroupChat extends ChatAbstract
         );
     }
 
+    /**
+     * @param int $groupId
+     * @return array|\Exception
+     */
     public function fetchGroupMemberIdsByGroupId(int $groupId)
     {
         $sql = 'SELECT market_user_id AS id FROM chat_group_market_users WHERE group_chat_id = ?';
@@ -178,6 +207,13 @@ class GroupChat extends ChatAbstract
 
     }
 
+    /**
+     * @param string $uuid
+     * @param string $field
+     * @param $value
+     * @return \Exception|mixed
+     * @throws \App\Repository\RepositoryException
+     */
     public function updateChatGroupByUuid(string $uuid, string $field, $value)
     {
         if (!array_key_exists($field, self::GROUP_CHAT_UPDATES_SQL_BY_UUID))
@@ -192,6 +228,13 @@ class GroupChat extends ChatAbstract
         );
     }
 
+    /**
+     * @param int $id
+     * @param string $field
+     * @param $value
+     * @return \Exception|mixed
+     * @throws \App\Repository\RepositoryException
+     */
     public function updateChatGroupById(int $id, string $field, $value)
     {
         if (!array_key_exists($field, self::GROUP_CHAT_UPDATES_SQL_BY_ID))

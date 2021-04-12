@@ -123,5 +123,8 @@ interface ChatInterface
         self::QRY_IS_GROUP_KEY => null
     ];
 
+    const TRACKER_BY_CONTACT_AND_USER_ID = 'SELECT DISTINCT tracker_id AS id FROM Chat WHERE contact_id = ? AND user_id = ?';
+
+    const TRACKER_BY_CONTACT_AND_REC_ID = 'SELECT DISTINCT tracker_id AS id FROM Chat WHERE contact_id = ? AND recipient_id = ?';
 
 }
