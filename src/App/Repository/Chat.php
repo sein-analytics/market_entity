@@ -122,19 +122,11 @@ class Chat extends ChatAbstract
      */
     public function fetchTrackerIdForUserContact(int $userId, int $contactId)
     {
-        if (($result = $this->buildAndExecuteFromSql(
+        return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             self::TRACKER_BY_CONTACT_AND_USER_ID,
             self::FETCH_ONE_MTHD,
-            [$contactId, $userId]
-        )) !== null){
-            return $result;
-        }
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            self::TRACKER_BY_CONTACT_AND_REC_ID,
-            self::FETCH_ONE_MTHD,
-            [$contactId, $userId]
+            [$contactId, $userId, $contactId, $userId]
         );
     }
 
