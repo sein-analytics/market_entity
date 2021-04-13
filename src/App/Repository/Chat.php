@@ -30,6 +30,8 @@ class Chat extends ChatAbstract
 
     protected $callUserDataForChat = 'call UserDataForChat(:userId)';
 
+    protected $callChatRecipientDataFromTrackerId = 'call ChatRecipientDataFromTrackerId(:trackerId)';
+
     private $insertIntoChatSql = "insert into Chat value (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     /**
@@ -130,6 +132,32 @@ class Chat extends ChatAbstract
         );
     }
 
+    /**
+     * @param string $uuid
+     * @return array|false|mixed|string
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function fetchUserTrackerIdByUuid (string $uuid)
+    {
+        $sql = "SELECT id FROM ChatTracker WHERE uuid = ?";
+        try {
+            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt->bindValue(1, $uuid);
+            return $stmt->fetchNumeric();
+        }catch (\Exception $exception){
+            $msg = "Error fetching id for uuid: " . $exception->getMessage();
+            Log::critical($msg);
+            return $msg;
+        }
+    }
+
+    public function contactDataFromChatTrackerId (int $chatId)
+    {
+        return $this->executeProcedure([$chatId],
+            $this->getCallChatRecipientDataFromTrackerId()
+        );
+    }
+
     protected function executeProcedure(array $params, string $procedure)
     {
         return json_decode(
@@ -174,24 +202,11 @@ class Chat extends ChatAbstract
     public function getCallUserDataForChat(): string { return $this->callUserDataForChat; }
 
     /**
-     * @param string $uuid
-     * @return array|false|mixed|string
-     * @throws \Doctrine\DBAL\Driver\Exception
+     * @return string
      */
-    public function fetchUserTrackerIdByUuid (string $uuid)
-    {
-        $sql = "SELECT id FROM ChatTracker WHERE uuid = ?";
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-            $stmt->bindValue(1, $uuid);
-            return $stmt->fetchNumeric();
-        }catch (\Exception $exception){
-            $msg = "Error fetching id for uuid: " . $exception->getMessage();
-            Log::critical($msg);
-            return $msg;
-        }
+    public function getCallChatRecipientDataFromTrackerId(): string {
+        return $this->callChatRecipientDataFromTrackerId;
     }
 
-    public function createChatTrackerForUuid (string $uuid)
-    {}
+
 }
