@@ -86,18 +86,13 @@ trait FetchingTrait
      * @param EntityManager $em
      * @param string $sql
      * @param array $orderedParams
-     * @param bool $useIntArray
      * @return Statement|\Exception
      */
-    public function buildStmtFromSql(EntityManager $em, string $sql, array $orderedParams = [], $useIntArray=false)
+    public function buildStmtFromSql(EntityManager $em, string $sql, array $orderedParams = [])
     {
         try {
-            if (!$useIntArray)
-                return $this->bindStatementParamValues(
-                    $em->getConnection()->prepare($sql), $orderedParams);
-            else {
-                return $this->returnInArraySqlStmt($em, $orderedParams, $sql);
-            }
+            return $this->bindStatementParamValues(
+                $em->getConnection()->prepare($sql), $orderedParams);
         } catch (\Exception $exception){
             Log::critical("Attempt to build sql statement $sql returned error: {$exception->getMessage()}");
             return $exception;
@@ -150,9 +145,13 @@ trait FetchingTrait
     private function buildAndExecuteFromSql(EntityManager $em, string $sql, string $fetchMethod,
                                             array $orderedParams, $useIntArr=false)
     {
-        if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams, $useIntArr) ) instanceof \Exception)
-            return $stmt;
-        return $this->executeStatementFetchMethod($stmt, $fetchMethod);
+        if (!$useIntArr){
+            if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams) ) instanceof \Exception)
+                return $stmt;
+            return $this->executeStatementFetchMethod($stmt, $fetchMethod);
+        } else {
+            return $this->fetchByIntArray($em, $orderedParams, $sql);
+        }
     }
 
     /**
