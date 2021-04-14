@@ -158,14 +158,6 @@ class Chat extends ChatAbstract
         );
     }
 
-    protected function executeProcedure(array $params, string $procedure)
-    {
-        return json_decode(
-            json_encode(DB::select($procedure, $params)),
-            true
-        );
-    }
-
     /**
      * @return string
      */
