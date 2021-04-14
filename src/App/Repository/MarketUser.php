@@ -31,7 +31,7 @@ class MarketUser extends EntityRepository
         );
         if ($result instanceof \Exception)
             return $result;
-        return $this->flattenResultArrayByKey($result, 'uuid');
+        return $this->flattenResultArrayByKey($result, 'uuid', false);
     }
 
     /**
