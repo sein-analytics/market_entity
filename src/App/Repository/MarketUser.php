@@ -22,14 +22,12 @@ class MarketUser extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait;
 
+    protected $callUsersUuidsFromIds = 'call UsersUuidsFromIds(:userIds)';
+
     function fetchUsersUuidFromIds(array $userIds)
     {
-        $result = $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            "SELECT email_confirm_hash AS uuid FROM MarketUser WHERE id in (?)",
-            self::FETCH_ALL_ASSO_MTHD,
-            $userIds,
-            true
+        $result = $this->executeProcedure([implode(', ', $userIds)],
+            $this->callUsersUuidsFromIds
         );
         if ($result instanceof \Exception)
             return $result;

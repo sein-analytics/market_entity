@@ -14,6 +14,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use function Lambdish\phunctional\{each};
 
@@ -152,6 +153,14 @@ trait FetchingTrait
         } else {
             return $this->fetchByIntArray($em, $orderedParams, $sql);
         }
+    }
+
+    private function executeProcedure(array $params, string $procedure)
+    {
+        return json_decode(
+            json_encode(DB::select($procedure, $params)),
+            true
+        );
     }
 
     /**
