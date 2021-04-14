@@ -31,7 +31,7 @@ trait FetchingTrait
     public function fetchByIntArray(EntityManager $em, array $keys, string $sql){
         if(!count($keys) > 0) { return false; }
         $stmt = $this->returnInArraySqlStmt($em, $keys, $sql);
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY); //$stmt->fetchAllAssociative();
         return $results;
     }
 
@@ -86,13 +86,18 @@ trait FetchingTrait
      * @param EntityManager $em
      * @param string $sql
      * @param array $orderedParams
+     * @param bool $useIntArray
      * @return Statement|\Exception
      */
-    public function buildStmtFromSql(EntityManager $em, string $sql, array $orderedParams = [])
+    public function buildStmtFromSql(EntityManager $em, string $sql, array $orderedParams = [], $useIntArray=false)
     {
         try {
-            return $this->bindStatementParamValues(
-                $em->getConnection()->prepare($sql), $orderedParams);
+            if (!$useIntArray)
+                return $this->bindStatementParamValues(
+                    $em->getConnection()->prepare($sql), $orderedParams);
+            else {
+                return $this->returnInArraySqlStmt($em, $orderedParams, $sql);
+            }
         } catch (\Exception $exception){
             Log::critical("Attempt to build sql statement $sql returned error: {$exception->getMessage()}");
             return $exception;
@@ -139,12 +144,13 @@ trait FetchingTrait
      * @param string $sql
      * @param string $fetchMethod
      * @param array $orderedParams
+     * @param bool $useIntArr
      * @return mixed|\Exception
      */
-    private function buildAndExecuteFromSql(EntityManager $em, string $sql,
-                                            string $fetchMethod, array $orderedParams)
+    private function buildAndExecuteFromSql(EntityManager $em, string $sql, string $fetchMethod,
+                                            array $orderedParams, $useIntArr=false)
     {
-        if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams) ) instanceof \Exception)
+        if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams, $useIntArr) ) instanceof \Exception)
             return $stmt;
         return $this->executeStatementFetchMethod($stmt, $fetchMethod);
     }

@@ -67,7 +67,7 @@ interface ChatGroupInterface
     ];
 
     const GROUP_IMG_UTL_VAR = [
-        self::DEFAULT_KEY => 'NULL',
+        self::DEFAULT_KEY => null,
         self::COL_NAME_KEY => self::GROUP_IMAGE_URL_KEY
     ];
 

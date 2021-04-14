@@ -18,8 +18,23 @@ use Doctrine\ORM\Query;
 use Illuminate\Support\Facades\Log;
 
 class MarketUser extends EntityRepository
+    implements DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait;
+
+    function fetchUsersUuidFromIds(array $userIds)
+    {
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            "SELECT email_confirm_hash AS uuid FROM MarketUser WHERE id in (?)",
+            self::FETCH_ALL_ASSO_MTHD,
+            $userIds,
+            true
+        );
+        if ($result instanceof \Exception)
+            return $result;
+        return $this->flattenResultArrayByKey($result, 'uuid');
+    }
 
     /**
      * @param $userId

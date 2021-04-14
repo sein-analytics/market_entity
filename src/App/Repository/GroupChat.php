@@ -84,10 +84,10 @@ class GroupChat extends ChatAbstract
         $result = true;
         each(function ($userId) use($groupId, &$result) {
             if(($result = $this->buildAndExecuteFromSql(
-                $this->getEntityManager(),
-                $this->deleteGroupUsersSqlBase,
-                self::EXECUTE_MTHD,
-                [$userId, $groupId]
+                    $this->getEntityManager(),
+                    $this->deleteGroupUsersSqlBase,
+                    self::EXECUTE_MTHD,
+                    [$userId, $groupId]
             )) instanceof \Exception){
                 return $result;
             }
