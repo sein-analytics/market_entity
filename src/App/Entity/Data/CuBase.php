@@ -59,7 +59,7 @@ class CuBase
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaRegion")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * @var CunaRegion
      **/
     protected $region;
