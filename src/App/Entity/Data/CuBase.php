@@ -3,6 +3,7 @@
 
 namespace App\Entity\Data;
 
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Data\State;
 use App\Entity\Data\CunaType;
 use App\Entity\Data\CunaRegion;
@@ -102,7 +103,7 @@ class CuBase
      * @return CunaRegion
      */
     public function getRegion(): CunaRegion { return $this->region; }
-    
+
 
 
 }
