@@ -47,8 +47,16 @@ class CuBase
      **/
     protected $state;
 
-    /** @ORM\Column(type="string", nullable=false) */
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
     protected $zip;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $isLowIncDes;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaType")
@@ -90,9 +98,9 @@ class CuBase
     public function getState(): State { return $this->state; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getZip() { return $this->zip; }
+    public function getZip():string { return $this->zip; }
 
     /**
      * @return CunaType
@@ -104,6 +112,10 @@ class CuBase
      */
     public function getRegion(): CunaRegion { return $this->region; }
 
-
+    /**
+     * @return mixed
+     */
+    public function getIsLowIncDes() { return $this->isLowIncDes; }
+    
 
 }
