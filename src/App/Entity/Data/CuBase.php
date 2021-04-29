@@ -42,7 +42,7 @@ class CuBase
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Data\State")
-     * @JoinColumn(name="state_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      * @var State
      **/
     protected $state;
@@ -52,14 +52,14 @@ class CuBase
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaType")
-     * @JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      * @var CunaType
      **/
     protected $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaRegion")
-     * @JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      * @var CunaRegion
      **/
     protected $region;
