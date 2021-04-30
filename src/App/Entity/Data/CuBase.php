@@ -86,7 +86,7 @@ class CuBase
     protected $region;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Data\CuBaseData", , mappedBy="cuBase")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Data\CuBaseData", mappedBy="cuBase")
      * @var PersistentCollection
      **/
     protected $cuData;
