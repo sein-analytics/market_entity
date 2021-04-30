@@ -3,10 +3,11 @@
 
 namespace App\Entity\Data;
 
+use App\Entity\Data\CunaRegion;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Data\State;
 use App\Entity\Data\CunaType;
-use App\Entity\Data\CunaRegion;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity()
@@ -21,6 +22,18 @@ class CuBase
      * @var int
      **/
     protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @var int
+     **/
+    protected $charterNum;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @var int
+     **/
+    protected $ncuaId;
 
     /**
      * @ORM\Column(type="string")
@@ -73,6 +86,12 @@ class CuBase
     protected $region;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Data\CuBaseData", , mappedBy="cuBase")
+     * @var PersistentCollection
+     **/
+    protected $cuData;
+
+    /**
      * @return int
      */
     public function getId(): int { return $this->id; }
@@ -116,6 +135,6 @@ class CuBase
      * @return mixed
      */
     public function getIsLowIncDes() { return $this->isLowIncDes; }
-    
+
 
 }
