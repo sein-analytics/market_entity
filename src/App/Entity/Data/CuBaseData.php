@@ -50,49 +50,49 @@ class CuBaseData
     protected $totalDeposits;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $returnOnAvgAsset;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $netWorthRatio;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $loanToShare;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $depositGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $loansGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $assetGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $membersGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var numeric
      */
     protected $netWorthGrowthPct;
