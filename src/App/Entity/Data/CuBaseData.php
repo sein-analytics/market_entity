@@ -26,6 +26,12 @@ class CuBaseData
     protected $cuBase;
 
     /**
+     * @ORM\Column(type = "datetime", nullable=false)
+     * @var \DateTime
+     **/
+    protected $date;
+
+    /**
      * @ORM\Column(type="decimal", precision=14, nullable=false)
      * @var numeric
      */
@@ -106,6 +112,11 @@ class CuBaseData
      * @return CuBase
      */
     public function getCuBase(): CuBase { return $this->cuBase; }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate(): \DateTime { return $this->date; }
 
     /**
      * @return float|int|string
