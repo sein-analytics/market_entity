@@ -365,7 +365,7 @@ class MarketUser
     }
 
     public function routeNotificationForSlack(Notification $notification):string {
-        return 'https://hooks.slack.com/services/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';
+        return env('SLACK_HOOK_NOTIFY');
     }
 
     /**
