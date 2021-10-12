@@ -14,6 +14,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Illuminate\Notifications\Notification;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
@@ -361,6 +362,10 @@ class MarketUser
         $this->myCommunities = new ArrayCollection();
         $this->failedAttempts = new FailedLogin();
         parent::__construct();
+    }
+
+    public function routeNotificationForSlack(Notification $notification):string {
+        return 'https://hooks.slack.com/services/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';
     }
 
     /**
