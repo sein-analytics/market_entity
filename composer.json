@@ -9,17 +9,17 @@
 	],
 	"require-dev": {
 		"php": ">=7.2",
-		"doctrine/orm" : "^2.7.0",
-		"laravel-doctrine/orm": "^1.7.0",
-		"phpunit/phpunit": "^8.3"
+		"doctrine/orm" : "^2.10.3",
+		"laravel-doctrine/orm": "^1.7.12",
+		"phpunit/phpunit": "^9.4"
 	},
 	"autoload": {
 		"classmap": [ "src/" ]
 	},
 	"require": {
 		"laravel/framework": "^8.0",
-		"laravel-doctrine/migrations": "2.2.x-dev",
-		"gedmo/doctrine-extensions": "^2.4",
+		"laravel-doctrine/migrations": "2.3.1",
+		"gedmo/doctrine-extensions": "^3.3.1",
 		"ext-json": "*",
 		"tymon/jwt-auth": "1.0.*",
 		"lambdish/phunctional": "^2.1",
