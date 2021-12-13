@@ -23,7 +23,7 @@
 		"ext-json": "*",
 		"tymon/jwt-auth": "1.0.*",
 		"lambdish/phunctional": "^2.1",
-		"vlucas/phpdotenv": "5.3.x-dev"
+		"vlucas/phpdotenv": "v5.3.1"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": false
