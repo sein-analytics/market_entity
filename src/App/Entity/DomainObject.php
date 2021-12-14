@@ -4,7 +4,7 @@
 namespace App\Entity;
 
 
-use Doctrine\Common\NotifyPropertyChanged;
+use Doctrine\Persistence\NotifyPropertyChanged;
 use Doctrine\Persistence\PropertyChangedListener;
 use Illuminate\Database\Eloquent\Model;
 
