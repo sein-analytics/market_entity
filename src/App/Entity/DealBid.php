@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="DealBid")
+ *
+ * Any change in the definition should be reflected in
+ * ServiceInterface.php
  */
 class DealBid
 {
