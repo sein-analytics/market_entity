@@ -8,7 +8,6 @@ namespace App\Entity\Typed\Update;
 
 use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
-use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Period;

@@ -12,7 +12,6 @@ use App\Entity\DomainObject;
 use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\NotifyPropertyChanged;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use App\Entity\Period;
 use App\Entity\Pool;
