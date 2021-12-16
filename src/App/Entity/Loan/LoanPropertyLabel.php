@@ -13,8 +13,6 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
-use function foo\func;
-use phpDocumentor\Reflection\Types\This;
 
 class LoanPropertyLabel extends EntityRepository
 {

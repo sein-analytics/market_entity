@@ -169,6 +169,7 @@ class PoolUpdate extends DomainObject
     public function __construct()
     {
         $this->loans = new ArrayCollection();
+        parent::__construct();
     }
 
     /**

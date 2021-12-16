@@ -52,6 +52,11 @@ abstract class DealAbstract extends DomainObject
 
     protected $bidType;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * @return array
      */

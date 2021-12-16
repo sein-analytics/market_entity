@@ -126,6 +126,7 @@ class Pool extends DomainObject
         $this->loans        = new ArrayCollection();
         $this->bonds        = new ArrayCollection();
         $this->poolUpdates  = new  ArrayCollection();
+        parent::__construct();
     }
 
     /**

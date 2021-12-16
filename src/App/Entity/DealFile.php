@@ -88,7 +88,7 @@ class DealFile extends DomainObject
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
-    protected $localPath;
+    protected $publicPath;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
@@ -121,7 +121,7 @@ class DealFile extends DomainObject
      * @ORM\Column(type="string", nullable=false)
      * @var string
      */
-    protected $virusScanId;
+    protected $assetId;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -139,13 +139,13 @@ class DealFile extends DomainObject
      * @ORM\Column(type="string", nullable=true)
      * @var string;
      */
-    protected $helloSignId;
+    protected $signatureId;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string;
      */
-    protected $helloSignPath;
+    protected $signaturePath;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
@@ -166,6 +166,7 @@ class DealFile extends DomainObject
         $this->docAccess = new ArrayCollection();
         $this->issues = new ArrayCollection();
         $this->diligence = new ArrayCollection();
+        parent::__construct();
     }
 
     public function addIssue(DueDiligenceIssue $issue){
@@ -197,7 +198,7 @@ class DealFile extends DomainObject
     /**
      * @return string
      */
-    public function getFileName() { return $this->fileName; }
+    public function getFileName():string  { return $this->fileName; }
 
     /**
      * @param string $fileName
@@ -223,7 +224,7 @@ class DealFile extends DomainObject
     /**
      * @return MimeType
      */
-    public function getMimeType() { return $this->mime; }
+    public function getMimeType():MimeType { return $this->mime; }
 
     /**
      * @param MimeType $mime
@@ -234,29 +235,29 @@ class DealFile extends DomainObject
     }
 
     /**
-     * @return string | null
+     * @return string
      */
-    public function getLocalPath() { return $this->localPath; }
+    public function getPublicPath():string { return $this->publicPath; }
 
     /**
-     * @param string $localPath
+     * @param string $publicPath
      */
-    public function setLocalPath(string $localPath)
+    public function setPublicPath(string $publicPath)
     {
-        $this->implementChange($this,'localPath', $this->localPath, $localPath);
+        $this->implementChange($this,'publicPath', $this->publicPath, $publicPath);
     }
 
     /**
      * @return string
      */
-    public function getVirusScanId(): string { return $this->virusScanId; }
+    public function getAssetId(): string { return $this->assetId; }
 
     /**
-     * @param string $virusScanId
+     * @param string $assetId
      */
-    public function setVirusScanId(string $virusScanId)
+    public function setAssetId(string $assetId)
     {
-        $this->virusScanId = $virusScanId;
+        $this->assetId = $assetId;
     }
 
     /**
@@ -278,22 +279,22 @@ class DealFile extends DomainObject
     /**
      * @return MarketUser
      */
-    public function getUser() { return $this->user; }
+    public function getUser():MarketUser { return $this->user; }
 
     /**
      * @return ArrayCollection
      */
-    public function getReplacements() { return $this->replacements; }
+    public function getReplacements():ArrayCollection { return $this->replacements; }
 
     /**
      * @return ArrayCollection
      */
-    public function getAppends() { return $this->appends; }
+    public function getAppends():ArrayCollection { return $this->appends; }
 
     /**
      * @return DocType
      */
-    public function getDocType() { return $this->docType; }
+    public function getDocType():DocType { return $this->docType; }
 
     /**
      * @param DocType $docType
@@ -322,29 +323,29 @@ class DealFile extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getHelloSignId() { return $this->helloSignId; }
+    public function getSignatureId() { return $this->signatureId; }
 
     /**
-     * @param mixed $helloSignId
+     * @param mixed $signatureId
      */
-    public function setHelloSignId($helloSignId)
+    public function setSignatureId(string $signatureId)
     {
-        $this->helloSignId = $helloSignId;
+        $this->signatureId = $signatureId;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHelloSignPath(): string { return $this->helloSignPath; }
+    public function getSignaturePath() { return $this->signaturePath; }
 
     /**
-     * @param string $helloSignPath
+     * @param string $signaturePath
      */
-    public function setHelloSignPath(string $helloSignPath)
+    public function setSignaturePath(string $signaturePath)
     {
-        $this->helloSignPath = $helloSignPath;
+        $this->signaturePath = $signaturePath;
     }
 
     /**

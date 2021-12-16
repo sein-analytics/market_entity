@@ -46,6 +46,7 @@ class SaleAttribute extends DomainObject
     public function __construct()
     {
         $this->buyers = new ArrayCollection();
+        parent::__construct();
     }
 
     public function addBuyer(MarketUser $marketUser)
