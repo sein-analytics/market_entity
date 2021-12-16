@@ -21,20 +21,22 @@ class DealFile extends EntityRepository implements SqlManagerTraitInterface
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static $table = [
-      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'deal_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'user_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-      'mime_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'doc_type_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'file_name' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-      'file_size' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'asset_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-      'scan_location' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-      'has_viruses' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'public_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-      'signature_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-      'signature_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'deal_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'user_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        'mime_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'doc_type_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'file_name' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        'file_size' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'asset_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'scan_location' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        'has_viruses' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'public_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'signature_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'signature_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'access_mode' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
+
     ];
 
     public function __construct(EntityManager $em, ClassMetadata $class)
