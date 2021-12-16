@@ -29,12 +29,12 @@ class DealFile extends EntityRepository implements SqlManagerTraitInterface
       'doc_type_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
       'file_name' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
       'file_size' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'local_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-      'virus_scan_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+      'asset_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
       'scan_location' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
       'has_viruses' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'hello_sign_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-      'hello_sign_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
+      'public_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'signature_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+      'signature_path' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
     ];
 
     public function __construct(EntityManager $em, ClassMetadata $class)
