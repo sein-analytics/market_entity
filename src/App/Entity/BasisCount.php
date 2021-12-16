@@ -65,6 +65,7 @@ class BasisCount extends DomainObject
     public function __construct()
     {
         $this->bonds = new ArrayCollection();
+        parent::__construct();
     }
 
     /**

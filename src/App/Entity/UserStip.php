@@ -51,6 +51,7 @@ class UserStip extends DomainObject
     {
         $this->user = new MarketUser();
         $this->deal = new Deal();
+        parent::__construct();
     }
 
     public function setStips(array $stips)

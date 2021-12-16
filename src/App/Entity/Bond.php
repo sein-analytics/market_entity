@@ -167,6 +167,7 @@ class Bond extends DomainObject
     {
         $this->updates = new ArrayCollection();
         $this->components = new ArrayCollection();
+        parent::__construct();
     }
 
     /**

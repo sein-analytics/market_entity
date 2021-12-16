@@ -230,6 +230,7 @@ class Deal extends DealAbstract
         $this->issuer = new Issuer();
         $this->ratings = new ArrayCollection();
         $this->stips = new ArrayCollection();
+        parent::__construct();
     }
 
     function addMessage(Message $message)

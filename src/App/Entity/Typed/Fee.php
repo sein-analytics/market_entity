@@ -84,6 +84,7 @@ abstract class Fee extends AbstractTyped
     public function __construct()
     {
         $this->updates = new ArrayCollection();
+        parent::__construct();
     }
 
 

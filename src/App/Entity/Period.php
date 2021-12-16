@@ -93,6 +93,7 @@ class Period extends DomainObject
         //$this->periodAccounts = new ArrayCollection();
         //$this->periodShelfSpecifics = new ArrayCollection();
         //$this->periodTriggers = new ArrayCollection();
+        parent::__construct();
     }
 
     /**

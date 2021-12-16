@@ -12,6 +12,8 @@ abstract class DomainObject extends Model implements NotifyPropertyChanged
 {
     private $listeners = [];
 
+    public function __construct() { parent::__construct(); }
+
     public function addPropertyChangedListener(PropertyChangedListener $listener)
     {
         $this->listeners = $listener;

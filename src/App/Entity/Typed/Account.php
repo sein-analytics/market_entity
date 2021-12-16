@@ -82,6 +82,7 @@ abstract class Account extends AbstractTyped
     public function __construct()
     {
         $this->updates = new ArrayCollection();
+        parent::__construct();
     }
 
     public function getId()
