@@ -8,20 +8,25 @@
 
 namespace App\Repository;
 
+use App\Repository\Loan\LoanInterface;
 use App\Service\QueryManagerTrait;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 
-class Loan extends EntityRepository implements SqlManagerTraitInterface
+class Loan extends EntityRepository
+    implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
+
+    const LOAN_NUMS_BY_IDS_SQL = "SELECT id, loan_id FROM loans WHERE id IN (?) ORDER BY id ASC";
 
     private $subTypes = [
         'Auto' => '\AssetType\Auto',
@@ -33,71 +38,71 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
     ];
 
     static $table = [
-        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'pool_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'state_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'msa_code_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'amortization_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'description_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'loan_id' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'original_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
-        'current_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
-        'monthly_payment' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'issuance_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'initial_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'seasoning' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'current_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
-        'origination_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
-        'current_duefor_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
-        'first_payment_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
-        'loan_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'final_duefor_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
-        'original_term' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NOT NULL'],
-        'remaining_term' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
-        'amortization_term' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NOT NULL'],
-        'io_term' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
-        'balloon_period' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
-        'original_ltv' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
-        'original_cltv' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'appraised_value' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
-        'credit_score' => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
-        'front_dti' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'back_dti' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'number_of_borrowers' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'first_time_buyer' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'lien_position' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'note_type' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'loan_type' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'documentation' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'purpose' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'occupancy' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'dwelling' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'address' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'city' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'zip' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'asset_attributes' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'payment_string' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'servicingfee' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'lpmi_fee' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'mi_coverage' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'foreclosure_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'bankruptcy_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'reo_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'zero_balance_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'loan_has_been_modified' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'end_mod_period' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'channel' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'last_payment_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'times_30' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'times_60' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'times_90' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'year_built' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'new_vs_used' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'reserves' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'dealer_reserve' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'prepay_penalty_term' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'prepay_penalty' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'prepay_step_down' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
+        self::ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::POOL_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::STATE_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::MSA_CODE_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::AMORT_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::DESC_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::LOAN_ID_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::ORIG_BAL_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+        self::CURR_BAL_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+        self::MON_PMT_KEY=> [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::ISSUE_BAL_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::INIT_RATE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::SEASNING_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::CURR_RATE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+        self::ORIG_DATE_KEY => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+        self::DUE_FOR_DATE_KEY => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+        self::FST_PAY_DATE => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+        self::LOAN_STAT_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::FIN_DUE_DATE_KEY => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+        self::ORIG_TERM_KEY => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NOT NULL'],
+        self::REM_TERM_KEY => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
+        self::AMORT_TERM_KEY => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NOT NULL'],
+        self::IO_TERM_KEY => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
+        self::BALON_TERM_KEY => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
+        self::ORIG_LTV_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+        self::ORIG_CLTV_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::APPR_VAL_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
+        self::CREDIT_SC_KEY => [self::DATA_TYPE => ['decimal', 'integer'], self::DATA_DEFAULT => 'NULL'],
+        self::FRONT_DTI_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::BACK_DTI_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::NUM_BORR_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::FST_TIMEB_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::LIEN_POS_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::NOTE_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::LOAN_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::DOC_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::PUR_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::OCCU_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::DWELL_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::ADDR_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::CITY_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::ZIP_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::ASST_ATTR_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::PMT_STR_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::SVC_FEE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::LPMI_FEE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::MI_COV_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::FORC_DATE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::BKRY_DATE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::REO_DATE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::ZERO_BAL_DATE_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::LOAN_MOD_IND_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::END_MOD_PER_KEY => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        self::CHANNEL_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::LAST_PMT_DATE_KEY => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        self::TIMES_30_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::TIMES_60_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::TIMES_90_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::YR_BUILT_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::NEW_USED_IND_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::RESERVES_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::DEALR_RSVS_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::PP_PNLTY_TERM_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::PP_PNLTY_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        self::PP_PNLTY_STEP_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
     ];
 
     public function __construct(EntityManager $em, ClassMetadata $class)
@@ -112,14 +117,13 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
      */
     public function fetchLoansByDealId(int $dealId)
     {
-        $em = $this->getEntityManager();
         $sql = "SELECT * FROM Pool WHERE deal_id IN (?)";
         $results = $this->fetchByIntArray($this->em, array($dealId), $sql);
         if(count($results) > 0){
             $poolIds = $this->array_value_recursive('id', $results);
             try{
                 $results = $this->fetchLoansByPoolIds($poolIds);
-            } catch (DBALException $e){
+            } catch (\Exception $e){
                 return ['message' => $e->getMessage()];
             }
         }
@@ -159,7 +163,6 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
         );
         $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $results = array_merge($noArms, $armLoans);
-        $stmt->closeCursor();
         return $results;
     }
 
@@ -176,19 +179,22 @@ class Loan extends EntityRepository implements SqlManagerTraitInterface
 
     /**
      * @param array $loanIds
-     * @return array
+     * @return array|string
      */
-    public function fetchLoanNumbersByLoanids(array $loanIds)
+    public function fetchLoanNumbersByLoanIds(array $loanIds)
     {
-        $sql = "SELECT id, loan_id FROM loans WHERE id IN (?) ORDER BY id ASC";
-        $stmt = $this->returnInArraySqlStmt($this->em, $loanIds, $sql);
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        $data = [];
-        foreach ($result as $dbData){
-            $data[$dbData['loan_id']] = (int)$dbData['id'];
+        $stmt = $this->returnInArraySqlDriver($this->em, $loanIds, self::LOAN_NUMS_BY_IDS_SQL);
+        if (is_string($stmt))
+            return $stmt;
+        try {
+            $result = $stmt->fetchAllAssociative();
+        } catch (\Doctrine\DBAL\Driver\Exception $err){
+            return $err->getMessage();
         }
-        return $data;
+        return $this->flattenByKeyValue($result, self::LOAN_ID_KEY, self::ID_KEY,
+            $this->dbValueSubStringFromCharClosure(self::APPEND_UNDER_SCORE),
+            $this->dbValueToIntClosure()
+        );
     }
 
     /**

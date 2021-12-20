@@ -6,31 +6,38 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
+use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityRepository;
 
-class MimeType extends EntityRepository implements SqlManagerTraitInterface
+class MimeType extends EntityRepository
+    implements SqlManagerTraitInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
+    const EXT_KEY = 'ext';
+
+    const MIME_TYPE_KEY = 'mime_type';
+
+    const EXT_ID_SQL = 'SELECT ext, id FROM MimeType';
+
     static $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'ext' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        'mime_type' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::EXT_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
+        self::MIME_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
     ];
 
-    public function fetchExtAndId()
+    public function fetchAllExtAndId()
     {
-        try {
-            $stmt = $this->em->getConnection()->prepare('SELECT ext, id');
-        }catch (\Exception $exception){
-            return $exception->getMessage();
-        }
-        try {
-            $result = $stmt->executeStatement([]);
-        } catch (\Doctrine\DBAL\Driver\Exception  $err){
-            return $err->getMessage();
-        }
-        return $result;
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::EXT_ID_SQL,
+            self::FETCH_ALL_ASSO_MTHD,
+            []
+        );
+        if ($result instanceof \Exception)
+            return $result->getMessage();
+        return $this->flattenByKeyValue($result, self::EXT_KEY, 'id',
+            $this->dbValueRawCloser(), $this->dbValueToIntClosure());
     }
 
     function fetchNextAvailableId()
