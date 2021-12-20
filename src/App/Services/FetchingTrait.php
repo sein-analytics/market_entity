@@ -16,6 +16,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Doctrine\DBAL\ForwardCompatibility\DriverResultStatement;
+use Doctrine\DBAL\ForwardCompatibility\DriverStatement;
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use function Lambdish\phunctional\{each};
 
 trait FetchingTrait
@@ -51,6 +54,7 @@ trait FetchingTrait
     }
 
     /**
+     * @deprecated
      * @param EntityManager $em
      * @param array $keys
      * @param string $sql
@@ -63,6 +67,24 @@ trait FetchingTrait
             array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         );
         return $stmt;
+    }
+
+    /**
+     * @param EntityManager $em
+     * @param array $keys
+     * @param string $sql
+     * @return DriverResultStatement|DriverStatement|Result|string
+     */
+    public function returnInArraySqlDriver(EntityManager $em, array $keys, string $sql)
+    {
+        try {
+            return $em->getConnection()->executeQuery($sql,
+                array($keys),
+                array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+            );
+        }catch (\Exception $err){
+            return $err->getMessage();
+        }
     }
 
     /**
@@ -114,7 +136,7 @@ trait FetchingTrait
         }
         try {
             if ($fetchMethod !== 'execute'){
-                $stmt->execute();
+                $stmt = $stmt->executeQuery();
             }
             return $stmt->{$fetchMethod}();
         } catch (\Exception $exception){
@@ -123,7 +145,12 @@ trait FetchingTrait
         }
     }
 
-    private function bindStatementParamValues(Statement $stmt, array $orderedParams = [])
+    /**
+     * @param Statement $stmt
+     * @param array $orderedParams
+     * @return Statement
+     */
+    private function bindStatementParamValues(Statement $stmt, array $orderedParams = []):Statement
     {
         if (count($orderedParams) === 0)
             return $stmt;

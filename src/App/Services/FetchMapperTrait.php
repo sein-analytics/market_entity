@@ -8,6 +8,7 @@
 
 namespace App\Service;
 use Doctrine\DBAL\Driver\Statement;
+use function Lambdish\phunctional\{each};
 use Doctrine\ORM\Query;
 
 /**
@@ -85,6 +86,41 @@ trait FetchMapperTrait
             $base[$status['id']] = $status['status'];
         }
         return $base;
+    }
+
+    public function flattenByKeyValue(array $results, string $key, string $value,
+                                      \Closure $keyFunc, \Closure $valueFunc):array
+    {
+        $flatArray = [];
+        if (count($results) > 0) {
+            each(function ($result) use(&$flatArray, $keyFunc, $valueFunc, $key, $value) {
+                if (array_key_exists($key, $result)
+                    && array_key_exists($value, $result)){
+                    $flatArray[$keyFunc($result[$key])] = $valueFunc($result[$value]);
+                }
+            }, $results);
+        }
+        return $flatArray;
+    }
+
+    public function dbValueToIntClosure():\Closure {
+        return function($dbValue) {
+            return (int)$dbValue;
+        };
+    }
+
+    public function dbValueRawCloser():\Closure {
+        return function ($dbValue) {
+            return $dbValue;
+        };
+    }
+
+    public function dbValueSubStringFromCharClosure($char):\Closure {
+        return function ($dbValue) use($char) {
+            if (($pos = strripos($dbValue, $char)) === false)
+                return $dbValue;
+            return substr($dbValue, 0, $pos - 1);
+        };
     }
 
 }
