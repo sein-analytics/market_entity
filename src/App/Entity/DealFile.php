@@ -155,12 +155,6 @@ class DealFile extends DomainObject
     protected $signaturePath;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string;
-     */
-    protected $accessMode;
-
-    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
      * @var ArrayCollection
      */
@@ -315,6 +309,11 @@ class DealFile extends DomainObject
     public function getAccessId():FileAccessCode { return $this->accessId; }
 
     /**
+     * @param FileAccessCode $mode
+     */
+    public function setAccessId(FileAccessCode $mode) { $this->accessId = $mode; }
+
+    /**
      * @param DocType $docType
      */
     public function setDocType(DocType $docType)
@@ -365,11 +364,6 @@ class DealFile extends DomainObject
     {
         $this->signaturePath = $signaturePath;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getAccessMode() { return $this->accessMode; }
 
     /**
      * @return ArrayCollection
