@@ -119,7 +119,7 @@ trait FetchMapperTrait
         return function ($dbValue) use($char) {
             if (($pos = strripos($dbValue, $char)) === false)
                 return $dbValue;
-            return substr($dbValue, 0, $pos - 1);
+            return substr($dbValue, 0, $pos);
         };
     }
 
