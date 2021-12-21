@@ -118,6 +118,13 @@ class DealFile extends DomainObject
     protected $docType;
 
     /**
+     * @ManyToOne(targetEntity="Address")
+     * @JoinColumn(name="accress_id", referencedColumnName="id", nullable=true)
+     * @var FileAccessCode
+     */
+    protected $accessId;
+
+    /**
      * @ORM\Column(type="string", nullable=false)
      * @var string
      */
@@ -301,6 +308,11 @@ class DealFile extends DomainObject
      * @return DocType
      */
     public function getDocType():DocType { return $this->docType; }
+
+    /**
+     * @return FileAccessCode
+     */
+    public function getAccessId():FileAccessCode { return $this->accessId; }
 
     /**
      * @param DocType $docType
