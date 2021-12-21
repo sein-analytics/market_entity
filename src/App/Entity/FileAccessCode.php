@@ -36,6 +36,13 @@ class FileAccessCode extends DomainObject
     protected $label;
 
     /**
+     * @return array
+     */
+    static public function getLabelToIdMapper ():array {
+        return self::ACCESS_LABEL_TO_ID;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int { return $this->id; }
