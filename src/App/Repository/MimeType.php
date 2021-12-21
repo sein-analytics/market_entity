@@ -29,7 +29,7 @@ class MimeType extends EntityRepository
     public function fetchAllExtAndId()
     {
         $result = $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
+            $this->em,
             self::EXT_ID_SQL,
             self::FETCH_ALL_ASSO_MTHD,
             []
