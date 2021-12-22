@@ -10,7 +10,7 @@ namespace App\Service;
 
 
 use Doctrine\ORM\EntityManager;
-
+use Doctrine\Persistence\Mapping\ClassMetadata;
 trait QueryManagerTrait
 {
 
@@ -18,6 +18,10 @@ trait QueryManagerTrait
     protected $em;
 
     static $base = 'App\\Entity\\';
+
+    static $wrongArrayLen = ['message' => 'Insert array size is wrong'];
+
+    static $missingColVal = ['message' => 'Insert array size is wrong'];
 
     public function __construct(EntityManager $em)
     {
@@ -64,15 +68,19 @@ trait QueryManagerTrait
 
     /**
      * @param string $tableName
-     * @return bool|\Doctrine\Common\Persistence\Mapping\ClassMetadata
+     * @return bool|array
      */
     public function fetchEntityMetaData(string $tableName)
     {
         if(!$this->doesEntityTableExist($tableName)){
             return false;
         }
-        $meta = $this->em->getMetadataFactory()->getMetadataFor(self::$base . $tableName);
-        return $meta->getColumnNames();
+        try {
+            $meta = $this->em->getMetadataFactory()->getMetadataFor(self::$base . $tableName);
+            return $meta->getColumnNames();
+        }catch (\Exception $exception){
+            return false;
+        }
     }
 
     public function doesEntityTableExist($tableName)
@@ -96,7 +104,8 @@ trait QueryManagerTrait
                 $counter++;
                 continue;
             }
-            $value = $data[$counter];
+            if (!($value = $this->returnInsertArrayValue($data, $counter, $colName)))
+                return self::$missingColVal;
             $typeResult = $this->isTypeMappingCorrect(gettype($value), $colName, $properties);
             if(is_array($typeResult))
                 return $typeResult;
@@ -112,13 +121,14 @@ trait QueryManagerTrait
     public function buildInsertElementStatement(array $data, $ensureSize=true){
         $size = count(self::$table);
         if(count($data) !== $size &&  $ensureSize){
-            return ['message' => 'Insert array size is wrong'];
+            return self::$wrongArrayLen;
         }
         reset(self::$table);
         $counter = 0;
         $insertStmt = '(';
         foreach (self::$table as $colName => $properties){
-            $value = $data[$counter];
+            if (!($value = $this->returnInsertArrayValue($data, $counter, $colName)))
+                return self::$missingColVal;
             if(is_null($value)) {
                 $value = $this->isValueNullable($value, $colName, $properties);
                 if(is_array($value)){
@@ -136,6 +146,15 @@ trait QueryManagerTrait
             $counter++;
         }
         return $insertStmt;
+    }
+
+    public function returnInsertArrayValue(array $insertData, int $counter, string $colName)
+    {
+        if (array_key_exists($colName, $insertData))
+            return $insertData[$colName];
+        elseif (array_key_exists($counter, $insertData))
+            return $insertData[$counter];
+        return false;
     }
 
     public function quoteStringValue($value, array $properties){
