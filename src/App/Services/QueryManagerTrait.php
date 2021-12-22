@@ -21,7 +21,7 @@ trait QueryManagerTrait
 
     static $wrongArrayLen = ['message' => 'Insert array size is wrong'];
 
-    static $missingColVal = ['message' => 'Insert array size is wrong'];
+    static $missingColVal = ['message' => 'Insert array is missing a column data'];
 
     public function __construct(EntityManager $em)
     {
@@ -104,7 +104,7 @@ trait QueryManagerTrait
                 $counter++;
                 continue;
             }
-            if (!($value = $this->returnInsertArrayValue($data, $counter, $colName)))
+            if (($value = $this->returnInsertArrayValue($data, $counter, $colName)) === false)
                 return self::$missingColVal;
             $typeResult = $this->isTypeMappingCorrect(gettype($value), $colName, $properties);
             if(is_array($typeResult))
@@ -127,7 +127,7 @@ trait QueryManagerTrait
         $counter = 0;
         $insertStmt = '(';
         foreach (self::$table as $colName => $properties){
-            if (!($value = $this->returnInsertArrayValue($data, $counter, $colName)))
+            if (($value = $this->returnInsertArrayValue($data, $counter, $colName)) === false)
                 return self::$missingColVal;
             if(is_null($value)) {
                 $value = $this->isValueNullable($value, $colName, $properties);
