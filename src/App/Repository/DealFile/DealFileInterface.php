@@ -74,7 +74,7 @@ interface DealFileInterface
         self::DAM_PUB_PATH => self::DF_PUB_PATH,
         self::DAM_ACC_MODE => self::DF_ACC_MODE,
         self::DAM_LOAN_API => self::DF_LOAN_ID,
-        self::DAM_FILE_TYPE => self::DF_TYPE_ID
+        self::DAM_FILE_TYPE => self::DF_MIME_ID
     ];
 
     const BASE_INSERT_ARR = [
