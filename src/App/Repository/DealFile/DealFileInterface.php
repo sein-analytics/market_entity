@@ -4,8 +4,6 @@ namespace App\Repository\DealFile;
 
 interface DealFileInterface
 {
-    const DEFAULT_DOC_TYPE_ID = 9;
-
     const DEFAULT_VIRUS_BOOL = 0;
 
     const DEFAULT_SCAN_LOC = 'https://www.virustotal.com/file/0bff379d5_temp_default/analysis/1509569818/';
@@ -85,7 +83,7 @@ interface DealFileInterface
         self::DF_USER_ID => null,
         self::DF_LOAN_ID => null,
         self::DF_MIME_ID => null,
-        self::DF_TYPE_ID => self::DEFAULT_DOC_TYPE_ID,
+        self::DF_TYPE_ID => null,
         self::DF_FILE_NAME => null,
         self::DF_FILE_SIZE => null,
         self::DF_ASSET_ID => null,
