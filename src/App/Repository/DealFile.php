@@ -8,6 +8,7 @@
 
 namespace App\Repository;
 
+use App\Repository\DealFile\DealFileInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
