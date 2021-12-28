@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 
+use App\Repository\Statistic\StatisticInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
@@ -17,29 +18,30 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class Statistic extends EntityRepository implements SqlManagerTraitInterface
+class Statistic extends EntityRepository
+    implements SqlManagerTraitInterface, StatisticInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static $table = [
-      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'deal_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'states' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'summary_states' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'ltv' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'summary_ltv' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'balance' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'summary_balance' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'rate' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'summary_rate' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'loan_type' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'property_type' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'occupancy' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'maturity' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'summary_maturity' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'credit' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'summary_credit' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
-      'filter_data' => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
+        self::STATS_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::STATS_DEAL_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::STATS_STATES_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::SUMRY_STATES_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_LTV_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::SUMRY_LTV_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_BAL_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::SUMRY_BAL_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_RATE_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::SUMRY_RATE_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_LOAN_TYPE_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_PROP_TYPE_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_OCCU_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_MAT_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::SUMRY_MAT_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_CREDIT_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::SUMRY_CREDIT_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        self::STATS_FILTER_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
     ];
 
     public function __construct(EntityManager $em, ClassMetadata $class)
@@ -53,12 +55,11 @@ class Statistic extends EntityRepository implements SqlManagerTraitInterface
      * @param bool $mapStatisticsToDeal
      * @return array|bool
      */
-    public function fetchDealStatisticsByDealIds(array $dealIds, $mapStatisticsToDeal = true)
+    public function fetchDealStatisticsByDealIds(array $dealIds, bool $mapStatisticsToDeal=true)
     {
-        $sql = 'SELECT * FROM Statistic WHERE deal_id IN (?)';
-        $results = $this->fetchByIntArray($this->em, $dealIds, $sql);
+        $results = $this->fetchByIntArray($this->em, $dealIds, self::SELECT_ALL_BY_DEAL_SQL);
         if(count($results) > 0 && $mapStatisticsToDeal){
-            $results = $this->mapRequestIdsToResults($dealIds, $results, "deal_id");
+            $results = $this->mapRequestIdsToResults($dealIds, $results, self::STATS_DEAL_ID_KEY);
         }
         return $results;
     }
@@ -69,8 +70,7 @@ class Statistic extends EntityRepository implements SqlManagerTraitInterface
      */
     public function fetchStatisticIdByDealId(int $dealId)
     {
-        $sql = "SELECT id FROM Statistic Where deal_id = ?";
-        $stmt = $this->em->getConnection()->prepare($sql);
+        $stmt = $this->em->getConnection()->prepare(self::SELECT_ID_BY_DEAL_SQL);
         $stmt->bindValue(1, $dealId);
         return $this->completeIdFetchQuery($stmt);
     }
@@ -92,7 +92,7 @@ class Statistic extends EntityRepository implements SqlManagerTraitInterface
      */
     public function fetchNextAvailableId()
     {
-        return $this->fetchNextAvailableTableId('Statistic');
+        return $this->fetchNextAvailableTableId(self::STATS_TABLE_NAME);
     }
 
     public function fetchEntityPropertiesForSql(string $subType = null)
