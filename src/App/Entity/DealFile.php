@@ -119,7 +119,7 @@ class DealFile extends DomainObject
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\FileAccessCode")
-     * @ORM\JoinColumn(name="accress_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="access_id", referencedColumnName="id", nullable=true)
      * @var FileAccessCode
      */
     protected $accessId;
