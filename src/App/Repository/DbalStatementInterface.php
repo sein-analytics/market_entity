@@ -18,6 +18,8 @@ interface DbalStatementInterface
 
     const FETCH_ALL_ASSO_IND_MTHD = 'fetchAllAssociativeIndexed';
 
+    const EXECUTE_STMT_MTHD = 'executeStatement';
+
     const QUERY_JUST_ID = 'id';
 
     const QUERY_ALL = '*';

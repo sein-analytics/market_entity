@@ -9,13 +9,31 @@
 namespace App\Repository;
 
 
+use App\Repository\LoanTapeTemplate\TemplateInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
+use App\Service\QueryManagerTrait;
+use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 
 class LoanTapeTemplate extends EntityRepository
+implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
 {
-    use FetchMapperTrait, FetchingTrait;
+    use FetchMapperTrait, FetchingTrait, QueryManagerTrait;
+
+    const CHECK_ID_SQL = 'SELECT COUNT(id) AS count FROM LoanTapeTemplate WHERE id=?';
+
+    const UPDATE_TEMPLATE_SQL = 'Update LoanTapeTemplate set template=? WHERE id=?';
+
+    const TEMPLATE_INS_BASE_SQL = 'INSERT INTO `LoanTapeTemplate` (`id`, `user_id`, `asset_id`, `template`, `template_name`) VALUES)';
+
+    static $table = [
+        self::TEMPLATE_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::TEMPLATE_USR_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::TEMPLATE_ASSET_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::TEMPLATE_DB_KEY => [self::DATA_TYPE => 'longtext', self::DATA_DEFAULT => 'NOT NULL'],
+        self::TEMPLATE_NAME_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL']
+    ];
 
     /**
      * @param array $userId
@@ -28,4 +46,33 @@ class LoanTapeTemplate extends EntityRepository
         return $results;
     }
 
+    public function updateLoanTemplate (int $id, array $template)
+    {
+        if (($stmt = $this->buildStmtFromSql($this->em, self::CHECK_ID_SQL, [$id]))
+            instanceof \Exception
+        )
+            return 'Error executing id check: ' . $stmt->getMessage();
+        $result = $this->executeStatementFetchMethod($stmt, self::EXECUTE_STMT_MTHD);
+        if (!is_array($result )
+            ||!array_key_exists('count', $result))
+            return "LoanTapeTemplate with $id does not exist";
+        $stmt = $this->buildStmtFromSql($this->em, self::UPDATE_TEMPLATE_SQL,
+            [json_encode($template), $id]);
+        if ($stmt instanceof \Exception)
+            return $stmt->getMessage();
+        return $this->executeStatementFetchMethod($stmt, self::EXECUTE_STMT_MTHD);
+    }
+
+    /**
+     * @return bool|int
+     */
+    public function fetchNextAvailableId()
+    {
+        return $this->fetchNextAvailableTableId('LoanTapeTemplate');
+    }
+
+    public function fetchEntityPropertiesForSql(string $subType = null)
+    {
+        return array_keys(self::$table);
+    }
 }
