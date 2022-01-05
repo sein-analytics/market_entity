@@ -91,7 +91,7 @@ trait FetchingTrait
      * @param EntityManager $em
      * @param string $sql
      * @param array[] ...$keys
-     * @return Statement
+     * @return DriverStatement|Result|string
      */
     public function returnMultiIntArraySqlStmt(EntityManager $em, string $sql, array ...$keys)
     {
@@ -101,8 +101,11 @@ trait FetchingTrait
             array_push($intParams, Connection::PARAM_INT_ARRAY);
             return $result;
         }, []);
-        $stmt = $em->getConnection()->executeQuery($sql, $base, $intParams);
-        return $stmt;
+        try {
+            return $em->getConnection()->executeQuery($sql, $base, $intParams);
+        }catch (\Doctrine\DBAL\Exception $err){
+            return $err->getMessage();
+        }
     }
 
     /**
@@ -135,11 +138,12 @@ trait FetchingTrait
             return new \Exception($msg);
         }
         try {
-            if ($fetchMethod !== 'execute'){
+            if ($fetchMethod !== 'execute'
+                || $fetchMethod !== 'executeStatement'){
                 $stmt = $stmt->executeQuery();
             }
             return $stmt->{$fetchMethod}();
-        } catch (\Exception $exception){
+        } catch (\Doctrine\DBAL\Driver\Exception  $exception){
             Log::critical("Error executing statement with error: {$exception->getMessage()}");
             return $exception;
         }
