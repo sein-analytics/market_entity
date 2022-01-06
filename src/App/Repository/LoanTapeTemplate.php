@@ -14,7 +14,9 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class LoanTapeTemplate extends EntityRepository
 implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
@@ -36,6 +38,12 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
         self::TEMPLATE_DB_KEY => [self::DATA_TYPE => 'longtext', self::DATA_DEFAULT => 'NOT NULL'],
         self::TEMPLATE_DB_NAME_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL']
     ];
+
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
 
     /**
      * @param array $userId
