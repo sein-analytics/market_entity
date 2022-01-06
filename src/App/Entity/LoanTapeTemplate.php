@@ -10,6 +10,8 @@ namespace App\Entity;
 
 use App\Entity\MarketUser;
 use App\Service\CreatePropertiesArrayTrait;
+use App\Service\FetchingTrait;
+use App\Service\FetchMapperTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LoanTapeTemplate
 {
-    use CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait, FetchingTrait, FetchMapperTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")
