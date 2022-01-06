@@ -7,7 +7,6 @@
 namespace App\Entity\Typed\Update;
 
 use App\Entity\DomainObject;
-use App\Entity\NotifyChangeTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Period;
@@ -20,8 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractTypeUpdate extends DomainObject
     implements TypedUpdateInterface
 {
-    use NotifyChangeTrait;
-    
     /**
      * @ORM\Column(type="integer", nullable=false)
      **/

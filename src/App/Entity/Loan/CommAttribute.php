@@ -10,7 +10,6 @@ namespace App\Entity\Loan;
 
 use App\Entity\DomainObject;
 use App\Entity\Loan;
-use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;

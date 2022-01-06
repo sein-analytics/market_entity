@@ -6,7 +6,6 @@
 
 namespace App\Entity\Bond;
 use App\Entity\DomainObject;
-use App\Entity\NotifyChangeTrait;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Update\BondUpdate;
 

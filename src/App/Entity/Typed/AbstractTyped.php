@@ -8,7 +8,6 @@ namespace App\Entity\Typed;
 
 
 use App\Entity\DomainObject;
-use App\Entity\NotifyChangeTrait;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\Collection;
