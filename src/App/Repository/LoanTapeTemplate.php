@@ -25,7 +25,9 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
 
     const UPDATE_TEMPLATE_SQL = 'Update LoanTapeTemplate set template=? WHERE id=?';
 
-    const TEMPLATE_INS_BASE_SQL = 'INSERT INTO `LoanTapeTemplate` (`id`, `user_id`, `asset_id`, `template`, `template_name`) VALUES)';
+    const TEMPLATE_INS_BASE_SQL = 'INSERT INTO `LoanTapeTemplate` (`id`, `user_id`, `asset_id`, `template`, `template_name`) VALUES';
+
+    const TPLT_ID_BY_USR_TNAME_SQL = 'SELECT `id` FROM LoanTapeTemplate WHERE `user_id`=? AND `template_name`=?';
 
     static $table = [
         self::TEMPLATE_DB_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
@@ -46,6 +48,11 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
         return $results;
     }
 
+    /**
+     * @param int $id
+     * @param array $template
+     * @return \Doctrine\DBAL\Driver\Exception|\Exception|mixed|string
+     */
     public function updateLoanTemplate (int $id, array $template)
     {
         if (($stmt = $this->buildStmtFromSql($this->em, self::CHECK_ID_SQL, [$id]))
@@ -61,6 +68,23 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
         if ($stmt instanceof \Exception)
             return $stmt->getMessage();
         return $this->executeStatementFetchMethod($stmt, self::EXECUTE_STMT_MTHD);
+    }
+
+    /**
+     * @param int $userId
+     * @param string $templateName
+     * @return \Doctrine\DBAL\Driver\Exception|\Exception|mixed|string
+     */
+    public function templateIdByUserAndTemplateName(int $userId, string $templateName)
+    {
+        $stmt = $this->buildStmtFromSql($this->em, self::TPLT_ID_BY_USR_TNAME_SQL,
+            [$userId, $templateName]);
+        if ($stmt instanceof \Exception)
+            return $stmt->getMessage();
+        $result = $this->executeStatementFetchMethod($stmt, self::FETCH_ASSO_MTHD);
+        if (!is_array($result))
+            return $result;
+        return $result[self::TEMPLATE_DB_ID_KEY];
     }
 
     /**
