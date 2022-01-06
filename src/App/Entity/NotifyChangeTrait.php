@@ -9,6 +9,9 @@
 namespace App\Entity;
 use Doctrine\Common\PropertyChangedListener;
 
+/**
+ * @deprecated 
+ */
 trait NotifyChangeTrait
 {
     private $_listener=[];

@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DealAuction
 {
-    use NotifyChangeTrait, CreatePropertiesArrayTrait;
+    use CreatePropertiesArrayTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

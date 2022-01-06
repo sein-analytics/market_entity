@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class UserStip extends DomainObject
 {
-    use NotifyChangeTrait;
 
     /**
      * @ORM\Id @ORM\Column(type="integer")

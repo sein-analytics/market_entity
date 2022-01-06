@@ -9,7 +9,6 @@
 namespace App\Entity\Update;
 
 use App\Entity\DomainObject;
-use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;

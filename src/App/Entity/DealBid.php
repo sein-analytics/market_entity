@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DealBid
 {
-    use CreatePropertiesArrayTrait, NotifyChangeTrait;
+    use CreatePropertiesArrayTrait;
     /**
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue

@@ -6,7 +6,6 @@ namespace App\Entity\Loan;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Entity\MarketUser;
-use App\Entity\NotifyChangeTrait;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
