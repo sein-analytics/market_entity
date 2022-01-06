@@ -10,7 +10,7 @@ namespace App\Entity;
 use Doctrine\Common\PropertyChangedListener;
 
 /**
- * @deprecated 
+ * @deprecated
  */
 trait NotifyChangeTrait
 {
