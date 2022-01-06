@@ -28,11 +28,11 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
     const TEMPLATE_INS_BASE_SQL = 'INSERT INTO `LoanTapeTemplate` (`id`, `user_id`, `asset_id`, `template`, `template_name`) VALUES)';
 
     static $table = [
-        self::TEMPLATE_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        self::TEMPLATE_USR_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        self::TEMPLATE_ASSET_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::TEMPLATE_DB_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::TEMPLATE_DB_USR_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        self::TEMPLATE_DB_ASSET_ID_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
         self::TEMPLATE_DB_KEY => [self::DATA_TYPE => 'longtext', self::DATA_DEFAULT => 'NOT NULL'],
-        self::TEMPLATE_NAME_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL']
+        self::TEMPLATE_DB_NAME_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL']
     ];
 
     /**
