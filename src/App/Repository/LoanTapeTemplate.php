@@ -42,7 +42,7 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
     public function fetchUserLoanTemplates(array $userId)
     {
         $sql = "SELECT * FROM LoanTapeTemplate WHERE user_id in (?) ORDER BY id ASC";
-        $results = $this->fetchByIntArray($this->getEntityManager(), $userId, $sql);
+        $results = $this->fetchByIntArray($this->em, $userId, $sql);
         return $results;
     }
 
