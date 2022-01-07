@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 
+use App\Repository\MarketUser\abstractMktUser;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\DBALException;
@@ -17,12 +18,10 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Illuminate\Support\Facades\Log;
 
-class MarketUser extends EntityRepository
+class MarketUser extends abstractMktUser
     implements DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait;
-
-    protected $callUsersUuidsFromIds = 'call UsersUuidsFromIds(:userIds)';
 
     function fetchUsersUuidFromIds(array $userIds)
     {
@@ -40,9 +39,8 @@ class MarketUser extends EntityRepository
      */
     function fetchUserMarketDealIds(int $userId)
     {
-        $sql = "SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?";
         try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt = $this->getEntityManager()->getConnection()->prepare(self::getUserDealIdsSql());
         } catch (\Exception $exception){
             return $exception->getMessage();
         }
@@ -54,14 +52,13 @@ class MarketUser extends EntityRepository
         }
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $stmt->closeCursor();
-        return $this->flattenResultArrayByKey($results, 'deal_id');
+        return $this->flattenResultArrayByKey($results, self::MKT_DEAL_ID_KEY);
     }
 
     public function fetchUserWatchlistDealIds(int $userId)
     {
-        $sql = "SELECT favorite_deal_id FROM user_favorite_deals WHERE  user_id = ?";
         try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt = $this->getEntityManager()->getConnection()->prepare(self::getUsrWatchlistIdsSql());
         } catch (\Exception $exception){
             return $exception->getMessage();
         }
@@ -73,7 +70,7 @@ class MarketUser extends EntityRepository
         }
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $stmt->closeCursor();
-        return $this->flattenResultArrayByKey($results, 'favorite_deal_id');
+        return $this->flattenResultArrayByKey($results, self::FAV_DEAL_ID_KEY);
     }
 
     /**
@@ -105,8 +102,7 @@ class MarketUser extends EntityRepository
      * @return bool|\Exception
      */
     public function removeDealFromUserWatchlist(int $userId, int $dealId) {
-        $sql = "DELETE FROM user_favorite_deals WHERE user_id=? AND `favorite_deal_id`=?";
-        return $this->completeWatchlistSql($userId, $dealId, $sql);
+        return $this->completeWatchlistSql($userId, $dealId, self::getRmvFromWatchlistSql());
     }
 
     /**
@@ -115,8 +111,7 @@ class MarketUser extends EntityRepository
      * @return bool|\Exception
      */
     public function addDealToUserWatchlist(int $userId, int $dealId) {
-        $sql = "INSERT INTO user_favorite_deals (`user_id`, `favorite_deal_id`) VALUES (?,?)";
-        return $this->completeWatchlistSql($userId, $dealId, $sql);
+        return $this->completeWatchlistSql($userId, $dealId, self::getAddToWatchlistSql());
     }
 
     /**
@@ -125,9 +120,7 @@ class MarketUser extends EntityRepository
      */
     public function fetchMarketUsersFromIds(array $ids)
     {
-        $sql = "SELECT * FROM MarketUser WHERE id IN (?) ORDER BY id ASC";
-        $results = $this->fetchByIntArray($this->getEntityManager(), $ids, $sql);
-        return $results;
+        return $this->fetchByIntArray($this->getEntityManager(), $ids, self::getUsersFromIdsArrSql());
     }
 
     /**
@@ -176,15 +169,15 @@ class MarketUser extends EntityRepository
      */
     public function fetchAllMarketUserBuyerIds()
     {
-        $sql = "SELECT id FROM AclRole WHERE role='Buyer' OR role='Both'";
-        $roles = $this->getEntityManager()->getConnection()->fetchAll($sql);
+        $roles = $this->getEntityManager()
+            ->getConnection()->fetchAll(self::getBuyerIdsByRoleSql());
         if(!is_array($roles)
             || count($roles) === 0){
             return false;
         }
         $rolesIds = $this->flattenResultArrayByKey($roles, 'id');
-        $sql = "SELECT id FROM MarketUser WHERE role_id in (?) ORDER BY id ASC ";
-        $results = $this->fetchByIntArray($this->getEntityManager(), $rolesIds, $sql);
+        $results = $this->fetchByIntArray($this->getEntityManager(),
+            $rolesIds, self::getUserIdsByRoleIdSql());
         if(!is_array($roles) || count($roles) === 0){
             return false;
         }
@@ -194,9 +187,9 @@ class MarketUser extends EntityRepository
 
     public function fetchMarketUserSaltByEmail(string $email)
     {
-        $sql = "SELECT user_salt FROM MarketUser WHERE email = ? ";
         try{
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt = $this->getEntityManager()
+                ->getConnection()->prepare(self::getUserSaltByEmailSql());
         } catch (\Exception $e){
             return false;
         }
@@ -213,21 +206,21 @@ class MarketUser extends EntityRepository
 
     public function fetchIssuerUserIdsByIssuerId(int $issuerId, int $exceptId=0)
     {
-        $sql = "SELECT id FROM MarketUser WHERE issuer_id = ? AND id != ? ORDER BY id ASC ";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt = $this->getEntityManager()
+            ->getConnection()->prepare(self::getUsrIdByIssuerIdSql());
         $stmt->bindParam(1, $issuerId);
         $stmt->bindParam(2, $exceptId);
         $stmt->execute();
         $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $stmt->closeCursor();
-        return $this->flattenResultArrayByKey($result, 'id');
+        return $this->flattenResultArrayByKey($result, self::MKT_USR_DB_ID_KEY);
     }
 
     public function addNewMsgMarketUser(int $msgId, int $userId)
     {
-        $sql = "INSERT INTO `market_user_message` (`message_id`, `market_user_id`) VALUES (?, ?) ";
         try{
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt = $this->getEntityManager()
+                ->getConnection()->prepare(self::getInsertMsgIdUsrIdSql());
             $stmt->bindParam(1, $msgId);
             $stmt->bindParam(2, $userId);
         } catch (\Exception $e){
@@ -242,10 +235,9 @@ class MarketUser extends EntityRepository
      */
     public function fetchLeaderTeamIdsFromLeaderId(int $userId)
     {
-        $sql = "SELECT id from MarketUser m1 " .
-            "WHERE m1.issuer_id = (SELECT issuer_id FROM MarketUser WHERE id = ?)";
         try{
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt = $this->getEntityManager()
+                ->getConnection()->prepare(self::getTeamLeadIdFromUsrIdAndIssuerSql());
             $stmt->bindValue(1, $userId);
         } catch (DBALException $e){
             return $e->getMessage();
@@ -255,9 +247,9 @@ class MarketUser extends EntityRepository
 
     public function updateRememberTokenById(string $token, int $id)
     {
-        $sql = "UPDATE `MarketUser` SET `remember_token`= ? WHere id= ?";
         try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt = $this->getEntityManager()
+                ->getConnection()->prepare(self::getUpdateRemTokenByUsrIdSql());
             $stmt->bindParam(1, $token);
             $stmt->bindParam(2, $id);
         } catch (\Exception $exception){
@@ -289,9 +281,9 @@ class MarketUser extends EntityRepository
 
     public function updateAuthyTokenById(string $token, int $id)
     {
-        $sql = "UPDATE `MarketUser` SET `authy_token`= ? WHere id= ?";
         try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $stmt = $this->getEntityManager()
+                ->getConnection()->prepare(self::getUpdateAuthTokenByUsrIdSql());
             $stmt->bindParam(1, $token);
             $stmt->bindParam(2, $id);
         } catch (\Exception $exception){

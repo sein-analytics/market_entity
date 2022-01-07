@@ -11,6 +11,11 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\Mapping\ClassMetadata;
+
+/**
+ * @requires __construct(EntityManager $em, ClassMetadata $class)
+ * in calling class
+ */
 trait QueryManagerTrait
 {
 
