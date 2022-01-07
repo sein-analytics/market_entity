@@ -88,7 +88,7 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
             [$userId, $templateName]);
         if ($stmt instanceof \Exception)
             return $stmt->getMessage();
-        $result = $this->executeStatementFetchMethod($stmt, self::FETCH_ALL_ASSO_MTHD);
+        $result = $this->executeStatementFetchMethod($stmt, self::FETCH_ASSO_MTHD);
         if (!is_array($result))
             return $result;
         return (int)$result[self::TEMPLATE_DB_ID_KEY];
