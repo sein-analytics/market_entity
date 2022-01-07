@@ -92,7 +92,7 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
         $result = $this->executeStatementFetchMethod($stmt, self::FETCH_ASSO_MTHD);
         if (!is_array($result))
             return $result;
-        return $result[self::TEMPLATE_DB_ID_KEY];
+        return (int)$result[self::TEMPLATE_DB_ID_KEY];
     }
 
     /**
