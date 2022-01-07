@@ -138,10 +138,7 @@ trait FetchingTrait
             return new \Exception($msg);
         }
         try {
-            if ($fetchMethod !== 'execute'
-                || $fetchMethod !== 'executeStatement'){
-                $stmt = $stmt->executeQuery();
-            }
+            $stmt = $stmt->executeQuery();
             return $stmt->{$fetchMethod}();
         } catch (\Doctrine\DBAL\Driver\Exception  $exception){
             Log::critical("Error executing statement with error: {$exception->getMessage()}");
