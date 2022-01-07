@@ -67,15 +67,14 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
             instanceof \Exception
         )
             return 'Error executing id check: ' . $stmt->getMessage();
-        $result = $this->executeStatementFetchMethod($stmt, self::EXECUTE_STMT_MTHD);
-        if (!is_array($result )
-            ||!array_key_exists('count', $result))
+        $result = $this->executeStatementFetchMethod($stmt, self::FETCH_ONE_MTHD);
+        if (!$result)
             return "LoanTapeTemplate with $id does not exist";
         $stmt = $this->buildStmtFromSql($this->em, self::UPDATE_TEMPLATE_SQL,
             [json_encode($template), $id]);
         if ($stmt instanceof \Exception)
             return $stmt->getMessage();
-        return $this->executeStatementFetchMethod($stmt, self::EXECUTE_STMT_MTHD);
+        return $this->executeStatementFetchMethod($stmt, self::EXECUTE_MTHD);
     }
 
     /**
@@ -89,7 +88,7 @@ implements DbalStatementInterface, SqlManagerTraitInterface, TemplateInterface
             [$userId, $templateName]);
         if ($stmt instanceof \Exception)
             return $stmt->getMessage();
-        $result = $this->executeStatementFetchMethod($stmt, self::FETCH_ASSO_MTHD);
+        $result = $this->executeStatementFetchMethod($stmt, self::FETCH_ALL_ASSO_MTHD);
         if (!is_array($result))
             return $result;
         return (int)$result[self::TEMPLATE_DB_ID_KEY];
