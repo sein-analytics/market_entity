@@ -27,6 +27,6 @@ class TriggerType
     protected $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Trigger", mappedBy="type") */
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="type") */
     protected $triggers;
 }
