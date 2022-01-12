@@ -166,7 +166,7 @@ class Deal extends DealAbstract
     /** @ORM\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="deal")  **/
     protected $shelfSpecifics;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Typed\Trigger", mappedBy="deal")  **/
+    /** @ORM\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="deal")  **/
     protected $triggers;
 
     /**

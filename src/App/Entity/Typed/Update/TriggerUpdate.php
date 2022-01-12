@@ -10,7 +10,7 @@ namespace App\Entity\Typed\Update;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-use App\Entity\Typed\Trigger;
+use App\Entity\Typed\Triggers;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
  *
@@ -27,8 +27,8 @@ class TriggerUpdate extends AbstractTypeUpdate
     protected $id;
 
     /**
-     * @var \App\Entity\Typed\Trigger $trigger
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Trigger", inversedBy="updates") **/
+     * @var \App\Entity\Typed\Triggers $trigger
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Triggers", inversedBy="updates") **/
     protected $trigger;
 
     /**
@@ -61,13 +61,16 @@ class TriggerUpdate extends AbstractTypeUpdate
     }
 
     /**
-     * @return Trigger
+     * @return Triggers
      */
-    public function getTrigger() {
+    public function getTrigger():Triggers {
         return $this->trigger;
     }
 
-    public function getPeriod() {
+    /**
+     * @return Period
+     */
+    public function getPeriod():Period {
         return $this->period;
     }
 
@@ -100,9 +103,9 @@ class TriggerUpdate extends AbstractTypeUpdate
     }
 
     /**
-     * @param Trigger $trigger
+     * @param Triggers $trigger
      */
-    public function setTrigger(Trigger $trigger) {
+    public function setTrigger(Triggers $trigger) {
         $this->implementChange($this,'trigger', $this->trigger, $trigger);
     }
 

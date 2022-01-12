@@ -6,7 +6,7 @@
 
 namespace App\Entity\Typed\Trigger;
 
-use App\Entity\Typed\Trigger;
+use App\Entity\Typed\Triggers;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Bond;
@@ -16,7 +16,7 @@ use App\Entity\Typed\TypedInterface;
 /**
  * @ORM\Entity
  */
-class BondTrigger extends Trigger
+class BondTrigger extends Triggers
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")

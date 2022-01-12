@@ -18,14 +18,14 @@ use App\Entity\Typed\Update\TypedUpdateInterface;
 /**
  * @MappedSuperclass
  * @ORM\Entity
- * @ORM\Table(name="Trigger")
+ * @ORM\Table(name="Triggers")
  * @ORM\DiscriminatorColumn(name="triggerClass", type="string")
  * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Trigger\BondTrigger",
  *                        "pool" = "\App\Entity\Typed\Trigger\PoolTrigger",
  *                        "loan" = "\App\Entity\Typed\Trigger\LoanTrigger"
  * })
  */
-abstract class Trigger extends AbstractTyped
+abstract class Triggers extends AbstractTyped
 {
     abstract public function addAttached(TypedInterface $entity);
 
