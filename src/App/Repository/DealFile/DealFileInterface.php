@@ -89,9 +89,9 @@ interface DealFileInterface
         self::DF_ASSET_ID => null,
         self::DF_SCAN_LOC => self::DEFAULT_SCAN_LOC,
         self::DF_VIRUS_IND => self::DEFAULT_VIRUS_BOOL,
+        self::DF_ACC_MODE => null,
         self::DF_PUB_PATH => null,
         self::DF_SIG_ID => null,
         self::DF_SIG_PATH => null,
-        self::DF_ACC_MODE => null
     ];
 }
