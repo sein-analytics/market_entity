@@ -28,6 +28,8 @@ trait QueryManagerTrait
 
     static $missingColVal = ['message' => 'Insert array is missing a column data'];
 
+    private static $missingDataVal = 'NAV';
+
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -109,7 +111,7 @@ trait QueryManagerTrait
                 $counter++;
                 continue;
             }
-            if (($value = $this->returnInsertArrayValue($data, $counter, $colName)) === false)
+            if (($value = $this->returnInsertArrayValue($data, $counter, $colName)) === self::$missingDataVal)
                 return self::$missingColVal;
             $typeResult = $this->isTypeMappingCorrect(gettype($value), $colName, $properties);
             if(is_array($typeResult))
@@ -132,7 +134,7 @@ trait QueryManagerTrait
         $counter = 0;
         $insertStmt = '(';
         foreach (self::$table as $colName => $properties){
-            if (($value = $this->returnInsertArrayValue($data, $counter, $colName)) === false)
+            if (($value = $this->returnInsertArrayValue($data, $counter, $colName)) === self::$missingDataVal)
                 return self::$missingColVal;
             if(is_null($value)) {
                 $value = $this->isValueNullable($value, $colName, $properties);
@@ -159,7 +161,7 @@ trait QueryManagerTrait
             return $insertData[$colName];
         elseif (array_key_exists($counter, $insertData))
             return $insertData[$counter];
-        return false;
+        return self::$missingDataVal;
     }
 
     public function quoteStringValue($value, array $properties){
