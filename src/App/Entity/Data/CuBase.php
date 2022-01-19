@@ -92,6 +92,11 @@ class CuBase
     protected $cuData;
 
     /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\Issuer", mappedBy="cuMain")
+     */
+    protected $issuers;
+
+    /**
      * @return int
      */
     public function getId(): int { return $this->id; }
