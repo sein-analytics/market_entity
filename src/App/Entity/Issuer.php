@@ -5,6 +5,7 @@
  */
 
 namespace App\Entity;
+use App\Entity\Data\CuBase;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
@@ -71,6 +72,13 @@ class Issuer
     /** @ORM\Column(type="string", nullable=false, unique=true) **/
     protected $phone;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="issuers")
+     * @ORM\JoinColumn(name="cu_id", referencedColumnName="id", nullable=true)
+     * @var CuBase
+     */
+    private $cuMain;
+
     function __construct()
     {
     }
@@ -120,6 +128,16 @@ class Issuer
      * @param \DateTime $approvedDate
      */
     public function setApprovedDate(\DateTime $approvedDate) { $this->approvedDate = $approvedDate; }
+
+    /**
+     * @return CuBase|null
+     */
+    public function getCuMain(): ?CuBase { return $this->cuMain; }
+
+    /**
+     * @param CuBase $cuMain
+     */
+    public function setCuMain(CuBase $cuMain): void { $this->cuMain = $cuMain; }
 
 
 
