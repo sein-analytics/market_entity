@@ -16,7 +16,7 @@ interface CommunityInterface
 
     const COMM_SELLERS_KEY = 'sellers';
 
-    const COMM_COMMUNITY_KEY = 'community';
+    const COMM_GROUPS_KEY = 'communityGroups';
 
     const COMM_DB_ID_KEY = 'id';
 
