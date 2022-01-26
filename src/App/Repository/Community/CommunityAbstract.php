@@ -58,6 +58,11 @@ abstract class CommunityAbstract extends EntityRepository
         ];
     }
 
+    /**
+     * @param array $userIds
+     * @param string $role
+     * @return array|false
+     */
     public function returnCommunityProfilesParams(array $userIds, string $role)
     {
         if (!$this->isRollKeyAppropriate($role))

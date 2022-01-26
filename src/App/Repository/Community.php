@@ -40,7 +40,11 @@ class Community extends CommunityAbstract
         ];
     }
 
-    public function fetchUserCommunities(int $userId)
+    /**
+     * @param int $userId
+     * @return array[]
+     */
+    public function fetchUserCommunities(int $userId):array
     {
         $results = $this->executeProcedure([$userId], self::$callCommunitiesByUserId);
         if (count($results) > 0){
@@ -59,7 +63,7 @@ class Community extends CommunityAbstract
                 }
             }, $results);
         }
-        return $results;
+        return [self::COMM_GROUPS_KEY => $results];
     }
 
     public function fetchCommunityGroupUserIds (int $commId, $userId)
