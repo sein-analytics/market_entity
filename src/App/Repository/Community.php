@@ -73,6 +73,13 @@ class Community extends CommunityAbstract
         );
     }
 
+    public function fetchMarketSpecialities ()
+    {
+        return $this->buildAndExecuteFromSql($this->em,
+            self::FETCH_SPECIALITIES_SQL, self::FETCH_ALL_ASSO_MTHD, []
+        );
+    }
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('Community');

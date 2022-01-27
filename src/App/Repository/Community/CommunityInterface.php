@@ -40,5 +40,7 @@ interface CommunityInterface
 
     const FETCH_COMM_GROUP_USER_IDS_MTHD = 'fetchCommunityGroupUserIds';
 
+    const FETCH_SPECIALITIES_SQL = 'SELECT uuid, speciality AS label FROM Speciality';
+
     //const COMM_INSERT_ARRAY = [];
 }
