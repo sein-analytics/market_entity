@@ -34,5 +34,11 @@ interface CommunityInterface
 
     const COMM_DB_UUID_KEY = 'uuid';
 
+    const FETCH_COMM_GROUP_MTHD = 'fetchUserCommunities';
+
+    const FETCH_COMM_PROFILES_MTHD = 'fetchUserCommunityProfiles';
+
+    const FETCH_COMM_GROUP_USER_IDS_MTHD = 'fetchCommunityGroupUserIds';
+
     //const COMM_INSERT_ARRAY = [];
 }
