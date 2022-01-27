@@ -35,7 +35,7 @@ class Speciality
     protected $speciality;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false, unique=true)
      * @var string
      **/
     protected $uuid;
