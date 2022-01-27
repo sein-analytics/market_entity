@@ -33,4 +33,10 @@ class Speciality
      * @var string
      **/
     protected $speciality;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     **/
+    protected $uuid;
 }
