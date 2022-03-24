@@ -75,16 +75,31 @@ class Community
      */
     protected $uuid;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="communityId")
+     * @var ArrayCollection
+     */
+    protected $invites;
+
     // @ORM\Column(type="boolean", options={"default":"0"}
 
     public function __construct()
     {
         $this->users  = new ArrayCollection();
         $this->groupChats = new ArrayCollection();
+        $this->invites = new ArrayCollection();
     }
 
     public function addUserToCommunity(MarketUser $user){
         $this->users->add($user);
+    }
+
+    /**
+     * @param CommunityInvite $invite
+     */
+    public function addCommunityInvite (CommunityInvite $invite)
+    {
+        $this->invites->add($invite);
     }
 
     public function removeUserFromCommunity(MarketUser $user)
@@ -98,17 +113,17 @@ class Community
     /**
      * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return ArrayCollection
      */
-    public function getUsers() { return $this->users; }
+    public function getUsers():ArrayCollection { return $this->users; }
 
     /**
      * @return string
      */
-    public function getName() { return $this->name; }
+    public function getName():string { return $this->name; }
 
     /**
      * @return \App\Entity\MarketUser
@@ -180,5 +195,10 @@ class Community
      * @param bool $isPrimaryGroup
      */
     public function setIsPrimaryGroup(bool $isPrimaryGroup) { $this->isPrimaryGroup = $isPrimaryGroup; }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getInvites ():ArrayCollection { return $this->invites; }
 
 }
