@@ -76,7 +76,7 @@ class Community
     protected $uuid;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="communityId")
+     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="community")
      * @var ArrayCollection
      */
     protected $invites;
