@@ -163,6 +163,12 @@ class MarketUser
     protected $bids;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="user")
+     * @var ArrayCollection
+     */
+    protected $communityInvites;
+
+    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="user")
      * @var null|PersistentCollection
      */
@@ -360,6 +366,7 @@ class MarketUser
         $this->role = new AclRole();
         $this->communities = new ArrayCollection();
         $this->myCommunities = new ArrayCollection();
+        $this->communityInvites = new ArrayCollection();
         $this->failedAttempts = new FailedLogin();
         parent::__construct();
     }
@@ -444,7 +451,7 @@ class MarketUser
     /**
      * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return mixed
