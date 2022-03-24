@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="CommunityInviteStatus")
+ * @ORM\Table(name="CommInviteStatus")
  */
 class CommInviteStatus
 {
@@ -41,7 +41,7 @@ class CommInviteStatus
     protected $label = '';
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\CommunityInvite", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="\App\Entity\CommunityInvite", mappedBy="status")
      * @var ArrayCollection
      */
     protected $invites;
