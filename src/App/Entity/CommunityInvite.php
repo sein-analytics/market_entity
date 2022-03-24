@@ -20,21 +20,21 @@ class CommunityInvite
 
     /**
      * @ORM\ManyToOne (targetEntity="\App\Entity\Community", inversedBy="invites")
-     * @ORM\JoinColumn(name="community_id", referenceColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="community_id", referencedColumnName="id", nullable=false)
      * @var Community
      */
     protected $community;
 
     /**
      * @ORM\ManyToOne (targetEntity="\App\Entity\CommInviteStatus", inversedBy="invites")
-     * @ORM\JoinColumn(name="status_id", referenceColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var CommInviteStatus
      */
     protected $status;
 
     /**
      * @ORM\ManyToOne (targetEntity="\App\Entity\MarketUser", inversedBy="communityInvites")
-     * @ORM\JoinColumn(name="user_id", referenceColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * @var null|MarketUser
      */
     protected $user;
