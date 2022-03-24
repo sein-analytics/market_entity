@@ -44,5 +44,17 @@ interface CommunityInterface
 
     const FETCH_SPECIALITIES_SQL = 'SELECT uuid, speciality AS label FROM Speciality';
 
+    const COMM_INV_DB_COMM_ID_KEY = 'community_id';
+
+    const COMM_INV_DB_STATUS_ID_KEY = 'status_id';
+
+    const COMM_INV_DB_USER_ID_KEY = 'user_id';
+
+    const COMM_INV_DB_INVITE_KEY = 'invite_date';
+
+    const COMM_INV_DB_EMAIL_KEY = 'email';
+
+    const COMM_INV_DB_UUID_KEY = 'uuid';
+
     //const COMM_INSERT_ARRAY = [];
 }

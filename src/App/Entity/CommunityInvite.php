@@ -40,6 +40,27 @@ class CommunityInvite
     protected $user;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var null|string
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     * {"type":"datetime","min":"2010-01-01T00:00:00Z","step":"1"}
+     * {"format":"Y-m-d\TH:iP"}
+     * @var \DateTime
+     */
+    protected $inviteDate;
+
+    /**
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string", unique=true)
+     * @var string
+     */
+    protected $uuid;
+
+    /**
      * @return int
      */
     public function getId(): int { return $this->id; }
@@ -74,7 +95,29 @@ class CommunityInvite
      */
     public function setStatus(CommInviteStatus $status): void { $this->status = $status; }
 
+    /**
+     * @return null|string
+     */
+    public function getEmail(): ?string { return $this->email; }
 
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void { $this->email = $email; }
 
+    /**
+     * @return \DateTime
+     */
+    public function getInviteDate(): \DateTime { return $this->inviteDate; }
+
+    /**
+     * @param \DateTime $inviteDate
+     */
+    public function setInviteDate(\DateTime $inviteDate): void { $this->inviteDate = $inviteDate; }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string { return $this->uuid; }
 
 }
