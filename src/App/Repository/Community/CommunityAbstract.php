@@ -15,6 +15,10 @@ abstract class CommunityAbstract extends EntityRepository
 
     protected static $callCommProfilesByUserIdsBidAndRoles = 'call CommunityProfilesByUserBidStatusAndRole(:bidStatusIds, :roleIds, :userIds)';
 
+    protected static $callCommunityRecentPurchases = 'call CommunityRecentPurchases(:userId)';
+
+    protected static $callCommunityRecentSales = 'call CommunityRecentSales(:userId)';
+
     protected static $communityUserIdsSql = 'SELECT user_id FROM user_communities WHERE comm_id=? AND user_id !=?';
 
     protected static $createCommunitySql = 'INSERT INTO Community VALUE (0, ?, ?, ?, ?, ?, ?, ?)';

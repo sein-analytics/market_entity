@@ -73,6 +73,20 @@ class Community extends CommunityAbstract
         );
     }
 
+    /**
+     * @param int $userId
+     * @return mixed
+     */
+    public function fetchUserRecentSales(int $userId)
+    {
+        return $this->executeProcedure([$userId], self::$callCommunityRecentSales);
+    }
+
+    public function fetchUserRecentPurchases(int $userId)
+    {
+        return $this->executeProcedure([$userId], self::$callCommunityRecentPurchases);
+    }
+
     public function fetchMarketSpecialities ()
     {
         return $this->buildAndExecuteFromSql($this->em,
