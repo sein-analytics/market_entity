@@ -56,5 +56,11 @@ interface CommunityInterface
 
     const COMM_INV_DB_UUID_KEY = 'uuid';
 
+    const RECENT_PURCHASES_JSON_KEY = 'recentPurchases';
+
+    const RECENT_SALES_JSON_KEY = 'recentSales';
+
+    const CALL_REPORT_JSON_KEY = 'callReportData';
+
     //const COMM_INSERT_ARRAY = [];
 }
