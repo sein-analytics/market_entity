@@ -87,6 +87,16 @@ class Community extends CommunityAbstract
         return $this->executeProcedure([$userId], self::$callCommunityRecentPurchases);
     }
 
+    public function fetchUserRatingsDist (int $userId)
+    {
+        return $this->executeProcedure([$userId], self::$callUserRatingsDist);
+    }
+
+    public function fetchProfileCallReportData(int $issuerId)
+    {
+        return $this->executeProcedure([$issuerId], self::$callProfileCallReportData);
+    }
+
     public function fetchMarketSpecialities ()
     {
         return $this->buildAndExecuteFromSql($this->em,
