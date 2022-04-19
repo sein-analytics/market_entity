@@ -17,6 +17,10 @@ abstract class CommunityAbstract extends EntityRepository
 
     protected static $callCommunityRecentPurchases = 'call CommunityRecentPurchases(:userId)';
 
+    protected static $callUserRatingsDist = 'call UserRatingsDist(:userId)';
+
+    protected static $callProfileCallReportData = 'call ProfileCallReportData(:issuerId)';
+
     protected static $callCommunityRecentSales = 'call CommunityRecentSales(:userId)';
 
     protected static $communityUserIdsSql = 'SELECT user_id FROM user_communities WHERE comm_id=? AND user_id !=?';
