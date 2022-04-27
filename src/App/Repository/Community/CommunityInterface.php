@@ -62,5 +62,7 @@ interface CommunityInterface
 
     const CALL_REPORT_JSON_KEY = 'callReportData';
 
+    const PROFILE_USER_JSON_KEY = 'profileUser';
+
     //const COMM_INSERT_ARRAY = [];
 }
