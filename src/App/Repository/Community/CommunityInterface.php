@@ -42,6 +42,12 @@ interface CommunityInterface
 
     const FETCH_COMM_SPECIALITIES_MTHD = 'fetchMarketSpecialities';
 
+    const FETCH_RECENT_SALES_MTHD = 'fetchUserRecentSales';
+
+    const FETCH_RECENT_PURCHASES_MTHD = 'fetchUserRecentPurchases';
+
+    const FETCH_CALL_REPORT_MTHD = 'fetchProfileCallReportData';
+
     const FETCH_SPECIALITIES_SQL = 'SELECT uuid, speciality AS label FROM Speciality';
 
     const COMM_INV_DB_COMM_ID_KEY = 'community_id';
