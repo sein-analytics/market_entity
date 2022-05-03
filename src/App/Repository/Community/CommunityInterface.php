@@ -70,5 +70,11 @@ interface CommunityInterface
 
     const PROFILE_USER_JSON_KEY = 'profileUser';
 
+    const PROFILE_DATA = [
+        self::RECENT_SALES_JSON_KEY => [],
+        self::RECENT_PURCHASES_JSON_KEY => [],
+        self::CALL_REPORT_JSON_KEY => []
+    ];
+
     //const COMM_INSERT_ARRAY = [];
 }

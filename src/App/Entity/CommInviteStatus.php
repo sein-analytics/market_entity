@@ -21,11 +21,11 @@ class CommInviteStatus
     const ON_BOARDING_USER = 'on-boarding';
 
     protected static $inviteStatuses = [
-        self::PENDING_RESPONSE => 0,
-        self::INVITE_ACCEPT => 1,
-        self::ON_BOARDING_USER => 2,
-        self::INVITE_REJECT => 3,
-        self::EMAIL_ERROR => 4
+        self::PENDING_RESPONSE => 1,
+        self::INVITE_ACCEPT => 2,
+        self::ON_BOARDING_USER => 3,
+        self::INVITE_REJECT => 4,
+        self::EMAIL_ERROR => 5
     ];
 
     /**
