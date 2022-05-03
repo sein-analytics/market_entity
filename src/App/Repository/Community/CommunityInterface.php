@@ -76,5 +76,11 @@ interface CommunityInterface
         self::CALL_REPORT_JSON_KEY => []
     ];
 
+    const PROFILE_DATA_MTHD_MAP  = [
+        self::RECENT_SALES_JSON_KEY => self::FETCH_RECENT_SALES_MTHD,
+        self::RECENT_PURCHASES_JSON_KEY => self::FETCH_RECENT_PURCHASES_MTHD,
+        self::CALL_REPORT_JSON_KEY => self::FETCH_CALL_REPORT_MTHD
+    ];
+
     //const COMM_INSERT_ARRAY = [];
 }
