@@ -70,6 +70,12 @@ interface CommunityInterface
 
     const PROFILE_USER_JSON_KEY = 'profileUser';
 
+    const PROFILE_PARAM_KEY = 'param';
+
+    const PROFILE_MTHD_KEY = 'method';
+
+    const PROFILE_ISSUER_ID_JSON = 'issuerId';
+
     const PROFILE_DATA = [
         self::RECENT_SALES_JSON_KEY => [],
         self::RECENT_PURCHASES_JSON_KEY => [],
@@ -77,9 +83,18 @@ interface CommunityInterface
     ];
 
     const PROFILE_DATA_MTHD_MAP  = [
-        self::RECENT_SALES_JSON_KEY => self::FETCH_RECENT_SALES_MTHD,
-        self::RECENT_PURCHASES_JSON_KEY => self::FETCH_RECENT_PURCHASES_MTHD,
-        self::CALL_REPORT_JSON_KEY => self::FETCH_CALL_REPORT_MTHD
+        self::RECENT_SALES_JSON_KEY => [
+            self::PROFILE_MTHD_KEY => self::FETCH_RECENT_SALES_MTHD,
+            self::PROFILE_PARAM_KEY => self::COMM_DB_ID_KEY
+        ],
+        self::RECENT_PURCHASES_JSON_KEY => [
+            self::PROFILE_MTHD_KEY => self::FETCH_RECENT_PURCHASES_MTHD,
+            self::PROFILE_PARAM_KEY => self::COMM_DB_ID_KEY
+        ],
+        self::CALL_REPORT_JSON_KEY => [
+            self::PROFILE_MTHD_KEY => self::FETCH_CALL_REPORT_MTHD,
+            self::PROFILE_PARAM_KEY => self::PROFILE_ISSUER_ID_JSON
+        ]
     ];
 
     //const COMM_INSERT_ARRAY = [];
