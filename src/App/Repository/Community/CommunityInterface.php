@@ -48,6 +48,8 @@ interface CommunityInterface
 
     const FETCH_CALL_REPORT_MTHD = 'fetchProfileCallReportData';
 
+    const FETCH_RATINGS_DIST_MTHD = 'fetchUserRatingsDist';
+
     const FETCH_SPECIALITIES_SQL = 'SELECT uuid, speciality AS label FROM Speciality';
 
     const COMM_INV_DB_COMM_ID_KEY = 'community_id';
@@ -70,6 +72,8 @@ interface CommunityInterface
 
     const PROFILE_USER_JSON_KEY = 'profileUser';
 
+    const RATINGS_DIST_JSON_KEY = 'ratingsDistribution';
+
     const PROFILE_PARAM_KEY = 'param';
 
     const PROFILE_MTHD_KEY = 'method';
@@ -79,7 +83,8 @@ interface CommunityInterface
     const PROFILE_DATA = [
         self::RECENT_SALES_JSON_KEY => [],
         self::RECENT_PURCHASES_JSON_KEY => [],
-        self::CALL_REPORT_JSON_KEY => []
+        self::CALL_REPORT_JSON_KEY => [],
+        self::RATINGS_DIST_JSON_KEY => []
     ];
 
     const PROFILE_DATA_MTHD_MAP  = [
@@ -94,6 +99,10 @@ interface CommunityInterface
         self::CALL_REPORT_JSON_KEY => [
             self::PROFILE_MTHD_KEY => self::FETCH_CALL_REPORT_MTHD,
             self::PROFILE_PARAM_KEY => self::PROFILE_ISSUER_ID_JSON
+        ],
+        self::RATINGS_DIST_JSON_KEY => [
+            self::PROFILE_MTHD_KEY => self::FETCH_RATINGS_DIST_MTHD,
+            self::PROFILE_PARAM_KEY => self::COMM_DB_ID_KEY
         ]
     ];
 
