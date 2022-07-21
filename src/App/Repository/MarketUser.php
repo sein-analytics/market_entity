@@ -13,6 +13,8 @@ use App\Repository\MarketUser\abstractMktUser;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception\DriverException;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -295,5 +297,13 @@ class MarketUser extends abstractMktUser
             return  false;
         }
         return true;
+    }
+
+    public function fetchMarketUserById($userId)
+    {
+        /** @var  $query Query */
+        $query = $this->getEntityManager()->createQuery('SELECT * FROM MarketUser where id=:id');
+        $query->setParameter('id', $userId);
+        return $query->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
 }
