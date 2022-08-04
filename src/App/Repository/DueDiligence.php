@@ -9,108 +9,112 @@
 namespace App\Repository;
 
 
+use App\Repository\DueDiligence\DueDiligenceAbstract;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\DBAL\Driver\Result;
 use Doctrine\ORM\Query;
 
-class DueDiligence extends EntityRepository
+class DueDiligence extends DueDiligenceAbstract
 {
     use FetchMapperTrait, FetchingTrait;
+
+    /**
+     * @param int $userId
+     * @return mixed
+     */
+    public function fetchUserSaleDealIdsInDueDiligence (int $userId):mixed
+    {
+        return $this->executeProcedure([$userId], self::$callUserSaleDealIdsInDueDiligence);
+    }
+
+    public function fetchUserPurchasesDueDiligenceDealIds(int $userId)
+    {
+        $result = $this->buildAndExecuteFromSql($this->getEntityManager(),
+            self::$userPurchaseDueDiligenceDealIdsSql, self::FETCH_ALL_KEY_VAL_MTHD, [$userId]
+        );
+        if (!is_array($result))
+            return $result;
+        return $this->flattenResultArrayByKey($result, self::QUERY_JUST_ID);
+    }
 
     /**
      * @param array $userIds
      * @param array $dealIds
      * @param array $exceptIds
-     * @return array
+     * @return array|string
      */
-    public function fetchDdIdsByUserIdsDealIds(array $userIds, array $dealIds, array $exceptIds=[0])
+    public function fetchDdIdsByUserIdsDealIds(array $userIds, array $dealIds, array $exceptIds=[0]):array|string
     {
         $sql = 'SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)';
         $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $userIds, $dealIds, $exceptIds);
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        if(count($results)){
-            return $this->flattenResultArrayByKey($results, 'id');
+        try {
+            $results = $stmt->fetchAllAssociative();
+            if(count($results)){
+                return $this->flattenResultArrayByKey($results, 'id');
+            }
+            return [];
+        }catch (\Doctrine\DBAL\Driver\Exception $err){
+            return $err->getMessage();
         }
-        return $results;
     }
 
     /**
-     * @param array $ddIds
-     * @return array
+     * @param int $issuerId
+     * @return mixed
      */
-    public function fetchDealFileDataByDdIds(array $ddIds)
+    public function fetchDealFileDataByDdIds(int $issuerId):mixed
     {
-        $sql = 'SELECT loan_id, deal_file_id, doc_type_id, deal_id, file_name AS fileName, file.user_id, image_arn AS link, ' .
-            'issue AS dealName FROM deal_file_due_diligence ' .
-            'LEFT JOIN DealFile file ON file.id = deal_file_due_diligence.deal_file_id ' .
-            'LEFT JOIN MarketUser user ON user.id = file.user_id ' .
-            'LEFT JOIN Deal deal ON deal.id=deal_id ' .
-            'WHERE due_diligence_id IN (?) ORDER BY loan_id, doc_type_id ASC';
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
-            array($ddIds),
-            array(Connection::PARAM_INT_ARRAY)
-        );
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $results;
+        return $this->executeProcedure([$issuerId],
+            self::$callDealFileDataByIssuerDueDiligenceIds);
     }
 
     /**
-     * @param array $ddIds
-     * @return array
+     * @param int $issuerId
+     * @return mixed
      */
-    public function fetchDdIssuesDataByDdIds(array  $ddIds)
+    public function fetchDdIssuesDataByDdIds(int $issuerId):mixed
     {
-        $sql = 'SELECT DueDiligenceIssue.id AS issueId, due_diligence_id, status_id, file_id, file_name AS fileName, open_date AS created, ' .
-            'closed_date, doc_type_id, type AS section, issue, status, priority_id, file.loan_id, message_priority AS significance FROM DueDiligenceIssue ' .
-            'LEFT JOIN DealFile file ON file.id=file_id ' .
-            'LEFT JOIN DocType doc on doc.id=doc_type_id ' .
-            'LEFT JOIN DueDilIssueStatus ddstatus on ddstatus.id=status_id ' .
-            'LEFT JOIN MessagePriority priority on priority.id=priority_id ' .
-            'WHERE due_diligence_id IN (?) ORDER BY issueId, due_diligence_id ASC';
-        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds);
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $results;
+        return $this->executeProcedure([$issuerId],
+            self::$callIssuesDataByIssuerDueDiligenceIds);
     }
 
     /**
-     * @param array $issueIds
-     * @param array $loanIds
-     * @return array
+     * @param int $issuerId
+     * @return mixed
      */
-    public function fetchMsgIssuesDataByIssueIdsLoanIds(array $issueIds, array $loanIds)
+    public function fetchMsgIssuesDataByIssueIdsLoanIds(int $issuerId):mixed
     {
-        $sql = 'SELECT Message.id AS msg_id, loan_id, user_id, issue_id, type_id, Message.status_id, priority_id, date AS dated, subject, message, ' .
-            'first_name, last_name, image_arn AS senderPicture, issuer_id, issuer_name As senderCompany, message_status AS status, type FROM Message ' .
-            'LEFT JOIN MarketUser user On user.id=user_id ' .
-            'LEFT JOIN Issuer issuer ON issuer.id=issuer_id ' .
-            'LEFT JOIN MessageStatus msg ON msg.id=Message.status_id ' .
-            'LEFT JOIN MessageType msgType on msgType.id=type_id ' .
-            'WHERE issue_id IN (?) AND loan_id IN (?)';
-        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $issueIds, $loanIds);
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $results;
+        return $this->executeProcedure([$issuerId],
+            self::$callIssuesMsgsDataByIssuerDueDiligenceIds);
     }
 
     /**
      * @param array $ddIds
      * @param $loanIds
-     * @return array
+     * @return \Exception|mixed
      */
-    public function fetchDdLoanStatusByDdIdLoanId(array $ddIds, $loanIds)
+    public function fetchDdLoanStatusByDdIdLoanId(array $ddIds, $loanIds):mixed
     {
-        $sql = 'SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)';
-        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $ddIds, $loanIds);
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
+        $stmt = $this->returnMultiIntArraySqlStmt(
+            $this->getEntityManager(), self::$dueDilLoanStatusByDdIdsLoanIdsSql,
+            $ddIds, $loanIds);
+        try {
+            $results = $stmt->fetchAllAssociative();
+        }catch (\Doctrine\DBAL\Driver\Exception  $err){
+            $results = ['message' => $err->getMessage()];
+        }
         return $results;
     }
 
+    /**
+     * @deprecated ToDo delete once all calls to method are deleted
+     * @param int $issuerId
+     * @param int $dealId
+     * @return false|int|mixed[]
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function fetchDdLeadUserIdByIssueIdDealId(int $issuerId, int $dealId)
     {
         $sql = 'SELECT user_id FROM DueDiligence dd ' .
@@ -119,8 +123,11 @@ class DueDiligence extends EntityRepository
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->bindParam(1, $issuerId);
         $stmt->bindParam(2, $dealId);
-        $stmt->execute();
-        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        try {
+            $result = $stmt->executeQuery()
+            ->fetchAssociative();
+        }catch (\Doctrine\DBAL\Driver\Exception $err){}
+
         if(array_key_exists('user_id', $result)){
             return (int)$result['user_id'];
         }

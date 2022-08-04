@@ -26,40 +26,36 @@ class Message extends DomainObject
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="messages")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @var MarketUser
      **/
-    protected $user;
+    protected MarketUser $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="messages")
      * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
-     * @var Deal
      */
-    protected $deal;
+    protected Deal $deal;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
      * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
-     * @var Loan
      */
-    protected $loan;
+    protected Loan $loan;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
      */
-    protected $date;
+    protected \DateTime $date;
 
     /**
      * @ORM\Column(type="string", nullable=false)
      * @var string
      */
-    protected $subject;
+    protected string $subject;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
@@ -67,9 +63,14 @@ class Message extends DomainObject
      *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
-     * @var PersistentCollection|null
      */
-    protected $responses;
+    protected ArrayCollection|null $responses;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
+     */
+    protected MessageType $type;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
@@ -78,51 +79,43 @@ class Message extends DomainObject
     protected $recipients;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
-     * @var MessageType
-     */
-    protected $type;
-
-    /**
      * @ORM\Column(type="text", nullable=false)
-     * @var string
      */
-    protected $message;
+    protected string $message;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageOriginator", inversedBy="messages")
      * @ORM\JoinColumn(name="originator_id", referencedColumnName="id", nullable=false)
-     * @var MessageOriginator
      */
-    protected $originator;
+    protected MessageOriginator $originator;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
-     * @var MessageStatus
      */
-    protected $status;
+    protected MessageStatus $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="messages")
      * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=true)
-     * @var MessagePriority
      */
-    protected $priority;
+    protected MessagePriority $priority;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
      * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
-     * @var MessageAction
      */
-    protected $action;
+    protected MessageAction $action;
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @var string
      */
-    protected $sendStatus;
+    protected string $sendStatus;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    protected array|string $msgRecipientIds;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceIssue", inversedBy="messages")

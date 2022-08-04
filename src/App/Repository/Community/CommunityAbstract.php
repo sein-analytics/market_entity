@@ -11,31 +11,31 @@ abstract class CommunityAbstract extends EntityRepository
     implements CommunityInterface, DbalStatementInterface, SqlManagerTraitInterface
 {
 
-    protected static $callCommProfilesByBidAndRoles = 'call CommunityProfilesByBidStatusAndUserRole(:bidStatusIds, :roleIds, :userId)';
+    protected static string $callCommProfilesByBidAndRoles = 'call CommunityProfilesByBidStatusAndUserRole(:bidStatusIds, :roleIds, :userId)';
 
-    protected static $callCommProfilesByUserIdsBidAndRoles = 'call CommunityProfilesByUserBidStatusAndRole(:bidStatusIds, :roleIds, :userIds)';
+    protected static string $callCommProfilesByUserIdsBidAndRoles = 'call CommunityProfilesByUserBidStatusAndRole(:bidStatusIds, :roleIds, :userIds)';
 
-    protected static $callCommunityRecentPurchases = 'call CommunityRecentPurchases(:userId)';
+    protected static string $callCommunityRecentPurchases = 'call CommunityRecentPurchases(:userId)';
 
-    protected static $callUserRatingsDist = 'call UserRatingsDist(:userId)';
+    protected static string $callUserRatingsDist = 'call UserRatingsDist(:userId)';
 
-    protected static $callProfileCallReportData = 'call ProfileCallReportData(:issuerId)';
+    protected static string $callProfileCallReportData = 'call ProfileCallReportData(:issuerId)';
 
-    protected static $callCommunityRecentSales = 'call CommunityRecentSales(:userId)';
+    protected static string $callCommunityRecentSales = 'call CommunityRecentSales(:userId)';
 
-    protected static $communityUserIdsSql = 'SELECT user_id FROM user_communities WHERE comm_id=? AND user_id !=?';
+    protected static string $communityUserIdsSql = 'SELECT user_id FROM user_communities WHERE comm_id=? AND user_id !=?';
 
-    protected static $createCommunitySql = 'INSERT INTO Community VALUE (0, ?, ?, ?, ?, ?, ?, ?)';
+    protected static string $createCommunitySql = 'INSERT INTO Community VALUE (0, ?, ?, ?, ?, ?, ?, ?)';
 
-    protected static $addUserToGroup = 'INSERT INTO user_communities VALUE (?, ?)';
+    protected static string $addUserToGroup = 'INSERT INTO user_communities VALUE (?, ?)';
 
-    protected static $deleteUserFromGroup = 'DELETE FROM user_communities WHERE comm_id=? and user_id=?';
+    protected static string $deleteUserFromGroup = 'DELETE FROM user_communities WHERE comm_id=? and user_id=?';
 
-    protected static $addToFollowingSql = 'INSERT INTO following VALUE (?, ?)';
+    protected static string $addToFollowingSql = 'INSERT INTO following VALUE (?, ?)';
 
-    protected static $removeFromFollowingSql = 'DELETE FROM following WHERE user_id=? AND followin_id=?';
+    protected static string $removeFromFollowingSql = 'DELETE FROM following WHERE user_id=? AND followin_id=?';
 
-    protected static $callCommunitiesByUserId = 'call CommunitiesByUserId(:userId)';
+    protected static string $callCommunitiesByUserId = 'call CommunitiesByUserId(:userId)';
 
     public function __construct(EntityManagerInterface $em, ClassMetadata $class)
     {

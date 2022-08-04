@@ -16,29 +16,29 @@ class Chat extends ChatAbstract
 {
     use FetchingTrait, FetchMapperTrait;
 
-    protected $callContactTrackIds = 'call UserContactsChatTrackerIds(:userId)';
+    protected string $callContactTrackIds = 'call UserContactsChatTrackerIds(:userId)';
 
-    protected $callGroupTrackIds = 'call UserGroupChatTrackerIds(:userId)';
+    protected string $callGroupTrackIds = 'call UserGroupChatTrackerIds(:userId)';
 
-    protected $callChatDataByTrackId = 'call ChatDataFromTrackerId(:trackerId, :tempDb, :offsetNum)';
+    protected string $callChatDataByTrackId = 'call ChatDataFromTrackerId(:trackerId, :tempDb, :offsetNum)';
 
-    protected $callChatGroupUsersByGroupId = 'call ChatGroupUsersByGroupId(:groupId)';
+    protected string $callChatGroupUsersByGroupId = 'call ChatGroupUsersByGroupId(:groupId)';
 
-    protected $callChatGroupDataFromGroupId = 'call ChatGroupDataFromGroupId(:groupId)';
+    protected string $callChatGroupDataFromGroupId = 'call ChatGroupDataFromGroupId(:groupId)';
 
-    protected $callNoChatUserIds = 'call NoChatUserIds(:userId, :chatUserIds)';
+    protected string $callNoChatUserIds = 'call NoChatUserIds(:userId, :chatUserIds)';
 
-    protected $callUserDataForChat = 'call UserDataForChat(:userId)';
+    protected string $callUserDataForChat = 'call UserDataForChat(:userId)';
 
-    protected $callChatRecipientDataFromTrackerId = 'call ChatRecipientDataFromTrackerId(:trackerId)';
+    protected string $callChatRecipientDataFromTrackerId = 'call ChatRecipientDataFromTrackerId(:trackerId)';
 
-    private $insertIntoChatSql = "insert into Chat value (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertIntoChatSql = "insert into Chat value (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     /**
      * @param array $params
      * @return \Exception|mixed
      */
-    public function insertNewChat(array $params)
+    public function insertNewChat(array $params): mixed
     {
         if (array_key_exists(self::QRY_ID_KEY, $params))
             unset($params[self::QRY_ID_KEY]);

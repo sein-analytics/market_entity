@@ -61,15 +61,15 @@ trait FetchMapperTrait
      * @param $key
      * @return array
      */
-    public function flattenResultArrayByKey(array $hydration, $key, $isIntVar=true)
+    public function flattenResultArrayByKey(array $hydration, $key, $isIntVar=true):array
     {
         $flat = [];
         $pos = strripos($key, 'id');
         foreach ($hydration as $dataPoint){
             if($pos !== false && $isIntVar){
-                array_push($flat, (int)$dataPoint[$key]);
+                $flat[] = (int)$dataPoint[$key];
             }else{
-                array_push($flat, $dataPoint[$key]);
+                $flat[] = $dataPoint[$key];
             }
         }
         return $flat;

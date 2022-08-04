@@ -24,11 +24,11 @@ trait QueryManagerTrait
 
     static $base = 'App\\Entity\\';
 
-    static $wrongArrayLen = ['message' => 'Insert array size is wrong'];
+    static array $wrongArrayLen = ['message' => 'Insert array size is wrong'];
 
-    static $missingColVal = ['message' => 'Insert array is missing a column data'];
+    static array $missingColVal = ['message' => 'Insert array is missing a column data'];
 
-    private static $missingDataVal = 'NAV';
+    private static string $missingDataVal = 'NAV';
 
     public function __construct(EntityManager $em)
     {
@@ -38,8 +38,10 @@ trait QueryManagerTrait
     /**
      * @param string $tableName
      * @return bool|int
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function fetchNextAvailableTableId(string $tableName)
+    public function fetchNextAvailableTableId(string $tableName) :bool|int
     {
         $schemaManager = $this->em->getConnection()->getSchemaManager();
         if(!$schemaManager->tablesExist(array($tableName))){

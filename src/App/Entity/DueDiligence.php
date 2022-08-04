@@ -23,62 +23,70 @@ class DueDiligence
      * @ORM\Id @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="diligence")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @var MarketUser
      */
-    protected $user;
+    protected MarketUser $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="diligence")
      * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
-     * @var Deal
      */
-    protected $deal;
+    protected Deal $deal;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="dueDiligence")
-     * @var ArrayCollection
      */
-    protected $issues;
+    protected ArrayCollection $issues;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
      * @ORM\JoinColumn(name="dd_role_id", referencedColumnName="id", nullable=false)
-     * @var DueDiligenceRole
      */
-    protected $diligenceRole;
+    protected DueDiligenceRole $diligenceRole;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceStatus", inversedBy="dueDiligence")
      * @ORM\JoinColumn(name="dd_status_id", referencedColumnName="id", nullable=false)
-     * @var DueDiligenceStatus
      */
-    protected $status;
+    protected DueDiligenceStatus $status;
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
      * @ORM\OneToOne(targetEntity="\App\Entity\Bid", inversedBy="dueDiligence")
      * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
-     * @var \App\Entity\Bid
      */
-    protected $bid;
+    protected Bid $bid;
+
+    /**
+     * All other members of the Due Diligence team will have a reference due diligence ID
+     * associated with the user that placed the bid
+     * @ORM\ManyToOne  (targetEntity="\App\Entity\DueDiligence", inversedBy="ddMembers")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     *
+     */
+    protected DueDiligence $parentId;
+
+    /**
+     * All other members of the Due Diligence team will have a reference due diligence ID
+     * associated with the user that placed the bid
+     * @ORM\OneToMany   (targetEntity="\App\Entity\DueDiligence", mappedBy="parentId")
+     */
+    protected ArrayCollection $ddMembers;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
-     * @var ArrayCollection
      */
-    protected $files;
+    protected ArrayCollection $files;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
-     * @var ArrayCollection
      */
-    protected $reviewStatuses;
+    protected ArrayCollection  $reviewStatuses;
 
     function __construct()
     {
@@ -89,71 +97,56 @@ class DueDiligence
         $this->deal = new Deal();
     }
 
-    public function addReviewToDueDil(DueDilReviewStatus $stat)
+    public function addReviewToDueDil(DueDilReviewStatus $stat):void
     {
         $this->reviewStatuses->add($stat);
     }
 
-    public function addFileToDueDil(DealFile $file)
+    public function addFileToDueDil(DealFile $file):void
     {
         $this->files->add($file);
     }
 
-    public function addFile(DealFile $file)
+    public function addFile(DealFile $file):void
     {
         $this->files->add($file);
     }
 
-    function addMDueDiligenceIssue(DueDiligenceIssue $issue)
+    function addMDueDiligenceIssue(DueDiligenceIssue $issue):void
     {
         $this->issues->add($issue);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @param MarketUser $user
      */
-    public function setUser(MarketUser $user)
+    public function setUser(MarketUser $user):void
     {
         $this->user = $user;
     }
 
-    /**
-     * @return MarketUser
-     */
     public function getUser() : MarketUser { return $this->user; }
 
-    /**
-     * @return Deal
-     */
     public function getDeal() :Deal { return $this->deal; }
 
     /**
      * @param Deal $deal
      */
-    public function setDeal(Deal $deal)
+    public function setDeal(Deal $deal):void
     {
         $this->deal = $deal;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getIssues() { return $this->issues; }
+    public function getIssues():ArrayCollection { return $this->issues; }
 
-    /**
-     * @return DueDiligenceRole
-     */
-    public function getDiligenceRole() { return $this->diligenceRole; }
+    public function getDiligenceRole():DueDiligenceRole { return $this->diligenceRole; }
 
     /**
      * @param DueDiligenceRole $diligenceRole
      */
-    public function setDiligenceRole(DueDiligenceRole $diligenceRole)
+    public function setDiligenceRole(DueDiligenceRole $diligenceRole):void
     {
         $this->diligenceRole = $diligenceRole;
     }
@@ -166,31 +159,23 @@ class DueDiligence
     /**
      * @param DueDiligenceStatus $status
      */
-    public function setStatus(DueDiligenceStatus $status)
+    public function setStatus(DueDiligenceStatus $status):void
     {
         $this->status = $status;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getFiles() { return $this->files; }
+    public function getFiles():ArrayCollection { return $this->files; }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getReviewStatuses() { return $this->reviewStatuses; }
+    public function getReviewStatuses():ArrayCollection { return $this->reviewStatuses; }
 
     /**
      * @return Bid|null
      */
-    public function getBid() { return $this->bid; }
+    public function getBid():Bid|null { return $this->bid; }
 
     /**
      * @param Bid $bid
      */
-    public function setBid(Bid $bid) { $this->bid = $bid; }
-
-
+    public function setBid(Bid $bid):void { $this->bid = $bid; }
 
 }
