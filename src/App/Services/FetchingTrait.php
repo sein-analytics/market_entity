@@ -13,7 +13,9 @@ use App\Repository\RepositoryException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
+use http\Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Doctrine\DBAL\ForwardCompatibility\DriverResultStatement;
@@ -164,15 +166,15 @@ trait FetchingTrait
     }
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager|EntityManagerInterface $em
      * @param string $sql
      * @param string $fetchMethod
      * @param array $orderedParams
      * @param bool $useIntArr
      * @return mixed|\Exception
      */
-    private function buildAndExecuteFromSql(EntityManager $em, string $sql, string $fetchMethod,
-                                            array $orderedParams, $useIntArr=false)
+    private function buildAndExecuteFromSql(EntityManager|EntityManagerInterface $em, string $sql, string $fetchMethod,
+                                            array $orderedParams, bool $useIntArr=false):mixed
     {
         if (!$useIntArr){
             if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams) ) instanceof \Exception)
