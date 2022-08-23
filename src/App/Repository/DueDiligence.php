@@ -95,7 +95,7 @@ class DueDiligence extends DueDiligenceAbstract
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             self::$dueDiligenceTeamDataSql,
-            self::FETCH_ASSO_MTHD,
+            self::FETCH_ALL_ASSO_MTHD,
             [$issuerId, $userId]
         );
     }
