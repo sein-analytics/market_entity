@@ -20,7 +20,7 @@ abstract class DueDiligenceAbstract extends EntityRepository
 
     protected static string $dueDilLoanStatusByDdIdsLoanIdsSql = 'SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)';
 
-    protected static string $dueDiligenceTeamDataSql = 'SELECT id as userId, concat(first_name,\' \', last_name ), role_id as roleId, image_arn as imageLink FROM `MarketUser` WHERE issuer_id = ? AND id != ?';
+    protected static string $dueDiligenceTeamDataSql = 'SELECT id AS userId, concat(first_name,\' \', last_name ) AS teamMemberName, role_id AS roleId, image_arn AS imageLink FROM `MarketUser` WHERE issuer_id = ? AND id != ?';
 
     /*public function __construct(EntityManagerInterface $em, ClassMetadata $class)
     {
