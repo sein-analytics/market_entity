@@ -50,7 +50,7 @@ class DueDiligenceIssue
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="issue")
      * null|PersistentCollection
      */
-    protected ArrayCollection $messages;
+    protected null|ArrayCollection|PersistentCollection $messages;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="issues")
@@ -89,6 +89,11 @@ class DueDiligenceIssue
      **/
     protected \DateTime $closedDate;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected string $annotationId;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -116,7 +121,7 @@ class DueDiligenceIssue
     /**
      * @param DueDiligence $dueDiligence
      */
-    public function setDueDiligence(DueDiligence $dueDiligence): void
+    public function setDueDiligence(DueDiligence $dueDiligence):void
     {
         $this->dueDiligence = $dueDiligence;
     }
@@ -132,7 +137,7 @@ class DueDiligenceIssue
     /**
      * @param DueDilIssueStatus $status
      */
-    public function setStatus(DueDilIssueStatus $status): void
+    public function setStatus(DueDilIssueStatus $status):void
     {
         $this->status = $status;
     }
@@ -145,8 +150,7 @@ class DueDiligenceIssue
     /**
      * @param mixed $issue
      */
-    public function setIssue(string  $issue): void
-    { $this->issue = $issue; }
+    public function setIssue(string  $issue):void { $this->issue = $issue; }
 
     /**
      * @return ArrayCollection|PersistentCollection|null
@@ -158,14 +162,12 @@ class DueDiligenceIssue
     /**
      * @return DealFile
      */
-    public function getFile(): DealFile
-    { return $this->file; }
+    public function getFile():DealFile { return $this->file; }
 
     /**
      * @param DealFile $file
      */
-    public function setFile(DealFile $file): void
-    { $this->file = $file; }
+    public function setFile(DealFile $file):void { $this->file = $file; }
 
     /**
      * @return MessagePriority
@@ -173,7 +175,8 @@ class DueDiligenceIssue
     public function getPriority(): MessagePriority { return $this->priority; }
 
     /** @param MessagePriority $priority */
-    public function setPriority(MessagePriority $priority): void
+
+    public function setPriority(MessagePriority $priority):void
     {
         $this->priority = $priority;
     }
@@ -187,7 +190,7 @@ class DueDiligenceIssue
     /**
      * @param bool $notify
      */
-    public function setNotifySeller(bool $notify): void
+    public function setNotifySeller(bool $notify):void
     {
         $this->notifySeller = $notify;
     }
@@ -200,7 +203,7 @@ class DueDiligenceIssue
     /**
      * @param bool $notify
      */
-    public function setNotifyTeam(bool $notify): void
+    public function setNotifyTeam(bool $notify):void
     {
         $this->notifyTeam = $notify;
     }
@@ -213,7 +216,7 @@ class DueDiligenceIssue
     /**
      * @param \DateTime $openDate
      */
-    public function setOpenDate(\DateTime $openDate): void
+    public function setOpenDate(\DateTime $openDate):void
     {
         $this->openDate = $openDate;
     }
@@ -226,7 +229,7 @@ class DueDiligenceIssue
     /**
      * @param \DateTime $closedDate
      */
-    public function setClosedDate(\DateTime $closedDate): void
+    public function setClosedDate(\DateTime $closedDate):void
     {
         $this->closedDate = $closedDate;
     }
@@ -239,9 +242,22 @@ class DueDiligenceIssue
     /**
      * @param Loan $loan
      */
-    public function setLoan(Loan $loan): void
-    { $this->loan = $loan; }
+    public function setLoan(Loan $loan):void { $this->loan = $loan; }
 
+    /**
+     * @return string
+     */
+    public function getAnnotationId(): string
+    {
+        return $this->annotationId;
+    }
 
+    /**
+     * @param string $annotationId
+     */
+    public function setAnnotationId(string $annotationId): void
+    {
+        $this->annotationId = $annotationId;
+    }
 
 }
