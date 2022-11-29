@@ -175,6 +175,7 @@ class DueDiligenceIssue
     public function getPriority(): MessagePriority { return $this->priority; }
 
     /** @param MessagePriority $priority */
+
     public function setPriority(MessagePriority $priority):void
     {
         $this->priority = $priority;
