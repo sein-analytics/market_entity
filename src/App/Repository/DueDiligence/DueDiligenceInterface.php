@@ -43,4 +43,10 @@ interface DueDiligenceInterface
     const FILE_EXIST_IN_FILE_MANY_TO_MANY_QRY = "SELECT COUNT(deal_file_id) FROM deal_file_due_diligence WHERE deal_file_id = ?";
 
     const FILE_EXIST_IN_FILE_MANY_TO_MANY_BY_DD_QRY = "SELECT COUNT(deal_file_id) FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
+
+    const ANNOTATION_API_KEY = "annotationItem";
+
+    const DD_USER_API_KEY = "dueDiligenceUser";
+    
+    const DD_FILE_USER_KEY = "dueDiligenceFileUser";
 }
