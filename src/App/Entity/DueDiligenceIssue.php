@@ -90,7 +90,7 @@ class DueDiligenceIssue
     protected \DateTime $closedDate;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique-true)
+     * @ORM\Column(type="string", nullable=false, unique=true)
      */
     protected string $annotationId;
 
