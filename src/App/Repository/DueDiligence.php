@@ -15,10 +15,74 @@ use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Result;
 use Doctrine\ORM\Query;
+use JetBrains\PhpStorm\ArrayShape;
+use function Lambdish\phunctional\{each};
 
 class DueDiligence extends DueDiligenceAbstract
 {
     use FetchMapperTrait, FetchingTrait;
+
+    private array $tableProps = [
+        self::DD_QRY_ID_KEY => [self::TBL_PROP_ENTITY_KEY => null,
+            self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => null],
+        self::DD_QRY_USER_ID_KEY => [self::TBL_PROP_ENTITY_KEY => self::MKT_USER_ENTITY,
+            self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => self::TBL_PROP_NONE_DEFAULT],
+        self::DD_QRY_DEAL_ID_KEY => [self::TBL_PROP_ENTITY_KEY => self::DEAL_ENTITY,
+            self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => self::TBL_PROP_NONE_DEFAULT],
+        self::DD_QRY_ROLE_ID_KEY => [self::TBL_PROP_ENTITY_KEY => self::DD_ROLE_ENTITY,
+            self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => self::MEMBER_ROLE],
+        self::DD_QRY_STATUS_ID_KEY => [self::TBL_PROP_ENTITY_KEY => self::DD_STATUS_ENTITY,
+            self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => self::DD_OPEN_STATUS],
+        self::DD_QRY_BID_ID_KEY => [self::TBL_PROP_ENTITY_KEY => self::BID_ENTITY,
+            self::TBL_PROP_NULLABLE_KEY => true, self::TBL_PROP_DEFAULT_KEY => null],
+        self::DD_QRY_PARENT_ID_KEY => [self::TBL_PROP_ENTITY_KEY => self::DUE_DIL_ENTITY,
+            self::TBL_PROP_NULLABLE_KEY => true, self::TBL_PROP_DEFAULT_KEY => null],
+    ];
+
+    private string $insertDueDilSql = "INSERT INTO DueDiligence VALUE (null, ?, ?, ?, ?, ?, ?)";
+
+    private string $insertDdFileSql = "INSERT INTO deal_file_due_diligence VALUE (?, ?)";
+
+    private string $updateFileDdIdByDdIdFileIdSql = "UPDATE deal_file_due_diligence SET due_diligence_id=? WHERE due_diligence_id=? AND deal_file_id=?";
+
+    public function insertNewDueDiligence(array $params):mixed
+    {
+        if (array_key_exists(self::DD_QRY_ID_KEY, $params))
+            unset($params[self::DD_QRY_ID_KEY]);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertDueDilSql,
+            self::EXECUTE_MTHD,
+            array_values($params)
+        );
+    }
+
+    public function insertNewDealFileDueDiligence (array $params):mixed
+    {
+        $hasParams = true;
+        each(function ($nullVal, $key) use(&$hasParams, $params){
+            if (!array_key_exists($key, $params))
+                $hasParams = false;
+        }, $this->returnDealFileDdManyToManyProps());
+        if ($hasParams)
+            return $this->buildAndExecuteFromSql(
+                    $this->getEntityManager(),
+                    $this->insertDdFileSql,
+                    self::EXECUTE_MTHD,
+                    array_values($params)
+                );
+        return false;
+    }
+
+    public function reassignDdIdByDdIdDealFileId (int $ddId, int $fileId, int $newDdId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateFileDdIdByDdIdFileIdSql,
+            self::EXECUTE_MTHD,
+            [$newDdId, $ddId, $fileId]
+        );
+    }
 
     /**
      * @param int $userId
@@ -143,4 +207,27 @@ class DueDiligence extends DueDiligenceAbstract
         }
         return $result;
     }
+
+    public function returnBaseInsertArray():array
+    {
+        $base = [];
+        each(function ($props, $key) use(&$base) {
+            if ($props[self::TBL_PROP_DEFAULT_KEY] === self::TBL_PROP_NONE_DEFAULT)
+                $base[$key] = null;
+            else
+                $base[$key] = $props[self::TBL_PROP_DEFAULT_KEY];
+        }, $this->tableProps);
+        return $base;
+    }
+
+    public function returnTablePropsArray ():array { return $this->tableProps; }
+
+    #[ArrayShape([self::MANY_TO_MANY_DD_ID_KEY => "null", self::MANY_TO_MANY_FILE_ID_KEY => "null"])] public function returnDealFileDdManyToManyProps ():array
+    {
+        return [
+            self::MANY_TO_MANY_DD_ID_KEY => null,
+            self::MANY_TO_MANY_FILE_ID_KEY => null
+        ];
+    }
+
 }

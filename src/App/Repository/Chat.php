@@ -54,7 +54,7 @@ class Chat extends ChatAbstract
      * @param int $userId
      * @return mixed
      */
-    public function fetchUserContactChatTrackerIds(int $userId)
+    public function fetchUserContactChatTrackerIds(int $userId):mixed
     {
         return $this->executeProcedure([$userId], $this->getCallContactTrackIds());
     }
@@ -63,7 +63,7 @@ class Chat extends ChatAbstract
      * @param int $userId
      * @return mixed
      */
-    public function fetchUserGroupChatTrackerIds(int $userId)
+    public function fetchUserGroupChatTrackerIds(int $userId):mixed
     {
         return $this->executeProcedure([$userId], $this->getCallGroupTrackIds());
     }
@@ -73,7 +73,7 @@ class Chat extends ChatAbstract
      * @param int $offset
      * @return mixed
      */
-    public function fetchChatDataByTrackerId(int $trackerId, int $offset=0)
+    public function fetchChatDataByTrackerId(int $trackerId, int $offset=0):mixed
     {
         $uuid = 'dbName' . Str::uuid()->getHex()->toString();
         return $this->executeProcedure([$trackerId, $uuid, $offset],
@@ -84,7 +84,7 @@ class Chat extends ChatAbstract
      * @param int $groupId
      * @return mixed
      */
-    public function fetchChatGroupUsersByGroupId(int $groupId){
+    public function fetchChatGroupUsersByGroupId(int $groupId):mixed {
         return $this->executeProcedure([$groupId], $this->getCallChatGroupUsersByGroupId());
     }
 
@@ -92,7 +92,7 @@ class Chat extends ChatAbstract
      * @param int $groupId
      * @return mixed
      */
-    public function fetchChatGroupData(int $groupId){
+    public function fetchChatGroupData(int $groupId):mixed {
         return $this->executeProcedure([$groupId], $this->getCallChatGroupDataFromGroupId());
     }
 
@@ -101,7 +101,7 @@ class Chat extends ChatAbstract
      * @param array $chatUserIds
      * @return mixed
      */
-    public function fetchContactIdsWithNoChats(int $userId, array $chatUserIds) {
+    public function fetchContactIdsWithNoChats(int $userId, array $chatUserIds):mixed {
         return $this->executeProcedure([$userId, implode(', ', $chatUserIds)],
             $this->getCallNoChatUserIds()
         );
@@ -111,7 +111,7 @@ class Chat extends ChatAbstract
      * @param array $userIds
      * @return mixed
      */
-    public function fetchChatDataForUserIds(array $userIds) {
+    public function fetchChatDataForUserIds(array $userIds):mixed {
         return $this->executeProcedure([implode(', ', $userIds)],
             $this->getCallUserDataForChat()
         );
@@ -122,7 +122,7 @@ class Chat extends ChatAbstract
      * @param int $contactId
      * @return \Exception|mixed
      */
-    public function fetchTrackerIdForUserContact(int $userId, int $contactId)
+    public function fetchTrackerIdForUserContact(int $userId, int $contactId):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),

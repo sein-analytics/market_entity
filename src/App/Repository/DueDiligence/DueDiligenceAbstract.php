@@ -1,13 +1,18 @@
 <?php
 namespace App\Repository\DueDiligence;
 use App\Repository\DbalStatementInterface;
+use App\Service\FetchingTrait;
+use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use function Lambdish\phunctional\{each};
 
 abstract class DueDiligenceAbstract extends EntityRepository
-    implements DbalStatementInterface
+    implements DbalStatementInterface, IssueInterface, DueDiligenceInterface, DueDilLoanStatusInterface
 {
+    use FetchingTrait, FetchMapperTrait;
+
     protected static string $callUserSaleDealIdsInDueDiligence = 'call UserSaleDealIdsInDueDiligence(:userId)';
 
     protected static string $callDealFileDataByIssuerDueDiligenceIds = 'call DealFileDataByIssuerDueDiligenceIds(:issuerId)';

@@ -42,7 +42,7 @@ class DueDiligenceIssue
     protected DueDilIssueStatus $status;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected string $issue;
 
@@ -90,7 +90,7 @@ class DueDiligenceIssue
     protected \DateTime $closedDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=false, unique-true)
      */
     protected string $annotationId;
 

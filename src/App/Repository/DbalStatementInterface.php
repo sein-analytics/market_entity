@@ -4,6 +4,10 @@
 namespace App\Repository;
 
 
+use App\Entity\DueDiligenceRole;
+use App\Entity\DueDiligenceStatus;
+use App\Entity\DueDilReviewStatus;
+
 interface DbalStatementInterface
 {
     const COUNT_DB_KEY = 'count';
@@ -38,4 +42,41 @@ interface DbalStatementInterface
 
     const USER_ID_COND = 'user_id';
 
+    const TBL_PROP_ENTITY_KEY = 'entity_name';
+
+    const TBL_PROP_NULLABLE_KEY = 'is_nullable';
+
+    const TBL_PROP_DEFAULT_KEY = 'default_value';
+
+    const TBL_PROP_NONE_DEFAULT = 'None';
+
+    const DEFAULT_START_DATE = '1970-01-01 00:00:00';
+
+    const MKT_USER_ENTITY = \App\Entity\MarketUser::class;
+
+    const DEAL_ENTITY = \App\Entity\Deal::class;
+
+    const DD_ROLE_ENTITY = DueDiligenceRole::class;
+
+    const DD_STATUS_ENTITY = DueDiligenceStatus::class;
+
+    const DUE_DIL_ENTITY = \App\Entity\DueDiligence::class;
+
+    const DD_ISSUE_STATUS_ENTITY = \App\Entity\DueDilIssueStatus::class;
+
+    const DEAL_FILE_ENTITY = \App\Entity\DealFile::class;
+
+    const MSG_PRIORITY_ENTITY = \App\Entity\MessagePriority::class;
+
+    const LOAN_ENTITY = \App\Entity\Loan::class;
+
+    const BID_ENTITY = \App\Entity\Bid::class;
+
+    const DD_REVIEW_STATUS_ENTITY = DueDilReviewStatus::class;
+
+    const MKT_USER_EXIST_QRY = "SELECT COUNT(id) FROM MarketUser WHERE id = ?";
+
+    const DEAL_EXIST_QRY = "SELECT COUNT(id) FROM DeaL WHERE id = ?";
+
+    const LAST_INSERT_ID_QRY = "SELECT LAST_INSERT_ID()";
 }
