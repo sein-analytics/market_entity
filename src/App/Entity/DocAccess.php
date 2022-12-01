@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\DocAccess")
  * @ORM\Table(name="DocAccess")
  */
 class DocAccess

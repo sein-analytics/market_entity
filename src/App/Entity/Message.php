@@ -52,7 +52,7 @@ class Message extends DomainObject
     protected \DateTime $date;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected string $subject;
