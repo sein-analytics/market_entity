@@ -71,4 +71,31 @@ interface DueDiligenceInterface
     const API_FILES_KEY = "files";
 
     const API_LOAN_STATUS_ID_KEY = "loanStatusId";
+
+    const API_LOGGER_ACTIONS_KEY = "actions";
+
+    const API_LOGGER_ACTION_KEY = "action";
+
+    const API_LOGGER_DATE_KEY = "date";
+
+    const API_LOGGER_USER_ID_KEY = "userId";
+
+    const API_LOGGER_ACTION_DATA_KEY = "actionData";
+
+    const ASSIGN_FILE_ACTION = "assignFile";
+
+    const CREATE_COMMENT_ACTION = "createComment";
+
+    const ADD_REPLY_ACTION = "createComment";
+
+    const UPDATE_COMMENT_ACTION = "updateComment";
+
+    const UPDATE_LOAN_STATUS_ACTION = "updateLoanStatus";
+
+    const LOGGER_ACTIONS_BASE = [
+        self::API_LOGGER_DATE_KEY => '',
+        self::API_LOGGER_USER_ID_KEY => '',
+        self::API_LOGGER_ACTION_KEY => '',
+        self::API_LOGGER_ACTION_DATA_KEY => ''
+    ];
 }
