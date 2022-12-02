@@ -47,6 +47,28 @@ interface DueDiligenceInterface
     const ANNOTATION_API_KEY = "annotationItem";
 
     const DD_USER_API_KEY = "dueDiligenceUser";
-    
+
     const DD_FILE_USER_KEY = "dueDiligenceFileUser";
+
+    const API_BID_ID_KEY = "bidId";
+
+    const API_DD_USER_ISSUER_ID_KEY = "ddUserIssuerId";
+
+    const API_DEAL_ID_KEY = "dealId";
+
+    const API_DUE_DIL_ID_KEY = "dueDilId";
+
+    const API_DD_LN_STATUS_KEY = "Open";
+
+    const API_DD_FILE_ID_KEY = "fileId";
+
+    const API_ISSUER_ID_KEY = "issuerId";
+
+    const API_LOAN_ID_KEY = "loanId";
+
+    const API_LOGGER_KEY = "logger";
+
+    const API_FILES_KEY = "files";
+
+    const API_LOAN_STATUS_ID_KEY = "loanStatusId";
 }
