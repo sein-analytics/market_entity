@@ -22,11 +22,19 @@ interface DueDiligenceInterface
 
     const MEMBER_ROLE = 2;
 
+    const DD_OPEN_TEXT = "Open";
+
     const DD_OPEN_STATUS = 1;
+
+    const DD_CLOSED_TEXT = "Closed";
 
     const DD_CLOSED_STATUS = 2;
 
+    const DD_ACCEPTED_TEXT = "Accepted";
+
     const DD_ACCEPTED_STATUS = 3;
+
+    const DD_REJECTED_TEXT = "Rejected";
 
     const DD_REJECTED_STATUS = 4;
 
@@ -54,11 +62,13 @@ interface DueDiligenceInterface
 
     const API_DD_USER_ISSUER_ID_KEY = "ddUserIssuerId";
 
+    const API_DD_USER_ID_KEY = "dueDilUser";
+
     const API_DEAL_ID_KEY = "dealId";
 
     const API_DUE_DIL_ID_KEY = "dueDilId";
 
-    const API_DD_LN_STATUS_KEY = "Open";
+    const API_DD_LN_STATUS_KEY = "dueDilLnStatus";
 
     const API_DD_FILE_ID_KEY = "fileId";
 
@@ -97,5 +107,22 @@ interface DueDiligenceInterface
         self::API_LOGGER_USER_ID_KEY => '',
         self::API_LOGGER_ACTION_KEY => '',
         self::API_LOGGER_ACTION_DATA_KEY => ''
+    ];
+
+    const DD_STATUS_TO_IT = [
+        self::DD_OPEN_TEXT => self::DD_OPEN_STATUS,
+        self::DD_CLOSED_TEXT => self::DD_CLOSED_STATUS,
+        self::DD_ACCEPTED_TEXT => self::DD_ACCEPTED_STATUS,
+        self::DD_REJECTED_TEXT => self::DD_REJECTED_STATUS,
+    ];
+
+    const DD_USER_API_NEW_TEAM_MEMBER = [
+        self::DD_QRY_ID_KEY => null,
+        self::DD_QRY_USER_ID_KEY => self::API_LOGGER_USER_ID_KEY,
+        self::DD_QRY_DEAL_ID_KEY => self::API_DEAL_ID_KEY,
+        self::DD_QRY_ROLE_ID_KEY => self::MEMBER_ROLE,
+        self::DD_QRY_STATUS_ID_KEY => self::API_DD_LN_STATUS_KEY,
+        self::DD_QRY_BID_ID_KEY => null,
+        self::DD_QRY_PARENT_ID_KEY => self::API_DUE_DIL_ID_KEY
     ];
 }
