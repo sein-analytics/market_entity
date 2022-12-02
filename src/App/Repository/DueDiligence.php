@@ -39,11 +39,13 @@ class DueDiligence extends DueDiligenceAbstract
             self::TBL_PROP_NULLABLE_KEY => true, self::TBL_PROP_DEFAULT_KEY => null],
     ];
 
-    private string $insertDueDilSql = "INSERT INTO DueDiligence VALUE (null, ?, ?, ?, ?, ?, ?)";
+    private string $insertDueDilSql = "INSERT INTO DueDiligence VALUE (null, ?, ?, ?, ?, ?, ?);" . self::LAST_INSERT_ID_QRY;
 
     private string $insertDdFileSql = "INSERT INTO deal_file_due_diligence VALUE (?, ?)";
 
     private string $updateFileDdIdByDdIdFileIdSql = "UPDATE deal_file_due_diligence SET due_diligence_id=? WHERE due_diligence_id=? AND deal_file_id=?";
+
+    private string $teamMemberDdIdSql = "SELECT id FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=?;";
 
     public function insertNewDueDiligence(array $params):mixed
     {
@@ -91,6 +93,16 @@ class DueDiligence extends DueDiligenceAbstract
     public function fetchUserSaleDealIdsInDueDiligence (int $userId):mixed
     {
         return $this->executeProcedure([$userId], self::$callUserSaleDealIdsInDueDiligence);
+    }
+
+    public function fetchTeamMemberDueDiligenceIdForDeal (int $dealId, int $userId, int $parentId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->teamMemberDdIdSql,
+            self::EXECUTE_MTHD,
+            [$dealId, $userId, $parentId]
+        );
     }
 
     public function fetchUserPurchasesDueDiligenceDealIds(int $userId)
