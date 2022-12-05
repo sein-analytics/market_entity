@@ -102,6 +102,8 @@ interface DueDiligenceInterface
 
     const UPDATE_LOAN_STATUS_ACTION = "updateLoanStatus";
 
+    const API_DD_USER_TEAM_KEY = "dueDiligenceTeam";
+
     const LOGGER_ACTIONS_BASE = [
         self::API_LOGGER_DATE_KEY => '',
         self::API_LOGGER_USER_ID_KEY => '',
