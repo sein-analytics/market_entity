@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Repository\DealFile\DocAccessInterface;
+use App\Repository\DueDiligence\DueDiligenceInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
 use function Lambdish\Phunctional\each;
 
 class DocAccess extends EntityRepository
-    implements DocAccessInterface, DbalStatementInterface
+    implements DocAccessInterface, DbalStatementInterface, DueDiligenceInterface
 {
     use FetchingTrait, FetchMapperTrait;
 
@@ -60,4 +61,14 @@ class DocAccess extends EntityRepository
     }
 
     public function returnTablePropsArray ():array { return $this->tableProps; }
+
+
+    public function docAccessDueDilApiMapper ():array
+    {
+        return [
+            self::DA_QRY_USER_ID_KEY => self::API_LOGGER_USER_ID_KEY,
+            self::DA_QRY_DEAL_ID_KEY => self::API_DEAL_ID_KEY,
+            self::DA_QRY_FILE_ID_KEY => self::API_DD_FILE_ID_KEY
+        ];
+    }
 }
