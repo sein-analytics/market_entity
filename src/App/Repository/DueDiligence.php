@@ -49,6 +49,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $manyToManyFileIdSql = "SELECT deal_file_id FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
 
+    private string $deleteFromManyToManySql = "DELETE FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -78,13 +80,23 @@ class DueDiligence extends DueDiligenceAbstract
         return false;
     }
 
-    public function fetchFileIdByDdIdFileId (int $dueDilId, $fileId)
+    public function fetchFileIdByDdIdFileId (int $dueDilId, $fileId):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->manyToManyFileIdSql,
             self::EXECUTE_MTHD,
             [$dueDilId, $fileId]
+        );
+    }
+
+    public function deleteFromDealFileDueDiligence(int $ddId, int $fileId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteFromManyToManySql,
+            self::EXECUTE_MTHD,
+            [$ddId, $fileId]
         );
     }
 

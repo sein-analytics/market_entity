@@ -20,6 +20,8 @@ class DocAccess extends EntityRepository
 
     private string $userDocAccessSql = "SELECT user_id FROM DocAccess WHERE deal_id = ? AND document_id = ?";
 
+    private string $deleteFromDocAccessSql = "DELETE FROM DocAccess WHERE user_id=? AND deal_id = ? AND document_id = ?";
+
     private array $tableProps = [
         self::DA_QRY_ID_KEY => [self::TBL_PROP_ENTITY_KEY => null,
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => null],
@@ -58,8 +60,18 @@ class DocAccess extends EntityRepository
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->userDocAccessSql,
-            self::EXECUTE_MTHD,
+            self::FETCH_NUMERIC_MTHD,
             [$dealId, $fileId]
+        );
+    }
+
+    public function deleteFromDocAccess (int $userId, int $dealId, int $fileId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteFromDocAccessSql,
+            self::EXECUTE_MTHD,
+            [$userId, $dealId, $fileId]
         );
     }
 
