@@ -53,8 +53,7 @@ class DueDiligence extends DueDiligenceAbstract
 
     public function insertNewDueDiligence(array $params):mixed
     {
-        if (array_key_exists(self::DD_QRY_ID_KEY, $params))
-            unset($params[self::DD_QRY_ID_KEY]);
+        $params[self::DD_QRY_ID_KEY] = null;
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->insertDueDilSql,
