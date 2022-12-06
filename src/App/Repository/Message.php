@@ -21,7 +21,7 @@ class Message extends MessageAbstract
 {
     use FetchingTrait, FetchMapperTrait;
 
-    private string $insertMessageSql = "INSERT INTO Message VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);" . self::LAST_INSERT_ID_QRY;
+    private string $insertMessageSql = "INSERT INTO Message VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $updateMessageSql = "UPDATE Message SET message=? WHERE id=?";
 
