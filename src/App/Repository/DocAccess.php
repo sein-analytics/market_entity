@@ -35,7 +35,8 @@ class DocAccess extends EntityRepository
 
     public function insertNewDocAccess (array $params):mixed
     {
-        $params[self::DA_QRY_ID_KEY] = null;
+        if (array_key_exists(self::DA_QRY_ID_KEY, $params))
+            unset($params[self::DA_QRY_ID_KEY]);
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->insertDocAccessSql,

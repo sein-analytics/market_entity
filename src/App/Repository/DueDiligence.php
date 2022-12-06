@@ -39,7 +39,7 @@ class DueDiligence extends DueDiligenceAbstract
             self::TBL_PROP_NULLABLE_KEY => true, self::TBL_PROP_DEFAULT_KEY => null],
     ];
 
-    private string $insertDueDilSql = "INSERT INTO DueDiligence VALUE (null, ?, ?, ?, ?, ?, ?);" . self::LAST_INSERT_ID_QRY;
+    private string $insertDueDilSql = "INSERT INTO DueDiligence VALUE (null, ?, ?, ?, ?, ?, ?)";
 
     private string $insertDdFileSql = "INSERT INTO deal_file_due_diligence VALUE (?, ?)";
 
@@ -53,7 +53,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     public function insertNewDueDiligence(array $params):mixed
     {
-        $params[self::DD_QRY_ID_KEY] = null;
+        if (array_key_exists(self::DD_QRY_ID_KEY, $params))
+            unset($params[self::DD_QRY_ID_KEY]);
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->insertDueDilSql,
@@ -128,7 +129,7 @@ class DueDiligence extends DueDiligenceAbstract
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->teamMemberDdIdSql,
-            self::EXECUTE_MTHD,
+            self::FETCH_ONE_MTHD,
             [$dealId, $userId, $parentId]
         );
     }
