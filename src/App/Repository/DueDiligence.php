@@ -119,6 +119,11 @@ class DueDiligence extends DueDiligenceAbstract
         return $this->executeProcedure([$userId], self::$callUserSaleDealIdsInDueDiligence);
     }
 
+    public function fetchTeamFileOwnerId (int $dealId, int $fileId, int $parentId)
+    {
+        return $this->executeProcedure([$dealId, $fileId, $parentId], self::$callDiligenceTeamFileOwner);
+    }
+
     public function fetchTeamMemberDueDiligenceIdForDeal (int $dealId, int $userId, int $parentId)
     {
         return $this->buildAndExecuteFromSql(
