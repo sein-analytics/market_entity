@@ -123,7 +123,7 @@ interface DueDiligenceInterface
         self::DD_QRY_USER_ID_KEY => self::API_LOGGER_USER_ID_KEY,
         self::DD_QRY_DEAL_ID_KEY => self::API_DEAL_ID_KEY,
         self::DD_QRY_ROLE_ID_KEY => self::MEMBER_ROLE,
-        self::DD_QRY_STATUS_ID_KEY => self::API_DD_LN_STATUS_KEY,
+        self::DD_QRY_STATUS_ID_KEY => self::DD_OPEN_STATUS,
         self::DD_QRY_BID_ID_KEY => null,
         self::DD_QRY_PARENT_ID_KEY => self::API_DUE_DIL_ID_KEY
     ];
