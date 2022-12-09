@@ -72,6 +72,8 @@ interface DueDiligenceInterface
 
     const API_DD_FILE_ID_KEY = "fileId";
 
+    const API_USER_DD_ROLE_KEY = "userDdRole";
+
     const API_ISSUER_ID_KEY = "issuerId";
 
     const API_LOAN_ID_KEY = "loanId";
