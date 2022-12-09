@@ -106,6 +106,12 @@ interface DueDiligenceInterface
 
     const API_DD_USER_TEAM_KEY = "dueDiligenceTeam";
 
+    const API_TEAM_ROLE_ID_KEY = "roleId";
+
+    const API_TEAM_EMAIL_KEY = "email";
+
+    const API_TEAM_MEMBER_NAME_KEY = "teamMemberName";
+
     const LOGGER_ACTIONS_BASE = [
         self::API_LOGGER_DATE_KEY => '',
         self::API_LOGGER_USER_ID_KEY => '',
