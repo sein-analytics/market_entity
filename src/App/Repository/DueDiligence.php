@@ -215,13 +215,13 @@ class DueDiligence extends DueDiligenceAbstract
         );
     }
 
-    public function fetchUserBuyingFilesFilter (int $userId):mixed
+    public function fetchUserBuyingFilesFilter (int $userIssuerId):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             self::$buyingDealsFilterSql,
             self::FETCH_ALL_ASSO_MTHD,
-            [$userId]
+            [$userIssuerId]
         );
     }
 
