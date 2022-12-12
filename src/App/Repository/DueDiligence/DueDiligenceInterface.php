@@ -112,6 +112,8 @@ interface DueDiligenceInterface
 
     const API_TEAM_MEMBER_NAME_KEY = "teamMemberName";
 
+    const API_DD_PARENT_KEY = "ddParent";
+
     const LOGGER_ACTIONS_BASE = [
         self::API_LOGGER_DATE_KEY => '',
         self::API_LOGGER_USER_ID_KEY => '',
