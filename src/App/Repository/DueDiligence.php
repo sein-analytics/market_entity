@@ -205,6 +205,26 @@ class DueDiligence extends DueDiligenceAbstract
         );
     }
 
+    public function fetchUserSellingFilesFilter (int $userIssuerId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::$sellingDealsFilterSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userIssuerId]
+        );
+    }
+
+    public function fetchUserBuyingFilesFilter (int $userId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::$buyingDealsFilterSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+    }
+
     /**
      * @param array $ddIds
      * @param $loanIds
