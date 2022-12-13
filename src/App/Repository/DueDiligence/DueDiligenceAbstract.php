@@ -29,9 +29,9 @@ abstract class DueDiligenceAbstract extends EntityRepository
 
     protected static string $dueDiligenceTeamDataSql = 'SELECT id AS userId, concat(first_name,\' \', last_name ) AS teamMemberName, role_id AS roleId, image_arn AS imageLink, user_name AS email FROM `MarketUser` WHERE issuer_id = ? AND id != ?';
 
-    protected static string $buyingDealsFilterSql = "SELECT DISTINCT(user_id) AS dueDilUser, deal_id AS dealId, dd_role_id as userDdRole, parent_id as ddParent, bid_id as bidId FROM `DueDiligence` WHERE user_id IN (SELECT id FROM MarketUser WHERE issuer_id = ?)";
+    protected static string $buyingDealsFilterSql = "SELECT DISTINCT(user_id) AS dueDilUser, id as dueDilId, deal_id AS dealId, dd_role_id as userDdRole, parent_id as ddParent, bid_id as bidId FROM `DueDiligence` WHERE user_id IN (SELECT id FROM MarketUser WHERE issuer_id = ?)";
 
-    protected static string $sellingDealsFilterSql = "SELECT DISTINCT (deal_id) AS dealId, user_id AS dueDilUser, dd_role_id as userDdRole, parent_id as ddParent, bid_id as bidId, userDb.issuer_id AS ddUserIssuerId FROM `DueDiligence` " .
+    protected static string $sellingDealsFilterSql = "SELECT DISTINCT (deal_id) AS dealId, user_id AS dueDilUser, DueDiligence.id as dueDilId, dd_role_id as userDdRole, parent_id as ddParent, bid_id as bidId, userDb.issuer_id AS ddUserIssuerId FROM `DueDiligence` " .
                                                     "LEFT JOIN MarketUser userDb on userDb.id = user_id " .
                                                     "WHERE deal_id IN ( SELECT id FROM Deal WHERE issuer_id = ? )";
 
