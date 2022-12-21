@@ -195,13 +195,13 @@ class DueDiligence extends DueDiligenceAbstract
             self::$callIssuesMsgsDataByIssuerDueDiligenceIds);
     }
 
-    public function fetchMarketUserTeamDataByIssuerId(int $issuerId, int $userId):mixed
+    public function fetchMarketUserTeamDataByIssuerId(int $issuerId):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             self::$dueDiligenceTeamDataSql,
             self::FETCH_ALL_ASSO_MTHD,
-            [$issuerId, $userId]
+            [$issuerId]
         );
     }
 
