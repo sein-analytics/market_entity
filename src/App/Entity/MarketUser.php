@@ -32,7 +32,7 @@ class MarketUser
 
     const DAILY = 'daily';
 
-    const NOTIFY_OFF = 'off';
+    const NOTIFY_OFF = 'off';//this is just to reflect the update of the composer for plugin_entity
 
     const NOTIFY =[
         1 => self::ASAP,
