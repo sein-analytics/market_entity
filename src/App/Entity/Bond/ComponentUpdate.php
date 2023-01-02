@@ -53,7 +53,7 @@ class ComponentUpdate extends DomainObject
     protected float $principalPaid;
 
     /**
-     * @ORMORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $cumulativeLosses;
 
