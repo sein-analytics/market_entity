@@ -5,10 +5,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="CommInviteStatus")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="CommInviteStatus")
  */
-class CommInviteStatus
+class CommInviteStatus extends AnnotationMappings
 {
     const EMAIL_ERROR = 'emailError';
 
@@ -20,7 +20,7 @@ class CommInviteStatus
 
     const ON_BOARDING_USER = 'on-boarding';
 
-    protected static $inviteStatuses = [
+    protected static array $inviteStatuses = [
         self::PENDING_RESPONSE => 1,
         self::INVITE_ACCEPT => 2,
         self::ON_BOARDING_USER => 3,
@@ -29,20 +29,21 @@ class CommInviteStatus
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
-    protected $id;
-
-    /** @ORM\Column(type="string", nullable=false)
-     * @var string
-     */
-    protected $label = '';
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\CommunityInvite", mappedBy="status")
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $label = '';
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\CommunityInvite", mappedBy="status")
      * @var ArrayCollection
      */
     protected $invites;

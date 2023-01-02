@@ -8,29 +8,30 @@
 
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\DueDilIssueStatus")
- * @ORM\Table(name="DueDilIssueStatus")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DueDilIssueStatus")
+ * \Doctrine\ORM\Mapping\Table(name="DueDilIssueStatus")
  */
-class DueDilIssueStatus
+class DueDilIssueStatus extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
      */
-    protected $status = '';
+    protected string $status = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="status")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="status")
      * @var ArrayCollection
      */
     protected $issues;

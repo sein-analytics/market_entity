@@ -8,54 +8,59 @@
 
 namespace App\Entity\Typed\Update;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Triggers;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
  *
- * @ORM\Entity
- * @ORM\Table(name="TriggerUpdate")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="TriggerUpdate")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class TriggerUpdate extends AbstractTypeUpdate
 {
     const TRIGGER_RESULT_PASS = 1;
     const TRIGGER_RESULT_FAIL = 0;
 
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
-    protected $id;
+    /**
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue *
+     */
+    protected int $id;
 
     /**
-     * @var \App\Entity\Typed\Triggers $trigger
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Triggers", inversedBy="updates") **/
+     * @var Triggers $trigger
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\Triggers", inversedBy="updates")
+     **/
     protected $trigger;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="triggers")
-     * @var \App\Entity\Period
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="triggers")
+     * @var Period
      **/
     protected $period;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=3)
-     *
+     * @var float $threshold
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3)
      */
-    public $threshold = 0;
+    public float $threshold = 0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=3)
-     *
+     * @var float $actual
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3)
      */
-    public $actual = 0;
+    public float $actual = 0;
 
     /**
-     * @ORM\Column(type="string")
-     * @var string $triggerResult
+     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @var int $triggerResult
      */
-    public $triggerResult = self::TRIGGER_RESULT_PASS;
+    public int $triggerResult = self::TRIGGER_RESULT_PASS;
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -77,49 +82,49 @@ class TriggerUpdate extends AbstractTypeUpdate
     /**
      * @param Period $period
      */
-    public function setPeriod(Period $period) {
+    public function setPeriod(Period $period):void {
         $this->implementChange($this,'period', $this->period, $period);
     }
 
     /**
-     * @return number $threshold
+     * @return float $threshold
      */
-    public function getThreshold() {
+    public function getThreshold():float {
         return $this->threshold;
     }
 
     /**
-     * @return number $actual
+     * @return float $actual
      */
-    public function getActual() {
+    public function getActual():float {
         return $this->actual;
     }
 
     /**
      * @return int $triggerResult
      */
-    public function getTriggerResult() {
+    public function getTriggerResult():int {
         return $this->triggerResult;
     }
 
     /**
      * @param Triggers $trigger
      */
-    public function setTrigger(Triggers $trigger) {
+    public function setTrigger(Triggers $trigger):void {
         $this->implementChange($this,'trigger', $this->trigger, $trigger);
     }
 
     /**
-     * @param number $threshold
+     * @param float $threshold
      */
-    public function setThreshold($threshold) {
+    public function setThreshold(float $threshold):void {
         $this->implementChange($this,'threshold', $this->threshold, $threshold);
     }
 
     /**
-     * @param number $actual
+     * @param float $actual
      */
-    public function setActual($actual) {
+    public function setActual(float $actual):void {
         $this->implementChange($this,'actual', $this->actual, $actual);
     }
 
@@ -134,6 +139,5 @@ class TriggerUpdate extends AbstractTypeUpdate
         }
         $this->implementChange($this,'triggerResult', $this->triggerResult, $constant);
     }
-
 
 }

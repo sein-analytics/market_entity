@@ -9,12 +9,11 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="BasisCount")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="BasisCount")
  *
  */
 class BasisCount extends DomainObject
@@ -41,23 +40,26 @@ class BasisCount extends DomainObject
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
     protected $id;
 
-    /** @ORM\Column(type="string", nullable=false)   */
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     */
     protected $basis;
 
-    /** @ORM\Column(type="json", nullable=false)
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=false)
      * @var string
      */
     protected $formula;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\Bond", mappedBy="basisCount")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\Bond", mappedBy="basisCount")
      * @var ArrayCollection
      */
     protected $bonds;

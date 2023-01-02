@@ -12,69 +12,102 @@ use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\CommAttribute")
- * @ORM\Table(name="CommAttribute")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Loan\CommAttribute")
+ * \Doctrine\ORM\Mapping\Table(name="CommAttribute")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class CommAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    protected $ignoreDbProperties = [];
+    protected array $ignoreDbProperties = [];
 
-    protected $addUcIdToPropName = ['loan' => null];
+    protected array $addUcIdToPropName = ['loan' => null];
 
-    protected $defaultValueProperties = [];
-
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
-    protected $id;
+    protected array $defaultValueProperties = [];
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="commAttributes")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     */
+    protected int $id;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="commAttributes")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Loan
      **/
     protected $loan;
 
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
-    protected $dscr;
-
-    /** @ORM\Column(type="decimal", precision=16, scale=4, nullable=true) **/
-    protected $noi;
-
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
-    protected $netWorthToLoan;
-
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
-    protected $profitRatio;
-
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
-    protected $loanToCostRatio;
-
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
-    protected $debtYieldRatio;
-
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
-    protected $vacancyRate;
-
-    /** @ORM\Column(type="integer", nullable=true)   */
-    protected $lockoutPeriod;
-
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     * @var \DateTime
-     **/
-    protected $defeasanceDate;
-
-    /** @ORM\Column(type="decimal", precision=12, scale=8, nullable=true) **/
-    protected $capRate;
-
-    /**
-     * @return mixed
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
-    public function getId() { return $this->id; }
+    protected float|null $dscr;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=4, nullable=true)
+     */
+    protected float|null $noi;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     */
+    protected float|null $netWorthToLoan;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     */
+    protected float|null $profitRatio;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     */
+    protected float|null $loanToCostRatio;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     */
+    protected float|null $debtYieldRatio;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     */
+    protected float|null $vacancyRate;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     */
+    protected int|null $lockoutPeriod;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected \DateTime|null $defeasanceDate;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     */
+    protected float|null $capRate;
+
+    /**
+     * @return int
+     */
+    public function getId():int { return $this->id; }
 
     /**
      * @return Loan
@@ -90,131 +123,131 @@ class CommAttribute extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getDscr() { return $this->dscr; }
+    public function getDscr():?float { return $this->dscr; }
 
     /**
-     * @param mixed $dscr
+     * @param float $dscr
      */
-    public function setDscr($dscr)
+    public function setDscr(float $dscr):void
     {
         $this->implementChange($this, 'dscr', $this->dscr, $dscr);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getNoi() { return $this->noi; }
+    public function getNoi():float|null { return $this->noi; }
 
     /**
-     * @param mixed $noi
+     * @param float $noi
      */
-    public function setNoi($noi)
+    public function setNoi(float $noi):void
     {
         $this->implementChange($this, 'noi', $this->noi, $noi);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getNetWorthToLoan() { return $this->netWorthToLoan; }
+    public function getNetWorthToLoan():float|null { return $this->netWorthToLoan; }
 
     /**
-     * @param mixed $netWorthToLoan
+     * @param float $netWorthToLoan
      */
-    public function setNetWorthToLoan($netWorthToLoan)
+    public function setNetWorthToLoan(float $netWorthToLoan)
     {
         $this->implementChange($this, 'netWorthToLoan', $this->netWorthToLoan, $netWorthToLoan);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getProfitRatio() { return $this->profitRatio; }
+    public function getProfitRatio():float|null { return $this->profitRatio; }
 
     /**
-     * @param mixed $profitRatio
+     * @param float $profitRatio
      */
-    public function setProfitRatio($profitRatio)
+    public function setProfitRatio(float $profitRatio):void
     {
         $this->implementChange($this, 'profitRatio', $this->profitRatio, $profitRatio);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getLoanToCostRatio() { return $this->loanToCostRatio; }
+    public function getLoanToCostRatio():float|null { return $this->loanToCostRatio; }
 
     /**
-     * @param mixed $loanToCostRatio
+     * @param float $loanToCostRatio
      */
-    public function setLoanToCostRatio($loanToCostRatio)
+    public function setLoanToCostRatio(float $loanToCostRatio)
     {
         $this->implementChange($this, 'loanToCostRatio', $this->loanToCostRatio, $loanToCostRatio);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getDebtYieldRatio() { return $this->debtYieldRatio;}
+    public function getDebtYieldRatio():float|null { return $this->debtYieldRatio;}
 
     /**
-     * @param mixed $debtYieldRatio
+     * @param float  $debtYieldRatio
      */
-    public function setDebtYieldRatio($debtYieldRatio)
+    public function setDebtYieldRatio(float $debtYieldRatio)
     {
         $this->implementChange($this, 'debtYieldRatio', $this->debtYieldRatio, $debtYieldRatio);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getVacancyRate() { return $this->vacancyRate; }
+    public function getVacancyRate():float|null { return $this->vacancyRate; }
 
     /**
-     * @param mixed $vacancyRate
+     * @param float $vacancyRate
      */
-    public function setVacancyRate($vacancyRate)
+    public function setVacancyRate(float $vacancyRate)
     {
         $this->implementChange($this, 'vacancyRate', $this->vacancyRate, $vacancyRate);
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getLockoutPeriod() { return $this->lockoutPeriod; }
+    public function getLockoutPeriod():?int { return $this->lockoutPeriod; }
 
     /**
-     * @param mixed $lockoutPeriod
+     * @param int $lockoutPeriod
      */
-    public function setLockoutPeriod($lockoutPeriod)
+    public function setLockoutPeriod(int $lockoutPeriod)
     {
         $this->implementChange($this, 'lockoutPeriod', $this->lockoutPeriod, $lockoutPeriod);
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getDefeasanceDate() {  return $this->defeasanceDate; }
+    public function getDefeasanceDate():\DateTime|null {  return $this->defeasanceDate; }
 
     /**
      * @param \DateTime $defeasanceDate
      */
-    public function setDefeasanceDate(\DateTime $defeasanceDate)
+    public function setDefeasanceDate(\DateTime $defeasanceDate):void
     {
         $this->implementChange($this,'defeasanceDate', $this->defeasanceDate, $defeasanceDate);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getCapRate() { return $this->capRate; }
+    public function getCapRate():float|null { return $this->capRate; }
 
     /**
-     * @param mixed $capRate
+     * @param float $capRate
      */
-    public function setCapRate($capRate)
+    public function setCapRate(float $capRate)
     {
         $this->implementChange($this, 'capRate', $this->capRate, $capRate);
     }

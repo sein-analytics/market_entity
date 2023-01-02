@@ -3,96 +3,97 @@
 
 namespace App\Entity\Data;
 
+use App\Entity\AnnotationMappings;
 use App\Entity\Data\CunaRegion;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Data\State;
 use App\Entity\Data\CunaType;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="CuBase")
+ * \Doctrine\ORM\Mapping\Entity()
+ * \Doctrine\ORM\Mapping\Table(name="CuBase")
  */
-class CuBase
+class CuBase extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
      * @var int
      **/
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\Column(type="integer")
      * @var int
      **/
-    protected $charterNum;
+    protected int $charterNum;
 
     /**
-     * @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\Column(type="integer")
      * @var int
      **/
-    protected $ncuaId;
+    protected int $ncuaId;
 
     /**
-     * @ORM\Column(type="string")
+     * \Doctrine\ORM\Mapping\Column(type="string")
      * @var string
      **/
-    protected $name;
+    protected string $name;
 
     /**
-     * @ORM\Column(type="string")
+     * \Doctrine\ORM\Mapping\Column(type="string")
      * @var string
      **/
-    protected $address;
+    protected string $address;
 
     /**
-     * @ORM\Column(type="string")
+     * \Doctrine\ORM\Mapping\Column(type="string")
      * @var string
      **/
-    protected $city;
+    protected string $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\State")
-     * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Data\State")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="state_id", referencedColumnName="id")
      * @var State
      **/
     protected $state;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $zip;
+    protected string $zip;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
      */
-    protected $isLowIncDes;
+    protected bool $isLowIncDes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaType")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Data\CunaType")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="type_id", referencedColumnName="id")
      * @var CunaType
      **/
     protected $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaRegion")
-     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Data\CunaRegion")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="region_id", referencedColumnName="id")
      * @var CunaRegion
      **/
     protected $region;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Data\CuBaseData", mappedBy="cuBase")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Data\CuBaseData", mappedBy="cuBase")
      * @var PersistentCollection
      **/
     protected $cuData;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Issuer", mappedBy="cuMain")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Issuer", mappedBy="cuMain")
      */
     protected $issuers;
 
@@ -137,9 +138,9 @@ class CuBase
     public function getRegion(): CunaRegion { return $this->region; }
 
     /**
-     * @return mixed
+     * @return bool|int
      */
-    public function getIsLowIncDes() { return $this->isLowIncDes; }
+    public function getIsLowIncDes():bool|int { return $this->isLowIncDes; }
 
 
 }

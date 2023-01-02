@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Data\State;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -13,14 +13,33 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 //use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Illuminate\Notifications\Notification;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
- * @ORM\Table(name="MarketUser")
- * @ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MarketUser")
+ * \Doctrine\ORM\Mapping\Table(name="MarketUser")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\HasLifeCycleCallbacks
  */
 class MarketUser
     extends DomainObject
@@ -41,304 +60,348 @@ class MarketUser
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Column(type="integer")
      */
-    protected $id;
+    protected int $id;
 
     public $incrementing = false;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, unique=true)
+     * @var string
      */
-    protected $userName;
+    protected string $userName='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
      */
-    protected $firstName;
+    protected string $firstName='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
      */
-    protected $lastName;
-
-    /** @ORM\Column(type="string", nullable=false) */
-    protected $image_arn;
-
-    /** @ORM\Column(type="string", nullable=true) */
-    protected $signature_arn;
+    protected string $lastName='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     *@var string
      */
-    protected $companyAddress;
+    protected string $image_arn='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
      */
-    protected $city;
+    protected ?string $signature_arn;
 
-    /** @ORM\Column(type="string", nullable=false) */
-    protected $zip;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $companyAddress='';
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\Data\State", inversedBy="users")
-     * @var \App\Entity\Data\State
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $city='';
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     *@var string
+     */
+    protected string $zip='';
+
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Data\State", inversedBy="users")
+     * @var State
      **/
     protected $state;
 
-    /** @ORM\Column(type="string", unique=true), nullable=false */
-    protected $phone;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true, nullable=false)
+     * @var string
+     */
+    protected string $phone='';
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true)
      *{"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
      * {"format":"Y-m-d\TH:iP"}
+     * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true)
      * {"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
      * {"format":"Y-m-d\TH:iP"}
+     * @var \DateTime
      */
     protected $updatedAt;
 
-    /** @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="users")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="users")
+     * @var Issuer
+     */
     protected $issuer;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
      * @var string
      *
      * This doubles as the users uuid
      */
-    protected $emailConfirmHash;
+    protected string $emailConfirmHash='';
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     *
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
+     * @var string
      */
-    protected $email;
-
-    /** @ORM\Column(type="string", unique=true)   */
-    protected $phoneConfirmToken;
+    protected string $email;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
+     * @var string
      */
-    protected $userSalt;
+    protected string $phoneConfirmToken='';
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", length=255, nullable=true)
+     * @var ?string
      */
-    protected $notifications;
+    protected ?string $userSalt;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $notifications;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $deals;
 
-    /** @ORM\Column(type="string") */
-    protected $password;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", , nullable=false)
+     * @var string
+     */
+    protected string $password='';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\LoginLog", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\LoginLog", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $logins;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $stips;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $bids;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $communityInvites;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="user")
-     * @var null|PersistentCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Message", mappedBy="recipients")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Message", mappedBy="recipients")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $receivedMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $documents;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\AclRole", inversedBy="users")
-     * @var \App\Entity\AclRole
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\AclRole", inversedBy="users")
+     * @var AclRole
      */
     protected $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\UserStatus", inversedBy="users")
-     * @var \App\Entity\UserStatus
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\UserStatus", inversedBy="users")
+     * @var UserStatus
      */
     protected $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\FailedLogin", inversedBy="users")
-     * @var \App\Entity\FailedLogin
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\FailedLogin", inversedBy="users")
+     * @var FailedLogin
      */
     protected $failedAttempts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Speciality", mappedBy="users")
-     * @var \App\Entity\Speciality
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="App\Entity\Speciality", mappedBy="users")
+     * @var Speciality
      */
     protected $specialities;
 
-    /** @ORM\Column(type="bigint", nullable=false, unique=true) **/
-    protected $authyId = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $closedVolume = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $dealVolume = 0;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="bigint", nullable=false, unique=true)
+     * @var int
+     */
+    protected int $authyId = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @var float
+     */
+    protected float $closedVolume = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @var float
+     */
+    protected float $dealVolume = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      **/
     protected $ratings;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Community", mappedBy="users")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Community", mappedBy="users")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $communities;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Community", mappedBy="owner")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Community", mappedBy="owner")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $myCommunities;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="rater")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="rater")
+     * @var ArrayCollection|PersistentCollection|null
      **/
     protected $rated;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinTable(name="followers",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="follower_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser")
+     * \Doctrine\ORM\Mapping\JoinTable(name="followers",
+     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="follower_id", referencedColumnName="id")}
      *     )
-     * @var ArrayCollection
+     * @var ArrayCollection|PersistentCollection|null
      **/
     protected $followers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinTable(name="following",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="following_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser")
+     * \Doctrine\ORM\Mapping\JoinTable(name="following",
+     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="following_id", referencedColumnName="id")}
      *     )
-     * @var ArrayCollection
+     * @var ArrayCollection|PersistentCollection|null
      **/
     protected $following;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $files;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="userFavorites")
-     * @ORM\JoinTable(name="user_favorite_deals",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="favorite_deal_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="userFavorites")
+     * \Doctrine\ORM\Mapping\JoinTable(name="user_favorite_deals",
+     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="favorite_deal_id", referencedColumnName="id")}
      *     )
-     * @var ArrayCollection
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $marketFavorites;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="text", nullable=true)
+     * @var ?string
      */
-    protected $token;
+    protected ?string $token;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="text", nullable=true)
+     * @var ?string
      */
-    protected $authyToken;
+    protected ?string $authyToken;
 
     /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="text", nullable=true)
+     * @var ?string
      */
-    protected $rememberToken;
+    protected ?string $rememberToken;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="marketUsers")
-     *
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="marketUsers")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $marketDeals;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan\SaleAttribute", mappedBy="buyers")
-     * @var PersistentCollection
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan\SaleAttribute", mappedBy="buyers")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $boughtLoans;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="user")
-     * @var \App\Entity\DueDiligence
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $diligence;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="user")
-     * @var  ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="user")
+     * @var  ArrayCollection|PersistentCollection|null
      * */
     protected $templates;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $chats;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="recipient")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="recipient")
      * @var MarketUser
      */
     protected $chatRecipient;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="user")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="user")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $groupChats;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\GroupChat", mappedBy="members")  */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\GroupChat", mappedBy="members")
+     * @var ArrayCollection|PersistentCollection|null
+     */
     protected $chatGroupMemberships;
 
     /**
@@ -454,9 +517,9 @@ class MarketUser
     public function getId():int { return $this->id; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getUserName() { return $this->userName; }
+    public function getUserName():string { return $this->userName; }
 
     function addDiligence(DueDiligence $diligence)
     {
@@ -477,20 +540,21 @@ class MarketUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAuthPassword() { return $this->password; }
+    public function getAuthPassword(): string
+    { return $this->password; }
 
-    public function getAuthIdentifierName() { return 'userName'; }
+    public function getAuthIdentifierName():string { return 'userName'; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAuthIdentifier() { return $this->userName; }
+    public function getAuthIdentifier():string { return $this->userName; }
 
-    public function getRememberTokenName() { return 'rememberToken'; }
+    public function getRememberTokenName():string { return 'rememberToken'; }
 
-    public function getRememberToken() { return $this->rememberToken; }
+    public function getRememberToken():string { return $this->rememberToken; }
 
     public function setRememberToken($value)
     {
@@ -500,25 +564,25 @@ class MarketUser
     /**
      * @param mixed $password
      */
-    public function setAuthPassword($password) { $this->password = $password; }
+    public function setAuthPassword(mixed $password) { $this->password = $password; }
 
     public function setAuthyToken ($authyToken) { $this->authyToken = $authyToken; }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getUserSalt() { return $this->userSalt; }
+    public function getUserSalt():?string { return $this->userSalt; }
 
     /**
-     * @return mixed
+     * @return UserStatus
      */
-    public function getStatus() { return $this->status; }
+    public function getStatus():UserStatus { return $this->status; }
 
     /**
      * @param $status UserStatus
      * @throws \Exception
      */
-    public function setStatus(UserStatus $status)
+    public function setStatus(UserStatus $status):void
     {
         $this->implementChange($this,'status', $this->status, $status);
     }
@@ -550,23 +614,24 @@ class MarketUser
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getAuthyId() { return $this->authyId; }
+    public function getAuthyId():int { return $this->authyId; }
 
     /**
-     * @param mixed $authyId
+     * @param int $authyId
      */
-    public function setAuthyId($authyId)
+    public function setAuthyId(int $authyId):void
     {
         $this->implementChange($this,'authyId', $this->authyId, $authyId);
     }
 
     /**
      * @param int $int
-     * @return \Exception
+     * @return \Exception|void
+     * @throw  \Exception
      */
-    public function setNotifications(int $int)
+    public function setNotifications(int $int):?\Exception
     {
         if(array_key_exists($int, self::NOTIFY)){
             $this->notifications = $int;
@@ -576,57 +641,61 @@ class MarketUser
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getDiligence() { return $this->diligence; }
+    public function getDiligence():ArrayCollection|PersistentCollection|null { return $this->diligence; }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getFiles(){ return $this->files; }
+    public function getFiles(): ArrayCollection|PersistentCollection|null
+    { return $this->files; }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getMarketDeals() { return $this->marketDeals; }
+    public function getMarketDeals():ArrayCollection|PersistentCollection|null
+    { return $this->marketDeals; }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getMarketFavorites() { return $this->marketFavorites; }
+    public function getMarketFavorites():ArrayCollection|PersistentCollection|null
+    { return $this->marketFavorites; }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getTemplates() { return $this->templates; }
+    public function getTemplates():ArrayCollection|PersistentCollection|null
+    { return $this->templates; }
 
-    public function getMappedTypes() { return $this->mappedTypes; }
-
-    /**
-     * @return mixed
-     */
-    public function getFirstName() { return $this->firstName; }
+    public function getMappedTypes():ArrayCollection { return $this->mappedTypes; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLastName() { return $this->lastName; }
+    public function getFirstName():string { return $this->firstName; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSignatureArn() { return $this->signature_arn; }
+    public function getLastName():string { return $this->lastName; }
+
+    /**
+     * @return ?string
+     */
+    public function getSignatureArn():?string { return $this->signature_arn; }
 
     public function getIssuer() :Issuer { return $this->issuer; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getImageArn() { return $this->image_arn; }
+    public function getImageArn():string { return $this->image_arn; }
 
-    public function getEmail() { return $this->email; }
+    public function getEmail():string { return $this->email; }
 
-    public function getNotifications() { return $this->notifications; }
+    public function getNotifications():?string { return $this->notifications; }
 
     /**
      * @return AclRole
@@ -634,31 +703,31 @@ class MarketUser
     public function getRole(): AclRole { return $this->role; }
 
     /**
-     * @return null|PersistentCollection
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getMessages() { return $this->messages; }
+    public function getMessages():ArrayCollection|PersistentCollection|null { return $this->messages; }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getRatings() { return $this->ratings; }
+    public function getRatings():ArrayCollection|PersistentCollection|null { return $this->ratings; }
 
     /**
      * @return mixed
      */
     public function getRated() { return $this->rated; }
 
-    public function getAuthyToken() { return $this->authyToken; }
+    public function getAuthyToken():?string { return $this->authyToken; }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getCommunities() { return $this->communities; }
+    public function getCommunities():ArrayCollection|PersistentCollection|null { return $this->communities; }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getMyCommunities() { return $this->myCommunities; }
+    public function getMyCommunities():ArrayCollection|PersistentCollection|null { return $this->myCommunities; }
 
     /**
      * @return string
@@ -672,7 +741,8 @@ class MarketUser
         $this->implementChange($this,'logins', $this->logins, $this->logins);
     }
 
-    public function getLogins() :ArrayCollection { return $this->logins; }
+    public function getLogins() :ArrayCollection|PersistentCollection|null
+    { return $this->logins; }
 
     public function addStip (UserStip $stip)
     {
@@ -680,7 +750,8 @@ class MarketUser
         $this->implementChange($this,'stips', $this->stips, $this->stips);
     }
 
-    public function getStips() :ArrayCollection { return $this->stips; }
+    public function getStips() :ArrayCollection|PersistentCollection|null
+    { return $this->stips; }
 
     public function loginToArray()
     {

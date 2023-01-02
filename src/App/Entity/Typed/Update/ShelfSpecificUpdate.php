@@ -8,127 +8,142 @@
 
 namespace App\Entity\Typed\Update;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\ShelfSpecific;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
- *
- * @ORM\Entity
- * @ORM\Table(name="ShelfSpecificUpdate")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="ShelfSpecificUpdate")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class ShelfSpecificUpdate extends AbstractTypeUpdate
 {
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Column(type="integer")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var \App\Entity\Typed\ShelfSpecific $shelfSpecific
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecific", inversedBy="updates") **/
+     * @var ShelfSpecific $shelfSpecific
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecific", inversedBy="updates")
+     **/
     protected $shelfSpecific;
 
     /**
-     * @var \App\Entity\Period $period
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="shelfSpecifics") **/
+     * @var Period $period
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="shelfSpecifics")
+     **/
     protected $period;
 
     /**
-     * @var double $amountDue
-     * @ORM\Column(type = "decimal", precision=14, scale=2) **/
-    public $amountDue = 0;
+     * @var float $amountDue
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     **/
+    public float $amountDue = 0;
 
     /**
-     * @var double $amountPaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2) **/
-    public $amountPaid = 0;
+     * @var float $amountPaid
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     **/
+    public float $amountPaid = 0;
 
     /**
-     * @var double $currentAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2) **/
-    public $currentAmountUnpaid = 0;
+     * @var float $currentAmountUnpaid
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     **/
+    public float $currentAmountUnpaid = 0;
 
     /**
-     * @var double $cumulativeAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2) **/
-    public $cumulativeAmountUnpaid = 0;
+     * @var float $cumulativeAmountUnpaid
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     **/
+    public float $cumulativeAmountUnpaid = 0;
 
     /**
-     * @var double $cumulativeAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2) **/
-    public $beginningBalance = 0;
+     * @var float $cumulativeAmountUnpaid
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     **/
+    public float $beginningBalance = 0;
 
     /**
-     * @var double $cumulativeAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2) **/
-    public $endingBalance = 0;
+     * @var float $cumulativeAmountUnpaid
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     **/
+    public float $endingBalance = 0;
 
     /**
-     * @var double $interestRate
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $interestRate;
+     * @var float|null $interestRate
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $interestRate;
 
     /**
-     * @var double $interestRate
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $deferredAmount;
+     * @var float|null $interestRate
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $deferredAmount;
 
     /**
-     * @var double $calculatedInterest
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $calculatedInterest;
+     * @var float|null $calculatedInterest
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $calculatedInterest;
 
     /**
-     * @var double $interestPaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $interestPaid;
+     * @var float|null $interestPaid
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $interestPaid;
 
     /**
-     * @var double $unpaidInterest
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $unpaidInterest;
+     * @var float|null $unpaidInterest
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $unpaidInterest;
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return \App\Entity\Typed\ShelfSpecific
+     * @return ShelfSpecific
      */
-    public function getShelfSpecific()
+    public function getShelfSpecific():ShelfSpecific
     {
         return $this->shelfSpecific;
     }
 
-    public function getPeriod() {
+    /**
+     * @return Period
+     */
+    public function getPeriod():Period {
         return $this->period;
     }
 
     /**
      * @param Period $period
      */
-    public function setPeriod(Period $period) {
+    public function setPeriod(Period $period):void {
         $this->implementChange($this,'period', $this->period, $period);
     }
 
     /**
-     * @param \App\Entity\Typed\ShelfSpecific $shelfSpecific
+     * @param ShelfSpecific $shelfSpecific
      */
-    public function setShelfSpecific(ShelfSpecific $shelfSpecific)
+    public function setShelfSpecific(ShelfSpecific $shelfSpecific):void
     {
         $this->implementChange($this,'shelfSpecific', $this->shelfSpecific, $shelfSpecific);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getAmountDue()
+    public function getAmountDue():?float
     {
         return $this->amountDue;
     }
@@ -136,15 +151,15 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $amountDue
      */
-    public function setAmountDue($amountDue)
+    public function setAmountDue(float $amountDue):void
     {
         $this->implementChange($this,'amountDue', $this->amountDue, $amountDue);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getAmountPaid()
+    public function getAmountPaid():?float
     {
         return $this->amountPaid;
     }
@@ -152,7 +167,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $amountPaid
      */
-    public function setAmountPaid($amountPaid)
+    public function setAmountPaid(float $amountPaid):void
     {
         $this->implementChange($this,'amountPaid', $this->amountPaid, $amountPaid);
     }
@@ -160,7 +175,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @return float
      */
-    public function getCurrentAmountUnpaid()
+    public function getCurrentAmountUnpaid():float
     {
         return $this->currentAmountUnpaid;
     }
@@ -168,7 +183,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $currentAmountUnpaid
      */
-    public function setCurrentAmountUnpaid($currentAmountUnpaid)
+    public function setCurrentAmountUnpaid(float $currentAmountUnpaid):void
     {
         $this->implementChange($this,'currentAmountUnpaid', $this->currentAmountUnpaid, $currentAmountUnpaid);
     }
@@ -176,7 +191,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @return float
      */
-    public function getCumulativeAmountUnpaid()
+    public function getCumulativeAmountUnpaid():float
     {
         return $this->cumulativeAmountUnpaid;
     }
@@ -184,7 +199,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $cumulativeAmountUnpaid
      */
-    public function setCumulativeAmountUnpaid($cumulativeAmountUnpaid)
+    public function setCumulativeAmountUnpaid(float $cumulativeAmountUnpaid):void
     {
         $this->implementChange($this,'cumulativeAmountUnpaid', $this->cumulativeAmountUnpaid, $cumulativeAmountUnpaid);
     }
@@ -192,7 +207,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @return float
      */
-    public function getBeginningBalance()
+    public function getBeginningBalance():float
     {
         return $this->beginningBalance;
     }
@@ -200,7 +215,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $beginningBalance
      */
-    public function setBeginningBalance($beginningBalance)
+    public function setBeginningBalance(float $beginningBalance):void
     {
         $this->implementChange($this,'beginningBalance', $this->beginningBalance, $beginningBalance);
     }
@@ -208,7 +223,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @return float
      */
-    public function getEndingBalance()
+    public function getEndingBalance():float
     {
         return $this->endingBalance;
     }
@@ -216,15 +231,15 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $endingBalance
      */
-    public function setEndingBalance($endingBalance)
+    public function setEndingBalance(float $endingBalance):void
     {
         $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getInterestRate()
+    public function getInterestRate():?float
     {
         return $this->interestRate;
     }
@@ -232,15 +247,15 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $interestRate
      */
-    public function setInterestRate($interestRate)
+    public function setInterestRate(float $interestRate):void
     {
         $this->implementChange($this,'interestRate', $this->interestRate, $interestRate);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getDeferredAmount()
+    public function getDeferredAmount():?float
     {
         return $this->deferredAmount;
     }
@@ -248,15 +263,15 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $deferredAmount
      */
-    public function setDeferredAmount($deferredAmount)
+    public function setDeferredAmount(float $deferredAmount):void
     {
         $this->implementChange($this,'deferredAmount', $this->deferredAmount, $deferredAmount);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getCalculatedInterest()
+    public function getCalculatedInterest():?float
     {
         return $this->calculatedInterest;
     }
@@ -264,15 +279,15 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $calculatedInterest
      */
-    public function setCalculatedInterest($calculatedInterest)
+    public function setCalculatedInterest(float $calculatedInterest):void
     {
         $this->implementChange($this,'calculatedInterest', $this->calculatedInterest, $calculatedInterest);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getInterestPaid()
+    public function getInterestPaid():?float
     {
         return $this->interestPaid;
     }
@@ -280,15 +295,15 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $interestPaid
      */
-    public function setInterestPaid($interestPaid)
+    public function setInterestPaid(float $interestPaid):void
     {
         $this->implementChange($this,'interestPaid', $this->interestPaid, $interestPaid);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getUnpaidInterest()
+    public function getUnpaidInterest():?float
     {
         return $this->unpaidInterest;
     }
@@ -296,7 +311,7 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @param float $unpaidInterest
      */
-    public function setUnpaidInterest($unpaidInterest)
+    public function setUnpaidInterest(float $unpaidInterest):void
     {
         $this->implementChange($this,'unpaidInterest', $this->unpaidInterest, $unpaidInterest);
     }

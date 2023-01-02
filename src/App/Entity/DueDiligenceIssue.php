@@ -10,89 +10,99 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\DueDiligenceIssue")
- * @ORM\Table(name="DueDiligenceIssue")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DueDiligenceIssue")
+ * \Doctrine\ORM\Mapping\Table(name="DueDiligenceIssue")
  */
-class DueDiligenceIssue
+class DueDiligenceIssue extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
     protected int $id = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="issues")
-     * @ORM\JoinColumn(name="due_diligence_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="issues")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="due_diligence_id", referencedColumnName="id", nullable=false)
      * @var DueDiligence
      */
     protected DueDiligence $dueDiligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDilIssueStatus", inversedBy="issues")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDilIssueStatus", inversedBy="issues")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DueDilIssueStatus
      */
     protected DueDilIssueStatus $status;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
      */
-    protected string $issue;
+    protected ?string $issue;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="issue")
-     * null|PersistentCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="issue")
+     * @var null|ArrayCollection|PersistentCollection
      */
     protected null|ArrayCollection|PersistentCollection $messages;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="issues")
-     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="issues")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id", nullable=false)
      * @var DealFile
      */
     protected DealFile $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="issues")
-     * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="issues")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="priority_id", referencedColumnName="id", nullable=false)
      * @var MessagePriority
      */
     protected MessagePriority $priority;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */
     protected Loan $loan;
 
-    /** @ORM\Column(type="boolean", nullable=false) */
-    protected bool $notifySeller;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
+     * @var bool
+     */
+    protected bool $notifySeller = false;
 
-    /** @ORM\Column(type="boolean", nullable=false) */
-    protected bool $notifyTeam;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
+     * @var bool
+     */
+    protected bool $notifyTeam = false;
 
-    /** @ORM\Column(type="datetime", nullable=false)
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected \DateTime $openDate;
 
-    /** @ORM\Column(type="datetime", nullable=false)
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected \DateTime $closedDate;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, unique=true)
+     * @var ?string
      */
-    protected string $annotationId;
+    protected ?string $annotationId;
 
     public function __construct()
     {

@@ -2,31 +2,32 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 /**
- * @ORM\Entity
- * @ORM\Table(name="ChatStatus")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="ChatStatus")
  */
-class ChatStatus
+class ChatStatus extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string", unique=true)
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="UUID")
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
      * @var string
      */
-    protected $status;
+    protected string $status;
 
     /**
-     * @ORM\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="status")
+     * \Doctrine\ORM\Mapping\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="status")
      * @var PersistentCollection
      */
     protected $chats;

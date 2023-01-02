@@ -8,350 +8,399 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Statistic")
- * @ORM\Table(name="Statistic")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Statistic")
+ * \Doctrine\ORM\Mapping\Table(name="Statistic")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class Statistic extends DomainObject
 {
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Deal", inversedBy="stats")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\Deal
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Deal", inversedBy="stats")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @var Deal
      **/
     protected $deal;
 
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
      **/
-    protected $states;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $summaryStates;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $ltv;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $summaryLtv;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $balance;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $summaryBalance;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $rate;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $summaryRate;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $loanType;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $propertyType;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $occupancy;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $maturity;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $summaryMaturity;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $credit;
-
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
-     **/
-    protected $summaryCredit;
+    protected array|string|null $states;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
-     * @var array
-     */
-    protected $filterData;
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $summaryStates;
 
     /**
-     * @return mixed
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var  array|string|null
+     **/
+    protected array|string|null $ltv;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var  array|string|null
+     **/
+    protected array|string|null $summaryLtv;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var  array|string|null
+     **/
+    protected array|string|null $balance;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $summaryBalance;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $rate;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $summaryRate;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $loanType;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $propertyType;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $occupancy;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $maturity;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $summaryMaturity;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $credit;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
+     **/
+    protected array|string|null $summaryCredit;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|string|null
      */
-    public function getId() { return $this->id; }
+    protected array|string|null $filterData;
+
+    /**
+     * @return int
+     */
+    public function getId():int { return $this->id; }
 
     /**
      * @return Deal
      */
-    public function getDeal() { return $this->deal; }
+    public function getDeal():Deal { return $this->deal; }
 
     /**
      * @param Deal $deal
      */
-    public function setDeal(Deal $deal)
+    public function setDeal(Deal $deal):void
     {
         $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
-    /**
-     * @return array
-     */
-    public function getStates() { return $this->states; }
-
-    /**
-     * @param array $states
-     */
-    public function setStates(array $states)
+    protected function arrayToString(array|string $newValue):string
     {
-        $json_string = json_encode($states);
-        $this->implementChange($this,'states', $this->states, $json_string);
+        if (is_array($newValue))
+            return json_encode($newValue);
+        return $newValue;
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getSummaryStates() { return $this->summaryStates; }
+    public function getStates():array|string|null
+    { return $this->states; }
 
     /**
-     * @param array $summaryStates
+     * @param array|string $states
      */
-    public function setSummaryStates(array $summaryStates)
+    public function setStates(array|string $states):void
     {
-        $json_string = json_encode($summaryStates);
-        $this->implementChange($this,'summaryStates', $this->summaryStates, $json_string);
+        $this->implementChange($this,'states', $this->states,
+            $this->arrayToString($states));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getLtv() { return $this->ltv; }
+    public function getSummaryStates():array|string|null { return $this->summaryStates; }
 
     /**
-     * @param string $ltv
+     * @param array|string $summaryStates
      */
-    public function setLtv(string $ltv)
+    public function setSummaryStates(array|string $summaryStates):void
     {
-        $this->implementChange($this,'ltv', $this->ltv, $ltv);
+        $this->implementChange($this,'summaryStates', $this->summaryStates,
+            $this->arrayToString($summaryStates));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getSummaryLtv() { return $this->summaryLtv; }
+    public function getLtv():array|string|null { return $this->ltv; }
 
     /**
-     * @param array $summaryLtv
+     * @param array|string $ltv
      */
-    public function setSummaryLtv(array $summaryLtv)
+    public function setLtv(array|string $ltv):void
     {
-        $json_string = json_encode($summaryLtv);
-        $this->implementChange($this,'summaryLtv', $this->summaryLtv, $json_string);
+        $this->implementChange($this,'ltv', $this->ltv,
+            $this->arrayToString($ltv));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getBalance() { return $this->balance; }
+    public function getSummaryLtv():array|string|null
+    { return $this->summaryLtv; }
 
     /**
-     * @param array $balance
+     * @param array|string $summaryLtv
      */
-    public function setBalance(array $balance)
+    public function setSummaryLtv(array|string $summaryLtv):void
     {
-        $string = json_encode($balance);
-        $this->implementChange($this,'balance', $this->balance, $string);
+        $this->implementChange($this,'summaryLtv', $this->summaryLtv,
+            $this->arrayToString($summaryLtv));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getSummaryBalance() { return $this->summaryBalance; }
+    public function getBalance():array|string|null
+    { return $this->balance; }
 
     /**
-     * @param array $summaryBalance
+     * @param array|string $balance
      */
-    public function setSummaryBalance(array $summaryBalance)
+    public function setBalance(array|string $balance):void
     {
-        $json_string = json_encode($summaryBalance);
-        $this->implementChange($this,'summaryBalance', $this->summaryBalance, $json_string);
+        $this->implementChange($this,'balance', $this->balance,
+            $this->arrayToString($balance));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getRate() { return $this->rate; }
+    public function getSummaryBalance():array|string|null
+    { return $this->summaryBalance; }
 
     /**
-     * @param array $rate
+     * @param array|string $summaryBalance
      */
-    public function setRate(array $rate)
+    public function setSummaryBalance(array|string $summaryBalance):void
     {
-        $string = json_encode($rate);
-        $this->implementChange($this,'rate', $this->rate, $string);
+        $this->implementChange($this,'summaryBalance', $this->summaryBalance,
+            $this->arrayToString($summaryBalance));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getSummaryRate() { return $this->summaryRate; }
+    public function getRate():array|string|null { return $this->rate; }
 
     /**
-     * @param array $summaryRate
+     * @param array|string $rate
      */
-    public function setSummaryRate(array $summaryRate)
+    public function setRate(array|string $rate):void
     {
-        $json_string = json_encode($summaryRate);
-        $this->implementChange($this,'summaryRate', $this->summaryRate, $json_string);
+        $this->implementChange($this,'rate', $this->rate,
+            $this->arrayToString($rate));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getLoanType() { return $this->loanType; }
+    public function getSummaryRate():array|string|null { return $this->summaryRate; }
 
     /**
-     * @param array $loanType
+     * @param array|string $summaryRate
      */
-    public function setLoanType(array $loanType)
+    public function setSummaryRate(array|string $summaryRate):void
     {
-        $string = json_encode($loanType);
-        $this->implementChange($this,'loanType', $this->loanType, $string);
+        $this->implementChange($this,'summaryRate', $this->summaryRate,
+            $this->arrayToString($summaryRate));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getPropertyType() { return $this->propertyType; }
+    public function getLoanType():array|string|null
+    { return $this->loanType; }
 
     /**
-     * @param array $propertyType
+     * @param array|string $loanType
      */
-    public function setPropertyType(array $propertyType)
+    public function setLoanType(array|string $loanType):void
     {
-        $json_string = json_encode($propertyType);
-        $this->implementChange($this,'propertyType', $this->propertyType, $json_string);
+        $this->implementChange($this,'loanType', $this->loanType,
+            $this->arrayToString($loanType));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getOccupancy() { return $this->occupancy; }
+    public function getPropertyType():array|string|null
+    { return $this->propertyType; }
 
     /**
-     * @param array $occupancy
+     * @param array|string $propertyType
      */
-    public function setOccupancy(array $occupancy)
+    public function setPropertyType(array|string $propertyType):void
     {
-        $json_string = json_encode($occupancy);
-        $this->implementChange($this,'occupancy', $this->occupancy, $json_string);
+        $this->implementChange($this,'propertyType', $this->propertyType,
+            $this->arrayToString($propertyType));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getMaturity() { return $this->maturity; }
+    public function getOccupancy():array|string|null { return $this->occupancy; }
 
     /**
-     * @param array $maturity
+     * @param array|string $occupancy
      */
-    public function setMaturity(array $maturity)
+    public function setOccupancy(array|string $occupancy):void
     {
-        $json_string = json_encode($maturity);
-        $this->implementChange($this,'maturity', $this->maturity, $json_string);
+        $this->implementChange($this,'occupancy', $this->occupancy,
+            $this.$this->arrayToString($occupancy));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getSummaryMaturity() { return $this->summaryMaturity; }
+    public function getMaturity():array|string|null { return $this->maturity; }
 
     /**
-     * @param array $summaryMaturity
+     * @param array|string $maturity
      */
-    public function setSummaryMaturity(array $summaryMaturity)
+    public function setMaturity(array|string $maturity):void
     {
-        $json_string = json_encode($summaryMaturity);
-        $this->implementChange($this,'summaryMaturity', $this->summaryMaturity, $json_string);
+        $this->implementChange($this,'maturity', $this->maturity,
+            $this->arrayToString($maturity));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getCredit() { return $this->credit; }
+    public function getSummaryMaturity():array|string|null { return $this->summaryMaturity; }
 
     /**
-     * @param array $credit
+     * @param array|string $summaryMaturity
      */
-    public function setCredit(array $credit)
+    public function setSummaryMaturity(array|string $summaryMaturity):void
     {
-        $json_string = json_encode($credit);
-        $this->implementChange($this,'credit', $this->credit, $json_string);
+        $this->implementChange($this,'summaryMaturity', $this->summaryMaturity,
+            $this->arrayToString($summaryMaturity));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getSummaryCredit() { return $this->summaryCredit; }
+    public function getCredit():array|string|null { return $this->credit; }
 
     /**
-     * @param array $summaryCredit
+     * @param array|string $credit
      */
-    public function setSummaryCredit(array $summaryCredit)
+    public function setCredit(array|string $credit):void
+    {
+        $this->implementChange($this,'credit', $this->credit,
+            $this->arrayToString($credit));
+    }
+
+    /**
+     * @return array|string|null
+     */
+    public function getSummaryCredit():array|string|null { return $this->summaryCredit; }
+
+    /**
+     * @param array|string $summaryCredit
+     */
+    public function setSummaryCredit(array|string $summaryCredit):void
     {
         $json_string = json_encode($summaryCredit);
-        $this->implementChange($this, 'summaryCredit', $this->summaryCredit, $json_string);
+        $this->implementChange($this, 'summaryCredit', $this->summaryCredit,
+            $this->arrayToString($summaryCredit));
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
-    public function getFilterData() { return $this->filterData; }
+    public function getFilterData():array|string|null { return $this->filterData; }
 
     /**
-     * @param array $filterData
+     * @param array|string $filterData
      */
-    public function setFilterData(array $filterData)
+    public function setFilterData(array|string $filterData):void
     {
-        $json_string = json_encode($filterData);
-        $this->implementChange($this, 'filterData', $this->filterData, $json_string);
+        $this->implementChange($this, 'filterData', $this->filterData,
+            $this->arrayToString($filterData));
     }
 
 

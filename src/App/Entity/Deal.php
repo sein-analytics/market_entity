@@ -14,25 +14,25 @@ use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Deal")
- * @ORM\Table(name="Deal")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Deal")
+ * \Doctrine\ORM\Mapping\Table(name="Deal")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class Deal extends DealAbstract
 {
     use CreatePropertiesArrayTrait;
 
-    protected $ignoreDbProperties = [
+    protected array $ignoreDbProperties = [
         'bonds' => null, 'pools' => null, 'accounts' => null, 'shelfSpecifics' => null,
         'bids' => null  ,'triggers' => null, 'fees' => null, 'latestPeriod' => null
     ];
 
-    protected $addUcIdToPropName = [
+    protected array $addUcIdToPropName = [
         'issuer' => null, 'bidType', 'latestPeriod' => null,
         'status' => null, 'auctionType' => null, 'user' => null, 'assetType'
     ];
 
-    protected $defaultValueProperties = [
+    protected array $defaultValueProperties = [
         'views' => 0,
         'callFormular' => null,
         'loanDataParser' => null,
@@ -41,179 +41,219 @@ class Deal extends DealAbstract
     ];
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="deals")
-     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\Issuer
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="deals")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
+     * @var Issuer
      **/
     protected $issuer;
 
-    /** @ORM\Column(type="string") **/
-    protected $issue;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @var string
+     */
+    protected string $issue = '';
 
-    /** @ORM\Column(type="datetime", nullable=false)
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $cutOffDate;
 
-    /** @ORM\Column(type="datetime", nullable=false) **/
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     **/
     protected $closingDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealStatus", inversedBy="deals")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\DealStatus
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealStatus", inversedBy="deals")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * @var DealStatus
      **/
     protected $status;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $dealDocs;
 
-    /** @ORM\Column(type="integer", nullable=false) **/
-    protected $paymentDay = 1;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $currentBalance;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $originalBalance;
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     * @var int
+     */
+    protected int $paymentDay = 1;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAuction", inversedBy="deals")
-     * @ORM\JoinColumn(name="auction_type_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false) *
+     * @var float
+     */
+    protected float $currentBalance=0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false) *
+     * @var float
+     */
+    protected float $originalBalance=0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealAuction", inversedBy="deals")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="auction_type_id", referencedColumnName="id", nullable=false)
      **/
     protected $auctionType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset", inversedBy="deals")
-     * @ORM\JoinColumn(name="asset_type_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealAsset", inversedBy="deals")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="asset_type_id", referencedColumnName="id", nullable=false)
      **/
     protected $assetType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealBid", inversedBy="deals")
-     * @ORM\JoinColumn(name="bid_type_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealBid", inversedBy="deals")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="bid_type_id", referencedColumnName="id", nullable=false)
      **/
     protected $bidType;
 
-    /** @ORM\OneToOne(targetEntity="\App\Entity\Statistic", mappedBy="deal")
-     * @var \App\Entity\Statistic
+    /**
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Statistic", mappedBy="deal")
+     * @var Statistic
      **/
     protected $stats;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $priorOC;
-
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $cashflowEngine;
-
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $callFormular;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $priorOC;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Pool", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $cashflowEngine;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $callFormular;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Pool", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $pools;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $bonds;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Period", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Period", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $periods;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $bids;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $documents;
 
     /**
-    * @ORM\OneToOne(targetEntity="\App\Entity\Period")
-    * @var \App\Entity\Period
+    * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Period")
+    * @var Period
     */
     protected $latestPeriod;
 
-    /** @ORM\Column(type="string", nullable=true) */
-    protected $loanDataParser;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $loanDataParser;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="deal")   */
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="deal")
+     */
     protected $fees;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="deal")  **/
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="deal")  *
+     */
     protected $accounts;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="deal")  **/
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="deal")  *
+     */
     protected $shelfSpecifics;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="deal")  **/
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="deal")  *
+     */
     protected $triggers;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $diligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="deals")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="deals")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\MarketUser
      */
     protected $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketDeals")
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketDeals")
      * @var PersistentCollection
      */
     protected $marketUsers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketFavorites")
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketFavorites")
      * @var ArrayCollection
      */
     protected $userFavorites;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $ratings;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="deal")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $stips;
 
-    /** @ORM\Column(type="integer", nullable=true)   */
-    protected $views;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $views;
 
     public function __construct()
     {
@@ -274,9 +314,9 @@ class Deal extends DealAbstract
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return Issuer
@@ -286,20 +326,20 @@ class Deal extends DealAbstract
     /**
      * @param mixed $issuer
      */
-    public function setIssuer(Issuer $issuer)
+    public function setIssuer(Issuer $issuer):void
     {
         $this->implementChange($this,'issuer', $this->issuer, $issuer);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getIssue() { return $this->issue; }
+    public function getIssue():string { return $this->issue; }
 
     /**
-     * @param mixed $issue
+     * @param string $issue
      */
-    public function setIssue($issue)
+    public function setIssue(string $issue):void
     {
         $this->implementChange($this,'issue', $this->issue, $issue);
     }
@@ -312,7 +352,7 @@ class Deal extends DealAbstract
     /**
      * @param \DateTime $closingDate
      */
-    public function setClosingDate(\DateTime $closingDate)
+    public function setClosingDate(\DateTime $closingDate):void
     {
         $this->implementChange($this,'closingDate', $this->closingDate, $closingDate);
     }
@@ -325,72 +365,72 @@ class Deal extends DealAbstract
     /**
      * @param \DateTime $cutOffDate
      */
-    public function setCutOffDate(\DateTime$cutOffDate)
+    public function setCutOffDate(\DateTime $cutOffDate):void
     {
         $this->implementChange($this,'cutOffDate', $this->cutOffDate, $cutOffDate);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getPaymentDay() { return $this->paymentDay; }
+    public function getPaymentDay():int { return $this->paymentDay; }
 
     /**
-     * @param mixed $paymentDay
+     * @param int $paymentDay
      */
-    public function setPaymentDay($paymentDay)
+    public function setPaymentDay(int $paymentDay):void
     {
         $this->implementChange($this,'paymentDay', $this->paymentDay, $paymentDay);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getOriginalBalance() { return $this->originalBalance; }
+    public function getOriginalBalance():float { return $this->originalBalance; }
 
     /**
-     * @param mixed $originalBalance
+     * @param float $originalBalance
      */
-    public function setOriginalBalance($originalBalance)
+    public function setOriginalBalance(float $originalBalance):void
     {
         $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getPriorOC() { return $this->priorOC; }
+    public function getPriorOC():?float { return $this->priorOC; }
 
     /**
-     * @param mixed $priorOC
+     * @param float $priorOC
      */
-    public function setPriorOC($priorOC)
+    public function setPriorOC(float $priorOC):void
     {
         $this->implementChange($this,'priorOC', $this->priorOC, $priorOC);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getCashflowEngine() { return $this->cashflowEngine; }
+    public function getCashflowEngine():?string { return $this->cashflowEngine; }
 
     /**
-     * @param mixed $cashflowEngine
+     * @param string $cashflowEngine
      */
-    public function setCashflowEngine($cashflowEngine)
+    public function setCashflowEngine(string $cashflowEngine):void
     {
         $this->implementChange($this,'cashflowEngine', $this->cashflowEngine, $cashflowEngine);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getCallFormular() { return $this->callFormular; }
+    public function getCallFormular():?string { return $this->callFormular; }
 
     /**
-     * @param mixed $callFormular
+     * @param string $callFormular
      */
-    public function setCallFormular($callFormular)
+    public function setCallFormular(string $callFormular):void
     {
         $this->implementChange($this,'callFormular', $this->callFormular, $callFormular);
     }
@@ -401,61 +441,61 @@ class Deal extends DealAbstract
     public function getPools() : ArrayCollection { return $this->pools; }
 
     /**
-     * @param mixed $pools
+     * @param ArrayCollection $pools
      */
-    public function setPools($pools)
+    public function setPools(ArrayCollection $pools):void
     {
         $this->implementChange($this,'pools', $this->pools, $pools);
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getBonds() { return $this->bonds; }
+    public function getBonds():ArrayCollection { return $this->bonds; }
 
     /**
-     * @param mixed $bonds
+     * @param ArrayCollection $bonds
      */
-    public function setBonds($bonds)
+    public function setBonds(ArrayCollection $bonds):void
     {
         $this->implementChange($this,'bonds', $this->bonds, $bonds);
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getPeriods() { return $this->periods; }
+    public function getPeriods():ArrayCollection { return $this->periods; }
 
     /**
-     * @param mixed $periods
+     * @param ArrayCollection $periods
      */
-    public function setPeriods($periods)
+    public function setPeriods(ArrayCollection $periods):void
     {
         $this->implementChange($this,'periods', $this->periods, $periods);
     }
 
     /**
-    * @return mixed
+    * @return Period
     */
-    public function getLatestPeriod() { return $this->latestPeriod; }
+    public function getLatestPeriod():Period { return $this->latestPeriod; }
 
     /**
-     * @param mixed $latestPeriod
+     * @param Period $latestPeriod
      */
-    public function setLatestPeriod($latestPeriod)
+    public function setLatestPeriod(Period $latestPeriod):void
      {
          $this->implementChange($this,'latestPeriod', $this->latestPeriod, $latestPeriod);
      }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getLoanDataParser() { return $this->loanDataParser; }
+    public function getLoanDataParser():?string { return $this->loanDataParser; }
 
     /**
-     * @param mixed $loanDataParser
+     * @param string $loanDataParser
      */
-    public function setLoanDataParser($loanDataParser)
+    public function setLoanDataParser(string $loanDataParser):void
     {
         $this->implementChange($this,'loanDataParser', $this->loanDataParser, $loanDataParser);
     }
@@ -476,12 +516,12 @@ class Deal extends DealAbstract
     /**
      * @return ArrayCollection
      */
-    public function getMessages() { return $this->messages; }
+    public function getMessages():ArrayCollection { return $this->messages; }
 
     /**
      * @return ArrayCollection
      */
-    public function getDiligence() { return $this->diligence; }
+    public function getDiligence():ArrayCollection { return $this->diligence; }
 
     /**
      * @return PersistentCollection
@@ -491,26 +531,26 @@ class Deal extends DealAbstract
     /**
      * @return ArrayCollection
      */
-    public function getUserFavorites() { return $this->userFavorites; }
+    public function getUserFavorites():ArrayCollection { return $this->userFavorites; }
 
     /**
-     * @param integer $views
+     * @param int $views
      */
-    public function setViews($views)
+    public function setViews(int $views):void
     {
         $this->implementChange($this,'views', $this->views, $views);
         $this->views = $views;
     }
 
-    public function getViews() { return $this->views; }
+    public function getViews():?int { return $this->views; }
 
     /**
      * @return ArrayCollection
      */
-    public function getRatings() {  return $this->ratings; }
+    public function getRatings():ArrayCollection {  return $this->ratings; }
 
     /**
-     * @return mixed
+     * @return DealAsset
      */
     public function getAssetType() : DealAsset { return $this->assetType; }
 
@@ -522,7 +562,7 @@ class Deal extends DealAbstract
     /**
      * @param DealStatus $status
      */
-    public function setStatus(DealStatus $status)  { $this->status = $status; }
+    public function setStatus(DealStatus $status):void  { $this->status = $status; }
 
     public function getStips() :ArrayCollection { return $this->stips; }
 

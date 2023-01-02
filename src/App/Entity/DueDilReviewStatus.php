@@ -12,36 +12,37 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="DueDilReviewStatus")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="DueDilReviewStatus")
  */
-class DueDilReviewStatus
+class DueDilReviewStatus extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $status = '';
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string  */
-    protected $status = '';
+    protected string $plusAction = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string  */
-    protected $plusAction = '';
+    protected string $minusAction = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string  */
-    protected $minusAction = '';
-
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="reviewStatus")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="reviewStatus")
      * @var ArrayCollection
      */
     protected $reviewStatuses;

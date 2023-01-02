@@ -8,19 +8,20 @@
 
 namespace App\Entity\Typed;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Deal;
 use App\Entity\Typed\Update\TriggerUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
+use Illuminate\Support\Arr;
 
 /**
- * @MappedSuperclass
- * @ORM\Entity
- * @ORM\Table(name="Triggers")
- * @ORM\DiscriminatorColumn(name="triggerClass", type="string")
- * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Trigger\BondTrigger",
+ * \Doctrine\ORM\Mapping\MappedSuperclass
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Triggers")
+ * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="triggerClass", type="string")
+ * \Doctrine\ORM\Mapping\DiscriminatorMap({"bond" = "\App\Entity\Typed\Trigger\BondTrigger",
  *                        "pool" = "\App\Entity\Typed\Trigger\PoolTrigger",
  *                        "loan" = "\App\Entity\Typed\Trigger\LoanTrigger"
  * })
@@ -31,33 +32,33 @@ abstract class Triggers extends AbstractTyped
 
     /**
      * @var integer $id
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue *
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue *
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "triggers")
-     * @var \App\Entity\Deal $deal
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "triggers")
+     * @var Deal $deal
      */
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\TriggerType", inversedBy="triggers")
-     * @var \App\Entity\Typed\TriggerType $triggerType
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\TriggerType", inversedBy="triggers")
+     * @var TriggerType $triggerType
      */
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", mappedBy="trigger")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", mappedBy="trigger")
      * @var ArrayCollection $triggersUpdate
      */
     protected $updates;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", fetch="EAGER")
-     * @var \App\Entity\Typed\Update\TriggerUpdate $latestTriggerUpdate
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", fetch="EAGER")
+     * @var TriggerUpdate $latestTriggerUpdate
      */
     protected $latestUpdate = null;
 
@@ -67,31 +68,31 @@ abstract class Triggers extends AbstractTyped
         parent::__construct();
     }
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return \App\Entity\Deal
+     * @return Deal|null
      */
-    public function getDeal()
+    public function getDeal():?Deal
     {
         return $this->deal;
     }
 
     /**
-     * @param \App\Entity\Deal $deal
+     * @param Deal $deal
      */
-    public function setDeal(Deal $deal)
+    public function setDeal(Deal $deal):void
     {
         $this->deal = $deal;
     }
 
     /**
-     * @return DefineTypeInterface
+     * @return DefineTypeInterface|TriggerType
      */
-    public function getType()
+    public function getType(): DefineTypeInterface|TriggerType
     {
         return $this->type;
     }
@@ -107,15 +108,15 @@ abstract class Triggers extends AbstractTyped
     /**
      * @return ArrayCollection
      */
-    public function getUpdates()
+    public function getUpdates():ArrayCollection
     {
         return $this->updates;
     }
 
     /**
-     * @return TypedUpdateInterface
+     * @return TypedUpdateInterface|TriggerUpdate|null
      */
-    public function getLatestUpdate()
+    public function getLatestUpdate(): TypedUpdateInterface|TriggerUpdate|null
     {
         return $this->latestUpdate;
     }
@@ -133,7 +134,7 @@ abstract class Triggers extends AbstractTyped
      * @return $this
      * @throws \Exception
      */
-    public function addTriggerUpdate(TriggerUpdate $update)
+    public function addTriggerUpdate(TriggerUpdate $update): static
     {
         return $this->addUpdate($update);
     }

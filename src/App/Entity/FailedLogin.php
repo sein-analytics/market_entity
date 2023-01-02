@@ -7,27 +7,30 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\FailedLogin")
- * @ORM\Table(name="FailedLogin")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\FailedLogin")
+ * \Doctrine\ORM\Mapping\Table(name="FailedLogin")
  */
-class FailedLogin
+class FailedLogin extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
-    protected $id;
-
-    /** @ORM\Column(type="integer", nullable=false)   */
-    protected $state;
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="failedAttempts")
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @var int
+     */
+    protected int $state = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="failedAttempts")
      * @var ArrayCollection
      */
     protected $users;
@@ -40,7 +43,7 @@ class FailedLogin
     /**
      * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return ArrayCollection

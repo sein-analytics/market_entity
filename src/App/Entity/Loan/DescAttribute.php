@@ -1,28 +1,32 @@
 <?php
 namespace App\Entity\Loan;
 
+use App\Entity\AnnotationMappings;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="DescAttribute")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="DescAttribute")
  */
-class DescAttribute
+class DescAttribute extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="description")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="description")
      * @var ArrayCollection
      **/
     protected $loans;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $descType;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false) *
+     */
+    protected string|null $descType;
 
     public function __construct()
     {
@@ -30,9 +34,9 @@ class DescAttribute
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getDescType()
+    public function getDescType():?string
     {
         return $this->descType;
     }
@@ -40,15 +44,15 @@ class DescAttribute
     /**
      * @return ArrayCollection
      */
-    public function getLoans()
+    public function getLoans():ArrayCollection
     {
         return $this->loans;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }

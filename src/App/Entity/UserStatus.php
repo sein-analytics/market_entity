@@ -7,58 +7,63 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="UserStatus")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="UserStatus")
  */
-class UserStatus
+class UserStatus extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
-
-    /** @ORM\Column(type="string", nullable=false)   */
-    protected $status;
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="status")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $status='';
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="status")
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $users;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getStatus()
+    public function getStatus():string
     {
         return $this->status;
     }
 
     /**
-     * @param mixed $status
+     * @param string $status
      */
-    public function setStatus($status)
+    public function setStatus(string $status)
     {
         $this->status = $status;
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getUsers()
+    public function getUsers():PersistentCollection|ArrayCollection|null
     {
         return $this->users;
     }

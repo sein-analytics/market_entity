@@ -2,13 +2,13 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\AclRole")
- * @ORM\Table(name="AclRole")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\AclRole")
+ * \Doctrine\ORM\Mapping\Table(name="AclRole")
  */
-class AclRole
+class AclRole extends AnnotationMappings
 {
     const SELLER = 'Seller';
     const BUYER = 'Buyer';
@@ -19,7 +19,7 @@ class AclRole
 
     const ADMIN ='Admin';
 
-    protected static $userAclRoles = [
+    protected static array $userAclRoles = [
         self::ADMIN => 0,
         self::BUYER => 1,
         self::SELLER => 2,
@@ -29,23 +29,23 @@ class AclRole
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="role")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="role")
      * @var ArrayCollection
      */
     protected $users;
 
-    /** @ORM\Column(type="string", nullable=false)
+    /** \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $role = '';
+    protected string $role = '';
 
     public function __construct()
     {

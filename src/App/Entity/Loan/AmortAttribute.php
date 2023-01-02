@@ -3,30 +3,34 @@
 
 namespace App\Entity\Loan;
 
+use App\Entity\AnnotationMappings;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="AmortAttribute")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="AmortAttribute")
  */
-class AmortAttribute
+class AmortAttribute extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="amortization")
+    /** \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="amortization")
      * @var ArrayCollection
      **/
     protected $loans;
 
 
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $amortType;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false) *
+     */
+    protected string $amortType;
 
     public function __construct()
     {
@@ -34,9 +38,9 @@ class AmortAttribute
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getAmortType()
+    public function getAmortType():?string
     {
         return $this->amortType;
     }
@@ -44,15 +48,15 @@ class AmortAttribute
     /**
      * @return ArrayCollection
      */
-    public function getLoans()
+    public function getLoans():ArrayCollection
     {
         return $this->loans;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }

@@ -6,132 +6,174 @@ use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\ArmAttribute")
- * @ORM\Table(name="ArmAttribute")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Loan\ArmAttribute")
+ * \Doctrine\ORM\Mapping\Table(name="ArmAttribute")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class ArmAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    protected $ignoreDbProperties = [];
+    protected array $ignoreDbProperties = [];
 
-    protected $addUcIdToPropName = ['loan' => null];
+    protected array $addUcIdToPropName = ['loan' => null];
 
-    protected $defaultValueProperties = [];
-
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
-    protected $id;
+    protected array $defaultValueProperties = [];
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="armAttributes")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\Loan
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     */
+    protected int $id;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="armAttributes")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
+     * @var Loan
      **/
     protected $loan;
 
-    /** @ORM\Column(type="decimal", precision=18, scale=15, nullable=true) **/
-    protected $grossMargin;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=15, nullable=true)
+     */
+    protected float|null $grossMargin = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=18, scale=15, nullable=true) **/
-    protected $minimumRate;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=15, nullable=true) *
+     */
+    protected float $minimumRate = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=18, scale=15, nullable=true) **/
-    protected $maximumRate;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=15, nullable=true)
+     */
+    protected float $maximumRate = 0.0;
 
-    /** @ORM\Column(type = "string", nullable=true) **/
-    protected $rateIndex;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     */
+    protected string $rateIndex;
 
-    /** @ORM\Column(type = "integer", nullable=true) **/
-    protected $fstRateAdjPeriod;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     */
+    protected int|null $fstRateAdjPeriod;
 
-    /** @ORM\Column(type = "datetime", nullable=true) **/
-    protected $fstRateAdjDate;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     */
+    protected \DateTime|null $fstRateAdjDate;
 
-    /** @ORM\Column(type = "integer", nullable=true) **/
-    protected $fstPmntAdjPeriod;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     */
+    protected int|null $fstPmntAdjPeriod;
 
-    /** @ORM\Column(type = "datetime", nullable=true) **/
-    protected $fstPmntAdjDate;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     */
+    protected \DateTime|null $fstPmntAdjDate;
 
-    /** @ORM\Column(type = "integer", nullable=true) **/
-    protected $rateAdjFrequency;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     */
+    protected int|null $rateAdjFrequency;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $periodicCap;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     */
+    protected float|null $periodicCap;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $initialCap;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     */
+    protected float|null $initialCap;
 
-    /** @ORM\Column(type = "integer", nullable=true) **/
-    protected $pmntAdjFrequency;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     */
+    protected int|null $pmntAdjFrequency;
 
-    /** @ORM\Column(type ="decimal", precision=14, scale=5, nullable=true) **/
-    protected $pmntIncreaseCap;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type ="decimal", precision=14, scale=5, nullable=true)
+     */
+    protected float|null $pmntIncreaseCap;
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return Loan
+     * @return Loan|null
      */
-    public function getLoan()
+    public function getLoan():?Loan
     {
         return $this->loan;
     }
 
     /**
-     * @param \App\Entity\Loan $loan
+     * @param Loan $loan
      */
-    public function setLoan(Loan $loan)
+    public function setLoan(Loan $loan):void
     {
         $this->implementChange($this,'loan', $this->loan, $loan);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getGrossMargin()
+    public function getGrossMargin():?float
     {
         return $this->grossMargin;
     }
 
     /**
-     * @param mixed $grossMargin
+     * @param float $grossMargin
      */
-    public function setGrossMargin($grossMargin)
+    public function setGrossMargin(float$grossMargin):void
     {
         $this->implementChange($this,'grossMargin', $this->grossMargin, $grossMargin);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getMinimumRate()
+    public function getMinimumRate():?float
     {
         return $this->minimumRate;
     }
 
     /**
-     * @param mixed $minimumRate
+     * @param float $minimumRate
      */
-    public function setMinimumRate($minimumRate)
+    public function setMinimumRate(float $minimumRate):void
     {
         $this->implementChange($this,'minimumRate', $this->minimumRate, $minimumRate);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getMaximumRate()
+    public function getMaximumRate():?float
     {
         return $this->maximumRate;
     }
@@ -139,167 +181,167 @@ class ArmAttribute extends DomainObject
     /**
      * @param mixed $maximumRate
      */
-    public function setMaximumRate($maximumRate)
+    public function setMaximumRate(float $maximumRate):void
     {
         $this->implementChange($this,'maximumRate', $this->maximumRate, $maximumRate);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getRateIndex()
+    public function getRateIndex():string
     {
         return $this->rateIndex;
     }
 
     /**
-     * @param mixed $rateIndex
+     * @param string $rateIndex
      */
-    public function setRateIndex($rateIndex)
+    public function setRateIndex(string $rateIndex):void
     {
         $this->implementChange($this,'rateIndex', $this->rateIndex, $rateIndex);
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getFstRateAdjPeriod()
+    public function getFstRateAdjPeriod():?int
     {
         return $this->fstRateAdjPeriod;
     }
 
     /**
-     * @param mixed $fstRateAdjPeriod
+     * @param int $fstRateAdjPeriod
      */
-    public function setFstRateAdjPeriod($fstRateAdjPeriod)
+    public function setFstRateAdjPeriod(int $fstRateAdjPeriod):void
     {
         $this->implementChange($this,'fstRateAdjPeriod', $this->fstRateAdjPeriod, $fstRateAdjPeriod);
     }
 
     /**
-     * @return mixed
+     * @return \DateTime|null
      */
-    public function getFstRateAdjDate()
+    public function getFstRateAdjDate():?\DateTime
     {
         return $this->fstRateAdjDate;
     }
 
     /**
-     * @param mixed $fstRateAdjDate
+     * @param \DateTime $fstRateAdjDate
      */
-    public function setFstRateAdjDate($fstRateAdjDate)
+    public function setFstRateAdjDate(\DateTime $fstRateAdjDate)
     {
         $this->implementChange($this,'fstRateAdjDate', $this->fstRateAdjDate, $fstRateAdjDate);
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getFstPmntAdjPeriod()
+    public function getFstPmntAdjPeriod():?int
     {
         return $this->fstPmntAdjPeriod;
     }
 
     /**
-     * @param mixed $fstPmntAdjPeriod
+     * @param int $fstPmntAdjPeriod
      */
-    public function setFstPmntAdjPeriod($fstPmntAdjPeriod)
+    public function setFstPmntAdjPeriod(int $fstPmntAdjPeriod)
     {
         $this->implementChange($this,'fstPmntAdjPeriod', $this->fstPmntAdjPeriod, $fstPmntAdjPeriod);
     }
 
     /**
-     * @return mixed
+     * @return \DateTime|null
      */
-    public function getFstPmntAdjDate()
+    public function getFstPmntAdjDate():?\DateTime
     {
         return $this->fstPmntAdjDate;
     }
 
     /**
-     * @param mixed $fstPmntAdjDate
+     * @param \DateTime $fstPmntAdjDate
      */
-    public function setFstPmtAdjDate($fstPmntAdjDate)
+    public function setFstPmtAdjDate(\DateTime $fstPmntAdjDate):void
     {
         $this->implementChange($this,'fstPmntAdjDate', $this->fstPmntAdjDate, $fstPmntAdjDate);
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getRateAdjFrequency()
+    public function getRateAdjFrequency():?int
     {
         return $this->rateAdjFrequency;
     }
 
     /**
-     * @param mixed $rateAdjFrequency
+     * @param int $rateAdjFrequency
      */
-    public function setRateAdjFrequency($rateAdjFrequency)
+    public function setRateAdjFrequency(int $rateAdjFrequency):void
     {
         $this->implementChange($this,'rateAdjFrequency', $this->rateAdjFrequency, $rateAdjFrequency);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getPeriodicCap()
+    public function getPeriodicCap():?float
     {
         return $this->periodicCap;
     }
 
     /**
-     * @param mixed $periodicCap
+     * @param float $periodicCap
      */
-    public function setPeriodicCap($periodicCap)
+    public function setPeriodicCap(float $periodicCap)
     {
         $this->implementChange($this,'periodicCap', $this->periodicCap, $periodicCap);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getInitialCap()
+    public function getInitialCap():?float
     {
         return $this->initialCap;
     }
 
     /**
-     * @param mixed $initialCap
+     * @param float $initialCap
      */
-    public function setInitialCap($initialCap)
+    public function setInitialCap(float $initialCap):void
     {
         $this->implementChange($this,'initialCap', $this->initialCap, $initialCap);
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getPmntAdjFrequency()
+    public function getPmntAdjFrequency():?int
     {
         return $this->pmntAdjFrequency;
     }
 
     /**
-     * @param mixed $pmntAdjFrequency
+     * @param int $pmntAdjFrequency
      */
-    public function setPmntAdjFrequency($pmntAdjFrequency)
+    public function setPmntAdjFrequency(int $pmntAdjFrequency):void
     {
         $this->implementChange($this,'pmntAdjFrequency', $this->pmntAdjFrequency, $pmntAdjFrequency);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getPmntIncreaseCap()
+    public function getPmntIncreaseCap():?float
     {
         return $this->pmntIncreaseCap;
     }
 
     /**
-     * @param mixed $pmntIncreaseCap
+     * @param float  $pmntIncreaseCap
      */
-    public function setPmntIncreaseCap($pmntIncreaseCap)
+    public function setPmntIncreaseCap(float $pmntIncreaseCap):void
     {
         $this->implementChange($this,'pmntIncreaseCap', $this->pmntIncreaseCap, $pmntIncreaseCap);
     }

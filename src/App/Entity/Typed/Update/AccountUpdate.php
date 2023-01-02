@@ -6,67 +6,79 @@
 
 namespace App\Entity\Typed\Update;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Account;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
  *
- * @ORM\Entity
- * @ORM\Table(name="AccountUpdate")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="AccountUpdate")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  *
  */
 class AccountUpdate extends AbstractTypeUpdate
 {
 
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
-    protected $id;
+    /**
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     */
+    protected int $id;
 
     /**
-     * @var \App\Entity\Typed\Account $account
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Account", inversedBy="updates", fetch="EAGER") **/
+     * @var Account $account
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\Account", inversedBy="updates", fetch="EAGER")
+     **/
     protected $account;
 
     /**
-     * @var \App\Entity\Period $period
-     * @ORM\ManyToOne(targetEntity="App\Entity\Period", inversedBy="accounts", fetch="EAGER") **/
+     * @var Period $period
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Period", inversedBy="accounts", fetch="EAGER")
+     **/
     protected $period;
 
     /**
-     * @var double $beginningBalance
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $beginningBalance;
+     * @var float|null $beginningBalance
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $beginningBalance;
 
     /**
-     * @var double $accountWithdrawals
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $accountWithdrawals;
+     * @var float|null $accountWithdrawals
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $accountWithdrawals;
 
     /**
-     * @var double $accountDeposits
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $accountDeposits;
+     * @var float|null $accountDeposits
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $accountDeposits;
 
     /**
-     * @var double $endingBalance
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $endingBalance;
+     * @var float|null $endingBalance
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $endingBalance;
 
     /**
-     * @var double $shortfall
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $shortfall;
+     * @var float|null $shortfall
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $shortfall;
 
     /**
-     * @var double $requiredAmount
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    public $requiredAmount;
+     * @var float|null $requiredAmount
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     **/
+    public float|null $requiredAmount;
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -74,109 +86,112 @@ class AccountUpdate extends AbstractTypeUpdate
     /**
      * @return Account $account
      */
-    public function getAccount() {
+    public function getAccount():Account {
         return $this->account;
     }
 
-    public function getPeriod() {
+    /**
+     * @return Period
+     */
+    public function getPeriod():Period {
         return $this->period;
     }
 
     /**
      * @param Period $period
      */
-    public function setPeriod(Period $period) {
+    public function setPeriod(Period $period):void {
         $this->implementChange($this,'period', $this->period, $period);
     }
 
     /**
-     * @return number $beginningBalance
+     * @return float|null $beginningBalance
      */
-    public function getBeginningBalance() {
+    public function getBeginningBalance():?float {
         return $this->beginningBalance;
     }
 
     /**
-     * @return number $accountWithdrawals
+     * @return float|null $accountWithdrawals
      */
-    public function getAccountWithdrawals() {
+    public function getAccountWithdrawals():?float {
         return $this->accountWithdrawals;
     }
 
     /**
-     * @return number $accountDeposits
+     * @return float|null $accountDeposits
      */
-    public function getAccountDeposits() {
+    public function getAccountDeposits():?float {
         return $this->accountDeposits;
     }
 
     /**
-     * @return number $endingBalance
+     * @return float|null $endingBalance
      */
-    public function getEndingBalance() {
+    public function getEndingBalance():?float {
         return $this->endingBalance;
     }
 
     /**
-     * @return number $shortfall
+     * @return float|null $shortfall
      */
-    public function getShortfall() {
+    public function getShortfall():?float {
         return $this->shortfall;
     }
 
     /**
-     * @return number $requiredAmount
+     * @return float|null $requiredAmount
      */
-    public function getRequiredAmount() {
+    public function getRequiredAmount():?float {
         return $this->requiredAmount;
     }
 
     /**
      * @param Account $account
      */
-    public function setAccount(Account $account) {
+    public function setAccount(Account $account):void {
         $this->implementChange($this,'account', $this->account, $account);
     }
 
     /**
-     * @param double $beginningBalance
+     * @param float $beginningBalance
      */
-    public function setBeginningBalance($beginningBalance) {
+    public function setBeginningBalance(float $beginningBalance):void {
         $this->implementChange($this,'beginningBalance', $this->beginningBalance, $beginningBalance);
     }
 
     /**
-     * @param double $accountWithdrawals
+     * @param float $accountWithdrawals
      */
-    public function setAccountWithdrawals($accountWithdrawals) {
+    public function setAccountWithdrawals(float $accountWithdrawals):void {
         $this->implementChange($this,'accountWithdrawals', $this->accountWithdrawals, $accountWithdrawals);
     }
 
     /**
-     * @param double $accountDeposits
+     * @param float $accountDeposits
      */
-    public function setAccountDeposits($accountDeposits) {
+    public function setAccountDeposits(float $accountDeposits):void {
         $this->implementChange($this,'accountDeposits', $this->accountDeposits, $accountDeposits);
     }
 
     /**
-     * @param double $endingBalance
+     * @param float  $endingBalance
      */
-    public function setEndingBalance($endingBalance) {
+    public function setEndingBalance(float $endingBalance):void {
         $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
-     * @param double $shortfall
+     * @param float $shortfall
      */
-    public function setShortfall($shortfall) {
+    public function setShortfall(float $shortfall):void {
         $this->implementChange($this,'shortfall', $this->shortfall, $shortfall);
     }
 
     /**
-     * @param number $requiredAmount
+     * @param float $requiredAmount
      */
-    public function setRequiredAmount($requiredAmount) {
+    public function setRequiredAmount(float $requiredAmount):void {
         $this->implementChange($this,'requiredAmount', $this->requiredAmount, $requiredAmount);
     }
     

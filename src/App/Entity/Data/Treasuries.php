@@ -2,33 +2,34 @@
 
 
 namespace App\Entity\Data;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AnnotationMappings;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Data\Treasuries")
- * @ORM\Table(name="Treasuries")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Data\Treasuries")
+ * \Doctrine\ORM\Mapping\Table(name="Treasuries")
  */
-class Treasuries
+class Treasuries extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      **/
-    protected $name;
+    protected string $name;
 
-    /** @ORM\Column(type="decimal", precision=9, scale=6, nullable = true) **/
-    protected $value;
+    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=9, scale=6, nullable = true) **/
+    protected float $value;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return string
@@ -36,14 +37,14 @@ class Treasuries
     public function getName(): string { return $this->name; }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getValue() { return $this->value; }
+    public function getValue():float { return $this->value; }
 
     /**
-     * @param mixed $value
+     * @param float $value
      */
-    public function setValue(float $value)
+    public function setValue(float $value):void
     {
         $this->value = $value;
     }

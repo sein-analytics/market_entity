@@ -6,14 +6,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\DealStatus")
  * @ORM\Table(name="DealStatus")
  */
-class DealStatus
+class DealStatus extends AnnotationMappings
 {
     const UPLOAD = "UPLOAD";
 
@@ -27,7 +27,7 @@ class DealStatus
 
     const CLOSED = "CLOSED";
     
-    protected static $statuses = array(
+    protected static array $statuses = array(
         self::UPLOAD        => "\\App\\Entity\\DealStatus\\Upload",
         self::AUCTION       => "\\App\\Entity\\DealStatus\\Auction",
         self::LOI           => "\\App\\Entity\\DealStatus\\Loi",
@@ -37,18 +37,23 @@ class DealStatus
     );
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="status")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="status")
      * @var ArrayCollection
      **/
     protected $deals;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $status;
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $status ='';
 
     public function __construct()
     {
@@ -56,9 +61,9 @@ class DealStatus
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -66,20 +71,20 @@ class DealStatus
     /**
      * @return ArrayCollection
      */
-    public function getDeals()
+    public function getDeals():ArrayCollection
     {
         return $this->deals;
     }
 
-    public function addDeal(Deal $deal)
+    public function addDeal(Deal $deal):void
     {
         $this->getDeals()->add($deal);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getStatus()
+    public function getStatus():string
     {
         return $this->status;
     }

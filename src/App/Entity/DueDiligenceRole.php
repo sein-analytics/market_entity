@@ -7,30 +7,30 @@
  */
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="DueDiligenceRole")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="DueDiligenceRole")
  */
-class DueDiligenceRole
+class DueDiligenceRole extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $role;
+    protected string $role = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="diligenceRole")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="diligenceRole")
      * @var ArrayCollection
      */
     protected $dueDiligence;
@@ -41,14 +41,14 @@ class DueDiligenceRole
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
-    function addDueDiligence(DueDiligence $dueDiligence)
+    function addDueDiligence(DueDiligence $dueDiligence):void
     {
         $this->dueDiligence->add($dueDiligence);
     }

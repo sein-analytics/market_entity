@@ -3,38 +3,38 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\ChatTracker")
- * @ORM\Table(name="ChatTracker")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\ChatTracker")
+ * \Doctrine\ORM\Mapping\Table(name="ChatTracker")
  */
-class ChatTracker
+class ChatTracker extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Column(name="id", type="integer")
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
      * @var string
      */
-    protected $uuid;
+    protected string $uuid;
 
     /**
-     * @ORM\OneToOne (targetEntity="\App\Entity\GroupChat", mappedBy="tracker")
+     * \Doctrine\ORM\Mapping\OneToOne (targetEntity="\App\Entity\GroupChat", mappedBy="tracker")
      * @var GroupChat|null
      */
     protected $group;
 
     /**
-     * @ORM\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="tracker")
+     * \Doctrine\ORM\Mapping\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="tracker")
      * @var PersistentCollection
      */
     protected $chats;

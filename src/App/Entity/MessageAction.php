@@ -8,44 +8,45 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\MessageAction")
- * @ORM\Table(name="MessageAction")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessageAction")
+ * \Doctrine\ORM\Mapping\Table(name="MessageAction")
  *
  */
-class MessageAction
+class MessageAction extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $urlText;
+    protected string $urlText;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $documentUrl;
+    protected string $documentUrl;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $icon;
+    protected string $icon;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="action")
-     * @var PersistentCollection
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $messages;
 
@@ -60,9 +61,10 @@ class MessageAction
     public function getUrlText(): string { return $this->urlText; }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getMessages() :PersistentCollection { return $this->messages; }
+    public function getMessages() :PersistentCollection|ArrayCollection|null
+    { return $this->messages; }
 
     /**
      * @return string
@@ -73,6 +75,5 @@ class MessageAction
      * @return string
      */
     public function getIcon(): string { return $this->icon; }
-
 
 }

@@ -8,30 +8,30 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="DueDiligenceStatus")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="DueDiligenceStatus")
  */
-class DueDiligenceStatus
+class DueDiligenceStatus extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $status = '';
+    protected string $status = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="status")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="status")
      * @var ArrayCollection
      */
     protected $dueDiligence;
@@ -47,19 +47,19 @@ class DueDiligenceStatus
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getId() { return $this->id; }
+    public function getId():string { return $this->id; }
 
     /**
      * @return string
      */
-    public function getStatus() { return $this->status; }
+    public function getStatus():string { return $this->status; }
 
     /**
      * @return ArrayCollection
      */
-    public function getDueDiligence() { return $this->dueDiligence; }
+    public function getDueDiligence():ArrayCollection { return $this->dueDiligence; }
 
 
 }

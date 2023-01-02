@@ -2,19 +2,29 @@
 
 
 namespace App\Entity;
-
 use App\Entity\Bond\Component;
 use App\Entity\Update\BondUpdate;
 use App\Service\CreatePropertiesArrayTrait;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="Bond")
- * @ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifecycleCallbacks
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Bond")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\HasLifecycleCallbacks
  *
  */
 class Bond extends DomainObject
@@ -25,83 +35,101 @@ class Bond extends DomainObject
     const SOLVE_FOR_PRICE = 2;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
-    protected $id;
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue **/
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="bonds")
-     * @var \App\Entity\Pool
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="bonds")
+     * @var Pool
      **/
     protected $pool;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bonds", cascade={"persist"})
-     * @var \App\Entity\Deal
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bonds", cascade={"persist"})
+     * @var Deal
      **/
     protected $deal;
 
-    /** @ORM\Column(type="string", unique=false) **/
-    protected $cusip;
+    /** \Doctrine\ORM\Mapping\Column(type="string", unique=false) **/
+    protected string $cusip;
 
-    /** @ORM\Column(type="string") **/
-    protected $className;
+    /** \Doctrine\ORM\Mapping\Column(type="string") **/
+    protected string $className;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $originalBalance;
+    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) **/
+    protected float $originalBalance;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $currentBalance = 0;
+    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) **/
+    protected float $currentBalance = 0;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $rateFormula;
+    /** \Doctrine\ORM\Mapping\Column(type="string", nullable=true) **/
+    protected string $rateFormula;
 
-    /** @ORM\Column(type="date", nullable=true) **/
+    /** \Doctrine\ORM\Mapping\Column(type="date", nullable=true) **/
     protected $scheduledMaturityDate;
 
-    /** @ORM\Column(type="decimal", precision=6, scale=5, nullable=true) **/
-    protected $fixedRate;
+    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=6, scale=5, nullable=true) **/
+    protected float $fixedRate;
 
-    /** @ORM\Column(type="decimal", precision=8, scale=6, nullable=true) **/
-    protected $origCreditSupport;
-
-    /** @ORM\Column(type="decimal", precision=6, scale=5) **/
-    protected $currCreditSupport = 0;
-
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\BasisCount", inversedBy="bonds") **/
-    protected $basisCount;
-
-    /** @ORM\Column(name="floatingIndex", type="string", nullable=true)**/
-    protected $floatingIndex;
-
-    /** @ORM\Column(name="indexMaturity", type="string", nullable=true) **/
-    protected $indexMaturity;
-
-    /** @ORM\Column(name="spreadArray", type="string", nullable=true) **/
-    protected $spreadArray;
-
-    /** @ORM\Column(type="datetime", nullable=true) **/
-    protected $legalFinal;
-
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $isIoBond;
-
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $isPoBond;
-
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $isComponent;
+    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=6, nullable=true) **/
+    protected float $origCreditSupport;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\Component",
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=6, scale=5) *
+     */
+    protected float$currCreditSupport = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\BasisCount", inversedBy="bonds") *
+     */
+    protected $basisCount;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(name="floatingIndex", type="string", nullable=true)*
+     */
+    protected string $floatingIndex;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(name="indexMaturity", type="string", nullable=true) *
+     */
+    protected string $indexMaturity;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(name="spreadArray", type="string", nullable=true) *
+     */
+    protected string $spreadArray;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true) *
+     */
+    protected $legalFinal;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true) *
+     */
+    protected $isIoBond;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true) *
+     */
+    protected int $isPoBond;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true) *
+     */
+    protected int $isComponent;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond\Component",
      *     mappedBy="bond", mappedBy="bond")
      * @var ArrayCollection
      **/
     protected $components;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="bond")
-     * @ORM\OrderBy({"reportDate" = "ASC"})
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="bond")
+     * \Doctrine\ORM\Mapping\OrderBy({"reportDate" = "ASC"})
      * @var ArrayCollection
      **/
     protected $updates;
@@ -110,58 +138,74 @@ class Bond extends DomainObject
     protected $updateCount = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Update\BondUpdate")
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Update\BondUpdate")
      * @var \App\Entity\Update\BondUpdate
      **/
     protected $latestUpdate;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $moodysRating;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $moodysRating;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $spRating;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $spRating;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $fitchRating;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $fitchRating;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $dbrsRating;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $dbrsRating;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\BondSpecific", mappedBy="bonds")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\BondSpecific", mappedBy="bonds")
+     */
     protected $specifics;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\BondFee", mappedBy="bonds")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Fee\BondFee", mappedBy="bonds")
+     */
     protected $fees;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\BondAccount", mappedBy="bonds")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Account\BondAccount", mappedBy="bonds")
+     */
     protected $accounts;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\BondTrigger", mappedBy="bonds")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\BondTrigger", mappedBy="bonds")
+     */
     protected $triggers;
 
     /**
-     * @ORM\Column(type = "integer")
+     * \Doctrine\ORM\Mapping\Column(type = "integer")
      *
      **/
-    protected $feeCount = 0;
+    protected int $feeCount = 0;
 
     /**
-     * @ORM\Column(type = "integer")
+     * \Doctrine\ORM\Mapping\Column(type = "integer")
      *
      **/
-    protected $triggerCount = 0;
+    protected int $triggerCount = 0;
 
     /**
-     * @ORM\Column(type = "integer")
+     * \Doctrine\ORM\Mapping\Column(type = "integer")
      *
      **/
-    protected $shelfSpecificCount = 0;
+    protected int $shelfSpecificCount = 0;
 
     /**
-     * @ORM\Column(type = "integer")
+     * \Doctrine\ORM\Mapping\Column(type = "integer")
      *
      **/
-    protected $accountCount = 0;
+    protected int $accountCount = 0;
 
     public function __construct()
     {
@@ -171,113 +215,113 @@ class Bond extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return Pool
      */
-    public function getPool()
+    public function getPool():Pool
     {
         return $this->pool;
     }
 
     /**
-     * @param mixed $pool
+     * @param Pool $pool
      */
-    public function setPool($pool)
+    public function setPool(Pool$pool):void
     {
         $this->implementChange($this,'pool', $this->pool, $pool);
     }
 
     /**
-     * @return mixed
+     * @return Deal
      */
-    public function getDeal()
+    public function getDeal():Deal
     {
         return $this->deal;
     }
 
     /**
-     * @param $deal
+     * @param Deal $deal
      */
-    public function setDeal($deal)
+    public function setDeal(Deal$deal):void
     {
         $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getCusip()
+    public function getCusip():string
     {
         return $this->cusip;
     }
 
     /**
-     * @param mixed $cusip
+     * @param string  $cusip
      */
-    public function setCusip($cusip)
+    public function setCusip(string $cusip):void
     {
         $this->implementChange($this,'cusip', $this->cusip, $cusip);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getClassName()
+    public function getClassName():string
     {
         return $this->className;
     }
 
     /**
-     * @param mixed $className
+     * @param string $className
      */
-    public function setClassName($className)
+    public function setClassName(string $className):void
     {
         $this->implementChange($this,'className', $this->className, $className);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getOriginalBalance()
+    public function getOriginalBalance():float
     {
         return $this->originalBalance;
     }
 
     /**
-     * @param mixed $originalBalance
+     * @param float $originalBalance
      */
-    public function setOriginalBalance($originalBalance)
+    public function setOriginalBalance(float $originalBalance):void
     {
         $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getCurrentBalance()
+    public function getCurrentBalance():float
     {
         return $this->currentBalance;
     }
 
     /**
-     * @param mixed $currentBalance
+     * @param float $currentBalance
      */
-    public function setCurrentBalance($currentBalance)
+    public function setCurrentBalance(float $currentBalance):void
     {
         $this->implementChange($this,'currentBalance', $this->currentBalance, $currentBalance);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getRateFormula()
+    public function getRateFormula():string
     {
         return $this->rateFormula;
     }
@@ -285,7 +329,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $rateFormula
      */
-    public function setRateFormula($rateFormula)
+    public function setRateFormula(mixed $rateFormula):void
     {
         if(is_array($rateFormula))
             $rateFormula = serialize($rateFormula);
@@ -293,25 +337,25 @@ class Bond extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return \DateTime|null
      */
-    public function getScheduledMaturityDate()
+    public function getScheduledMaturityDate():\DateTime|null
     {
         return $this->scheduledMaturityDate;
     }
 
     /**
-     * @param mixed $scheduledMaturityDate
+     * @param \DateTime $scheduledMaturityDate
      */
-    public function setScheduledMaturityDate($scheduledMaturityDate)
+    public function setScheduledMaturityDate(\DateTime $scheduledMaturityDate):void
     {
         $this->implementChange($this,'scheduledMaturityDate', $this->scheduledMaturityDate, $scheduledMaturityDate);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getFixedRate()
+    public function getFixedRate():float|null
     {
         return $this->fixedRate;
     }
@@ -319,7 +363,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $fixedRate
      */
-    public function setFixedRate($fixedRate)
+    public function setFixedRate(mixed $fixedRate):void
     {
         $this->implementChange($this,'fixedRate', $this->fixedRate, $fixedRate);
     }
@@ -327,7 +371,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getOrigCreditSupport()
+    public function getOrigCreditSupport(): mixed
     {
         return $this->origCreditSupport;
     }
@@ -335,7 +379,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $origCreditSupport
      */
-    public function setOrigCreditSupport($origCreditSupport)
+    public function setOrigCreditSupport(mixed $origCreditSupport)
     {
         $this->implementChange($this,'origCreditSupport', $this->origCreditSupport, $origCreditSupport);
     }
@@ -343,7 +387,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getCurrCreditSupport()
+    public function getCurrCreditSupport(): mixed
     {
         return $this->currCreditSupport;
     }
@@ -351,7 +395,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $currCreditSupport
      */
-    public function setCurrCreditSupport($currCreditSupport)
+    public function setCurrCreditSupport(mixed $currCreditSupport)
     {
         $this->implementChange($this,'currCreditSupport', $this->currCreditSupport, $currCreditSupport);
     }
@@ -359,7 +403,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getBasisCount()
+    public function getBasisCount(): mixed
     {
         return $this->basisCount;
     }
@@ -367,7 +411,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $basisCount
      */
-    public function setBasisCount($basisCount)
+    public function setBasisCount(mixed $basisCount)
     {
         $this->implementChange($this,'basisCount', $this->basisCount, $basisCount);
     }
@@ -375,7 +419,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getFloatingIndex()
+    public function getFloatingIndex(): mixed
     {
         return $this->floatingIndex;
     }
@@ -383,15 +427,15 @@ class Bond extends DomainObject
     /**
      * @param mixed $floatingIndex
      */
-    public function setFloatingIndex($floatingIndex)
+    public function setFloatingIndex(mixed $floatingIndex)
     {
         $this->implementChange($this,'floatingIndex', $this->floatingIndex, $floatingIndex);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getIndexMaturity()
+    public function getIndexMaturity(): string
     {
         return $this->indexMaturity;
     }
@@ -399,7 +443,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $indexMaturity
      */
-    public function setIndexMaturity($indexMaturity)
+    public function setIndexMaturity(mixed $indexMaturity)
     {
         $this->implementChange($this,'indexMaturity', $this->indexMaturity, $indexMaturity);
     }
@@ -407,7 +451,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getSpreadArray()
+    public function getSpreadArray(): mixed
     {
         return $this->spreadArray;
     }
@@ -415,7 +459,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $spreadArray
      */
-    public function setSpreadArray($spreadArray)
+    public function setSpreadArray(mixed $spreadArray)
     {
         $spread = serialize($spreadArray);
         $this->implementChange($this,'spreadArray', $this->spreadArray, $spread);
@@ -424,7 +468,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getLegalFinal()
+    public function getLegalFinal(): mixed
     {
         return $this->legalFinal;
     }
@@ -432,7 +476,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $legalFinal
      */
-    public function setLegalFinal($legalFinal)
+    public function setLegalFinal(mixed $legalFinal)
     {
         $this->implementChange($this,'legalFinal', $this->legalFinal, $legalFinal);
     }
@@ -440,7 +484,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getIsIoBond()
+    public function getIsIoBond(): mixed
     {
         return $this->isIoBond;
     }
@@ -448,15 +492,15 @@ class Bond extends DomainObject
     /**
      * @param mixed $isIoBond
      */
-    public function setIsIoBond($isIoBond)
+    public function setIsIoBond(mixed $isIoBond)
     {
         $this->implementChange($this,'isIoBond', $this->isIoBond, $isIoBond);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getIsPoBond()
+    public function getIsPoBond(): int
     {
         return $this->isPoBond;
     }
@@ -464,15 +508,15 @@ class Bond extends DomainObject
     /**
      * @param mixed $isPoBond
      */
-    public function setIsPoBond($isPoBond)
+    public function setIsPoBond(mixed $isPoBond)
     {
         $this->implementChange($this,'isPoBond', $this->isPoBond, $isPoBond);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getIsComponent()
+    public function getIsComponent(): int
     {
         return $this->isComponent;
     }
@@ -480,7 +524,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $isComponent
      */
-    public function setIsComponent($isComponent)
+    public function setIsComponent(mixed $isComponent)
     {
         $this->implementChange($this,'isComponent', $this->isComponent, $isComponent);
     }
@@ -488,7 +532,7 @@ class Bond extends DomainObject
     /**
      * @return ArrayCollection
      */
-    public function getComponents()
+    public function getComponents(): ArrayCollection
     {
         return $this->components;
     }
@@ -505,7 +549,7 @@ class Bond extends DomainObject
     /**
      * @return mixed
      */
-    public function getUpdates()
+    public function getUpdates(): mixed
     {
         return $this->updates;
     }
@@ -520,9 +564,9 @@ class Bond extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getUpdateCount()
+    public function getUpdateCount(): int
     {
         return $this->updateCount;
     }
@@ -530,7 +574,7 @@ class Bond extends DomainObject
     /**
      * @param mixed $updateCount
      */
-    public function setUpdateCount($updateCount)
+    public function setUpdateCount(mixed $updateCount)
     {
         $this->implementChange($this,'updateCount', $this->updateCount, $updateCount);
     }
@@ -538,7 +582,7 @@ class Bond extends DomainObject
     /**
      * @return BondUpdate
      */
-    public function getLatestUpdate()
+    public function getLatestUpdate(): BondUpdate
     {
         return $this->latestUpdate;
     }
@@ -552,9 +596,9 @@ class Bond extends DomainObject
     }
 
     /**
-     * @return number
+     * @return int
      */
-    public function getFeeCount()
+    public function getFeeCount():int
     {
         return $this->feeCount;
     }
@@ -568,113 +612,113 @@ class Bond extends DomainObject
     }
 
     /**
-     * @return number
+     * @return int
      */
-    public function getTriggerCount()
+    public function getTriggerCount():int
     {
         return $this->triggerCount;
     }
 
     /**
-     * @param number $triggerCount
+     * @param int $triggerCount
      */
-    public function setTriggerCount($triggerCount)
+    public function setTriggerCount(int $triggerCount):void
     {
         $this->implementChange($this,'triggerCount', $this->triggerCount, $triggerCount);
     }
 
     /**
-     * @return number
+     * @return int
      */
-    public function getShelfSpecificCount()
+    public function getShelfSpecificCount():int
     {
         return $this->shelfSpecificCount;
     }
 
     /**
-     * @param number $shelfSpecificCount
+     * @param int $shelfSpecificCount
      */
-    public function setShelfSpecificCount($shelfSpecificCount)
+    public function setShelfSpecificCount(int $shelfSpecificCount):void
     {
         $this->implementChange($this,'shelfSpecificCount', $this->shelfSpecificCount, $shelfSpecificCount);
     }
 
     /**
-     * @return number
+     * @return int
      */
-    public function getAccountCount()
+    public function getAccountCount():int
     {
         return $this->accountCount;
     }
 
     /**
-     * @param number $accountCount
+     * @param int $accountCount
      */
-    public function setAccountCount($accountCount)
+    public function setAccountCount(int $accountCount):void
     {
         $this->implementChange($this,'accountCount', $this->accountCount, $accountCount);
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getMoodysRating()
+    public function getMoodysRating():string|null
     {
         return $this->moodysRating;
     }
 
     /**
-     * @param mixed $moodysRating
+     * @param string $moodysRating
      */
-    public function setMoodysRating($moodysRating)
+    public function setMoodysRating(string $moodysRating):void
     {
         $this->implementChange($this,'moodysRating', $this->moodysRating, $moodysRating);
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getSpRating()
+    public function getSpRating():string|null
     {
         return $this->spRating;
     }
 
     /**
-     * @param mixed $spRating
+     * @param string $spRating
      */
-    public function setSpRating($spRating)
+    public function setSpRating(string $spRating):void
     {
         $this->implementChange($this,'spRating', $this->spRating, $spRating);
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getFitchRating()
+    public function getFitchRating():string|null
     {
         return $this->fitchRating;
     }
 
     /**
-     * @param mixed $fitchRating
+     * @param string $fitchRating
      */
-    public function setFitchRating($fitchRating)
+    public function setFitchRating(string $fitchRating)
     {
         $this->implementChange($this,'fitchRating', $this->fitchRating, $fitchRating);
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getDbrsRating()
+    public function getDbrsRating():string|null
     {
         return $this->dbrsRating;
     }
 
     /**
-     * @param mixed $dbrsRating
+     * @param string $dbrsRating
      */
-    public function setDbrsRating($dbrsRating)
+    public function setDbrsRating(string $dbrsRating):void
     {
         $this->implementChange($this,'dbrsRating', $this->dbrsRating, $dbrsRating);
     }

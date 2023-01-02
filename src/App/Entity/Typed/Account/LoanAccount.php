@@ -12,20 +12,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Loan;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
+use Illuminate\Support\Arr;
 
 /**
- * @ORM\Entity
+ * \Doctrine\ORM\Mapping\Entity
  */
 class LoanAccount extends Account
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue 
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "accounts")
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "accounts")
      *
      */
     protected $loans;
@@ -39,7 +40,7 @@ class LoanAccount extends Account
     /**
      * @return ArrayCollection
      */
-    public function getMappedEntities()
+    public function getMappedEntities():ArrayCollection
     {
         return $this->loans;
     }
@@ -48,7 +49,8 @@ class LoanAccount extends Account
      * @param TypedInterface $entity
      * @return $this|bool
      */
-    public function addAttached(TypedInterface $entity) {
+    public function addAttached(TypedInterface $entity): bool|static
+    {
         if(! $entity instanceof Loan){
             return false;
         }

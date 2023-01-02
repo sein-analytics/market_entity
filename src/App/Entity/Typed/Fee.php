@@ -16,11 +16,11 @@ use App\Entity\Typed\Update\FeeUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
 /**
- * @MappedSuperclass
- * @ORM\Entity
- * @ORM\Table(name="Fee")
- * @ORM\DiscriminatorColumn(name="feeClass", type="string")
- * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Fee\BondFee",
+ * \Doctrine\ORM\Mapping\MappedSuperclass
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Fee")
+ * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="feeClass", type="string")
+ * \Doctrine\ORM\Mapping\DiscriminatorMap({"bond" = "\App\Entity\Typed\Fee\BondFee",
  *                        "pool" = "\App\Entity\Typed\Fee\PoolFee",
  *                        "loan" = "\App\Entity\Typed\Fee\LoanFee"
  * })
@@ -31,55 +31,55 @@ abstract class Fee extends AbstractTyped
 
     /**
      * @var integer $id
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue *
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      */
-    protected $id;
+    protected int $id;
     
     /**
      * @var Deal $deal
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "fees") *
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "fees") *
      */
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\FeeType", inversedBy="fees")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\FeeType", inversedBy="fees")
      * @var \App\Entity\Typed\FeeType
      */
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="fee")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="fee")
      * @var ArrayCollection
      */
     protected $updates;
 
     /**
-     * @var \App\Entity\Typed\Update\FeeUpdate
-     * @ORM\OneToOne(targetEntity="\App\Entity\Typed\Update\FeeUpdate", fetch="EAGER")
+     * @var FeeUpdate
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Typed\Update\FeeUpdate", fetch="EAGER")
      */
     protected $latestUpdate = null;
 
     /**
-     * @var integer $isFeeHedge | Default = 0 Negative;
-     * @ORM\Column(type="integer") *
+     * @var int $isFeeHedge | Default = 0 Negative;
+     * \Doctrine\ORM\Mapping\Column(type="integer") *
      */
-    protected $isFeeHedge = 0;
+    protected int $isFeeHedge = 0;
 
 
     /**
      * @ORM\Column(type="integer")
-     * @var integer $isStructuredDealFee | Default = 1, fee is paid at the
+     * @var int $isStructuredDealFee | Default = 1, fee is paid at the
      *      StructuredDeal level
      */
-    protected $isDealFee = 1;
+    protected int $isDealFee = 1;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) *
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var float|null
      */
-    /** @var number */
-    protected $periodTotalFees;
+    protected float|null $periodTotalFees;
     
     public function __construct()
     {
@@ -88,19 +88,19 @@ abstract class Fee extends AbstractTyped
     }
 
 
-    /** @return number $periodTotalFees */
-    public function getPeriodTotalFees ()
+    /** @return float|null $periodTotalFees */
+    public function getPeriodTotalFees ():?float
     {
         return $this->periodTotalFees;
     }
 
-    /**  @param number $periodTotalFees */
-    public function setPeriodTotalFees ($periodTotalFees)
+    /**  @param float $periodTotalFees */
+    public function setPeriodTotalFees (float $periodTotalFees):void
     {
         $this->implementChange($this,'periodTotalFees', $this->periodTotalFees, $periodTotalFees);
     }
 
-    public function getDeal ()
+    public function getDeal ():?Deal
     {
         return $this->deal;
     }
@@ -108,7 +108,7 @@ abstract class Fee extends AbstractTyped
     /**
      * @return DefineTypeInterface
      */
-    public function getType()
+    public function getType():DefineTypeInterface
     {
         return $this->type;
     }
@@ -124,15 +124,15 @@ abstract class Fee extends AbstractTyped
     /**
     * @return ArrayCollection
     */
-    public function getUpdates()
+    public function getUpdates():ArrayCollection
     {
         return $this->updates;
     }
 
     /**
-     * @return TypedUpdateInterface
+     * @return TypedUpdateInterface|null
      */
-    public function getLatestUpdate()
+    public function getLatestUpdate():?TypedUpdateInterface
     {
         return $this->latestUpdate;
     }
@@ -155,30 +155,30 @@ abstract class Fee extends AbstractTyped
     }
 
     /**  @return int $isStructuredDealFee */
-    public function getIsDealFee ()
+    public function getIsDealFee ():int
     {
         return $this->isDealFee;
     }
 
     /** @return int $isInterestRateHedgeFee */
-    public function getIsFeeHedge()
+    public function getIsFeeHedge():int
     {
         return $this->isFeeHedge;
     }
 
-    /** @param \App\Entity\Deal $deal */
-    public function setDeal (Deal $deal)
+    /** @param Deal $deal */
+    public function setDeal (Deal $deal):void
     {
         $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
-    /** @param integer $isDealFee */
-    public function setIsDealFee ($isDealFee)
+    /** @param int $isDealFee */
+    public function setIsDealFee (int $isDealFee):void
     {
         $this->implementChange($this,'isDealFee', $this->isDealFee, $isDealFee);
     }
 
-    public function setIsInterestRateHedgeFee ($isFeeHedge)
+    public function setIsInterestRateHedgeFee (int $isFeeHedge):void
     {
         if ($isFeeHedge == 0 || $isFeeHedge == 1){
             $this->implementChange($this,'isFeeHedge', $this->isFeeHedge, $isFeeHedge);

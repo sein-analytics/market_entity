@@ -8,35 +8,43 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\DealAsset")
- * @ORM\Table(name="DealAsset")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DealAsset")
+ * \Doctrine\ORM\Mapping\Table(name="DealAsset")
  */
-class DealAsset
+class DealAsset extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="assetType")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="assetType")
      * @var ArrayCollection
      **/
     protected $deals;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $assetClass;
-
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $name;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $assetClass = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="type")
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $name = '';
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="type")
      */
     protected $templates;
 
@@ -46,24 +54,24 @@ class DealAsset
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return ArrayCollection
      */
-    public function getDeals() { return $this->deals; }
+    public function getDeals():ArrayCollection { return $this->deals; }
 
     /**
      * @return string
      */
-    public function getAssetClass() { return $this->assetClass; }
+    public function getAssetClass():string { return $this->assetClass; }
 
     /**
      * @return string
      */
-    public function getName() { return $this->name; }
+    public function getName():string { return $this->name; }
 
 
 }

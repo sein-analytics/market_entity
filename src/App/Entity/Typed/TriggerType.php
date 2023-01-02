@@ -8,25 +8,34 @@
 
 namespace App\Entity\Typed;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AnnotationMappings;
+
 /**
  * @author Samuel Belu-John
- *
- * @ORM\Entity
- * @ORM\Table(name="TriggerType")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="TriggerType")
  */
-class TriggerType
+class TriggerType extends AnnotationMappings
 {
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue */
-    protected $id;
-
-    /** @ORM\Column(type="string") */
-    protected $label;
-
-    /** @ORM\Column(type="string") */
-    protected $slug;
+    /**
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     */
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="type") */
+     * \Doctrine\ORM\Mapping\Column(type="string")
+     */
+    protected string $label;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string")
+     */
+    protected string $slug;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="type") */
     protected $triggers;
 }

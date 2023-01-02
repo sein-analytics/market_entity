@@ -8,35 +8,72 @@ namespace App\Entity;
 
 use App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="Speciality")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Speciality")
  */
-class Speciality
+class Speciality extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\MarketUser", inversedBy="specialities")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="App\Entity\MarketUser", inversedBy="specialities")
+     * @var PersistentCollection|ArrayCollection|null
      **/
     protected $users;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      **/
-    protected $speciality;
+    protected string $speciality;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, unique=true)
      * @var string
      **/
-    protected $uuid;
+    protected string $uuid;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return ArrayCollection|PersistentCollection|null
+     */
+    public function getUsers(): ArrayCollection|PersistentCollection|null
+    {
+        return $this->users;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSpeciality(): string
+    {
+        return $this->speciality;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+
 }

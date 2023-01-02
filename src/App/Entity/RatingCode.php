@@ -10,29 +10,34 @@ namespace App\Entity;
 
 use App\Entity\Rating;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="UserRating")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="UserRating")
  */
-class RatingCode
+class RatingCode extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="ratingCode")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="ratingCode")
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $ratings;
 
-    /** @ORM\Column(type="string", nullable=false)   */
-    protected $meaning;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $meaning;
 
     public function __construct()
     {
@@ -47,18 +52,19 @@ class RatingCode
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getRatings() { return $this->ratings; }
+    public function getRatings():PersistentCollection|ArrayCollection|null
+    { return $this->ratings; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getMeaning() { return $this->meaning; }
+    public function getMeaning():string { return $this->meaning; }
 
 }

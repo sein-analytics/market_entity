@@ -7,60 +7,68 @@
 namespace App\Entity\Typed\Update;
 
 use App\Entity\Typed\Fee;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
- * @ORM\Entity
- * @ORM\Table(name="FeeUpdate")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="FeeUpdate")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class FeeUpdate extends AbstractTypeUpdate
 {
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
-    protected $id;
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     **/
+    protected int $id;
     
     /**
-     * @var \App\Entity\Typed\Fee
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Fee", inversedBy="updates")
+     * @var Fee
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\Fee", inversedBy="updates")
      * */
     protected $fee;
 
     /**
-     * @var \App\Entity\Period $period
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="fees") **/
+     * @var Period $period
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="fees")
+     **/
     protected $period;
 
     /**
-     * @var number $amountOwed
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true) **/
-    public $amountDue;
+     * @var float|null $amountOwed
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     **/
+    public float|null $amountDue;
 
     /**
-     * @var number $amountPaid
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true) **/
-    public $amountPaid;
+     * @var float|null $amountPaid
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     **/
+    public float|null $amountPaid;
 
     /**
-     * @var number $currentAmountPaid
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true) **/
-    public $currentAmountUnpaid;
+     * @var float|null $currentAmountPaid
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     **/
+    public float|null $currentAmountUnpaid;
 
     /**
-     * @var number $cumulativeUnpaidAmount
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true) **/
-    public $cumulativeAmountUnpaid;
+     * @var float|null $cumulativeUnpaidAmount
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     **/
+    public float|null $cumulativeAmountUnpaid;
 
     /**
-     * @var number $unpaidReimbursed
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable = true) **/
-    public $unpaidAmountReimbursed;
+     * @var float|null $unpaidReimbursed
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable = true)
+     **/
+    public float|null $unpaidAmountReimbursed;
     
 
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -68,65 +76,65 @@ class FeeUpdate extends AbstractTypeUpdate
     /**
      * @return Period $period
      */
-    public function getPeriod() {
+    public function getPeriod():Period {
         return $this->period;
     }
 
     /**
      * @param Period $period
      */
-    public function setPeriod(Period $period) {
+    public function setPeriod(Period $period):void {
         $this->implementChange($this,'period', $this->period, $period);
     }
 
-    /** @return number $amountDue */
-    public function getAmountDue() {
+    /** @return float|null $amountDue */
+    public function getAmountDue():float|null {
         return $this->amountDue;
     }
 
-    /** @return number $amountPaid */
-    public function getAmountPaid() {
+    /** @return float|null $amountPaid */
+    public function getAmountPaid():float|null {
         return $this->amountPaid;
     }
 
-    /** @return number $currentAmountUnpaid */
-    public function getCurrentAmountUnpaid() {
+    /** @return float|null $currentAmountUnpaid */
+    public function getCurrentAmountUnpaid():float|null {
         return $this->currentAmountUnpaid;
     }
 
-    /** @return number $cumulativeAmountUnpaid */
-    public function getCumulativeAmountUnpaid() {
+    /** @return float|null $cumulativeAmountUnpaid */
+    public function getCumulativeAmountUnpaid():float|null {
         return $this->cumulativeAmountUnpaid;
     }
 
-    /** @return number $unpaidAmountReimbursed */
-    public function getUnpaidAmountReimbursed() {
+    /** @return float|null $unpaidAmountReimbursed */
+    public function getUnpaidAmountReimbursed():float|null {
         return $this->unpaidAmountReimbursed;
     }
     
 
-    /** @param number $amountDue */
-    public function setAmountDue($amountDue) {
+    /** @param float $amountDue */
+    public function setAmountDue(float $amountDue):void {
         $this->implementChange($this,'amountDue', $this->amountDue, $amountDue);
     }
 
-    /** @param double $amountPaid */
-    public function setAmountPaid($amountPaid) {
+    /** @param float $amountPaid */
+    public function setAmountPaid(float $amountPaid):void {
         $this->implementChange($this,'amountPaid', $this->amountPaid, $amountPaid);
     }
 
-    /** @param double $currentAmountUnpaid */
-    public function setCurrentAmountUnpaid($currentAmountUnpaid) {
+    /** @param float $currentAmountUnpaid */
+    public function setCurrentAmountUnpaid(float $currentAmountUnpaid):void {
         $this->implementChange($this,'currentAmountUnpaid', $this->currentAmountUnpaid, $currentAmountUnpaid);
     }
 
-    /** @param double $cumulativeAmountUnpaid */
-    public function setCumulativeAmountUnpaid($cumulativeAmountUnpaid) {
+    /** @param float $cumulativeAmountUnpaid */
+    public function setCumulativeAmountUnpaid(float $cumulativeAmountUnpaid):void {
         $this->implementChange($this,'cumulativeAmountUnpaid', $this->cumulativeAmountUnpaid, $cumulativeAmountUnpaid);
     }
 
-    /** @param double $unpaidAmountReimbursed */
-    public function setUnpaidReimbursed($unpaidAmountReimbursed) {
+    /** @param float $unpaidAmountReimbursed */
+    public function setUnpaidReimbursed(float $unpaidAmountReimbursed):void {
         $this->implementChange($this,'unpaidAmountReimbursed', $this->unpaidAmountReimbursed, $unpaidAmountReimbursed);
     }
 
@@ -137,6 +145,4 @@ class FeeUpdate extends AbstractTypeUpdate
     {
         $this->fee = $fee;
     }
-
-
 }

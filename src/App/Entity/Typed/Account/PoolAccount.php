@@ -14,19 +14,18 @@ use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * @ORM\Entity
+ * \Doctrine\ORM\Mapping\Entity
  */
 class PoolAccount extends Account
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "accounts")
-     *
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "accounts")
      */
     protected $pools;
 
@@ -39,7 +38,7 @@ class PoolAccount extends Account
     /**
      * @return ArrayCollection
      */
-    public function getMappedEntities()
+    public function getMappedEntities():ArrayCollection
     {
         return $this->pools;
     }
@@ -48,7 +47,7 @@ class PoolAccount extends Account
      * @param TypedInterface $entity
      * @return $this|bool
      */
-    public function addAttached(TypedInterface $entity) {
+    public function addAttached(TypedInterface $entity): bool|static {
         if(! $entity instanceof Pool){
             return false;
         }

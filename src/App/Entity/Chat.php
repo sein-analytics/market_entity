@@ -3,95 +3,95 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Chat")
- * @ORM\Table(name="Chat")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Chat")
+ * \Doctrine\ORM\Mapping\Table(name="Chat")
  */
-class Chat
+class Chat extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chats")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chats")
      * @var MarketUser
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chatRecipient")
-     * @ORM\JoinColumn(name="recipient_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chatRecipient")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="recipient_id", referencedColumnName="id", nullable=true)
      * @var MarketUser|null
      */
     protected $recipient;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Map\Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser")
+     * \Doctrine\ORM\Map\Doctrine\ORM\Mapping\JoinColumn(name="contact_id", referencedColumnName="id", nullable=true)
      * @var MarketUser
      */
     protected $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\GroupChat", inversedBy="chats")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\GroupChat", inversedBy="chats")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="group_id", referencedColumnName="id", nullable=true)
      * @var GroupChat|null
      */
     protected $group;
 
     /**
-     * @ORM\Column(type="blob")
+     * \Doctrine\ORM\Mapping\Column(type="blob")
      * @var string
      */
-    protected $message;
+    protected string $message;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $messageDate;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
      * @var array | null
      **/
-    protected $attachments;
+    protected array|null $attachments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Chat")
-     * @ORM\JoinTable(name="chat_replies",
-     *      joinColumns={@ORM\JoinColumn(name="chat_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Chat")
+     * \Doctrine\ORM\Mapping\JoinTable(name="chat_replies",
+     *      joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="chat_id", referencedColumnName="id")},
+     *      inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
      * @var PersistentCollection|ArrayCollection
      */
     protected $chatReplies;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatTracker", inversedBy="chats")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\ChatTracker", inversedBy="chats")
      * @var ChatTracker
      */
     protected $tracker;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatStatus", inversedBy="chats")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\ChatStatus", inversedBy="chats")
      * @var ChatStatus
      */
     protected $status;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false, options={"default":"0"})
      * @var bool
      */
-    protected $isGroup;
+    protected bool $isGroup;
 
     public function __construct()
     {
@@ -99,16 +99,16 @@ class Chat
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return PersistentCollection|ArrayCollection
      */
-    public function getChatReplies()  { return $this->chatReplies; }
+    public function getChatReplies():PersistentCollection|ArrayCollection  { return $this->chatReplies; }
 
-    public function addChatReply(Chat $chat){
+    public function addChatReply(Chat $chat):void {
         $this->chatReplies->add($chat);
     }
     /**

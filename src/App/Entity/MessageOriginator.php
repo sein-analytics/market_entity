@@ -10,33 +10,33 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\MessageOriginator")
- * @ORM\Table(name="MessageOriginator")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessageOriginator")
+ * \Doctrine\ORM\Mapping\Table(name="MessageOriginator")
  */
-class MessageOriginator
+class MessageOriginator extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      *   */
-    protected $originator;
+    protected string $originator;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="originator")
-     * @var PersistentCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="originator")
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $messages;
 
@@ -57,11 +57,12 @@ class MessageOriginator
     /**
      * @return string
      */
-    public function getOriginator() { return $this->originator; }
+    public function getOriginator():string { return $this->originator; }
 
     /**
-     * @return mixed
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getMessages() :PersistentCollection { return $this->messages; }
+    public function getMessages() :PersistentCollection|ArrayCollection|null
+    { return $this->messages; }
 
 }

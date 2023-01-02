@@ -13,20 +13,20 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="\App\Repository\BidStatus")
  * @ORM\Table(name="BidStatus")
  */
-class BidStatus
+class BidStatus extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\Column(type="string", nullable=false)   */
-    protected $status;
+    /** \Doctrine\ORM\Mapping\Column(type="string", nullable=false)   */
+    protected string $status;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\Bid", mappedBy="status")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\Bid", mappedBy="status")
      * @var ArrayCollection
      */
     protected $bids;
@@ -36,16 +36,16 @@ class BidStatus
         $this->bids = new ArrayCollection();
     }
 
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
-    function addBid(Bid $bid){
+    function addBid(Bid $bid):void {
         $this->bids->add($bid);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -57,6 +57,5 @@ class BidStatus
     {
         return $this->bids;
     }
-
 
 }
