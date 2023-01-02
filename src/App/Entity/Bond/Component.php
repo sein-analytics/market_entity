@@ -6,79 +6,79 @@
 
 namespace App\Entity\Bond;
 
-use App\Entity\AnnotationMappings;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Bond;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Component")
+ * @ORM\Entity
+ * @ORM\Table(name="Component")
  */
-class Component extends AnnotationMappings
+class Component
 {
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\GeneratedValue
-     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="components")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="components")
      * @var Bond
      **/
     protected $bond;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     * @ORM\Column(type="integer") *
      */
     protected int $componentNumber;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string") *
+     * @ORM\Column(type="string") *
      */
     protected string $componentName;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=6, scale=5, nullable=true) *
+     * @ORM\Column(type="decimal", precision=6, scale=5, nullable=true) *
      */
     protected float $fixedRate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $rateFormula;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Bond\ComponentUpdate") *
+     * @ORM\OneToOne(targetEntity="\App\Entity\Bond\ComponentUpdate") *
      */
     protected $latestUpdate;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="component")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="component")
      * @var ArrayCollection;
      **/
     protected $updates;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $componentBasis;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $floatingIndex;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $indexMaturity;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $spreadArray;
 

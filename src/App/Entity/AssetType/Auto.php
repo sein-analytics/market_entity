@@ -2,13 +2,14 @@
 namespace App\Entity\AssetType;
 
 use App\Entity\Loan;
+use App\Entity\Loan\ArmAttribute;
 class Auto extends Loan
 {
 
     /**
-     * @return Loan\ArmAttribute
+     * @return ArmAttribute|null
      */
-    public function getArmAttributes()
+    public function getArmAttributes():?ArmAttribute
     {
         return $this->armAttributes;
     }

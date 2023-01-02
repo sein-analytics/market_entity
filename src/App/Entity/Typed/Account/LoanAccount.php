@@ -15,18 +15,19 @@ use App\Entity\Typed\TypedInterface;
 use Illuminate\Support\Arr;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
+ * @ORM\Entity
  */
 class LoanAccount extends Account
 {
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "accounts")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "accounts")
      *
      */
     protected $loans;

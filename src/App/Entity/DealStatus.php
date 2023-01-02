@@ -6,14 +6,14 @@
 
 namespace App\Entity;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\DealStatus")
  * @ORM\Table(name="DealStatus")
  */
-class DealStatus extends AnnotationMappings
+class DealStatus
 {
     const UPLOAD = "UPLOAD";
 
@@ -37,14 +37,14 @@ class DealStatus extends AnnotationMappings
     );
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="status")
      * @var ArrayCollection
      **/
     protected $deals;

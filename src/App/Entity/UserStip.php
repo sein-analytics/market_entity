@@ -2,70 +2,50 @@
 
 
 namespace App\Entity;
-
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-
-use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\UserStip")
- * \Doctrine\ORM\Mapping\Table(name="UserStip")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
- * \Doctrine\ORM\Mapping\HasLifeCycleCallbacks
+ * @ORM\Entity(repositoryClass="\App\Repository\UserStip")
+ * @ORM\Table(name="UserStip")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\HasLifeCycleCallbacks
  */
 class UserStip extends DomainObject
 {
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="stips")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="stips")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
     protected $user;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="stips")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="stips")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      **/
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=false)
+     * @ORM\Column(type="json", nullable=false)
      * @var array|string
      **/
     protected array|string $stips = [];
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @ORM\Column(type="string")
      * @var string
      */
     protected string $name = '';

@@ -12,20 +12,7 @@ use App\Entity\Typed\Update\TypedUpdateInterface;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 
  abstract class AbstractTyped extends DomainObject
@@ -46,51 +33,51 @@ use App\Entity\Period;
 
     /**
      * @var integer
-     * \Doctrine\ORM\Mapping\Column(type="integer") */
+     * @ORM\Column(type="integer") */
     protected int $calculationType = self::CALC_FIXED;
 
     /**
      * @var integer
-     * \Doctrine\ORM\Mapping\Column(type = "integer") **/
+     * @ORM\Column(type = "integer") **/
     protected int $calculateAt = self::CALC_AT_LOAN;
 
     /**
      * @var string|null
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)  **/
+     * @ORM\Column(type = "string", nullable=true)  **/
     protected string|null $calculateAtFormula;
 
     /**
      * @var float|null $fixedAmount
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
     protected float|null $fixed;
 
     /**
      * @var string|null $formula
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      **/
     protected string|null $formula;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      *  @var int|null
      **/
     protected int|null $bondsCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      *  @var int|null
      **/
     protected int|null $loansCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      *  @var int|null
      **/
     protected int|null $poolsCount = 0;
 
     /**
      * @var int
-     * \Doctrine\ORM\Mapping\Column(type = "integer") **/
+     * @ORM\Column(type = "integer") **/
     protected int $updatesCount = 0;
 
 

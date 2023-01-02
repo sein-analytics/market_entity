@@ -10,35 +10,35 @@ use App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Speciality")
+ * @ORM\Entity
+ * @ORM\Table(name="Speciality")
  */
-class Speciality extends AnnotationMappings
+class Speciality 
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="App\Entity\MarketUser", inversedBy="specialities")
+     * @ORM\ManyToMany(targetEntity="App\Entity\MarketUser", inversedBy="specialities")
      * @var PersistentCollection|ArrayCollection|null
      **/
     protected $users;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
     protected string $speciality;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, unique=true)
+     * @ORM\Column(type="string", nullable=false, unique=true)
      * @var string
      **/
     protected string $uuid;

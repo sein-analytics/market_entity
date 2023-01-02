@@ -7,30 +7,30 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\FailedLogin")
- * \Doctrine\ORM\Mapping\Table(name="FailedLogin")
+ * @ORM\Entity(repositoryClass="\App\Repository\FailedLogin")
+ * @ORM\Table(name="FailedLogin")
  */
-class FailedLogin extends AnnotationMappings
+class FailedLogin 
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected int $state = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="failedAttempts")
+     * @ORM\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="failedAttempts")
      * @var ArrayCollection
      */
     protected $users;

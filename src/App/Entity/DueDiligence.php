@@ -9,65 +9,65 @@
 namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DueDiligence")
- * \Doctrine\ORM\Mapping\Table(name="DueDiligence")
+ * @ORM\Entity(repositoryClass="\App\Repository\DueDiligence")
+ * @ORM\Table(name="DueDiligence")
  */
-class DueDiligence extends AnnotationMappings
+class DueDiligence
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="diligence")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="diligence")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected MarketUser $user;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="diligence")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="diligence")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      */
     protected Deal $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="dueDiligence")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="dueDiligence")
      */
     protected ArrayCollection $issues;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="dd_role_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
+     * @ORM\JoinColumn(name="dd_role_id", referencedColumnName="id", nullable=false)
      */
     protected DueDiligenceRole $diligenceRole;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligenceStatus", inversedBy="dueDiligence")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="dd_status_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceStatus", inversedBy="dueDiligence")
+     * @ORM\JoinColumn(name="dd_status_id", referencedColumnName="id", nullable=false)
      */
     protected DueDiligenceStatus $status;
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Bid", inversedBy="dueDiligence")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToOne(targetEntity="\App\Entity\Bid", inversedBy="dueDiligence")
+     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
      */
     protected Bid $bid;
 
     /**
      * All other members of the Due Diligence team will have a reference due diligence ID
      * associated with the user that placed the bid
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="ddMembers")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="ddMembers")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      *
      */
     protected DueDiligence $parentId;
@@ -75,17 +75,17 @@ class DueDiligence extends AnnotationMappings
     /**
      * All other members of the Due Diligence team will have a reference due diligence ID
      * associated with the user that placed the bid
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="parentId")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="parentId")
      */
     protected ArrayCollection $ddMembers;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
      */
     protected ArrayCollection $files;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
      */
     protected ArrayCollection  $reviewStatuses;
 

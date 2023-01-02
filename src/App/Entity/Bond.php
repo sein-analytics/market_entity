@@ -5,26 +5,14 @@ namespace App\Entity;
 use App\Entity\Bond\Component;
 use App\Entity\Update\BondUpdate;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Bond")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
- * \Doctrine\ORM\Mapping\HasLifecycleCallbacks
+ * @ORM\Entity
+ * @ORM\Table(name="Bond")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\HasLifecycleCallbacks
  *
  */
 class Bond extends DomainObject
@@ -35,101 +23,102 @@ class Bond extends DomainObject
     const SOLVE_FOR_PRICE = 2;
 
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue **/
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="bonds")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="bonds")
      * @var Pool
      **/
     protected $pool;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bonds", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bonds", cascade={"persist"})
      * @var Deal
      **/
     protected $deal;
 
-    /** \Doctrine\ORM\Mapping\Column(type="string", unique=false) **/
+    /** @ORM\Column(type="string", unique=false) **/
     protected string $cusip;
 
-    /** \Doctrine\ORM\Mapping\Column(type="string") **/
+    /** @ORM\Column(type="string") **/
     protected string $className;
 
-    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) **/
+    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
     protected float $originalBalance;
 
-    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) **/
+    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
     protected float $currentBalance = 0;
 
-    /** \Doctrine\ORM\Mapping\Column(type="string", nullable=true) **/
+    /** @ORM\Column(type="string", nullable=true) **/
     protected string $rateFormula;
 
-    /** \Doctrine\ORM\Mapping\Column(type="date", nullable=true) **/
+    /** @ORM\Column(type="date", nullable=true) **/
     protected $scheduledMaturityDate;
 
-    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=6, scale=5, nullable=true) **/
+    /** @ORM\Column(type="decimal", precision=6, scale=5, nullable=true) **/
     protected float $fixedRate;
 
-    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=6, nullable=true) **/
+    /** @ORM\Column(type="decimal", precision=8, scale=6, nullable=true) **/
     protected float $origCreditSupport;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=6, scale=5) *
+     * @ORM\Column(type="decimal", precision=6, scale=5) *
      */
     protected float$currCreditSupport = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\BasisCount", inversedBy="bonds") *
+     * @ORM\ManyToOne(targetEntity="\App\Entity\BasisCount", inversedBy="bonds") *
      */
     protected $basisCount;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(name="floatingIndex", type="string", nullable=true)*
+     * @ORM\Column(name="floatingIndex", type="string", nullable=true)*
      */
     protected string $floatingIndex;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(name="indexMaturity", type="string", nullable=true) *
+     * @ORM\Column(name="indexMaturity", type="string", nullable=true) *
      */
     protected string $indexMaturity;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(name="spreadArray", type="string", nullable=true) *
+     * @ORM\Column(name="spreadArray", type="string", nullable=true) *
      */
     protected string $spreadArray;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true) *
+     * @ORM\Column(type="datetime", nullable=true) *
      */
     protected $legalFinal;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true) *
+     * @ORM\Column(type="integer", nullable=true) *
      */
     protected $isIoBond;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true) *
+     * @ORM\Column(type="integer", nullable=true) *
      */
     protected int $isPoBond;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true) *
+     * @ORM\Column(type="integer", nullable=true) *
      */
     protected int $isComponent;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond\Component",
+     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\Component",
      *     mappedBy="bond", mappedBy="bond")
      * @var ArrayCollection
      **/
     protected $components;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="bond")
-     * \Doctrine\ORM\Mapping\OrderBy({"reportDate" = "ASC"})
+     * @ORM\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="bond")
+     * @ORM\OrderBy({"reportDate" = "ASC"})
      * @var ArrayCollection
      **/
     protected $updates;
@@ -138,71 +127,71 @@ class Bond extends DomainObject
     protected $updateCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Update\BondUpdate")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Update\BondUpdate")
      * @var \App\Entity\Update\BondUpdate
      **/
     protected $latestUpdate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $moodysRating;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $spRating;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $fitchRating;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      */
     protected string $dbrsRating;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\BondSpecific", mappedBy="bonds")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\BondSpecific", mappedBy="bonds")
      */
     protected $specifics;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Fee\BondFee", mappedBy="bonds")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\BondFee", mappedBy="bonds")
      */
     protected $fees;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Account\BondAccount", mappedBy="bonds")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\BondAccount", mappedBy="bonds")
      */
     protected $accounts;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\BondTrigger", mappedBy="bonds")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\BondTrigger", mappedBy="bonds")
      */
     protected $triggers;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer")
+     * @ORM\Column(type = "integer")
      *
      **/
     protected int $feeCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer")
+     * @ORM\Column(type = "integer")
      *
      **/
     protected int $triggerCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer")
+     * @ORM\Column(type = "integer")
      *
      **/
     protected int $shelfSpecificCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer")
+     * @ORM\Column(type = "integer")
      *
      **/
     protected int $accountCount = 0;

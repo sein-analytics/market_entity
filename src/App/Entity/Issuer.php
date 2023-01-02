@@ -7,12 +7,12 @@
 namespace App\Entity;
 use App\Entity\Data\CuBase;
 use App\Service\CreatePropertiesArrayTrait;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Issuer")
- * \Doctrine\ORM\Mapping\Table(name="Issuer")
+ * @ORM\Entity(repositoryClass="\App\Repository\Issuer")
+ * @ORM\Table(name="Issuer")
  *
  */
 class Issuer extends AnnotationMappings
@@ -29,71 +29,71 @@ class Issuer extends AnnotationMappings
     protected array $defaultValueProperties = [];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue *
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Deal", mappedBy="issuer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Deal", mappedBy="issuer")
      * @var PersistentCollection
      */
     protected $deals;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $issuerName='';
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="issuer")
+     * @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="issuer")
      * @var PersistentCollection
      */
     protected $users;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $approvedDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $equity=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $outstanding=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $mainContact='';
 
     /**
      * Each Issuer has One main contact - Unidirectional
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\MarketUser")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="contact_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
      * @var MarketUser
      */
     protected $contactId;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, unique=true)
+     * @ORM\Column(type="string", nullable=false, unique=true)
      * @var string
      */
     protected string $phone;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="issuers")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="cu_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="issuers")
+     * @ORM\JoinColumn(name="cu_id", referencedColumnName="id", nullable=true)
      * @var CuBase
      */
     private $cuMain;

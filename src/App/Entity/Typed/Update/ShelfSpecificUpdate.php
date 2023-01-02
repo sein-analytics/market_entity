@@ -8,100 +8,100 @@
 
 namespace App\Entity\Typed\Update;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\ShelfSpecific;
-//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="ShelfSpecificUpdate")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity
+ * @ORM\Table(name="ShelfSpecificUpdate")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class ShelfSpecificUpdate extends AbstractTypeUpdate
 {
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
-     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     protected int $id;
 
     /**
      * @var ShelfSpecific $shelfSpecific
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecific", inversedBy="updates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecific", inversedBy="updates")
      **/
     protected $shelfSpecific;
 
     /**
      * @var Period $period
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="shelfSpecifics")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="shelfSpecifics")
      **/
     protected $period;
 
     /**
      * @var float $amountDue
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "decimal", precision=14, scale=2)
      **/
     public float $amountDue = 0;
 
     /**
      * @var float $amountPaid
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "decimal", precision=14, scale=2)
      **/
     public float $amountPaid = 0;
 
     /**
      * @var float $currentAmountUnpaid
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "decimal", precision=14, scale=2)
      **/
     public float $currentAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "decimal", precision=14, scale=2)
      **/
     public float $cumulativeAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "decimal", precision=14, scale=2)
      **/
     public float $beginningBalance = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "decimal", precision=14, scale=2)
      **/
     public float $endingBalance = 0;
 
     /**
      * @var float|null $interestRate
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $interestRate;
 
     /**
      * @var float|null $interestRate
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $deferredAmount;
 
     /**
      * @var float|null $calculatedInterest
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $calculatedInterest;
 
     /**
      * @var float|null $interestPaid
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $interestPaid;
 
     /**
      * @var float|null $unpaidInterest
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $unpaidInterest;
 

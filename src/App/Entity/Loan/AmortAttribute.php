@@ -3,24 +3,23 @@
 
 namespace App\Entity\Loan;
 
-use App\Entity\AnnotationMappings;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="AmortAttribute")
+ * @ORM\Entity
+ * @ORM\Table(name="AmortAttribute")
  */
-class AmortAttribute extends AnnotationMappings
+class AmortAttribute
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
-    /** \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="amortization")
+    /** @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="amortization")
      * @var ArrayCollection
      **/
     protected $loans;
@@ -28,7 +27,7 @@ class AmortAttribute extends AnnotationMappings
 
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false) *
+     * @ORM\Column(type="string", nullable=false) *
      */
     protected string $amortType;
 

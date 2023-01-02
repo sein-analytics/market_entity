@@ -8,23 +8,23 @@ namespace App\Entity\Typed\Fee;
 
 use App\Entity\Loan;
 use App\Entity\Typed\Fee;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
+ * @ORM\Entity
  */
 class LoanFee extends Fee
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue **/
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "fees")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "fees")
      */
     protected $loans;
 

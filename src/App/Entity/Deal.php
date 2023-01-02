@@ -14,9 +14,9 @@ use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Deal")
- * \Doctrine\ORM\Mapping\Table(name="Deal")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity(repositoryClass="\App\Repository\Deal")
+ * @ORM\Table(name="Deal")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class Deal extends DealAbstract
 {
@@ -41,45 +41,46 @@ class Deal extends DealAbstract
     ];
 
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="deals")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="deals")
+     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
      * @var Issuer
      **/
     protected $issuer;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @ORM\Column(type="string")
      * @var string
      */
     protected string $issue = '';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $cutOffDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $closingDate;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealStatus", inversedBy="deals")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealStatus", inversedBy="deals")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DealStatus
      **/
     protected $status;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $dealDocs;
@@ -91,166 +92,166 @@ class Deal extends DealAbstract
     protected int $paymentDay = 1;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false) *
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) *
      * @var float
      */
     protected float $currentBalance=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false) *
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) *
      * @var float
      */
     protected float $originalBalance=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealAuction", inversedBy="deals")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="auction_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAuction", inversedBy="deals")
+     * @ORM\JoinColumn(name="auction_type_id", referencedColumnName="id", nullable=false)
      **/
     protected $auctionType;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealAsset", inversedBy="deals")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="asset_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset", inversedBy="deals")
+     * @ORM\JoinColumn(name="asset_type_id", referencedColumnName="id", nullable=false)
      **/
     protected $assetType;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealBid", inversedBy="deals")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="bid_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DealBid", inversedBy="deals")
+     * @ORM\JoinColumn(name="bid_type_id", referencedColumnName="id", nullable=false)
      **/
     protected $bidType;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Statistic", mappedBy="deal")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Statistic", mappedBy="deal")
      * @var Statistic
      **/
     protected $stats;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $priorOC;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $cashflowEngine;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $callFormular;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Pool", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Pool", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $pools;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $bonds;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Period", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Period", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $periods;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $bids;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="deal")
      * @var ArrayCollection
      **/
     protected $documents;
 
     /**
-    * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Period")
+    * @ORM\OneToOne(targetEntity="\App\Entity\Period")
     * @var Period
     */
     protected $latestPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $loanDataParser;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="deal")
      */
     protected $fees;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="deal")  *
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="deal")  *
      */
     protected $accounts;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="deal")  *
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="deal")  *
      */
     protected $shelfSpecifics;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="deal")  *
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="deal")  *
      */
     protected $triggers;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $messages;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $diligence;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="deals")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="deals")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\MarketUser
      */
     protected $user;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketDeals")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketDeals")
      * @var PersistentCollection
      */
     protected $marketUsers;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketFavorites")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketFavorites")
      * @var ArrayCollection
      */
     protected $userFavorites;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $ratings;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="deal")
+     * @ORM\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="deal")
      * @var ArrayCollection
      */
     protected $stips;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
     protected ?int $views;

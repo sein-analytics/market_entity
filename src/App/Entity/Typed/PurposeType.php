@@ -10,11 +10,11 @@ namespace App\Entity\Typed;
 
 use App\Entity\MappedUserType;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Typed\MappedType")
- * \Doctrine\ORM\Mapping\Table(name="PurposeType")
+ * @ORM\Entity(repositoryClass="\App\Repository\Typed\MappedType")
+ * @ORM\Table(name="PurposeType")
  */
 class PurposeType extends MappedTypeAbstract
 {

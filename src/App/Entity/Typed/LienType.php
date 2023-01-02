@@ -11,8 +11,8 @@ namespace App\Entity\Typed;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="LienType")
+ * @ORM\Entity
+ * @ORM\Table(name="LienType")
  */
 class LienType extends MappedTypeAbstract
 {

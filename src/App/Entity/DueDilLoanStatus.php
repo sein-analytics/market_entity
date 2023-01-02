@@ -8,14 +8,14 @@
 
 namespace App\Entity;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DueDilLoanStatus")
- * \Doctrine\ORM\Mapping\Table(name="DueDilLoanStatus")
+ * @ORM\Entity(repositoryClass="\App\Repository\DueDilLoanStatus")
+ * @ORM\Table(name="DueDilLoanStatus")
  */
-class DueDilLoanStatus extends AnnotationMappings
+class DueDilLoanStatus 
 {
     protected array $logObject = [
         'userId' => null,
@@ -24,35 +24,35 @@ class DueDilLoanStatus extends AnnotationMappings
     ];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="reviewStatuses")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="dd_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="reviewStatuses")
+     * @ORM\JoinColumn(name="dd_id", referencedColumnName="id", nullable=false)
      * @var DueDiligence
      */
     protected $diligence;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="reviewStatuses")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="ln_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="reviewStatuses")
+     * @ORM\JoinColumn(name="ln_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
     protected $loan;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDilReviewStatus", inversedBy="reviewStatuses")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDilReviewStatus", inversedBy="reviewStatuses")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DueDilReviewStatus
      */
     protected $reviewStatus;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=false)
+     * @ORM\Column(type="json", nullable=false)
      */
     protected $logger;
 

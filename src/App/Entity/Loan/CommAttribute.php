@@ -11,23 +11,11 @@ namespace App\Entity\Loan;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping as ORM;
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Loan\CommAttribute")
- * \Doctrine\ORM\Mapping\Table(name="CommAttribute")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity(repositoryClass="\App\Repository\Loan\CommAttribute")
+ * @ORM\Table(name="CommAttribute")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class CommAttribute extends DomainObject
 {
@@ -40,67 +28,67 @@ class CommAttribute extends DomainObject
     protected array $defaultValueProperties = [];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="commAttributes")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
+     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="commAttributes")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\Loan
      **/
     protected $loan;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
     protected float|null $dscr;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=16, scale=4, nullable=true)
      */
     protected float|null $noi;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
     protected float|null $netWorthToLoan;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
     protected float|null $profitRatio;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
     protected float|null $loanToCostRatio;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
     protected float|null $debtYieldRatio;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
     protected float|null $vacancyRate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int|null $lockoutPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=true)
      * @var \DateTime|null
      **/
     protected \DateTime|null $defeasanceDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
      */
     protected float|null $capRate;
 

@@ -7,26 +7,26 @@
 namespace App\Entity\Typed\Trigger;
 
 use App\Entity\Typed\Triggers;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Pool;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
+ * @ORM\Entity
  */
 class PoolTrigger extends Triggers
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "triggers")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "triggers")
      */
     protected $pools;
 

@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 use JetBrains\PhpStorm\ArrayShape;
-
+use Doctrine\ORM\Mapping as ORM;
 class LoanPropertyLabel extends EntityRepository
 {
     use CreatePropertiesArrayTrait;

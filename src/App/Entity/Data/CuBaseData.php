@@ -3,103 +3,102 @@
 
 namespace App\Entity\Data;
 
-use App\Entity\AnnotationMappings;
 use Doctrine\ORM\PersistentCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 /**
- * \Doctrine\ORM\Mapping\Entity()
- * \Doctrine\ORM\Mapping\Table(name="CuBaseData")
+ * @ORM\Entity()
+ * @ORM\Table(name="CuBaseData")
  */
-class CuBaseData extends AnnotationMappings
+class CuBaseData
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="cuData")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="cuData")
      * @var CuBase
      */
     protected $cuBase;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $date;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $members;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $totalAssets;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $totalLoans;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $totalDeposits;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $returnOnAvgAsset;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $netWorthRatio;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $loanToShare;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $depositGrowthPct;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $loansGrowthPct;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $assetGrowthPct;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $membersGrowthPct;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $netWorthGrowthPct;

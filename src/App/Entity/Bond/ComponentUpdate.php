@@ -6,89 +6,79 @@
 
 namespace App\Entity\Bond;
 use App\Entity\DomainObject;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Update\BondUpdate;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="ComponentUpdate")
+ * @ORM\Entity
+ * @ORM\Table(name="ComponentUpdate")
  *
  */
 class ComponentUpdate extends DomainObject
 {
 
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\GeneratedValue
-     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      **/
     protected $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Bond\Component", inversedBy="updates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond\Component", inversedBy="updates")
      * @var Component
      **/
     protected $component;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true) *
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) *
      */
     protected float $startingBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true) *
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) *
      */
     protected float $endingBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Update\BondUpdate", inversedBy="components")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Update\BondUpdate", inversedBy="components")
      * @var BondUpdate
      **/
     protected $bondUpdate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $principalPaid;
 
     /**
-     * \Doctrine\ORM\MappingORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORMORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $cumulativeLosses;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $interestDue;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $interestPaid;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $interestUnpaid;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $interestOnUnpaidInterest;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="decimal", precision=14, scale=2) *
      */
     protected float $basisCarry;
 

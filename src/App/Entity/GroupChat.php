@@ -8,72 +8,72 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\GroupChat")
- * \Doctrine\ORM\Mapping\Table(name="ChatGroup")
+ * @ORM\Entity(repositoryClass="\App\Repository\GroupChat")
+ * @ORM\Table(name="ChatGroup")
  */
-class GroupChat extends AnnotationMappings
+class GroupChat
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
-     * \Doctrine\ORM\Mapping\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
      *
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true)
      * @var string
      */
     protected string $uuid;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, options={"default":"group_chat"})
+     * @ORM\Column(type="string", nullable=false, options={"default":"group_chat"})
      * @var string
      */
     protected string $groupName;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $imageUrl;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="groupChats")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="groupChats")
      * @var MarketUser
      */
     protected $user;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false, options={"default":"0"})
+     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
      * @var int
      */
     protected int  $isPrivate = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="group")
      * @var PersistentCollection|ArrayCollection
      */
     protected $chats;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Community", inversedBy="groupChats")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="community_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Community", inversedBy="groupChats")
+     * @ORM\JoinColumn(name="community_id", referencedColumnName="id", nullable=true)
      * @var Community|null
      */
     protected $community=null;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="tracker_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
+     * @ORM\JoinColumn(name="tracker_id", referencedColumnName="id", nullable=true)
      * @var ChatTracker|null
      */
     protected $tracker=null;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
-     * \Doctrine\ORM\Mapping\JoinTable(name="chat_group_market_users")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
+     * @ORM\JoinTable(name="chat_group_market_users")
      * @var PersistentCollection|ArrayCollection
      */
     protected $members;

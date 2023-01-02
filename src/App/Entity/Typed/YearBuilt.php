@@ -8,11 +8,11 @@
 
 namespace App\Entity\Typed;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="YearBuilt")
+ * @ORM\Entity
+ * @ORM\Table(name="YearBuilt")
  */
 class YearBuilt extends MappedTypeAbstract
 {

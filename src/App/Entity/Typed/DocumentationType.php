@@ -8,11 +8,11 @@
 
 namespace App\Entity\Typed;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Typed\MappedType")
- * \Doctrine\ORM\Mapping\Table(name="DocumentationType")
+ * @ORM\Entity(repositoryClass="\App\Repository\Typed\MappedType")
+ * @ORM\Table(name="DocumentationType")
  */
 class DocumentationType extends MappedTypeAbstract
 {

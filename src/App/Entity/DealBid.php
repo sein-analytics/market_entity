@@ -10,26 +10,26 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Support\Arr;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="DealBid")
+ * @ORM\Entity
+ * @ORM\Table(name="DealBid")
  *
  * Any change in the definition should be reflected in
  * ServiceInterface.php
  */
-class DealBid extends AnnotationMappings
+class DealBid 
 {
     use CreatePropertiesArrayTrait;
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="bidType")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="bidType")
      * @var ArrayCollection
      **/
     protected $deals;

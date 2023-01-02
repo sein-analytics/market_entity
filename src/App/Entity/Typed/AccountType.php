@@ -6,36 +6,35 @@
 
 namespace App\Entity\Typed;
 
-//use Doctrine\ORM\Mapping as ORM;
-use App\Entity\AnnotationMappings;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Samuel Belu-John
  *
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="AccountType")
+ * @ORM\Entity
+ * @ORM\Table(name="AccountType")
  */
-class AccountType extends AnnotationMappings
+class AccountType
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected string $label;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected string $slug;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="type")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="type")
      * @var Account
      */
     protected $accounts;

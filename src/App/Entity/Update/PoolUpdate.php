@@ -13,139 +13,126 @@ use App\Service\CreatePropertiesArrayTrait;
 use App\Entity\Period;
 use App\Entity\Pool;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Index;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping as ORM;
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="PoolUpdate",
- *     indexes={\Doctrine\ORM\Mapping\Index(name="period_pool_idx",
+ * @ORM\Entity
+ * @ORM\Table(name="PoolUpdate",
+ *     indexes={@ORM\Index(name="period_pool_idx",
  *     columns={"period_id", "pool_id"})})
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class PoolUpdate extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\GeneratedValue
-     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer") *
      */
     protected int $id;
 
     /** 
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="poolUpdates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="poolUpdates")
      * @var Pool
      **/
     protected $pool;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="poolUpdates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="poolUpdates")
      * @var Period
      **/
     protected $period;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="pool")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="pool")
      * @var ArrayCollection
      **/
     protected $loans;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var \DateTime|null
      **/
     protected \DateTime|null $reportDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var float|null $endingBalance
      */
     protected float|null $endingBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var float|null $startingBalance
      */
     protected float|null $startingBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var float|null $cumulativeLosses
      */
     protected float|null $cumulativeLosses;
 
     /**
      * Period starting gross weighted average coupon
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=9, scale=5, nullable=true)
+     * @ORM\Column(type="decimal", precision=9, scale=5, nullable=true)
      * @var float|null $groupGrossWac
      **/
     protected float|null $groupGrossWac;
 
     /**
      * Current Period's scheduled principal payments received
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var float|null $scheduledPrincipal
      **/
     protected float|null $scheduledPrincipal;
 
     /**
      * Current Period's interest payments received
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var float|null $interestCollections
      **/
     protected float|null $interestCollections;
 
     /**
      * Current Period's liquidated balance
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var float|null $liquidations
      **/
     protected float|null $liquidations;
 
     /**
      * Current Period's recoveries from liquidated loans
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var float|null $recoveries
      **/
     protected float|null $recoveries;
 
     /**
      * Current Period's pre-payed balance
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var float|null $prepayedBalance
      **/
     protected float|null $prepayedBalance;
 
     /**
      * Current Period's number of loans prepaying
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=3, nullable=true)
      * @var float|null $prepayedLoans
      **/
     protected float|null $prepayedLoans;
 
     /**
      * regular principal calculation--expected principal to be paid to the notes
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
      * @var float|null $bondRegularPrincipalCalc
      **/
     protected float|null $bondRegularPrincipalCalc;
 
     /**
      * supplemental principal calculation--in addition to the regular principal
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
      * @var float|null $unscheduledPrincipalCalc
      **/
     protected float|null $unscheduledPrincipalCalc;
@@ -159,57 +146,57 @@ class PoolUpdate extends DomainObject
 
     /**
      * Actual amount of regular principal paid to the notes
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
      * @var float|null $regularPrincipalPaid
      **/
     protected float|null $regularPrincipalPaid;
 
     /**
      * Actual amount of regular principal paid to the notes
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
      * @var float|null $unscheduledPrincipalPaid
      **/
     protected float|null $unscheduledPrincipalPaid;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int $updateStatus
      **/
     protected int $updateStatus = 1;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=7, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
      * @var float|null $groupNetWac
      */
     protected float|null $groupNetWac;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var int|null $receivablesCount
      */
     protected int|null $receivablesCount;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var float|null $groupSeniorPct
      */
     protected float|null $groupSeniorPct;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var float|null $groupSubPct
      */
     protected float|null $groupSubPct;
 
     /**
      * Indicate whether collateral is historic or forecast
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var int|null $isHistory
      */
     protected int|null $isHistory = 0;
     
     /** 
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Update\Delinquency", inversedBy="poolUpdate")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Update\Delinquency", inversedBy="poolUpdate")
      * @var Delinquency   
      */
     protected $delinquency;

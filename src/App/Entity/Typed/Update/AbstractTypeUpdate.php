@@ -9,42 +9,28 @@ namespace App\Entity\Typed\Update;
 use App\Entity\DomainObject;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping\MappedSuperclass;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
 
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
 use App\Entity\Period;
-use Doctrine\Tests\Common\Annotations\Null;
 
-//use Doctrine\ORM\Mapping as ORM;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\MappedSuperClass
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\MappedSuperClass
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  * */
 abstract class AbstractTypeUpdate extends DomainObject
     implements TypedUpdateInterface
 {
     /**
      * @var int $updateStatus
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      **/
     protected int $updateStatus = 1;
 
     /**
      * @var int|null $isHistory
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int|null $isHistory;
 

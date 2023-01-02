@@ -1,30 +1,30 @@
 <?php
 namespace App\Entity\Loan;
 
-use App\Entity\AnnotationMappings;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="DescAttribute")
+ * @ORM\Entity
+ * @ORM\Table(name="DescAttribute")
  */
-class DescAttribute extends AnnotationMappings
+class DescAttribute
 {
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="description")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="description")
      * @var ArrayCollection
      **/
     protected $loans;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false) *
+     * @ORM\Column(type="string", nullable=false) *
      */
     protected string|null $descType;
 

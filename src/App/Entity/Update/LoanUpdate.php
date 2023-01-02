@@ -12,207 +12,196 @@ use App\Entity\DomainObject;
 use App\Entity\Period;
 use App\Service\CreatePropertiesArrayTrait;
 use App\Entity\Loan;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Update\LoanUpdate")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
- * \Doctrine\ORM\Mapping\Table(name="LoanUpdate")
+ * @ORM\Entity(repositoryClass="\App\Repository\Update\LoanUpdate")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Table(name="LoanUpdate")
  */
 class LoanUpdate extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue *
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="updates")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="updates")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      **/
     protected $loan;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Update\PoolUpdate", inversedBy="loans")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Update\PoolUpdate", inversedBy="loans")
      * @var PoolUpdate
      **/
     protected $pool;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="loanUpdates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="loanUpdates")
      * @var Period
      **/
     protected $period;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4)
+     * @ORM\Column(type="decimal", precision=14, scale=4)
      * @var float
      **/
     protected float $beginningBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4)
+     * @ORM\Column(type="decimal", precision=14, scale=4)
      * @var float
      **/
     protected float $endingBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime|null
      **/
     protected ?\DateTime $dueforDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=7, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=7, scale=4, nullable=true)
      * @var float
      **/
     protected float $currentRate = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      */
     protected ?float $monthlyPayment = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var float|null
      **/
     protected ?float $principalPayment = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $interestPayment = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $tiPayment = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $lossAmount = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $prepaymentAmount = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $defaultingAmount = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      **/
     protected ?string $delinquencyReason = '';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @var ?\DateTime
      **/
     protected ?\DateTime $nextRateResetDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @var ?\DateTime
      **/
     protected ?\DateTime $nextPaymentResetDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      */
     protected ?int $nextRateAdjustmentPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      */
     protected ?int $nextPaymentAdjustmentPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $netRate= 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $unsupportedIntShortfall;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $servicingDues = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $latePaymentDues = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $recoveries = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $interestShortfall = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $compensatingInterest = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      **/
     protected ?int $loanDelinquencyStatus;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $escrowBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      * @var ?string
      **/
     protected ?string $servicingComments = '';

@@ -7,142 +7,124 @@
  */
 
 namespace App\Entity;
-
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-
-use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Statistic")
- * \Doctrine\ORM\Mapping\Table(name="Statistic")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity(repositoryClass="\App\Repository\Statistic")
+ * @ORM\Table(name="Statistic")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class Statistic extends DomainObject
 {
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Deal", inversedBy="stats")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @ORM\OneToOne(targetEntity="\App\Entity\Deal", inversedBy="stats")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      **/
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $states;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $summaryStates;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var  array|string|null
      **/
     protected array|string|null $ltv;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var  array|string|null
      **/
     protected array|string|null $summaryLtv;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var  array|string|null
      **/
     protected array|string|null $balance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $summaryBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $rate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $summaryRate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $loanType;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $propertyType;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $occupancy;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $maturity;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $summaryMaturity;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $credit;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
     protected array|string|null $summaryCredit;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      */
     protected array|string|null $filterData;

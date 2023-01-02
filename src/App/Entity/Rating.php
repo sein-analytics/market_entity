@@ -13,40 +13,40 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Rating")
+ * @ORM\Entity
+ * @ORM\Table(name="Rating")
  */
-class Rating extends AnnotationMappings
+class Rating 
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\RatingCode", inversedBy="ratings")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\RatingCode", inversedBy="ratings")
      * @var ?RatingCode
      */
     protected $ratingCode;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="rated")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="rated")
      * @var ?MarketUser
      */
     protected $rater;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="ratings")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="ratings")
      * @var ?MarketUser
      */
     protected $user;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="ratings")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="ratings")
      * @var ?Deal
      */
     protected $deal;

@@ -8,34 +8,33 @@
 
 namespace App\Entity\Typed;
 
-use App\Entity\AnnotationMappings;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @author Samuel Belu-John
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="ShelfSpecificType")
+ * @ORM\Entity
+ * @ORM\Table(name="ShelfSpecificType")
  */
-class ShelfSpecificType extends AnnotationMappings
+class ShelfSpecificType
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected string $label;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected string $slug;
 
     /** 
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="type")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="type")
      */
     protected $shelfSpecifics;
 

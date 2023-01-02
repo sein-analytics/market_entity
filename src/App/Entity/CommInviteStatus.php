@@ -5,10 +5,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="CommInviteStatus")
+ * @ORM\Entity
+ * @ORM\Table(name="CommInviteStatus")
  */
-class CommInviteStatus extends AnnotationMappings
+class CommInviteStatus
 {
     const EMAIL_ERROR = 'emailError';
 
@@ -29,21 +29,21 @@ class CommInviteStatus extends AnnotationMappings
     ];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $label = '';
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\CommunityInvite", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="\App\Entity\CommunityInvite", mappedBy="status")
      * @var ArrayCollection
      */
     protected $invites;
