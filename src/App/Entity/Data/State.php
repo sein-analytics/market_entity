@@ -7,43 +7,43 @@
  */
 
 namespace App\Entity\Data;
-use App\Entity\AnnotationMappings;
 use App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Data\State")
- * \Doctrine\ORM\Mapping\Table(name="State")
+ * @ORM\Entity(repositoryClass="\App\Repository\Data\State")
+ * @ORM\Table(name="State")
  */
-class State extends AnnotationMappings
+class State
 {
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="state")
+     * @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="state")
      * @var ArrayCollection
      **/
     protected $users;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Loan", mappedBy="state")
+     * @ORM\OneToMany(targetEntity="App\Entity\Loan", mappedBy="state")
      * @var ArrayCollection
      */
     protected $loans;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
     protected string $abbreviation;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
     protected string $name;

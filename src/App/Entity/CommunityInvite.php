@@ -3,50 +3,50 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\CommunityInvite")
- * \Doctrine\ORM\Mapping\Table(name="CommunityInvite")
+ * @ORM\Entity(repositoryClass="\App\Repository\CommunityInvite")
+ * @ORM\Table(name="CommunityInvite")
  */
-class CommunityInvite extends AnnotationMappings
+class CommunityInvite
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne (targetEntity="\App\Entity\Community", inversedBy="invites")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="community_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne (targetEntity="\App\Entity\Community", inversedBy="invites")
+     * @ORM\JoinColumn(name="community_id", referencedColumnName="id", nullable=false)
      * @var Community
      */
     protected $community;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne (targetEntity="\App\Entity\CommInviteStatus", inversedBy="invites")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne (targetEntity="\App\Entity\CommInviteStatus", inversedBy="invites")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var CommInviteStatus
      */
     protected $status;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne (targetEntity="\App\Entity\MarketUser", inversedBy="communityInvites")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne (targetEntity="\App\Entity\MarketUser", inversedBy="communityInvites")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * @var null|MarketUser
      */
     protected $user;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $email;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      * {"type":"datetime","min":"2010-01-01T00:00:00Z","step":"1"}
      * {"format":"Y-m-d\TH:iP"}
      * @var \DateTime
@@ -54,8 +54,8 @@ class CommunityInvite extends AnnotationMappings
     protected $inviteDate;
 
     /**
-     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="UUID")
-     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string", unique=true)
      * @var string
      */
     protected string $uuid;

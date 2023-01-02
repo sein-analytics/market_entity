@@ -16,11 +16,11 @@ use App\Entity\Typed\Update\FeeUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
 /**
- * \Doctrine\ORM\Mapping\MappedSuperclass
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Fee")
- * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="feeClass", type="string")
- * \Doctrine\ORM\Mapping\DiscriminatorMap({"bond" = "\App\Entity\Typed\Fee\BondFee",
+ * @ORM\MappedSuperclass
+ * @ORM\Entity
+ * @ORM\Table(name="Fee")
+ * @ORM\DiscriminatorColumn(name="feeClass", type="string")
+ * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Fee\BondFee",
  *                        "pool" = "\App\Entity\Typed\Fee\PoolFee",
  *                        "loan" = "\App\Entity\Typed\Fee\LoanFee"
  * })
@@ -31,39 +31,39 @@ abstract class Fee extends AbstractTyped
 
     /**
      * @var integer $id
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected int $id;
     
     /**
      * @var Deal $deal
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "fees") *
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "fees") *
      */
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\FeeType", inversedBy="fees")
-     * @var \App\Entity\Typed\FeeType
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\FeeType", inversedBy="fees")
+     * @var FeeType
      */
     protected $type;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="fee")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="fee")
      * @var ArrayCollection
      */
     protected $updates;
 
     /**
      * @var FeeUpdate
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Typed\Update\FeeUpdate", fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Typed\Update\FeeUpdate", fetch="EAGER")
      */
     protected $latestUpdate = null;
 
     /**
      * @var int $isFeeHedge | Default = 0 Negative;
-     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     * @ORM\Column(type="integer") *
      */
     protected int $isFeeHedge = 0;
 

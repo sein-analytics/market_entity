@@ -13,208 +13,197 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Bond;
 use App\Entity\Period;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 /**
  * @author Samuel Belu-John
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="BondUpdate")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity
+ * @ORM\Table(name="BondUpdate")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class BondUpdate extends DomainObject
 {   
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="updates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="updates")
      * @var Bond
      **/
     protected $bond;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="decimal", precision=14, scale=2)
      * @var  float
      **/
     protected float $startingBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="decimal", precision=14, scale=2)
      * @var float
      **/
     protected float $endingBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(name="reportDate", type = "datetime")
+     * @ORM\Column(name="reportDate", type = "datetime")
      * @var \DateTime
      **/
     protected  $reportDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $calculatedInterest;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="decimal", precision=14, scale=2)
      * @var float
      **/
     protected float $interestPaid = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $scheduledPrincipalPayment;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $principalPaid;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $unscheduledPrincipalPayment;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="decimal", precision=14, scale=2)
      * @var float
      **/
     protected float $principalLoss = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $interestLoss;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $unpaidInterest;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $deferredInterest;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $interestCarry;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $cumulativeRealizedLosses;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
      * @var ?float
      */
     protected ?float $bondFactor;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
      * @var ?float
      **/
     protected ?float $currentOC;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
      *@var ?float
      **/
     protected ?float $interestShortfall;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
      *@var ?float
      **/
     protected ?float $unsupportedIntShortfall;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="bondUpdate")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="bondUpdate")
      * @var ArrayCollection
      **/
     protected $components;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="bondUpdates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="bondUpdates")
      * @var Period
      **/
     protected $period;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $startReserveBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $reserveDraw;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $reserveDeposit;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $endReserveBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      **/
     protected ?int $isHistory = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $netHedge;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $accretionAmount;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      **/
     protected int $updateStatus = 1;

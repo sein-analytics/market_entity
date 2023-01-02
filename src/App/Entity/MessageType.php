@@ -13,20 +13,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessageType")
- * \Doctrine\ORM\Mapping\Table(name="MessageType")
+ * @ORM\Entity(repositoryClass="\App\Repository\MessageType")
+ * @ORM\Table(name="MessageType")
  */
-class MessageType extends AnnotationMappings
+class MessageType 
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
     protected string $type='';

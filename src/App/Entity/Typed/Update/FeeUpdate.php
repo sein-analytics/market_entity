@@ -7,63 +7,63 @@
 namespace App\Entity\Typed\Update;
 
 use App\Entity\Typed\Fee;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="FeeUpdate")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity
+ * @ORM\Table(name="FeeUpdate")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class FeeUpdate extends AbstractTypeUpdate
 {
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
     
     /**
      * @var Fee
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\Fee", inversedBy="updates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Fee", inversedBy="updates")
      * */
     protected $fee;
 
     /**
      * @var Period $period
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="fees")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="fees")
      **/
     protected $period;
 
     /**
      * @var float|null $amountOwed
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
      **/
     public float|null $amountDue;
 
     /**
      * @var float|null $amountPaid
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
      **/
     public float|null $amountPaid;
 
     /**
      * @var float|null $currentAmountPaid
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
      **/
     public float|null $currentAmountUnpaid;
 
     /**
      * @var float|null $cumulativeUnpaidAmount
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
      **/
     public float|null $cumulativeAmountUnpaid;
 
     /**
      * @var float|null $unpaidReimbursed
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3, nullable = true)
+     * @ORM\Column(type="decimal", precision=14, scale=3, nullable = true)
      **/
     public float|null $unpaidAmountReimbursed;
     

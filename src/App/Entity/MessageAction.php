@@ -8,38 +8,38 @@
 
 namespace App\Entity;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessageAction")
- * \Doctrine\ORM\Mapping\Table(name="MessageAction")
+ * @ORM\Entity(repositoryClass="\App\Repository\MessageAction")
+ * @ORM\Table(name="MessageAction")
  *
  */
-class MessageAction extends AnnotationMappings
+class MessageAction 
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $urlText;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $documentUrl;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $icon;

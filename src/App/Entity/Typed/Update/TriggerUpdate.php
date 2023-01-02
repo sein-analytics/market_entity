@@ -8,15 +8,15 @@
 
 namespace App\Entity\Typed\Update;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Triggers;
-//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
  *
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="TriggerUpdate")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity
+ * @ORM\Table(name="TriggerUpdate")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class TriggerUpdate extends AbstractTypeUpdate
 {
@@ -24,38 +24,38 @@ class TriggerUpdate extends AbstractTypeUpdate
     const TRIGGER_RESULT_FAIL = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue *
      */
     protected int $id;
 
     /**
      * @var Triggers $trigger
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\Triggers", inversedBy="updates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Triggers", inversedBy="updates")
      **/
     protected $trigger;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="triggers")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="triggers")
      * @var Period
      **/
     protected $period;
 
     /**
      * @var float $threshold
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3)
+     * @ORM\Column(type="decimal", precision=14, scale=3)
      */
     public float $threshold = 0;
 
     /**
      * @var float $actual
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=3)
+     * @ORM\Column(type="decimal", precision=14, scale=3)
      */
     public float $actual = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string")
+     * @ORM\Column(type="string")
      * @var int $triggerResult
      */
     public int $triggerResult = self::TRIGGER_RESULT_PASS;

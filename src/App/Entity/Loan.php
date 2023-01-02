@@ -14,35 +14,16 @@ use App\Entity\Loan\CommAttribute;
 use App\Entity\Loan\DescAttribute;
 use App\Entity\Loan\SaleAttribute;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-
-use Doctrine\ORM\Mapping\Index;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Loan")
- * \Doctrine\ORM\Mapping\Table(name="loans")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
- * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="assetClass", type="string")
- * \Doctrine\ORM\Mapping\DiscriminatorMap({
+ * @ORM\Entity(repositoryClass="\App\Repository\Loan")
+ * @ORM\Table(name="loans")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\DiscriminatorColumn(name="assetClass", type="string")
+ * @ORM\DiscriminatorMap({
  *      "Auto"          = "\App\Entity\AssetType\Auto",
  *      "Residential"   = "\App\Entity\AssetType\Residential",
  *      "Commercial"    = "\App\Entity\AssetType\Commercial",
@@ -100,269 +81,269 @@ class Loan extends DomainObject
     ];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @var int
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $loanId;
 
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity = "\App\Entity\Loan\ArmAttribute", mappedBy="loan")
+     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\ArmAttribute", mappedBy="loan")
      * @var ArmAttribute|null
      */
     protected $armAttributes;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity = "\App\Entity\Loan\CommAttribute", mappedBy="loan")
+     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\CommAttribute", mappedBy="loan")
      * @var CommAttribute|null
      */
     protected $commAttributes;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity = "\App\Entity\Loan\SaleAttribute", mappedBy="loan")
+     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\SaleAttribute", mappedBy="loan")
      * @var SaleAttribute|null
      */
     protected $saleAttributes;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="pool_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
+     * @ORM\JoinColumn(name="pool_id", referencedColumnName="id", nullable=false)
      * @var Pool
      **/
     protected $pool;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=false)
+     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=false)
      * @var float
      */
     protected float $originalBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=false)
+     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=false)
      * @var float
      */
     protected float $currentBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $monthlyPayment = null;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $issuanceBalance;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=6, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=6, nullable=true)
      * @var ?float
      */
     protected ?float $initialRate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
     protected ?int $seasoning;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=6, nullable=false)
+     * @ORM\Column(type="decimal", precision=10, scale=6, nullable=false)
      * @var float
      */
     protected float $currentRate=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $originationDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $currentDueforDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $firstPaymentDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $loanStatus='';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
+     * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $finalDueforDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $originalTerm=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $remainingTerm;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $amortizationTerm=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $ioTerm;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
     protected ?int $balloonPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=4, nullable=false)
+     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=false)
      * @var float
      **/
     protected float $originalLtv=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $originalCltv;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=4, nullable=false)
+     * @ORM\Column(type="decimal", precision=16, scale=4, nullable=false)
      * @var float
      **/
     protected float $appraisedValue=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $creditScore;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $frontDti;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $backDti;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      */
     protected ?int $numberOfBorrowers;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      */
     protected ?int $firstTimeBuyer;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected int $lienPosition=1;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $noteType;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $loanType='';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $documentation='';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $purpose='';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $occupancy='';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $dwelling;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $address;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Data\State", inversedBy="loans") *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Data\State", inversedBy="loans") *
      */
     protected $state;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $city;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $zip='';
 
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var ?string
      */
     protected ?string $assetAttributes;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Data\Cbsa", inversedBy="loans")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Data\Cbsa", inversedBy="loans")
      **/
     protected $msaCode;
 
@@ -373,185 +354,185 @@ class Loan extends DomainObject
     protected ?string $paymentString;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=6, nullable = true)
+     * @ORM\Column(type="decimal", precision=14, scale=6, nullable = true)
      * @var ?float
      */
     protected ?float $servicingfee;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=6, nullable = true)
+     * @ORM\Column(type="decimal", precision=14, scale=6, nullable = true)
      * @var ?float
      */
     protected ?float $lpmiFee;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable = true)
+     * @ORM\Column(type="decimal", precision=10, scale=4, nullable = true)
      * @var ?float
      */
     protected ?float $miCoverage;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan\AmortAttribute", inversedBy="loans")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan\AmortAttribute", inversedBy="loans")
      * @var  AmortAttribute */
     protected $amortization;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan\DescAttribute", inversedBy="loans")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan\DescAttribute", inversedBy="loans")
      * @var  DescAttribute */
     protected $description;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=true)
      * @var ?\dateTime
      **/
     protected $foreclosureDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=true)
      * @var ?\dateTime
      **/
     protected $bankruptcyDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=true)
      * @var ?\dateTime
      **/
     protected $reoDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=true)
      * @var ?\dateTime
      **/
     protected $zeroBalanceDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int $loanHasBeenModified
      */
     protected ?int $loanHasBeenModified;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int $lengthOfModification
      */
     protected ?int $endModPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @ORM\Column(type="string", nullable=true) *
      * @var ?string
      */
     protected ?string $channel;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @var ?\DateTime
      */
     protected $lastPaymentDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      *@var ?int
      */
     protected ?int $times_30;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      *@var ?int
      */
     protected ?int $times_60;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      *@var ?int
      */
     protected ?int $times_90;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
     protected ?int $yearBuilt;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $newVsUsed;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable = true)
      * @var ?float
      */
     protected ?float $reserves;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable = true)
      * @var ?float
      */
     protected ?float $dealerReserve;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
     protected ?int $prepayPenaltyTerm;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable = true)
      * @var ?float
      */
     protected ?float $prepayPenalty;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array|null
      **/
     protected $prepayStepDown;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")
      */
     protected $bids;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="loan")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="loan")
      */
     protected $updates;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\LoanSpecific", mappedBy="loans")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\LoanSpecific", mappedBy="loans")
      */
     protected $specifics;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Fee\LoanFee", mappedBy="loans")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\LoanFee", mappedBy="loans")
      */
     protected $fees;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Account\LoanAccount", mappedBy="loans")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\LoanAccount", mappedBy="loans")
      */
     protected $accounts;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\LoanTrigger", mappedBy="loans")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\LoanTrigger", mappedBy="loans")
      */
     protected $triggers;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="loan")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="loan")
      * @var ArrayCollection
      */
     protected $files;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="loan")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="loan")
      * @var ArrayCollection|PersistentCollection|null
      */
     protected $reviewStatuses;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="loan", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="loan", cascade={"persist"})
      * @var ArrayCollection  */
     protected $issues;
 

@@ -6,72 +6,72 @@
 
 namespace App\Entity\Typed\Update;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Account;
-//use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
  *
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="AccountUpdate")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity
+ * @ORM\Table(name="AccountUpdate")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  *
  */
 class AccountUpdate extends AbstractTypeUpdate
 {
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected int $id;
 
     /**
      * @var Account $account
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\Account", inversedBy="updates", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Account", inversedBy="updates", fetch="EAGER")
      **/
     protected $account;
 
     /**
      * @var Period $period
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Period", inversedBy="accounts", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Period", inversedBy="accounts", fetch="EAGER")
      **/
     protected $period;
 
     /**
      * @var float|null $beginningBalance
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $beginningBalance;
 
     /**
      * @var float|null $accountWithdrawals
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $accountWithdrawals;
 
     /**
      * @var float|null $accountDeposits
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $accountDeposits;
 
     /**
      * @var float|null $endingBalance
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $endingBalance;
 
     /**
      * @var float|null $shortfall
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $shortfall;
 
     /**
      * @var float|null $requiredAmount
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     public float|null $requiredAmount;
 

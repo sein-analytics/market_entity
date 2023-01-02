@@ -8,7 +8,7 @@
 
 namespace App\Entity\Typed;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Deal;
@@ -17,11 +17,11 @@ use App\Entity\Typed\Update\TypedUpdateInterface;
 use Illuminate\Support\Arr;
 
 /**
- * \Doctrine\ORM\Mapping\MappedSuperclass
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Triggers")
- * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="triggerClass", type="string")
- * \Doctrine\ORM\Mapping\DiscriminatorMap({"bond" = "\App\Entity\Typed\Trigger\BondTrigger",
+ * @ORM\MappedSuperclass
+ * @ORM\Entity
+ * @ORM\Table(name="Triggers")
+ * @ORM\DiscriminatorColumn(name="triggerClass", type="string")
+ * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Trigger\BondTrigger",
  *                        "pool" = "\App\Entity\Typed\Trigger\PoolTrigger",
  *                        "loan" = "\App\Entity\Typed\Trigger\LoanTrigger"
  * })
@@ -32,32 +32,32 @@ abstract class Triggers extends AbstractTyped
 
     /**
      * @var integer $id
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue *
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "triggers")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "triggers")
      * @var Deal $deal
      */
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\TriggerType", inversedBy="triggers")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\TriggerType", inversedBy="triggers")
      * @var TriggerType $triggerType
      */
     protected $type;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", mappedBy="trigger")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", mappedBy="trigger")
      * @var ArrayCollection $triggersUpdate
      */
     protected $updates;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", fetch="EAGER")
      * @var TriggerUpdate $latestTriggerUpdate
      */
     protected $latestUpdate = null;

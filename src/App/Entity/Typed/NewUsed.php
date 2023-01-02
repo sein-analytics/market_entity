@@ -8,11 +8,11 @@
 
 namespace App\Entity\Typed;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="NewUsed")
+ * @ORM\Entity
+ * @ORM\Table(name="NewUsed")
  */
 class NewUsed extends MappedTypeAbstract
 {

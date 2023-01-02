@@ -2,11 +2,11 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\AclRole")
- * \Doctrine\ORM\Mapping\Table(name="AclRole")
+ * @ORM\Entity(repositoryClass="\App\Repository\AclRole")
+ * @ORM\Table(name="AclRole")
  */
 class AclRole extends AnnotationMappings
 {
@@ -29,20 +29,20 @@ class AclRole extends AnnotationMappings
     ];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * @var int
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="role")
+     * @ORM\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="role")
      * @var ArrayCollection
      */
     protected $users;
 
-    /** \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+    /** @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $role = '';

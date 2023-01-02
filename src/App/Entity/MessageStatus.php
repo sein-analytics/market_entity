@@ -9,32 +9,32 @@
 namespace App\Entity;
 
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessageStatus")
- * \Doctrine\ORM\Mapping\Table(name="MessageStatus")
+ * @ORM\Entity(repositoryClass="\App\Repository\MessageStatus")
+ * @ORM\Table(name="MessageStatus")
  *
  */
-class MessageStatus extends AnnotationMappings
+class MessageStatus
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      *   */
     protected string $messageStatus;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="status")
      * @var PersistentCollection|ArrayCollection|null
      */
     protected $messages;

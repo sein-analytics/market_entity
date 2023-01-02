@@ -6,34 +6,34 @@ use Doctrine\ORM\EntityRepository;
 abstract class abstractMktUser extends EntityRepository
 implements MktUserInterface
 {
-    private static $userDealIdsSql = 'SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?';
+    private static string $userDealIdsSql = 'SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?';
 
-    private static $usrWatchlistIdsSql = 'SELECT favorite_deal_id FROM user_favorite_deals WHERE  user_id = ?"';
+    private static string $usrWatchlistIdsSql = 'SELECT favorite_deal_id FROM user_favorite_deals WHERE  user_id = ?"';
 
-    private static $rmvFromWatchlistSql = 'DELETE FROM user_favorite_deals WHERE user_id=? AND `favorite_deal_id`=?';
+    private static string $rmvFromWatchlistSql = 'DELETE FROM user_favorite_deals WHERE user_id=? AND `favorite_deal_id`=?';
 
-    private static $addToWatchlistSql = 'INSERT INTO user_favorite_deals (`user_id`, `favorite_deal_id`) VALUES (?,?)';
+    private static string $addToWatchlistSql = 'INSERT INTO user_favorite_deals (`user_id`, `favorite_deal_id`) VALUES (?,?)';
 
-    private static $usersFromIdsArrSql = 'SELECT * FROM MarketUser WHERE id IN (?) ORDER BY id ASC';
+    private static string $usersFromIdsArrSql = 'SELECT * FROM MarketUser WHERE id IN (?) ORDER BY id ASC';
 
-    private static $buyerIdsByRoleSql = "SELECT id FROM AclRole WHERE role='Buyer' OR role='Both'";
+    private static string $buyerIdsByRoleSql = "SELECT id FROM AclRole WHERE role='Buyer' OR role='Both'";
 
-    private static $userIdsByRoleIdSql = "SELECT id FROM MarketUser WHERE role_id in (?) ORDER BY id ASC ";
+    private static string $userIdsByRoleIdSql = "SELECT id FROM MarketUser WHERE role_id in (?) ORDER BY id ASC ";
 
-    private static $userSaltByEmailSql = "SELECT user_salt FROM MarketUser WHERE email = ? ";
+    private static string $userSaltByEmailSql = "SELECT user_salt FROM MarketUser WHERE email = ? ";
 
-    private static $usrIdByIssuerIdSql = "SELECT id FROM MarketUser WHERE issuer_id = ? AND id != ? ORDER BY id ASC ";
+    private static string $usrIdByIssuerIdSql = "SELECT id FROM MarketUser WHERE issuer_id = ? AND id != ? ORDER BY id ASC ";
 
-    private static $insertMsgIdUsrIdSql = "INSERT INTO `market_user_message` (`message_id`, `market_user_id`) VALUES (?, ?) ";
+    private static string $insertMsgIdUsrIdSql = "INSERT INTO `market_user_message` (`message_id`, `market_user_id`) VALUES (?, ?) ";
 
-    private static $teamLeadIdFromUsrIdAndIssuerSql = "SELECT id from MarketUser m1 " .
+    private static string $teamLeadIdFromUsrIdAndIssuerSql = "SELECT id from MarketUser m1 " .
         "WHERE m1.issuer_id = (SELECT issuer_id FROM MarketUser WHERE id = ?)";
 
-    private static $updateRemTokenByUsrIdSql = "UPDATE `MarketUser` SET `remember_token`= ? WHere id= ?";
+    private static string $updateRemTokenByUsrIdSql = "UPDATE `MarketUser` SET `remember_token`= ? WHere id= ?";
 
-    private static $updateAuthTokenByUsrIdSql = "UPDATE `MarketUser` SET `authy_token`= ? WHere id= ?";
+    private static string $updateAuthTokenByUsrIdSql = "UPDATE `MarketUser` SET `authy_token`= ? WHere id= ?";
 
-    protected $callUsersUuidsFromIds = 'call UsersUuidsFromIds(:userIds)';
+    protected string $callUsersUuidsFromIds = 'call UsersUuidsFromIds(:userIds)';
 
     /** @return string */
     public static function getUserDealIdsSql(): string

@@ -4,93 +4,81 @@ namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Support\Facades\App;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity (repositoryClass="\App\Repository\Bid")
- * \Doctrine\ORM\Mapping\Table (name="Bid")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity (repositoryClass="\App\Repository\Bid")
+ * @ORM\Table (name="Bid")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class Bid extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
-     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="bids")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="bids")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      */
     protected $user;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bids")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bids")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      */
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy="bids")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy="bids")
      * @var ArrayCollection
      */
     protected $loans;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=9, scale=3, nullable=false)
+     * @ORM\Column(type="decimal", precision=9, scale=3, nullable=false)
      */
     protected float $price = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
      */
     protected $effectiveBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      */
     protected float $proportionalBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      * @var array
      **/
     protected $bidHistory;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\BidStatus", inversedBy="bids")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\BidStatus", inversedBy="bids")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var BidStatus
      */
     protected $status;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $date;
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
+     * @ORM\OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
      * @var DueDiligence|null
      */
     protected $dueDiligence;

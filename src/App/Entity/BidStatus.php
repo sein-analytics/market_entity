@@ -13,20 +13,20 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="\App\Repository\BidStatus")
  * @ORM\Table(name="BidStatus")
  */
-class BidStatus extends AnnotationMappings
+class BidStatus
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
-    /** \Doctrine\ORM\Mapping\Column(type="string", nullable=false)   */
+    /** @ORM\Column(type="string", nullable=false)   */
     protected string $status;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity = "\App\Entity\Bid", mappedBy="status")
+     * @ORM\OneToMany(targetEntity = "\App\Entity\Bid", mappedBy="status")
      * @var ArrayCollection
      */
     protected $bids;

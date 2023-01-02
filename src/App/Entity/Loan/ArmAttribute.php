@@ -6,24 +6,13 @@ use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-//use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Loan\ArmAttribute")
- * \Doctrine\ORM\Mapping\Table(name="ArmAttribute")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity(repositoryClass="\App\Repository\Loan\ArmAttribute")
+ * @ORM\Table(name="ArmAttribute")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class ArmAttribute extends DomainObject
 {
@@ -36,81 +25,81 @@ class ArmAttribute extends DomainObject
     protected array $defaultValueProperties = [];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="armAttributes")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
+     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="armAttributes")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      **/
     protected $loan;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=15, nullable=true)
+     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true)
      */
     protected float|null $grossMargin = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=15, nullable=true) *
+     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true) *
      */
     protected float $minimumRate = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=18, scale=15, nullable=true)
+     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true)
      */
     protected float $maximumRate = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      */
     protected string $rateIndex;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      */
     protected int|null $fstRateAdjPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=true)
      */
     protected \DateTime|null $fstRateAdjDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      */
     protected int|null $fstPmntAdjPeriod;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @ORM\Column(type = "datetime", nullable=true)
      */
     protected \DateTime|null $fstPmntAdjDate;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      */
     protected int|null $rateAdjFrequency;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      */
     protected float|null $periodicCap;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
      */
     protected float|null $initialCap;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @ORM\Column(type = "integer", nullable=true)
      */
     protected int|null $pmntAdjFrequency;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type ="decimal", precision=14, scale=5, nullable=true)
+     * @ORM\Column(type ="decimal", precision=14, scale=5, nullable=true)
      */
     protected float|null $pmntIncreaseCap;
 

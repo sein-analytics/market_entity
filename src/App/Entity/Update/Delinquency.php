@@ -10,164 +10,152 @@ namespace App\Entity\Update;
 
 use App\Entity\DomainObject;
 use App\Service\CreatePropertiesArrayTrait;
-use App\Entity\Update\PoolUpdate;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Delinquency")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity
+ * @ORM\Table(name="Delinquency")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
 class Delinquency extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\GeneratedValue
-     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer") *
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="delinquency")
-     * @var \App\Entity\Update\PoolUpdate
+     * @ORM\OneToOne(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="delinquency")
+     * @var PoolUpdate
      */
     protected $poolUpdate;
 
     /**
      * Current Period's balance that is 30-60 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq30Balance;
 
     /**
      * Current Period's number of loans that are 30-60 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq30Loans;
 
     /**
      * Current Period's balance that is 61-90 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq60Balance;
 
     /**
      * Current Period's number of loans 61-90 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq60Loans;
 
     /**
      * Current Period's balance that is 91-120 or more days past-due (depends on trustee reporting)
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq90Balance;
 
     /**
      * Current Period's number of loans 91-120 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq90Loans;
 
     /**
      * Current Period's loan balance that is 120 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq120Balance;
 
     /**
      * Current Period's number of loans 120 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq120Loans;
 
     /**
      * Current Period's loan balance that is 150 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq150Balance;
 
     /**
      * Current Period's number of loans 150 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq150Loans;
 
     /**
      * Current Period's loan balance that is 180 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq180Balance;
 
     /**
      * Current Period's number of loans 180 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $dq180Loans;
 
     /**
      * Current Period's loan balance that is in reo
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $reoLoans;
 
     /**
      * Current Period's number of loans in reo
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $reoBalance;
 
     /**
      * Current Period's loan balance that is in foreclosure
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $foreclosureBalance;
 
     /**
      * Current Period's number of loans in foreclosure
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $foreclosureLoans;
 
     /**
      * Current Period's loan balance that is 180 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $bankruptcyBalance;
 
     /**
      * Current Period's number of loans 180 days past-due
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $bankruptcyLoans;
@@ -181,15 +169,15 @@ class Delinquency extends DomainObject
     }
 
     /**
-     * @return ?\App\Entity\Update\PoolUpdate
+     * @return ?PoolUpdate
      */
-    public function getPoolUpdate():?\App\Entity\Update\PoolUpdate
+    public function getPoolUpdate():?PoolUpdate
     {
         return $this->poolUpdate;
     }
 
     /**
-     * @param \App\Entity\Update\PoolUpdate $poolUpdate
+     * @param PoolUpdate $poolUpdate
      */
     public function setPoolUpdate(PoolUpdate $poolUpdate):void
     {

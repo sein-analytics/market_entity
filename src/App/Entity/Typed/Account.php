@@ -6,7 +6,7 @@
 
 namespace App\Entity\Typed;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Deal;
 use App\Entity\Typed\Update\AccountUpdate;
@@ -14,11 +14,11 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
 /**
- * \Doctrine\ORM\Mapping\MappedSuperClass
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="Account")
- * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="accountClass", type="string")
- * \Doctrine\ORM\Mapping\DiscriminatorMap({"bond" = "\App\Entity\Typed\Account\BondAccount",
+ * @ORM\MappedSuperClass
+ * @ORM\Entity
+ * @ORM\Table(name="Account")
+ * @ORM\DiscriminatorColumn(name="accountClass", type="string")
+ * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Account\BondAccount",
  *                        "pool" = "\App\Entity\Typed\Account\PoolAccount",
  *                        "loan" = "\App\Entity\Typed\Account\LoanAccount"
  * })
@@ -29,45 +29,45 @@ abstract class Account extends AbstractTyped
 
     /**
      * @var integer $id
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     protected int $id;
 
     /**
      * @var Deal $deal
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "accounts") *
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "accounts") *
      */
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\AccountType", inversedBy="accounts")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\AccountType", inversedBy="accounts")
      * @var AccountType
      */
     protected $type;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\AccountUpdate", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\AccountUpdate", mappedBy="account")
      * @var ArrayCollection
      */
     protected $updates;
 
     /**
      * @var AccountUpdate
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Typed\Update\FeeUpdate", fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Typed\Update\FeeUpdate", fetch="EAGER")
      */
     protected $latestUpdate = null;
 
     /**
      * @var int $isFeeHedge | Default = 0 Negative;
-     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     * @ORM\Column(type="integer") *
      */
     protected int $isFeeHedge = 0;
 
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @ORM\Column(type="integer")
      * @var int $isStructuredDealFee | Default = 1, fee is paid at the
      *      StructuredDeal level
      */

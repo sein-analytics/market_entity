@@ -8,43 +8,43 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DealAsset")
- * \Doctrine\ORM\Mapping\Table(name="DealAsset")
+ * @ORM\Entity(repositoryClass="\App\Repository\DealAsset")
+ * @ORM\Table(name="DealAsset")
  */
-class DealAsset extends AnnotationMappings
+class DealAsset
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="assetType")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="assetType")
      * @var ArrayCollection
      **/
     protected $deals;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $assetClass = '';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $name = '';
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="type")
+     * @ORM\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="type")
      */
     protected $templates;
 

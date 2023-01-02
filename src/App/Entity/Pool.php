@@ -8,33 +8,16 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-
-use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Pool")
- * \Doctrine\ORM\Mapping\Table(name="Pool")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
- * \Doctrine\ORM\Mapping\HasLifeCycleCallbacks
+ * @ORM\Entity(repositoryClass="\App\Repository\Pool")
+ * @ORM\Table(name="Pool")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\HasLifeCycleCallbacks
  */
 class Pool extends DomainObject
 {
@@ -58,116 +41,116 @@ class Pool extends DomainObject
     ];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="pools")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="pools")
      * @var ?Deal
      **/
     protected $deal;
 
     /** 
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="pool")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="pool")
      * @var PersistentCollection|ArrayCollection|null
      **/
     protected $loans;
 
     /** 
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="pool", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="pool", fetch="LAZY")
      * @var PersistentCollection|ArrayCollection|null
      **/
     protected $bonds;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @ORM\Column(type="integer")
      * @var int
      */
     protected int $bondsCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="decimal", precision=14, scale=2)
      * @var float
      */
     protected float $bondsTotalBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "decimal", precision=14, scale=2)
      * @var float
      */
     protected float $loanTotalBalance = 0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "integer")
+     * @ORM\Column(type = "integer")
      * @var int
      */
     protected int $loansCount = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="decimal", precision=14, scale=2)
      * @var float
      */
     protected float $originalBalance=0.0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $poolStructure;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type = "boolean", nullable=false)
+     * @ORM\Column(type = "boolean", nullable=false)
      * @var bool
      * **/
     protected bool $isCrossed = false;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      **/
     protected bool $isPogroup = false;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      **/
     protected bool $isIoGroup = false;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      */
     protected bool $addReserveToCreditSupport = false;
     
     /** 
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="pool", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="pool", fetch="LAZY")
      * @var PersistentCollection|ArrayCollection|null
      **/
     protected $poolUpdates;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\PoolSpecific", mappedBy="pools")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\PoolSpecific", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
     protected $specifics;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Fee\PoolFee", mappedBy="pools")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\PoolFee", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
     protected $fees;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Account\PoolAccount", mappedBy="pools")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\PoolAccount", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
     protected $accounts;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\PoolTrigger", mappedBy="pools")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\PoolTrigger", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
     protected $triggers;

@@ -9,136 +9,119 @@ namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-
-use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Message")
- * \Doctrine\ORM\Mapping\Table(name="Message")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
- * \Doctrine\ORM\Mapping\HasLifeCycleCallbacks
+ * @ORM\Entity(repositoryClass="\App\Repository\Message")
+ * @ORM\Table(name="Message")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\HasLifeCycleCallbacks
  */
 class Message extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="messages")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      **/
     protected MarketUser $user;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="messages")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
      */
     protected ?Deal $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      */
     protected ?Loan $loan;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected \DateTime $date;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
     protected ?string $subject;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Message")
-     * \Doctrine\ORM\Mapping\JoinTable(name="responses",
-     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="message_id", referencedColumnName="id")},
-     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="response_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
+     * @ORM\JoinTable(name="responses",
+     *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
      */
     protected ArrayCollection|PersistentCollection|null $responses;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
      */
     protected MessageType $type;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
      * @var PersistentCollection|ArrayCollection|null
      */
     protected $recipients;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     protected string $message='';
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageOriginator", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="originator_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageOriginator", inversedBy="messages")
+     * @ORM\JoinColumn(name="originator_id", referencedColumnName="id", nullable=false)
      */
     protected MessageOriginator $originator;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
      */
     protected ?MessageStatus $status;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="priority_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="messages")
+     * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=true)
      */
     protected ?MessagePriority $priority;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
+     * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
      */
     protected ?MessageAction $action;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected ?string $sendStatus;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      */
     protected array|string $msgRecipientIds;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligenceIssue", inversedBy="messages")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="issue_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceIssue", inversedBy="messages")
+     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id", nullable=true)
      */
     protected $issue;
 

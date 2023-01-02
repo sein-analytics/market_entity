@@ -7,23 +7,6 @@
 namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\GeneratedValue;
-
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-
-use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -31,9 +14,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DealFile")
- * \Doctrine\ORM\Mapping\Table(name="DealFile")
- * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * @ORM\Entity(repositoryClass="\App\Repository\DealFile")
+ * @ORM\Table(name="DealFile")
+ * @ORM\ChangeTrackingPolicy("NOTIFY")
  *
  */
 class DealFile extends DomainObject
@@ -51,136 +34,136 @@ class DealFile extends DomainObject
     protected array $defaultValueProperties = [];
 
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="dealDocs")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="dealDocs")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      */
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="files")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="files")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      */
     protected $user;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="files")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="files")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */
     protected $loan;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="document")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="document")
      * @var DocAccess
      */
     protected $docAccess;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $fileName ='';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected int $fileSize=0;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MimeType", inversedBy="files")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="mime_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MimeType", inversedBy="files")
+     * @ORM\JoinColumn(name="mime_id", referencedColumnName="id", nullable=false)
      * @var MimeType
      */
     protected $mime;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected string $publicPath ='';
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\DealFile")
-     * \Doctrine\ORM\Mapping\JoinTable(name="file_replacements",
-     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id")},
-     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="replacement_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
+     * @ORM\JoinTable(name="file_replacements",
+     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="replacement_id", referencedColumnName="id")}
      *     )
      * @var ArrayCollection
      **/
     protected $replacements;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\DealFile")
-     * \Doctrine\ORM\Mapping\JoinTable(name="file_appends",
-     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id")},
-     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="append_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
+     * @ORM\JoinTable(name="file_appends",
+     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="append_id", referencedColumnName="id")}
      *     )
      * @var ArrayCollection
      */
     protected $appends;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
+     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
      * @var DocType
      */
     protected $docType;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\FileAccessCode")
-     * \Doctrine\ORM\Mapping\JoinColumn(name="access_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\FileAccessCode")
+     * @ORM\JoinColumn(name="access_id", referencedColumnName="id", nullable=true)
      * @var FileAccessCode
      */
     protected $accessId;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $assetId = '';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected string $scanLocation = '';
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      * @var boolean
      */
     protected $hasViruses = 0;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string;
      */
     protected ?string $signatureId;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      * @var ?string;
      */
     protected ?string $signaturePath;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
+     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
      * @var ArrayCollection
      */
     protected $issues;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="files")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="files")
      * @var ArrayCollection
      */
     protected $diligence;

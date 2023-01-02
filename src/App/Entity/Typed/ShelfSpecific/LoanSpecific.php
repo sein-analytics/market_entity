@@ -6,26 +6,26 @@
 
 namespace App\Entity\Typed\ShelfSpecific;
 
-//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Loan;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * \Doctrine\ORM\Mapping\Entity
+ * @ORM\Entity
  */
 class LoanSpecific extends ShelfSpecific
 {
     /**
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "specifics")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "specifics")
      */
     protected $loans;
 

@@ -18,11 +18,11 @@ use App\Entity\Typed\Update\TypedUpdateInterface;
 
 /**
  *
- * \Doctrine\ORM\Mapping\MappedSuperclass
- * \Doctrine\ORM\Mapping\Entity
- * \Doctrine\ORM\Mapping\Table(name="ShelfSpecific")
- * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="specificClass", type="string")
- * \Doctrine\ORM\Mapping\DiscriminatorMap({"bond" = "\App\Entity\Typed\ShelfSpecific\BondSpecific",
+ * @ORM\MappedSuperclass
+ * @ORM\Entity
+ * @ORM\Table(name="ShelfSpecific")
+ * @ORM\DiscriminatorColumn(name="specificClass", type="string")
+ * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\ShelfSpecific\BondSpecific",
  *                        "pool" = "\App\Entity\Typed\ShelfSpecific\PoolSpecific",
  *                        "loan" = "\App\Entity\Typed\ShelfSpecific\LoanSpecific"
  * })
@@ -34,87 +34,87 @@ abstract class ShelfSpecific extends AbstractTyped
 
     /**
      * @var integer $id
-     * \Doctrine\ORM\Mapping\Id
-     * \Doctrine\ORM\Mapping\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue *
      */
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "shelfSpecifics")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "shelfSpecifics")
      * @var Deal
      */
     protected $deal;
 
     /**
-     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecificType", inversedBy="shelfSpecifics")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecificType", inversedBy="shelfSpecifics")
      * @var ShelfSpecificType
      */
     protected $type;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\ShelfSpecificUpdate", mappedBy="shelfSpecific")
+     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\ShelfSpecificUpdate", mappedBy="shelfSpecific")
      * @var ArrayCollection
      */
     protected $updates;
 
     /**
-     * \Doctrine\ORM\Mapping\OneToOne(targetEntity = "\App\Entity\Typed\Update\ShelfSpecificUpdate", fetch="EAGER")
+     * @ORM\OneToOne(targetEntity = "\App\Entity\Typed\Update\ShelfSpecificUpdate", fetch="EAGER")
      * @var \App\Entity\Typed\Update\ShelfSpecificUpdate
      */
     protected $latestUpdate;
 
     /**
      * @var string|null $shelfDesignation
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      **/
     protected string|null $shelfDesignation;
 
     /**
      * @var integer $isFeeHedge | Default = 1 Fixed;
-     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     * @ORM\Column(type="integer") *
      */
     protected int $rateType = self::CALC_FIXED;
 
     /**
      * @var float|null $fixedRAte
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=7, scale=6, nullable=true)
+     * @ORM\Column(type = "decimal", precision=7, scale=6, nullable=true)
      **/
     protected float|null $fixedRate;
 
     /**
      * @var string|null $rateFormula
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      **/
     protected string|null $rateFormula;
 
     /**
      * @var string|null $rateFormula
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      **/
     protected string|null $directToBond;
 
     /**
      * @var string|null $rateIndex
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      **/
     protected string|null $rateIndex;
 
     /**
      * @var string|null $indexMaturity
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      **/
     protected string|null $indexMaturity;
 
     /**
      * @var string|null $basis
-     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
+     * @ORM\Column(type = "string", nullable=true)
      **/
     protected string|null $basis;
 
     /**
      * @var float|null $originalBalance
-     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
      **/
     protected float|null $originalBalance;
 

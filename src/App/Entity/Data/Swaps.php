@@ -8,28 +8,28 @@
 
 namespace App\Entity\Data;
 
-//use Doctrine\ORM\Mapping as ORM;
-use App\Entity\AnnotationMappings;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Data\Swaps")
- * \Doctrine\ORM\Mapping\Table(name="Swaps")
+ * @ORM\Entity(repositoryClass="\App\Repository\Data\Swaps")
+ * @ORM\Table(name="Swaps")
  */
-class Swaps extends AnnotationMappings
+class Swaps
 {
     /**
-     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
-     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
     protected string $name;
 
-    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=9, scale=6, nullable = false) **/
+    /** @ORM\Column(type="decimal", precision=9, scale=6, nullable = false) **/
     protected float $value;
 
     /**
