@@ -1,6 +1,26 @@
 <?php
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
+use Doctrine\ORM\Mapping as ORM;
 
 abstract class DealAbstract extends DomainObject
 {
@@ -26,17 +46,17 @@ abstract class DealAbstract extends DomainObject
 
     const SYNDICATION               = 'SYNDICATION';
 
-    protected static $auctionTypes = array(
+    protected static array $auctionTypes = array(
         self::PLAIN_AUCTION       => "\\App\\Entity\\AuctionType\\Standard",
         self::DUTCH_AUCTION       => "\\App\\Entity\\AuctionType\\Dutch",
     );
 
-    protected static $bidTypes = array(
+    protected static array $bidTypes = array(
         self::ALL_OR_NONE       => "\\App\\Entity\\BidType\\AllOrNone",
         self::SYNDICATION       => "\\App\\Entity\\BidType\\Syndication",
     );
 
-    protected static $assetTypes = array(
+    protected static array $assetTypes = array(
         self::ASSET_AUTO            => "\\App\\Entity\\AssetType\\Auto",
         self::ASSET_RESIDENTIAL     => "\\App\\Entity\\AssetType\\Residential",
         self::ASSET_COMMERCIAL      => "\\App\\Entity\\AssetType\\Commercial",
@@ -60,7 +80,7 @@ abstract class DealAbstract extends DomainObject
     /**
      * @return array
      */
-    public static function getAuctionTypes()
+    public static function getAuctionTypes():array
     {
         return self::$auctionTypes;
     }
@@ -68,7 +88,7 @@ abstract class DealAbstract extends DomainObject
     /**
      * @return array
      */
-    public static function getAssetTypes()
+    public static function getAssetTypes():array
     {
         return self::$assetTypes;
     }
@@ -76,7 +96,7 @@ abstract class DealAbstract extends DomainObject
     /**
      * @return array
      */
-    public static function getBidTypes()
+    public static function getBidTypes():array
     {
         return self::$bidTypes;
     }
@@ -85,7 +105,7 @@ abstract class DealAbstract extends DomainObject
      * @param $auctionType
      * @throws \Exception
      */
-    public function setAuctionType($auctionType)
+    public function setAuctionType($auctionType):void
     {
         if(!array_key_exists(strtoupper($auctionType), self::$auctionTypes)){
             throw new \Exception("Auction class type: $auctionType does not exist");
@@ -98,7 +118,7 @@ abstract class DealAbstract extends DomainObject
      * @param $assetType
      * @throws \Exception
      */
-    public function setAssetType($assetType)
+    public function setAssetType($assetType):void
     {
         if(!array_key_exists(strtoupper($assetType), self::$assetTypes)){
             throw new \Exception("Asset class type: $assetType does not exist");

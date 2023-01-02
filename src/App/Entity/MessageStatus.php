@@ -9,32 +9,33 @@
 namespace App\Entity;
 
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\MessageStatus")
- * @ORM\Table(name="MessageStatus")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessageStatus")
+ * \Doctrine\ORM\Mapping\Table(name="MessageStatus")
  *
  */
-class MessageStatus
+class MessageStatus extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      *   */
-    protected $messageStatus;
+    protected string $messageStatus;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="status")
-     * @var PersistentCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="status")
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $messages;
 
@@ -49,9 +50,9 @@ class MessageStatus
     public function getMessageStatus(): string { return $this->messageStatus; }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getMessages() :PersistentCollection { return $this->messages; }
+    public function getMessages() :PersistentCollection|ArrayCollection|null { return $this->messages; }
 
 
 }

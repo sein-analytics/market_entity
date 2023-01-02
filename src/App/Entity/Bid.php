@@ -3,83 +3,102 @@
 namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-use Doctrine\ORM\Mapping as ORM;
 use Illuminate\Support\Facades\App;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Bid")
- * @ORM\Table(name="Bid")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity (repositoryClass="\App\Repository\Bid")
+ * \Doctrine\ORM\Mapping\Table (name="Bid")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class Bid extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Column(type="integer")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="bids")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\MarketUser
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="bids")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @var MarketUser
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bids")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\Deal
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bids")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @var Deal
      */
     protected $deal;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy="bids")
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy="bids")
      * @var ArrayCollection
      */
     protected $loans;
 
-    /** @ORM\Column(type="decimal", precision=9, scale=3, nullable=false) */
-    protected $price = 0.0;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=9, scale=3, nullable=false)
+     */
+    protected float $price = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) */
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     */
     protected $effectiveBalance = 0.0;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) */
-    protected $proportionalBalance = 0.0;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     */
+    protected float $proportionalBalance = 0.0;
 
-    /** @ORM\Column(type="json", nullable=true)
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
      * @var array
      **/
     protected $bidHistory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\BidStatus", inversedBy="bids")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\BidStatus
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\BidStatus", inversedBy="bids")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * @var BidStatus
      */
     protected $status;
 
-    /** @ORM\Column(type="datetime", nullable=false)
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $date;
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
-     * @ORM\OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
-     * @var \App\Entity\DueDiligence|null
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
+     * @var DueDiligence|null
      */
     protected $dueDiligence;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -105,7 +124,7 @@ class Bid extends DomainObject
     /**
      * @return Deal
      */
-    public function getDeal() : Deal
+    public function getDeal():Deal
     {
         return $this->deal;
     }
@@ -113,7 +132,7 @@ class Bid extends DomainObject
     /**
      * @param Deal $deal
      */
-    public function setDeal(Deal $deal)
+    public function setDeal(Deal $deal):void
     {
         $this->implementChange($this, 'deal', $this->deal, $deal);
     }
@@ -121,7 +140,7 @@ class Bid extends DomainObject
     /**
      * @return float
      */
-    public function getPrice() : float
+    public function getPrice():float
     {
         return $this->price;
     }
@@ -129,13 +148,13 @@ class Bid extends DomainObject
     /**
      * @param float $price
      */
-    public function setPrice(float $price)
+    public function setPrice(float $price):void
     {
         $this->updateBidHistory($price);
         $this->price = $price;
     }
 
-    protected function updateBidHistory($price)
+    protected function updateBidHistory($price):void
     {
         if(!isset($this->bidHistory)){
             $hist = array(
@@ -151,31 +170,31 @@ class Bid extends DomainObject
     /**
      * @return float
      */
-    public function getEffectiveBalance() : float
+    public function getEffectiveBalance():float
     {
         return $this->effectiveBalance;
     }
 
     /**
-     * @param mixed $effectiveBalance
+     * @param float $effectiveBalance
      */
-    public function setEffectiveBalance(float $effectiveBalance)
+    public function setEffectiveBalance(float $effectiveBalance):void
     {
         $this->implementChange($this, 'effectiveBalance', $this->effectiveBalance, $effectiveBalance);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getProportionalBalance()
+    public function getProportionalBalance(): float
     {
         return $this->proportionalBalance;
     }
 
     /**
-     * @param mixed $proportionalBalance
+     * @param float $proportionalBalance
      */
-    public function setProportionalBalance($proportionalBalance)
+    public function setProportionalBalance(float $proportionalBalance):void
     {
         $this->implementChange($this, 'proportionalBalance', $this->proportionalBalance, $proportionalBalance);
     }
@@ -183,7 +202,7 @@ class Bid extends DomainObject
     /**
      * @return array
      */
-    public function getBidHistory()
+    public function getBidHistory():array
     {
         return $this->bidHistory;
     }
@@ -191,7 +210,7 @@ class Bid extends DomainObject
     /**
      * @return ArrayCollection
      */
-    public function getLoan()
+    public function getLoan():ArrayCollection
     {
         return $this->loans;
     }
@@ -239,12 +258,11 @@ class Bid extends DomainObject
     /**
      * @return DueDiligence|null
      */
-    public function getDueDiligence() { return $this->dueDiligence; }
+    public function getDueDiligence():DueDiligence|null { return $this->dueDiligence; }
 
     /**
      * @param DueDiligence $dueDiligence
      */
     public function setDueDiligence(DueDiligence $dueDiligence) { $this->dueDiligence = $dueDiligence; }
-
 
 }

@@ -7,45 +7,46 @@
  */
 
 namespace App\Entity\Data;
+use App\Entity\AnnotationMappings;
 use App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Data\State")
- * @ORM\Table(name="State")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Data\State")
+ * \Doctrine\ORM\Mapping\Table(name="State")
  */
-class State
+class State extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="state")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="state")
      * @var ArrayCollection
      **/
     protected $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Loan", mappedBy="state")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Loan", mappedBy="state")
      * @var ArrayCollection
      */
     protected $loans;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      **/
-    protected $abbreviation;
+    protected string $abbreviation;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      **/
-    protected $name;
+    protected string $name;
 
     public function __construct()
     {
@@ -53,9 +54,9 @@ class State
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -63,7 +64,7 @@ class State
     /**
      * @return ArrayCollection
      */
-    public function getUsers()
+    public function getUsers():ArrayCollection
     {
         return $this->users;
     }
@@ -71,7 +72,7 @@ class State
     /**
      * @param MarketUser $user
      */
-    public function addUser(MarketUser $user)
+    public function addUser(MarketUser $user):void
     {
         $this->users->add($user);
     }
@@ -79,7 +80,7 @@ class State
     /**
      * @return string
      */
-    public function getAbbreviation()
+    public function getAbbreviation():string
     {
         return $this->abbreviation;
     }
@@ -87,7 +88,7 @@ class State
     /**
      * @param string $abbreviation
      */
-    public function setAbbreviation($abbreviation)
+    public function setAbbreviation(string $abbreviation):void
     {
         $this->abbreviation = $abbreviation;
     }
@@ -95,7 +96,7 @@ class State
     /**
      * @return string
      */
-    public function getName()
+    public function getName():string
     {
         return $this->name;
     }
@@ -103,7 +104,7 @@ class State
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name):void
     {
         $this->name = $name;
     }

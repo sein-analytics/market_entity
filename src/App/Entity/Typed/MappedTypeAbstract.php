@@ -9,22 +9,29 @@
 namespace App\Entity\Typed;
 
 
+use App\Entity\AnnotationMappings;
 use App\Entity\MappedUserType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
-abstract class MappedTypeAbstract
+abstract class MappedTypeAbstract extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue */
-    protected $id;
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     */
+    protected int $id;
 
-    /** @ORM\Column(type="string", nullable=false) */
-    protected $label;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     */
+    protected string $label;
 
-    /** @ORM\Column(type="string", nullable=false) */
-    protected $slug;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     */
+    protected string $slug;
 
     /** @var  ArrayCollection */
     protected $mappedUserType;
@@ -38,19 +45,19 @@ abstract class MappedTypeAbstract
         $this->mappedUserType->add($mappedUserType);
     }
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLabel(){ return $this->label; }
+    public function getLabel():string { return $this->label; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSlug() { return $this->slug; }
+    public function getSlug():string { return $this->slug; }
 
     function getMappedUserTypes(): ArrayCollection { return $this->mappedUserType; }
 }

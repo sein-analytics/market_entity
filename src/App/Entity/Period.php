@@ -8,80 +8,116 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  *
- * @ORM\Entity
- * @ORM\Table(name="Period")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Period")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  *
  */
 class Period extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
-    protected $id;
-
-    /** @ORM\Column(type="integer") **/
-    protected $periodIndex;
+    /**
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue *
+     */
+    protected int $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @var int
+     */
+    protected int $periodIndex;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime")
      * @var \DateTime
      **/
     protected $reportDate;
 
-    /** @ORM\Column(type="integer") **/
-    protected $isHistorical = 0;
-
-    /** @ORM\Column(type="integer") **/
-    protected $allParamsSet = 0;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @var int
+     */
+    protected int $isHistorical = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="period")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @var int
+     */
+    protected int $allParamsSet = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="period")
+     * @var PersistentCollection|ArrayCollection|null
      **/
     protected $poolUpdates;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="period")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="period")
+     * @var PersistentCollection|ArrayCollection|null
      **/
     protected $loanUpdates;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="periods")
-     * @var \App\Entity\Deal
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="periods")
+     * @var ?Deal
      **/
     protected $deal;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="period")
-     * @var ArrayCollection
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="period")
+     * @var PersistentCollection|ArrayCollection|null
      **/
     protected $bondUpdates;
 
     /**
-     * @var ArrayCollection $periodFees
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="period") **/
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="period")
+     *  @var PersistentCollection|ArrayCollection|null
+     **/
     protected $fees;
 
     /**
-     * @var ArrayCollection $periodRequiredAccounts
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\AccountUpdate", mappedBy="period") **/
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\AccountUpdate", mappedBy="period")
+     *  @var PersistentCollection|ArrayCollection|null
+     **/
     protected $accounts;
 
     /**
-     * @var ArrayCollection $periodShelfSpecifics
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\ShelfSpecificUpdate", mappedBy="period")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\ShelfSpecificUpdate", mappedBy="period")
+     *  @var PersistentCollection|ArrayCollection|null
      */
     protected $shelfSpecifics;
 
     /**
-     * @var ArrayCollection $periodTriggers
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", mappedBy="period") **/
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", mappedBy="period")
+     *  @var PersistentCollection|ArrayCollection|null
+     **/
     protected $triggers;
 
 
@@ -97,31 +133,31 @@ class Period extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getPeriodIndex()
+    public function getPeriodIndex():int
     {
         return $this->periodIndex;
     }
 
     /** @param int $periodIndex */
-    public function setPeriodIndex ($periodIndex)
+    public function setPeriodIndex (int $periodIndex):void
     {
         $this->implementChange($this, 'periodIndex', $this->periodIndex, $periodIndex);
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
-    public function getReportDate()
+    public function getReportDate():\DateTime
     {
         return $this->reportDate;
     }
@@ -129,31 +165,31 @@ class Period extends DomainObject
     /**
      * @param \DateTime $reportDate
      */
-    public function setReportDate (\DateTime $reportDate)
+    public function setReportDate (\DateTime $reportDate):void
     {
         $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getIsHistorical()
+    public function getIsHistorical():int
     {
         return $this->isHistorical;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getAllParamsSet()
+    public function getAllParamsSet():int
     {
         return $this->allParamsSet;
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getPoolUpdates()
+    public function getPoolUpdates():PersistentCollection|ArrayCollection|null
     {
         return $this->poolUpdates;
     }
@@ -163,17 +199,17 @@ class Period extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return ?Deal
      */
-    public function getDeal()
+    public function getDeal():?Deal
     {
         return $this->deal;
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getBondUpdates()
+    public function getBondUpdates():PersistentCollection|ArrayCollection|null
     {
         return $this->bondUpdates;
     }

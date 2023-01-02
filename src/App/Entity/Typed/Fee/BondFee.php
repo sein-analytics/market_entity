@@ -8,23 +8,24 @@ namespace App\Entity\Typed\Fee;
 
 use App\Entity\Bond;
 use App\Entity\Typed\Fee;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * @ORM\Entity
+ * \Doctrine\ORM\Mapping\Entity
  */
 class BondFee extends Fee
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
-    protected $id;
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     **/
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Bond", inversedBy = "fees")
-     *
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Bond", inversedBy = "fees")
      */
     protected $bonds;
 
@@ -37,7 +38,7 @@ class BondFee extends Fee
     /**
      * @return ArrayCollection
      */
-    public function getMappedEntities()
+    public function getMappedEntities():ArrayCollection
     {
         return $this->bonds;
     }
@@ -46,7 +47,8 @@ class BondFee extends Fee
      * @param TypedInterface $entity
      * @return $this|bool
      */
-    public function addAttached(TypedInterface $entity) {
+    public function addAttached(TypedInterface $entity): bool|static
+    {
         if(! $entity instanceof Bond){
             return false;
         }

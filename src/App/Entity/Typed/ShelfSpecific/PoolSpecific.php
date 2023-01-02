@@ -6,25 +6,26 @@
 
 namespace App\Entity\Typed\ShelfSpecific;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Pool;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * @ORM\Entity
+ * \Doctrine\ORM\Mapping\Entity
  */
 class PoolSpecific extends ShelfSpecific
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
-    protected $id;
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     **/
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "specifics")
-     *
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "specifics")
      */
     protected $pools;
 
@@ -37,7 +38,7 @@ class PoolSpecific extends ShelfSpecific
     /**
      * @return ArrayCollection
      */
-    public function getMappedEntities()
+    public function getMappedEntities():ArrayCollection
     {
         return $this->pools;
     }
@@ -46,7 +47,8 @@ class PoolSpecific extends ShelfSpecific
      * @param TypedInterface $entity
      * @return $this|bool
      */
-    public function addAttached(TypedInterface $entity) {
+    public function addAttached(TypedInterface $entity): bool|static
+    {
         if(! $entity instanceof Pool){
             return false;
         }

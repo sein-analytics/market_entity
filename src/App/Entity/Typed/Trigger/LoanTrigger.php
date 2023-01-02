@@ -7,26 +7,26 @@
 namespace App\Entity\Typed\Trigger;
 
 use App\Entity\Typed\Triggers;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Loan;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * @ORM\Entity
+ * \Doctrine\ORM\Mapping\Entity
  */
 class LoanTrigger extends Triggers
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue 
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "triggers")
-     *
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "triggers")
      */
     protected $loans;
 
@@ -39,7 +39,7 @@ class LoanTrigger extends Triggers
     /**
      * @return ArrayCollection
      */
-    public function getMappedEntities()
+    public function getMappedEntities():ArrayCollection
     {
         return $this->loans;
     }
@@ -48,7 +48,8 @@ class LoanTrigger extends Triggers
      * @param TypedInterface $entity
      * @return $this|bool
      */
-    public function addAttached(TypedInterface $entity) {
+    public function addAttached(TypedInterface $entity): bool|static
+    {
         if(! $entity instanceof Loan){
             return false;
         }

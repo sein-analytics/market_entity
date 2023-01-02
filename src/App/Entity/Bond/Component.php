@@ -6,61 +6,81 @@
 
 namespace App\Entity\Bond;
 
+use App\Entity\AnnotationMappings;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Bond;
+use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="Component")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Component")
  */
-class Component
+class Component extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\Id @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Column(type="integer")
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="components")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="components")
      * @var Bond
      **/
     protected $bond;
 
-    /** @ORM\Column(type="integer") **/
-    protected $componentNumber;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     */
+    protected int $componentNumber;
 
-    /** @ORM\Column(type="string") **/
-    protected $componentName;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string") *
+     */
+    protected string $componentName;
 
-    /** @ORM\Column(type="decimal", precision=6, scale=5, nullable=true) **/
-    protected $fixedRate;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=6, scale=5, nullable=true) *
+     */
+    protected float $fixedRate;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $rateFormula;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $rateFormula;
 
-    /** @ORM\OneToOne(targetEntity="\App\Entity\Bond\ComponentUpdate") **/
+    /**
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Bond\ComponentUpdate") *
+     */
     protected $latestUpdate;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="component")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="component")
      * @var ArrayCollection;
      **/
     protected $updates;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $componentBasis;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $componentBasis;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $floatingIndex;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $floatingIndex;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $indexMaturity;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $indexMaturity;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $spreadArray;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     */
+    protected string $spreadArray;
 
     public function __construct()
     {
@@ -68,97 +88,97 @@ class Component
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return Bond|null
      */
-    public function getBond()
+    public function getBond():?Bond
     {
         return $this->bond;
     }
 
     /**
-     * @param mixed $bond
+     * @param Bond $bond
      */
-    public function setBond($bond)
+    public function setBond(Bond $bond)
     {
         $this->bond = $bond;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getComponentNumber()
+    public function getComponentNumber():int
     {
         return $this->componentNumber;
     }
 
     /**
-     * @param mixed $componentNumber
+     * @param int $componentNumber
      */
-    public function setComponentNumber($componentNumber)
+    public function setComponentNumber(int $componentNumber):void
     {
         $this->componentNumber = $componentNumber;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getComponentName()
+    public function getComponentName():string
     {
         return $this->componentName;
     }
 
     /**
-     * @param mixed $componentName
+     * @param string $componentName
      */
-    public function setComponentName($componentName)
+    public function setComponentName(string $componentName):void
     {
         $this->componentName = $componentName;
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getFixedRate()
+    public function getFixedRate():?float
     {
         return $this->fixedRate;
     }
 
     /**
-     * @param mixed $fixedRate
+     * @param float $fixedRate
      */
-    public function setFixedRate($fixedRate)
+    public function setFixedRate(float $fixedRate):void
     {
         $this->fixedRate = $fixedRate;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getRateFormula()
+    public function getRateFormula():?string
     {
         return $this->rateFormula;
     }
 
     /**
-     * @param mixed $rateFormula
+     * @param string $rateFormula
      */
-    public function setRateFormula($rateFormula)
+    public function setRateFormula(string $rateFormula):void
     {
         $this->rateFormula = $rateFormula;
     }
 
     /**
-     * @return mixed
+     * @return ComponentUpdate|null
      */
-    public function getLatestUpdate()
+    public function getLatestUpdate():?ComponentUpdate
     {
         return $this->latestUpdate;
     }
@@ -166,15 +186,15 @@ class Component
     /**
      * @param ComponentUpdate $latestUpdate
      */
-    public function setLatestUpdate(ComponentUpdate $latestUpdate)
+    public function setLatestUpdate(ComponentUpdate $latestUpdate):void
     {
         $this->latestUpdate = $latestUpdate;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getUpdates()
+    public function getUpdates():ArrayCollection|PersistentCollection|null
     {
         return $this->updates;
     }
@@ -187,49 +207,49 @@ class Component
 
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getComponentBasis()
+    public function getComponentBasis():?string
     {
         return $this->componentBasis;
     }
 
     /**
-     * @param mixed $componentBasis
+     * @param string $componentBasis
      */
-    public function setComponentBasis($componentBasis)
+    public function setComponentBasis(string $componentBasis):void
     {
         $this->componentBasis = $componentBasis;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getFloatingIndex()
+    public function getFloatingIndex():?string
     {
         return $this->floatingIndex;
     }
 
     /**
-     * @param mixed $floatingIndex
+     * @param string $floatingIndex
      */
-    public function setFloatingIndex($floatingIndex)
+    public function setFloatingIndex(string $floatingIndex):void
     {
         $this->floatingIndex = $floatingIndex;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getIndexMaturity()
+    public function getIndexMaturity():?string
     {
         return $this->indexMaturity;
     }
 
     /**
-     * @param mixed $indexMaturity
+     * @param string $indexMaturity
      */
-    public function setIndexMaturity($indexMaturity)
+    public function setIndexMaturity(string $indexMaturity):void
     {
         $this->indexMaturity = $indexMaturity;
     }

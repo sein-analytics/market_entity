@@ -6,28 +6,34 @@
 
 namespace App\Entity\Data;
 
+use App\Entity\AnnotationMappings;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="Cbsa")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Cbsa")
  */
-class Cbsa
+class Cbsa extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\Column(type="integer", nullable=false)  **/
-    protected $cbsaCode;
+    /**
+     * Doctrine\ORM\Mapping\Column(type="integer", nullable=false)  *
+     */
+    protected int $cbsaCode;
 
-    /** @ORM\Column(type="string", nullable=false)  **/
-    protected $cbsaTitle;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)  *
+     */
+    protected string $cbsaTitle;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="msaCode")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="msaCode")
      * @var ArrayCollection
      **/
     protected $loans;

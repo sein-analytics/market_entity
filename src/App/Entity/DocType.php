@@ -10,31 +10,31 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="DocType")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="DocType")
  */
-class DocType
+class DocType extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $type;
+    protected string $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="docType")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="docType")
      * @var ArrayCollection
      */
     protected $dealFiles;
@@ -45,9 +45,9 @@ class DocType
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -55,7 +55,7 @@ class DocType
     /**
      * @return string
      */
-    public function getType()
+    public function getType():string
     {
         return $this->type;
     }
@@ -63,7 +63,7 @@ class DocType
     /**
      * @return ArrayCollection
      */
-    public function getDealFiles()
+    public function getDealFiles():ArrayCollection
     {
         return $this->dealFiles;
     }

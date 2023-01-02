@@ -8,118 +8,137 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\PersistentCollection;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Message")
- * @ORM\Table(name="Message")
- * @ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Message")
+ * \Doctrine\ORM\Mapping\Table(name="Message")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\HasLifeCycleCallbacks
  */
 class Message extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="messages")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      **/
     protected MarketUser $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="messages")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
      */
-    protected Deal $deal;
+    protected ?Deal $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      */
-    protected Loan $loan;
+    protected ?Loan $loan;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
      */
     protected \DateTime $date;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
      */
-    protected string $subject;
+    protected ?string $subject;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
-     * @ORM\JoinTable(name="responses",
-     *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Message")
+     * \Doctrine\ORM\Mapping\JoinTable(name="responses",
+     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="message_id", referencedColumnName="id")},
+     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="response_id", referencedColumnName="id")}
      *     )
      */
-    protected ArrayCollection|null $responses;
+    protected ArrayCollection|PersistentCollection|null $responses;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
      */
     protected MessageType $type;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
-     * @var PersistentCollection
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $recipients;
 
     /**
-     * @ORM\Column(type="text", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="text", nullable=false)
      */
-    protected string $message;
+    protected string $message='';
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageOriginator", inversedBy="messages")
-     * @ORM\JoinColumn(name="originator_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageOriginator", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="originator_id", referencedColumnName="id", nullable=false)
      */
     protected MessageOriginator $originator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
      */
-    protected MessageStatus $status;
+    protected ?MessageStatus $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="messages")
-     * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="priority_id", referencedColumnName="id", nullable=true)
      */
-    protected MessagePriority $priority;
+    protected ?MessagePriority $priority;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
-     * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
      */
-    protected MessageAction $action;
+    protected ?MessageAction $action;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
      */
-    protected string $sendStatus;
+    protected ?string $sendStatus;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
      */
     protected array|string $msgRecipientIds;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceIssue", inversedBy="messages")
-     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligenceIssue", inversedBy="messages")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="issue_id", referencedColumnName="id", nullable=true)
      */
     protected $issue;
 
@@ -141,9 +160,9 @@ class Message extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -151,12 +170,12 @@ class Message extends DomainObject
     /**
      * @return MarketUser
      */
-    public function getUser(){ return $this->user; }
+    public function getUser():MarketUser { return $this->user; }
 
     /**
      * @param MarketUser $user
      */
-    public function setUser(MarketUser $user)
+    public function setUser(MarketUser $user):void
     {
         $this->implementChange($this,'user', $this->user, $user);
     }
@@ -182,7 +201,7 @@ class Message extends DomainObject
     /**
      * @param mixed $message
      */
-    public function setMessage(string $message)
+    public function setMessage(string $message):void
     {
         $this->implementChange($this,'message', $this->message, $message);
     }
@@ -190,56 +209,56 @@ class Message extends DomainObject
     /**
      * @return \DateTime
      */
-    public function getDate() { return $this->date; }
+    public function getDate():\DateTime { return $this->date; }
 
     /**
      * @param mixed $date
      */
-    public function setDate(\DateTime $date)
+    public function setDate(\DateTime $date):void
     {
         $this->implementChange($this,'date', $this->date, $date);
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getSubject() :string { return $this->subject; }
+    public function getSubject() :?string { return $this->subject; }
 
     /**
      * @param string $subject
      */
-    public function setSubject(string $subject)
+    public function setSubject(string $subject):void
     {
         $this->implementChange($this,'subject', $this->subject, $subject);
     }
 
     /**
-     * @return PersistentCollection|null
+     * @return ArrayCollection|PersistentCollection|null
      */
-    public function getResponses() : ?PersistentCollection { return $this->responses; }
+    public function getResponses() : ArrayCollection|PersistentCollection|null { return $this->responses; }
 
     /**
-     * @return Deal
+     * @return ?Deal
      */
-    public function getDeal()  { return $this->deal; }
+    public function getDeal():?Deal  { return $this->deal; }
 
     /**
      * @param mixed $deal
      */
-    public function setDeal(Deal $deal)
+    public function setDeal(Deal $deal):void
     {
         $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
-     * @return Loan
+     * @return ?Loan
      */
-    public function getLoan() { return $this->loan; }
+    public function getLoan():?Loan { return $this->loan; }
 
     /**
      * @param mixed $loan
      */
-    public function setLoan(Loan $loan)
+    public function setLoan(Loan $loan):void
     {
         $this->implementChange($this,'loan', $this->loan, $loan);
     }
@@ -260,7 +279,7 @@ class Message extends DomainObject
     /**
      * @return DueDiligenceIssue|null
      */
-    public function getIssue() { return $this->issue; }
+    public function getIssue():?DueDiligenceIssue { return $this->issue; }
 
     /**
      * @param DueDiligenceIssue $issue
@@ -271,9 +290,10 @@ class Message extends DomainObject
     }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getRecipients() : PersistentCollection { return $this->recipients; }
+    public function getRecipients() : PersistentCollection|ArrayCollection|null
+    { return $this->recipients; }
 
     /**
      * @return MessageStatus

@@ -10,73 +10,82 @@ namespace App\Entity;
 
 use \App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Community")
- * @ORM\Table(name="Community")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Community")
+ * \Doctrine\ORM\Mapping\Table(name="Community")
  */
-class Community
+class Community extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="communities")
-     * @ORM\JoinTable(name="user_communities",
-     *     joinColumns={@ORM\JoinColumn(name="comm_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="communities")
+     * \Doctrine\ORM\Mapping\JoinTable(name="user_communities",
+     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="comm_id", referencedColumnName="id")},
+     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id")}
      *     )
      */
     protected $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="myCommunities")
-     * @ORM\JoinColumn(name="owner", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="myCommunities")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="owner", referencedColumnName="id", nullable=false)
      * @var MarketUser
      */
     protected $owner;
 
-    /** @ORM\Column(type="string", length=35, unique=true, nullable=false)  */
-    protected $name;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", length=35, unique=true, nullable=false)
+     * @var string
+     */
+    protected string $name='';
 
-    /** @ORM\Column(type="text", nullable=false)  */
-    protected $description;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="text", nullable=false)
+     * @var string
+     */
+    protected string $description='';
 
-    /** @ORM\Column(type="datetime", nullable=false) **/
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     **/
     protected $dateCreated;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
-     * @var bool
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false, options={"default":"0"})
+     * @var int
      */
-    protected $isPrimaryGroup;
+    protected int $isPrimaryGroup = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="community")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="community")
      * @var ArrayCollection
      */
     protected $groupChats;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
      */
-    protected $avatar;
+    protected ?string $avatar;
 
     /**
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string", unique=true)
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="UUID")
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
      * @var string
      */
-    protected $uuid;
+    protected string $uuid;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="community")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="community")
      * @var ArrayCollection
      */
     protected $invites;
@@ -97,7 +106,7 @@ class Community
     /**
      * @param CommunityInvite $invite
      */
-    public function addCommunityInvite (CommunityInvite $invite)
+    public function addCommunityInvite (CommunityInvite $invite):void
     {
         $this->invites->add($invite);
     }
@@ -131,16 +140,16 @@ class Community
     public function getOwner(): MarketUser { return $this->owner; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDescription() { return $this->description; }
+    public function getDescription():string { return $this->description; }
 
-    public function getDateCreated() { return $this->dateCreated; }
+    public function getDateCreated():\DateTime { return $this->dateCreated; }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isPrimaryGroup(): bool
+    public function getIsPrimaryGroup(): int
     {
         return $this->isPrimaryGroup;
     }
@@ -180,21 +189,21 @@ class Community
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
-    public function setName($name) { $this->name = $name; }
+    public function setName(string $name) { $this->name = $name; }
 
     /**
-     * @param mixed $description
+     * @param string  $description
      */
-    public function setDescription($description) { $this->description = $description; }
+    public function setDescription(string $description):void { $this->description = $description; }
 
-    public function setDateCreated(\DateTime $dateCreated) { $this->dateCreated = $dateCreated; }
+    public function setDateCreated(\DateTime $dateCreated):void { $this->dateCreated = $dateCreated; }
 
     /**
-     * @param bool $isPrimaryGroup
+     * @param int $isPrimaryGroup
      */
-    public function setIsPrimaryGroup(bool $isPrimaryGroup) { $this->isPrimaryGroup = $isPrimaryGroup; }
+    public function setIsPrimaryGroup(int $isPrimaryGroup):void { $this->isPrimaryGroup = $isPrimaryGroup; }
 
     /**
      * @return ArrayCollection

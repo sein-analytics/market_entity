@@ -7,74 +7,93 @@
 namespace App\Entity;
 use App\Entity\Data\CuBase;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Issuer")
- * @ORM\Table(name="Issuer")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Issuer")
+ * \Doctrine\ORM\Mapping\Table(name="Issuer")
  *
  */
-class Issuer
+class Issuer extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
 
-    protected $ignoreDbProperties = [
+    protected array $ignoreDbProperties = [
         'deals' => null,
         'users' => null
     ];
 
-    protected $addUcIdToPropName = [];
+    protected array $addUcIdToPropName = [];
 
-    protected $defaultValueProperties = [];
+    protected array $defaultValueProperties = [];
 
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
-    protected $id;
+    /**
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue *
+     */
+    protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\Deal", mappedBy="issuer")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\Deal", mappedBy="issuer")
      * @var PersistentCollection
      */
     protected $deals;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $issuerName;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $issuerName='';
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="issuer")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="issuer")
      * @var PersistentCollection
      */
     protected $users;
 
-    /** @ORM\Column(type="datetime", nullable=false)
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
     protected $approvedDate;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $equity;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $outstanding;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @var float
+     */
+    protected float $equity=0.0;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @var float
+     */
+    protected float $outstanding=0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $mainContact;
+    protected string $mainContact='';
 
     /**
      * Each Issuer has One main contact - Unidirectional
-     * @ORM\OneToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\MarketUser")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="contact_id", referencedColumnName="id")
      * @var MarketUser
      */
     protected $contactId;
 
-    /** @ORM\Column(type="string", nullable=false, unique=true) **/
-    protected $phone;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, unique=true)
+     * @var string
+     */
+    protected string $phone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="issuers")
-     * @ORM\JoinColumn(name="cu_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="issuers")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="cu_id", referencedColumnName="id", nullable=true)
      * @var CuBase
      */
     private $cuMain;
@@ -88,9 +107,9 @@ class Issuer
     function addUser(MarketUser $user){ $this->getUsers()->add($user); }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return PersistentCollection
@@ -112,7 +131,7 @@ class Issuer
     /**
      * @return PersistentCollection
      */
-    public function getUsers() { return $this->users; }
+    public function getUsers():PersistentCollection { return $this->users; }
 
     /**
      * @return string
@@ -122,12 +141,12 @@ class Issuer
     /**
      * @param string $issuerName
      */
-    public function setIssuerName(string $issuerName) { $this->issuerName = $issuerName; }
+    public function setIssuerName(string $issuerName):string { $this->issuerName = $issuerName; }
 
     /**
      * @param \DateTime $approvedDate
      */
-    public function setApprovedDate(\DateTime $approvedDate) { $this->approvedDate = $approvedDate; }
+    public function setApprovedDate(\DateTime $approvedDate):void { $this->approvedDate = $approvedDate; }
 
     /**
      * @return CuBase|null

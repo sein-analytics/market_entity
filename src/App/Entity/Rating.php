@@ -13,40 +13,50 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="Rating")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="Rating")
  */
-class Rating
+class Rating extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\RatingCode", inversedBy="ratings")
-     * @var RatingCode
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\RatingCode", inversedBy="ratings")
+     * @var ?RatingCode
      */
     protected $ratingCode;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="rated") **/
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="rated")
+     * @var ?MarketUser
+     */
     protected $rater;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="ratings") **/
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="ratings")
+     * @var ?MarketUser
+     */
     protected $user;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="ratings") **/
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="ratings")
+     * @var ?Deal
+     */
     protected $deal;
     
     public function __construct() {}
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return MarketUser
@@ -54,9 +64,9 @@ class Rating
     public function getUser() : MarketUser { return $this->user; }
 
     /**
-     * @return mixed
+     * @return ?RatingCode
      */
-    public function getRatingCode() { return $this->ratingCode; }
+    public function getRatingCode():?RatingCode { return $this->ratingCode; }
 
     /**
      * @return MarketUser

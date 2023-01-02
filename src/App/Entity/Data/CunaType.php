@@ -2,26 +2,27 @@
 
 
 namespace App\Entity\Data;
-use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AnnotationMappings;
+//use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity()
- * @ORM\Table(name="CunaType")
+ * \Doctrine\ORM\Mapping\Entity()
+ * \Doctrine\ORM\Mapping\Table(name="CunaType")
  */
-class CunaType
+class CunaType extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Column(name="id", type="integer")
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
      * @var string
      */
-    protected $label;
+    protected string $label;
 
     /**
      * @return int

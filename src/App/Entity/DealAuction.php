@@ -8,29 +8,34 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="DealAuction")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="DealAuction")
  */
-class DealAuction
+class DealAuction extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="auctionType")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="auctionType")
      * @var ArrayCollection
      **/
     protected $deals;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $auctionClass;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $auctionClass ='';
 
     public function __construct()
     {
@@ -38,33 +43,25 @@ class DealAuction
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return ArrayCollection
      */
-    public function getDeals()
+    public function getDeals():ArrayCollection
     {
         return $this->deals;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAuctionClass()
+    public function getAuctionClass():string
     {
         return $this->auctionClass;
     }

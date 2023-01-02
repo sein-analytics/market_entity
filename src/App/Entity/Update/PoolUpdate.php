@@ -10,157 +10,206 @@ namespace App\Entity\Update;
 
 use App\Entity\DomainObject;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use App\Entity\Period;
 use App\Entity\Pool;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Index;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 /**
- * @ORM\Entity
- * @ORM\Table(name="PoolUpdate", indexes={@ORM\Index(name="period_pool_idx", columns={"period_id", "pool_id"})})
- * @ORM\ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="PoolUpdate",
+ *     indexes={\Doctrine\ORM\Mapping\Index(name="period_pool_idx",
+ *     columns={"period_id", "pool_id"})})
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class PoolUpdate extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") **/
-    protected $id;
+    /**
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     * \Doctrine\ORM\Mapping\Column(type="integer") *
+     */
+    protected int $id;
 
     /** 
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="poolUpdates")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="poolUpdates")
      * @var Pool
      **/
     protected $pool;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="poolUpdates")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="poolUpdates")
      * @var Period
      **/
     protected $period;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="pool")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="pool")
      * @var ArrayCollection
      **/
     protected $loans;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime
+     * \Doctrine\ORM\Mapping\Column(type="datetime")
+     * @var \DateTime|null
      **/
-    protected $reportDate;
+    protected \DateTime|null $reportDate;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $endingBalance;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var float|null $endingBalance
+     */
+    protected float|null $endingBalance;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $startingBalance;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var float|null $startingBalance
+     */
+    protected float|null $startingBalance;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $cumulativeLosses;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var float|null $cumulativeLosses
+     */
+    protected float|null $cumulativeLosses;
 
     /**
      * Period starting gross weighted average coupon
-     * @ORM\Column(type="decimal", precision=9, scale=5, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=9, scale=5, nullable=true)
+     * @var float|null $groupGrossWac
      **/
-    protected $groupGrossWac;
+    protected float|null $groupGrossWac;
 
     /**
      * Current Period's scheduled principal payments received
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @var float|null $scheduledPrincipal
      **/
-    protected $scheduledPrincipal;
+    protected float|null $scheduledPrincipal;
 
     /**
      * Current Period's interest payments received
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @var float|null $interestCollections
      **/
-    protected $interestCollections;
+    protected float|null $interestCollections;
 
     /**
      * Current Period's liquidated balance
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @var float|null $liquidations
      **/
-    protected $liquidations;
+    protected float|null $liquidations;
 
     /**
      * Current Period's recoveries from liquidated loans
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @var float|null $recoveries
      **/
-    protected $recoveries;
+    protected float|null $recoveries;
 
     /**
-     * Current Period's prepayed balance
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * Current Period's pre-payed balance
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @var float|null $prepayedBalance
      **/
-    protected $prepayedBalance;
+    protected float|null $prepayedBalance;
 
     /**
      * Current Period's number of loans prepaying
-     * @ORM\Column(type="decimal", precision=12, scale=3, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=12, scale=3, nullable=true)
+     * @var float|null $prepayedLoans
      **/
-    protected $prepayedLoans;
+    protected float|null $prepayedLoans;
 
     /**
      * regular principal calculation--expected principal to be paid to the notes
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @var float|null $bondRegularPrincipalCalc
      **/
-    protected $bondRegularPrincipalCalc;
+    protected float|null $bondRegularPrincipalCalc;
 
     /**
      * supplemental principal calculation--in addition to the regular principal
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @var float|null $unscheduledPrincipalCalc
      **/
-    protected $unscheduledPrincipalCalc;
+    protected float|null $unscheduledPrincipalCalc;
 
     /**
      * Holds total interest payments to the notes for each forecast period
      * in the deal waterfall engine calculate()
-     * @var double
+     * @var float|null $bondInterestPayments
      */
-    protected $bondInterestPayments;
+    protected float|null $bondInterestPayments;
 
     /**
      * Actual amount of regular principal paid to the notes
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @var float|null $regularPrincipalPaid
      **/
-    protected $regularPrincipalPaid;
+    protected float|null $regularPrincipalPaid;
 
     /**
      * Actual amount of regular principal paid to the notes
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @var float|null $unscheduledPrincipalPaid
      **/
-    protected $unscheduledPrincipalPaid;
+    protected float|null $unscheduledPrincipalPaid;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @var int $updateStatus
      **/
-    protected $updateStatus = 1;
-
-    /** @ORM\Column(type="decimal", precision=10, scale=7, nullable=true) **/
-    protected $groupNetWac;
-
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $receivablesCount;
+    protected int $updateStatus = 1;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=7, nullable=true)
+     * @var float|null $groupNetWac
      */
-    protected $groupSeniorPct;
+    protected float|null $groupNetWac;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var int|null $receivablesCount
      */
-    protected $groupSubPct;
+    protected int|null $receivablesCount;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var float|null $groupSeniorPct
+     */
+    protected float|null $groupSeniorPct;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var float|null $groupSubPct
+     */
+    protected float|null $groupSubPct;
 
     /**
      * Indicate whether collateral is historic or forecast
-     * @ORM\Column(type="integer", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var int|null $isHistory
      */
-    protected $isHistory = 0;
+    protected int|null $isHistory = 0;
     
     /** 
-     * @ORM\OneToOne(targetEntity="\App\Entity\Update\Delinquency", inversedBy="poolUpdate")
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity="\App\Entity\Update\Delinquency", inversedBy="poolUpdate")
      * @var Delinquency   
      */
     protected $delinquency;
@@ -172,9 +221,9 @@ class PoolUpdate extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -182,7 +231,7 @@ class PoolUpdate extends DomainObject
     /**
      * @return Pool
      */
-    public function getPool()
+    public function getPool():Pool
     {
         return $this->pool;
     }
@@ -190,15 +239,15 @@ class PoolUpdate extends DomainObject
     /**
      * @param Pool $pool
      */
-    public function setPool(Pool $pool)
+    public function setPool(Pool $pool):void
     {
         $this->implementChange($this,'pool', $this->pool, $pool);
     }
 
     /**
-     * @return Period
+     * @return Period|null
      */
-    public function getPeriod()
+    public function getPeriod():?Pool
     {
         return $this->period;
     }
@@ -206,7 +255,7 @@ class PoolUpdate extends DomainObject
     /**
      * @param Period $period
      */
-    public function setPeriod(Period $period)
+    public function setPeriod(Period $period):void
     {
         $this->implementChange($this,'period', $this->period, $period);
     }
@@ -214,7 +263,7 @@ class PoolUpdate extends DomainObject
     /**
      * @return ArrayCollection
      */
-    public function getLoans()
+    public function getLoans():ArrayCollection
     {
         return $this->loans;
     }
@@ -222,8 +271,7 @@ class PoolUpdate extends DomainObject
     /**
      * @param LoanUpdate $loanUpdate
      */
-    public function addLoanUpdate(LoanUpdate $loanUpdate){
-        /** @var  $loans ArrayCollection */
+    public function addLoanUpdate(LoanUpdate $loanUpdate):void{
         $loans = $this->getLoans();
         $loanCollection = $loans->filter(function(LoanUpdate $l) use ($loanUpdate){
             return $l->getId() == $loanUpdate->getId();
@@ -237,7 +285,7 @@ class PoolUpdate extends DomainObject
     /**
      * @return \DateTime | null
      */
-    public function getReportDate()
+    public function getReportDate():?\DateTime
     {
         return $this->reportDate;
     }
@@ -245,191 +293,191 @@ class PoolUpdate extends DomainObject
     /**
      * @param \DateTime $reportDate
      */
-    public function setReportDate(\DateTime $reportDate)
+    public function setReportDate(\DateTime $reportDate):void
     {
         $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getEndingBalance()
+    public function getEndingBalance():?float
     {
         return $this->endingBalance;
     }
 
     /**
-     * @param mixed $endingBalance
+     * @param float  $endingBalance
      */
-    public function setEndingBalance($endingBalance)
+    public function setEndingBalance(float $endingBalance):void
     {
         $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getStartingBalance()
+    public function getStartingBalance():?float
     {
         return $this->startingBalance;
     }
 
     /**
-     * @param mixed $startingBalance
+     * @param float $startingBalance
      */
-    public function setStartingBalance($startingBalance)
+    public function setStartingBalance(float $startingBalance):void
     {
         $this->implementChange($this,'startingBalance', $this->startingBalance, $startingBalance);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getGroupGrossWac()
+    public function getGroupGrossWac():?float
     {
         return $this->groupGrossWac;
     }
 
     /**
-     * @param mixed $groupGrossWac
+     * @param float $groupGrossWac
      */
-    public function setGroupGrossWac($groupGrossWac)
+    public function setGroupGrossWac(float $groupGrossWac):void
     {
         $this->implementChange($this,'groupGrossWac', $this->groupGrossWac, $groupGrossWac);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getScheduledPrincipal()
+    public function getScheduledPrincipal():?float
     {
         return $this->scheduledPrincipal;
     }
 
     /**
-     * @param mixed $scheduledPrincipal
+     * @param float $scheduledPrincipal
      */
-    public function setScheduledPrincipal($scheduledPrincipal)
+    public function setScheduledPrincipal(float $scheduledPrincipal):void
     {
         $this->implementChange($this,'scheduledPrincipal', $this->scheduledPrincipal, $scheduledPrincipal);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getInterestCollections()
+    public function getInterestCollections():?float
     {
         return $this->interestCollections;
     }
 
     /**
-     * @param mixed $interestCollections
+     * @param float $interestCollections
      */
-    public function setInterestCollections($interestCollections)
+    public function setInterestCollections(float $interestCollections):void
     {
         $this->implementChange($this,'interestCollections', $this->interestCollections, $interestCollections);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getLiquidations()
+    public function getLiquidations():?float
     {
         return $this->liquidations;
     }
 
     /**
-     * @param mixed $liquidations
+     * @param float $liquidations
      */
-    public function setLiquidations($liquidations)
+    public function setLiquidations(float $liquidations):void
     {
         $this->implementChange($this,'liquidations', $this->liquidations, $liquidations);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getRecoveries()
+    public function getRecoveries():?float
     {
         return $this->recoveries;
     }
 
     /**
-     * @param mixed $recoveries
+     * @param float $recoveries
      */
-    public function setRecoveries($recoveries)
+    public function setRecoveries(float $recoveries):void
     {
         $this->implementChange($this,'recoveries', $this->recoveries, $recoveries);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getPrepayedBalance()
+    public function getPrepayedBalance():?float
     {
         return $this->prepayedBalance;
     }
 
     /**
-     * @param mixed $prepayedBalance
+     * @param float $prepayedBalance
      */
-    public function setPrepayedBalance($prepayedBalance)
+    public function setPrepayedBalance(float $prepayedBalance):void
     {
         $this->implementChange($this,'prepayedBalance', $this->prepayedBalance, $prepayedBalance);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getPrepayedLoans()
+    public function getPrepayedLoans():?float
     {
         return $this->prepayedLoans;
     }
 
     /**
-     * @param mixed $prepayedLoans
+     * @param float $prepayedLoans
      */
-    public function setPrepayedLoans($prepayedLoans)
+    public function setPrepayedLoans(float $prepayedLoans):void
     {
         $this->implementChange($this,'prepayedLoans', $this->prepayedLoans, $prepayedLoans);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getBondRegularPrincipalCalc()
+    public function getBondRegularPrincipalCalc():?float
     {
         return $this->bondRegularPrincipalCalc;
     }
 
     /**
-     * @param mixed $bondRegularPrincipalCalc
+     * @param float $bondRegularPrincipalCalc
      */
-    public function setBondRegularPrincipalCalc($bondRegularPrincipalCalc)
+    public function setBondRegularPrincipalCalc(float $bondRegularPrincipalCalc):?float
     {
         $this->implementChange($this,'bondRegularPrincipalCalc', $this->bondRegularPrincipalCalc, $bondRegularPrincipalCalc);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getUnscheduledPrincipalCalc()
+    public function getUnscheduledPrincipalCalc():?float
     {
         return $this->unscheduledPrincipalCalc;
     }
 
     /**
-     * @param mixed $unscheduledPrincipalCalc
+     * @param float $unscheduledPrincipalCalc
      */
-    public function setUnscheduledPrincipalCalc($unscheduledPrincipalCalc)
+    public function setUnscheduledPrincipalCalc(float $unscheduledPrincipalCalc):void
     {
         $this->implementChange($this,'unscheduledPrincipalCalc', $this->unscheduledPrincipalCalc, $unscheduledPrincipalCalc);
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getBondInterestPayments()
+    public function getBondInterestPayments():?float
     {
         return $this->bondInterestPayments;
     }
@@ -437,143 +485,143 @@ class PoolUpdate extends DomainObject
     /**
      * @param float $bondInterestPayments
      */
-    public function setBondInterestPayments($bondInterestPayments)
+    public function setBondInterestPayments(float $bondInterestPayments):void
     {
         $this->implementChange($this,'bondInterestPayments', $this->bondInterestPayments, $bondInterestPayments);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getRegularPrincipalPaid()
+    public function getRegularPrincipalPaid():?float
     {
         return $this->regularPrincipalPaid;
     }
 
     /**
-     * @param mixed $regularPrincipalPaid
+     * @param float $regularPrincipalPaid
      */
-    public function setRegularPrincipalPaid($regularPrincipalPaid)
+    public function setRegularPrincipalPaid(float $regularPrincipalPaid):void
     {
         $this->implementChange($this,'regularPrincipalPaid', $this->regularPrincipalPaid, $regularPrincipalPaid);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getUnscheduledPrincipalPaid()
+    public function getUnscheduledPrincipalPaid():?float
     {
         return $this->unscheduledPrincipalPaid;
     }
 
     /**
-     * @param mixed $unscheduledPrincipalPaid
+     * @param float $unscheduledPrincipalPaid
      */
-    public function setUnscheduledPrincipalPaid($unscheduledPrincipalPaid)
+    public function setUnscheduledPrincipalPaid(float $unscheduledPrincipalPaid):void
     {
         $this->implementChange($this,'unscheduledPrincipalPaid', $this->unscheduledPrincipalPaid, $unscheduledPrincipalPaid);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getUpdateStatus()
+    public function getUpdateStatus():int
     {
         return $this->updateStatus;
     }
 
     /**
-     * @param mixed $updateStatus
+     * @param int $updateStatus
      */
-    public function setUpdateStatus($updateStatus)
+    public function setUpdateStatus(int $updateStatus):void
     {
         $this->implementChange($this,'updateStatus', $this->updateStatus, $updateStatus);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getGroupNetWac()
+    public function getGroupNetWac():?float
     {
         return $this->groupNetWac;
     }
 
     /**
-     * @param mixed $groupNetWac
+     * @param float  $groupNetWac
      */
-    public function setGroupNetWac($groupNetWac)
+    public function setGroupNetWac(float $groupNetWac):void
     {
         $this->implementChange($this,'groupNetWac', $this->groupNetWac, $groupNetWac);
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getReceivablesCount()
+    public function getReceivablesCount():?int
     {
         return $this->receivablesCount;
     }
 
     /**
-     * @param mixed $receivablesCount
+     * @param int $receivablesCount
      */
-    public function setReceivablesCount($receivablesCount)
+    public function setReceivablesCount(int $receivablesCount):void
     {
         $this->implementChange($this,'receivablesCount', $this->receivablesCount, $receivablesCount);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getGroupSeniorPct()
+    public function getGroupSeniorPct():?float
     {
         return $this->groupSeniorPct;
     }
 
     /**
-     * @param mixed $groupSeniorPct
+     * @param float $groupSeniorPct
      */
-    public function setGroupSeniorPct($groupSeniorPct)
+    public function setGroupSeniorPct(float $groupSeniorPct):void
     {
         $this->implementChange($this,'groupSeniorPct', $this->groupSeniorPct, $groupSeniorPct);
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getGroupSubPct()
+    public function getGroupSubPct():?float
     {
         return $this->groupSubPct;
     }
 
     /**
-     * @param mixed $groupSubPct
+     * @param float $groupSubPct
      */
-    public function setGroupSubPct($groupSubPct)
+    public function setGroupSubPct(float $groupSubPct):void
     {
         $this->implementChange($this,'groupSubPct', $this->groupSubPct, $groupSubPct);
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getIsHistory()
+    public function getIsHistory():?int
     {
         return $this->isHistory;
     }
 
     /**
-     * @param mixed $isHistory
+     * @param int $isHistory
      */
-    public function setIsHistory($isHistory)
+    public function setIsHistory(int $isHistory):void
     {
         $this->implementChange($this,'isHistory', $this->isHistory, $isHistory);
     }
 
     /**
-     * @return Delinquency
+     * @return Delinquency|null
      */
-    public function getDelinquency()
+    public function getDelinquency():?Delinquency
     {
         return $this->delinquency;
     }
@@ -581,7 +629,7 @@ class PoolUpdate extends DomainObject
     /**
      * @param Delinquency $delinquency
      */
-    public function setDelinquency(Delinquency $delinquency)
+    public function setDelinquency(Delinquency $delinquency):void
     {
         $this->implementChange($this,'delinquency', $this->delinquency, $delinquency);
     }

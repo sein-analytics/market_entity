@@ -12,7 +12,20 @@ use App\Entity\Typed\Update\TypedUpdateInterface;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use App\Entity\Period;
 
  abstract class AbstractTyped extends DomainObject
@@ -21,7 +34,7 @@ use App\Entity\Period;
     use CreatePropertiesArrayTrait;
 
     /** @return ArrayCollection */
-    abstract public function getMappedEntities();
+    abstract public function getMappedEntities(): ArrayCollection;
 
     const CALC_FIXED   = 1;
     const CALC_FORMULA = 2;
@@ -33,48 +46,52 @@ use App\Entity\Period;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer") */
-    protected $calculationType = self::CALC_FIXED;
+     * \Doctrine\ORM\Mapping\Column(type="integer") */
+    protected int $calculationType = self::CALC_FIXED;
 
     /**
      * @var integer
-     * @ORM\Column(type = "integer") **/
-    protected $calculateAt = self::CALC_AT_LOAN;
+     * \Doctrine\ORM\Mapping\Column(type = "integer") **/
+    protected int $calculateAt = self::CALC_AT_LOAN;
 
     /**
      * @var string|null
-     * @ORM\Column(type = "string", nullable=true)  **/
-    protected $calculateAtFormula;
+     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)  **/
+    protected string|null $calculateAtFormula;
 
     /**
-     * @var double|null $fixedAmount
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
-    protected $fixed;
+     * @var float|null $fixedAmount
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
+    protected float|null $fixed;
 
     /**
      * @var string|null $formula
-     * @ORM\Column(type = "string", nullable=true) **/
-    protected $formula;
-
-    /** @ORM\Column(type = "integer", nullable=true)
-     *  @var integer|null
+     * \Doctrine\ORM\Mapping\Column(type = "string", nullable=true)
      **/
-    protected $bondsCount = 0;
-
-    /** @ORM\Column(type = "integer", nullable=true)
-     *  @var integer|null
-     **/
-    protected $loansCount = 0;
-
-    /** @ORM\Column(type = "integer", nullable=true)
-     *  @var integer|null
-     **/
-    protected $poolsCount = 0;
+    protected string|null $formula;
 
     /**
-     * @var integer
-     * @ORM\Column(type = "integer") **/
-    protected $updatesCount = 0;
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     *  @var int|null
+     **/
+    protected int|null $bondsCount = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     *  @var int|null
+     **/
+    protected int|null $loansCount = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     *  @var int|null
+     **/
+    protected int|null $poolsCount = 0;
+
+    /**
+     * @var int
+     * \Doctrine\ORM\Mapping\Column(type = "integer") **/
+    protected int $updatesCount = 0;
 
 
     /**
@@ -82,7 +99,7 @@ use App\Entity\Period;
      * @return $this
      * @throws \Exception
      */
-    public function addUpdate(TypedUpdateInterface $updateInterface)
+    public function addUpdate(TypedUpdateInterface $updateInterface):self
     {
         $period = $updateInterface->getPeriod();
         if(! $period instanceof Period){
@@ -98,7 +115,7 @@ use App\Entity\Period;
         return $this;
     }
 
-    protected function updateLatestUpdate(TypedUpdateInterface $update, Period $period)
+    protected function updateLatestUpdate(TypedUpdateInterface $update, Period $period):void
     {
         if(is_null($this->getLatestUpdate())
             || ($this->getLatestUpdate()->getPeriod()->getPeriodIndex() < $period->getPeriodIndex() && $period->getIsHistorical() == 1)){
@@ -111,7 +128,7 @@ use App\Entity\Period;
      * @param TypedInterface $mappedEntity
      * @return $this
      */
-    protected function addTypedMappedEntity(TypedInterface $mappedEntity)
+    protected function addTypedMappedEntity(TypedInterface $mappedEntity):self
     {
         if($this->getMappedEntities()->count() >0){
             $coll = $this->getMappedEntities()->filter(function (TypedUpdateInterface $bd) use ($mappedEntity) {
@@ -131,7 +148,7 @@ use App\Entity\Period;
     /**
      * @param TypedInterface $mappedEntity
      */
-    protected function incrementMappedCounter(TypedInterface $mappedEntity)
+    protected function incrementMappedCounter(TypedInterface $mappedEntity):void
     {
         $class = get_class($mappedEntity);
         if(is_numeric(stripos($class, 'Bond'))){
@@ -146,42 +163,42 @@ use App\Entity\Period;
     /**
      * @return int
      */
-    public static function fixedCalcConstant(){
+    public static function fixedCalcConstant():int {
         return self::CALC_FIXED;
     }
 
     /**
      * @return int
      */
-    public static function formulaCalcConstant(){
+    public static function formulaCalcConstant(): int {
         return self::CALC_FORMULA;
     }
 
     /**
      * @return int
      */
-    public static function poolCalcConstant(){
+    public static function poolCalcConstant():int {
         return self::CALC_AT_POOL;
     }
 
     /**
      * @return int
      */
-    public static function bondCalcConstant(){
+    public static function bondCalcConstant():int {
         return self::CALC_AT_BOND;
     }
 
     /**
      * @return int
      */
-    public static function loanCalcConstant(){
+    public static function loanCalcConstant():int {
         return self::CALC_AT_LOAN;
     }
 
     /**
      * @return int
      */
-    public function getCalculationType()
+    public function getCalculationType():int
     {
         return $this->calculationType;
     }
@@ -189,7 +206,7 @@ use App\Entity\Period;
     /**
      * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -212,7 +229,7 @@ use App\Entity\Period;
     /**
      * @return null|string
      */
-    public function getCalculateAt()
+    public function getCalculateAt():?string
     {
         return $this->calculateAt;
     }
@@ -221,7 +238,7 @@ use App\Entity\Period;
      * @param $calculateAt
      * @throws \Exception
      */
-    public function setCalculateAt($calculateAt)
+    public function setCalculateAt($calculateAt):void
     {
         $case = strtoupper($calculateAt);
         $constant = @constant("self::CALC_AT_{$case}");
@@ -231,10 +248,10 @@ use App\Entity\Period;
         $this->implementChange($this,'calculateAt', $this->calculateAt, $constant);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCalculateAtFormula()
+     /**
+      * @return string|null
+      */
+    public function getCalculateAtFormula():?string
     {
         return $this->calculateAtFormula;
     }
@@ -242,7 +259,7 @@ use App\Entity\Period;
     /**
      * @param mixed $calculateAtFormula
      */
-    public function setCalculateAtFormula($calculateAtFormula)
+    public function setCalculateAtFormula(mixed $calculateAtFormula):void
     {
         $this->calculateAtFormula = $calculateAtFormula;
     }
@@ -250,15 +267,15 @@ use App\Entity\Period;
     /**
      * @return int
      */
-    public function getBondsCount()
+    public function getBondsCount():int
     {
         return $this->bondsCount;
     }
 
-    /**
-     * @return float
-     */
-    public function getFixed()
+     /**
+      * @return float|null
+      */
+    public function getFixed():?float
     {
         return $this->fixed;
     }
@@ -266,15 +283,15 @@ use App\Entity\Period;
     /**
      * @param float $fixed
      */
-    public function setFixed($fixed)
+    public function setFixed(float $fixed)
     {
         $this->implementChange($this,'fixed', $this->fixed, $fixed);
     }
 
-    /**
-     * @return string
-     */
-    public function getFormula()
+     /**
+      * @return string|null
+      */
+    public function getFormula():?string
     {
         return $this->formula;
     }
@@ -282,7 +299,7 @@ use App\Entity\Period;
     /**
      * @param string|array $formula
      */
-    public function setFormula($formula)
+    public function setFormula($formula):void
     {
         if(is_array($formula)){
             $formula = serialize($formula);
@@ -293,7 +310,7 @@ use App\Entity\Period;
     /**
      * @param int $bondsCount
      */
-    public function setBondsCount($bondsCount)
+    public function setBondsCount(int $bondsCount):void
     {
         $this->bondsCount = $bondsCount;
     }
@@ -301,7 +318,7 @@ use App\Entity\Period;
     /**
      * @return int
      */
-    public function getLoansCount()
+    public function getLoansCount():int
     {
         return $this->loansCount;
     }
@@ -309,15 +326,15 @@ use App\Entity\Period;
     /**
      * @param int $loansCount
      */
-    public function setLoansCount($loansCount)
+    public function setLoansCount(int $loansCount):void
     {
         $this->implementChange($this,'loansCount', $this->loansCount, $loansCount);
     }
 
-    /**
-     * @return int
-     */
-    public function getPoolsCount()
+     /**
+      * @return int|null
+      */
+    public function getPoolsCount():?int
     {
         return $this->poolsCount;
     }
@@ -325,7 +342,7 @@ use App\Entity\Period;
     /**
      * @param int $poolsCount
      */
-    public function setPoolsCount($poolsCount)
+    public function setPoolsCount(int $poolsCount)
     {
         $this->implementChange($this,'poolsCount', $this->poolsCount, $poolsCount);
     }
@@ -333,7 +350,7 @@ use App\Entity\Period;
     /**
      * @return int
      */
-    public function getUpdatesCount()
+    public function getUpdatesCount():int
     {
         return $this->updatesCount;
     }
@@ -341,10 +358,9 @@ use App\Entity\Period;
     /**
      * @param int $updatesCount
      */
-    public function setUpdatesCount($updatesCount)
+    public function setUpdatesCount(int $updatesCount):void
     {
         $this->implementChange($this,'updatesCount', $this->updatesCount, $updatesCount);
     }
-
 
 }

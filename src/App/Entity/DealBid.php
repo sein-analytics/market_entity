@@ -8,30 +8,37 @@ namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Illuminate\Support\Arr;
+
+//use Doctrine\ORM\Mapping as ORM;
 /**
- * @ORM\Entity
- * @ORM\Table(name="DealBid")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="DealBid")
  *
  * Any change in the definition should be reflected in
  * ServiceInterface.php
  */
-class DealBid
+class DealBid extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="bidType")
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="bidType")
      * @var ArrayCollection
      **/
     protected $deals;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $bidClass;
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $bidClass;
 
     public function __construct()
     {
@@ -39,9 +46,9 @@ class DealBid
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -49,16 +56,16 @@ class DealBid
     /**
      * @return ArrayCollection
      */
-    public function getDeals()
+    public function getDeals():ArrayCollection
     {
         return $this->deals;
     }
 
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getBidClass()
+    public function getBidClass():string
     {
         return $this->bidClass;
     }

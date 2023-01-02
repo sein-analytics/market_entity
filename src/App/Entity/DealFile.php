@@ -7,161 +7,180 @@
 namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\DealFile")
- * @ORM\Table(name="DealFile")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DealFile")
+ * \Doctrine\ORM\Mapping\Table(name="DealFile")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  *
  */
 class DealFile extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    protected $ignoreDbProperties = [
+    protected array $ignoreDbProperties = [
         'appends' => null,
         'replacements' => null,
         'docAccess' => null
     ];
 
-    protected $addUcIdToPropName = ['loan' => null];
+    protected array $addUcIdToPropName = ['loan' => null];
 
-    protected $defaultValueProperties = [];
+    protected array $defaultValueProperties = [];
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="dealDocs")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="dealDocs")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      */
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="files")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="files")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="files")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="files")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */
     protected $loan;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="document")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="document")
      * @var DocAccess
      */
     protected $docAccess;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $fileName;
+    protected string $fileName ='';
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @var integer
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @var int
      */
-    protected $fileSize;
+    protected int $fileSize=0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MimeType", inversedBy="files")
-     * @ORM\JoinColumn(name="mime_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MimeType", inversedBy="files")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="mime_id", referencedColumnName="id", nullable=false)
      * @var MimeType
      */
     protected $mime;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
      * @var string
      */
-    protected $publicPath;
+    protected string $publicPath ='';
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
-     * @ORM\JoinTable(name="file_replacements",
-     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="replacement_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\DealFile")
+     * \Doctrine\ORM\Mapping\JoinTable(name="file_replacements",
+     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="replacement_id", referencedColumnName="id")}
      *     )
      * @var ArrayCollection
      **/
     protected $replacements;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
-     * @ORM\JoinTable(name="file_appends",
-     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="append_id", referencedColumnName="id")}
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\DealFile")
+     * \Doctrine\ORM\Mapping\JoinTable(name="file_appends",
+     *     joinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="file_id", referencedColumnName="id")},
+     *     inverseJoinColumns={\Doctrine\ORM\Mapping\JoinColumn(name="append_id", referencedColumnName="id")}
      *     )
      * @var ArrayCollection
      */
     protected $appends;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
-     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
      * @var DocType
      */
     protected $docType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\FileAccessCode")
-     * @ORM\JoinColumn(name="access_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\FileAccessCode")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="access_id", referencedColumnName="id", nullable=true)
      * @var FileAccessCode
      */
     protected $accessId;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $assetId;
+    protected string $assetId = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      */
-    protected $scanLocation;
+    protected string $scanLocation = '';
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
      * @var boolean
      */
-    protected $hasViruses;
+    protected $hasViruses = 0;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string;
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string;
      */
-    protected $signatureId;
+    protected ?string $signatureId;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string;
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string;
      */
-    protected $signaturePath;
+    protected ?string $signaturePath;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
      * @var ArrayCollection
      */
     protected $issues;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="files")
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="files")
      * @var ArrayCollection
      */
     protected $diligence;
@@ -185,19 +204,19 @@ class DealFile extends DomainObject
         $this->diligence->add($diligence);
     }
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return Deal
      */
-    public function getDeal() { return $this->deal; }
+    public function getDeal():Deal { return $this->deal; }
 
     /**
-     * @param \App\Entity\Deal $deal
+     * @param Deal $deal
      */
-    public function setDeal(Deal $deal)
+    public function setDeal(Deal $deal):void
     {
         $this->implementChange($this,'deal', $this->deal, $deal);
     }
@@ -210,7 +229,7 @@ class DealFile extends DomainObject
     /**
      * @param string $fileName
      */
-    public function setFileName(string $fileName)
+    public function setFileName(string $fileName):void
     {
         $this->implementChange($this,'fileName', $this->fileName, $fileName);
     }
@@ -218,12 +237,12 @@ class DealFile extends DomainObject
     /**
      * @return float
      */
-    public function getFileSize() { return $this->fileSize; }
+    public function getFileSize():float { return $this->fileSize; }
 
     /**
-     * @param integer $fileSize
+     * @param float $fileSize
      */
-    public function setFileSize(int $fileSize)
+    public function setFileSize(float $fileSize):void
     {
         $this->implementChange($this,'fileSize', $this->fileSize, $fileSize);
     }
@@ -236,7 +255,7 @@ class DealFile extends DomainObject
     /**
      * @param MimeType $mime
      */
-    public function setMimeType(MimeType $mime)
+    public function setMimeType(MimeType $mime):void
     {
         $this->implementChange($this,'mime', $this->mime, $mime);
     }
@@ -249,7 +268,7 @@ class DealFile extends DomainObject
     /**
      * @param string $publicPath
      */
-    public function setPublicPath(string $publicPath)
+    public function setPublicPath(string $publicPath):void
     {
         $this->implementChange($this,'publicPath', $this->publicPath, $publicPath);
     }
@@ -262,7 +281,7 @@ class DealFile extends DomainObject
     /**
      * @param string $assetId
      */
-    public function setAssetId(string $assetId)
+    public function setAssetId(string $assetId):void
     {
         $this->assetId = $assetId;
     }
@@ -324,7 +343,7 @@ class DealFile extends DomainObject
     /**
      * @return DocAccess
      */
-    public function getDocAccess() { return $this->docAccess; }
+    public function getDocAccess():DocAccess { return $this->docAccess; }
 
     /**
      * @return string
@@ -334,7 +353,7 @@ class DealFile extends DomainObject
     /**
      * @param string $scanLocation
      */
-    public function setScanLocation(string $scanLocation)
+    public function setScanLocation(string $scanLocation):void
     {
         $this->scanLocation = $scanLocation;
     }
@@ -342,12 +361,12 @@ class DealFile extends DomainObject
     /**
      * @return null|string
      */
-    public function getSignatureId() { return $this->signatureId; }
+    public function getSignatureId():?string { return $this->signatureId; }
 
     /**
-     * @param mixed $signatureId
+     * @param string $signatureId
      */
-    public function setSignatureId(string $signatureId)
+    public function setSignatureId(string $signatureId):void
     {
         $this->signatureId = $signatureId;
     }
@@ -355,12 +374,12 @@ class DealFile extends DomainObject
     /**
      * @return string|null
      */
-    public function getSignaturePath() { return $this->signaturePath; }
+    public function getSignaturePath():?string { return $this->signaturePath; }
 
     /**
      * @param string $signaturePath
      */
-    public function setSignaturePath(string $signaturePath)
+    public function setSignaturePath(string $signaturePath):void
     {
         $this->signaturePath = $signaturePath;
     }
@@ -368,12 +387,12 @@ class DealFile extends DomainObject
     /**
      * @return ArrayCollection
      */
-    public function getIssues() { return $this->issues; }
+    public function getIssues():ArrayCollection { return $this->issues; }
 
     /**
      * @return ArrayCollection
      */
-    public function getDiligence() { return $this->diligence; }
+    public function getDiligence():ArrayCollection { return $this->diligence; }
 
     /**
      * @return Loan
@@ -383,7 +402,7 @@ class DealFile extends DomainObject
     /**
      * @param Loan $loan
      */
-    public function setLoan(Loan $loan) { $this->loan = $loan; }
+    public function setLoan(Loan $loan):void { $this->loan = $loan; }
 
     /**
      * @return MimeType
@@ -393,6 +412,6 @@ class DealFile extends DomainObject
     /**
      * @param MimeType $mime
      */
-    public function setMime(MimeType $mime) { $this->mime = $mime;  }
+    public function setMime(MimeType $mime):void { $this->mime = $mime;  }
 
 }

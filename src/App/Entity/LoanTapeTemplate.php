@@ -12,45 +12,44 @@ use App\Entity\MarketUser;
 use App\Service\CreatePropertiesArrayTrait;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\LoanTapeTemplate")
- * @ORM\Table(name="LoanTapeTemplate")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\LoanTapeTemplate")
+ * \Doctrine\ORM\Mapping\Table(name="LoanTapeTemplate")
  */
-class LoanTapeTemplate
+class LoanTapeTemplate extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait, FetchingTrait, FetchMapperTrait;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MarketUser", inversedBy="templates")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\MarketUser", inversedBy="templates")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\DealAsset", inversedBy="templates")
-     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\DealAsset", inversedBy="templates")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="asset_id", referencedColumnName="id", nullable=true)
      * @var DealAsset
      */
     protected $type;
 
     /**
-     * @ORM\Column(type="json", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=false)
      * @var array | null
      *
      **/
     protected $template;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      *
      **/

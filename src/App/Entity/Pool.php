@@ -7,30 +7,49 @@
 namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Pool")
- * @ORM\Table(name="Pool")
- * @ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Pool")
+ * \Doctrine\ORM\Mapping\Table(name="Pool")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\HasLifeCycleCallbacks
  */
 class Pool extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    protected $ignoreDbProperties = [
+    protected array $ignoreDbProperties = [
         'bonds' => null, 'loans' => null, 'accounts' => null, 'specifics' => null,
         'triggers' => null, 'fees' => null, 'latestPeriod' => 'null'
     ];
 
-    protected $addUcIdToPropName = [
+    protected array $addUcIdToPropName = [
         'deal' => null,
     ];
 
-    protected $defaultValueProperties = [
+    protected array $defaultValueProperties = [
         'poolStructure' => null,
         'isCrossed' => null,
         'isPoGroup' => null,
@@ -39,86 +58,118 @@ class Pool extends DomainObject
     ];
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
-    /** @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="pools")
-     * @var \App\Entity\Deal
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="pools")
+     * @var ?Deal
      **/
     protected $deal;
 
     /** 
-     * @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="pool")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="pool")
+     * @var PersistentCollection|ArrayCollection|null
      **/
     protected $loans;
 
     /** 
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="pool", fetch="LAZY")
-     * @var ArrayCollection 
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="pool", fetch="LAZY")
+     * @var PersistentCollection|ArrayCollection|null
      **/
     protected $bonds;
 
-    /** @ORM\Column(type="integer") **/
-    protected $bondsCount = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $bondsTotalBalance = 0;
-
-    /** @ORM\Column(type = "decimal", precision=14, scale=2) **/
-    protected $loanTotalBalance = 0;
-
-    /** @ORM\Column(type = "integer") **/
-    protected $loansCount = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $originalBalance;
-
-    /** @ORM\Column(type="string", nullable=true) */
-    protected $poolStructure;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * @var int
+     */
+    protected int $bondsCount = 0;
 
     /**
-     * @ORM\Column(type = "boolean", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @var float
+     */
+    protected float $bondsTotalBalance = 0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "decimal", precision=14, scale=2)
+     * @var float
+     */
+    protected float $loanTotalBalance = 0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer")
+     * @var int
+     */
+    protected int $loansCount = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @var float
+     */
+    protected float $originalBalance=0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $poolStructure;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "boolean", nullable=false)
      * @var bool
      * **/
-    protected $isCrossed = false;
+    protected bool $isCrossed = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
      * @var bool
      **/
-    protected $isPogroup = false;
+    protected bool $isPogroup = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
      * @var bool
      **/
-    protected $isIoGroup = false;
+    protected bool $isIoGroup = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false)
      * @var bool
      */
-    protected $addReserveToCreditSupport = false;
+    protected bool $addReserveToCreditSupport = false;
     
     /** 
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="pool", fetch="LAZY")
-     * @var ArrayCollection 
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="pool", fetch="LAZY")
+     * @var PersistentCollection|ArrayCollection|null
      **/
     protected $poolUpdates;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\PoolSpecific", mappedBy="pools")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\PoolSpecific", mappedBy="pools")
+     * @var PersistentCollection|ArrayCollection|null
+     */
     protected $specifics;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\PoolFee", mappedBy="pools")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Fee\PoolFee", mappedBy="pools")
+     * @var PersistentCollection|ArrayCollection|null
+     */
     protected $fees;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\PoolAccount", mappedBy="pools")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Account\PoolAccount", mappedBy="pools")
+     * @var PersistentCollection|ArrayCollection|null
+     */
     protected $accounts;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\PoolTrigger", mappedBy="pools")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\PoolTrigger", mappedBy="pools")
+     * @var PersistentCollection|ArrayCollection|null
+     */
     protected $triggers;
 
     public function __construct()
@@ -130,33 +181,33 @@ class Pool extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return ?Deal
      */
-    public function getDeal()
+    public function getDeal():?Deal
     {
         return $this->deal;
     }
 
     /**
-     * @param mixed $deal
+     * @param Deal $deal
      */
-    public function setDeal($deal)
+    public function setDeal(Deal $deal):void
     {
         $this->implementChange($this,'deal', $this->deal, $deal);
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getLoans()
+    public function getLoans():PersistentCollection|ArrayCollection|null
     {
         return $this->loans;
     }
@@ -182,9 +233,9 @@ class Pool extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getBonds()
+    public function getBonds():PersistentCollection|ArrayCollection|null
     {
         return $this->bonds;
     }
@@ -203,97 +254,97 @@ class Pool extends DomainObject
     //public function addPoolUpdate()
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getBondsCount()
+    public function getBondsCount():int
     {
         return $this->bondsCount;
     }
 
     /**
-     * @param mixed $bondsCount
+     * @param int $bondsCount
      */
-    public function setBondsCount($bondsCount)
+    public function setBondsCount(int $bondsCount):void
     {
         $this->implementChange($this,'bondsCount', $this->bondsCount, $bondsCount);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getBondsTotalBalance()
+    public function getBondsTotalBalance():float
     {
         return $this->bondsTotalBalance;
     }
 
     /**
-     * @param mixed $bondsTotalBalance
+     * @param float $bondsTotalBalance
      */
-    public function setBondsTotalBalance($bondsTotalBalance)
+    public function setBondsTotalBalance(float $bondsTotalBalance):void
     {
         $this->implementChange($this,'bondsTotalBalance', $this->bondsTotalBalance, $bondsTotalBalance);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getLoanTotalBalance()
+    public function getLoanTotalBalance():float
     {
         return $this->loanTotalBalance;
     }
 
     /**
-     * @param mixed $loanTotalBalance
+     * @param float $loanTotalBalance
      */
-    public function setLoanTotalBalance($loanTotalBalance)
+    public function setLoanTotalBalance(float $loanTotalBalance):void
     {
         $this->implementChange($this,'loanTotalBalance', $this->loanTotalBalance, $loanTotalBalance);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getLoansCount()
+    public function getLoansCount():int
     {
         return $this->loansCount;
     }
 
     /**
-     * @param mixed $loansCount
+     * @param int $loansCount
      */
-    public function setLoansCount($loansCount)
+    public function setLoansCount(int $loansCount):void
     {
         $this->implementChange($this,'loansCount', $this->loansCount, $loansCount);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getOriginalBalance()
+    public function getOriginalBalance():float
     {
         return $this->originalBalance;
     }
 
     /**
-     * @param mixed $originalBalance
+     * @param float $originalBalance
      */
-    public function setOriginalBalance($originalBalance)
+    public function setOriginalBalance(float $originalBalance):void
     {
         $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getPoolStructure()
+    public function getPoolStructure():?string
     {
         return $this->poolStructure;
     }
 
     /**
-     * @param mixed $poolStructure
+     * @param string $poolStructure
      */
-    public function setPoolStructure($poolStructure)
+    public function setPoolStructure(string $poolStructure):void
     {
         $this->implementChange($this,'poolStructure', $this->poolStructure, $poolStructure);
     }
@@ -301,12 +352,12 @@ class Pool extends DomainObject
     /**
      * @return bool
      */
-    public function getIsCrossed() { return $this->isCrossed; }
+    public function getIsCrossed():bool { return $this->isCrossed; }
 
     /**
      * @param bool $isCrossed
      */
-    public function setIsCrossed(bool $isCrossed)
+    public function setIsCrossed(bool $isCrossed):void
     {
         $this->implementChange($this,'isCrossed', $this->isCrossed, $isCrossed);
     }
@@ -314,12 +365,12 @@ class Pool extends DomainObject
     /**
      * @return bool
      */
-    public function getIsPogroup() { return $this->isPogroup; }
+    public function getIsPogroup():bool { return $this->isPogroup; }
 
     /**
      * @param bool $isPogroup
      */
-    public function setIsPogroup(bool $isPogroup)
+    public function setIsPogroup(bool $isPogroup):void
     {
         $this->implementChange($this,'isPogroup', $this->isPogroup, $isPogroup);
     }
@@ -327,12 +378,12 @@ class Pool extends DomainObject
     /**
      * @return bool
      */
-    public function getIsIoGroup() { return $this->isIoGroup; }
+    public function getIsIoGroup():bool { return $this->isIoGroup; }
 
     /**
      * @param bool $isIoGroup
      */
-    public function setIsIoGroup(bool $isIoGroup)
+    public function setIsIoGroup(bool $isIoGroup):void
     {
         $this->implementChange($this,'isIoGroup', $this->isIoGroup, $isIoGroup);
     }
@@ -340,12 +391,12 @@ class Pool extends DomainObject
     /**
      * @return bool
      */
-    public function getAddReserveToCreditSupport() { return $this->addReserveToCreditSupport; }
+    public function getAddReserveToCreditSupport():bool { return $this->addReserveToCreditSupport; }
 
     /**
      * @param bool $addReserveToCreditSupport
      */
-    public function setAddReserveToCreditSupport(bool $addReserveToCreditSupport)
+    public function setAddReserveToCreditSupport(bool $addReserveToCreditSupport):void
     {
         $this->implementChange($this,'addReserveToCreditSupport', $this->addReserveToCreditSupport, $addReserveToCreditSupport);
     }

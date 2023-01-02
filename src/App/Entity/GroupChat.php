@@ -8,72 +8,72 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\GroupChat")
- * @ORM\Table(name="ChatGroup")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\GroupChat")
+ * \Doctrine\ORM\Mapping\Table(name="ChatGroup")
  */
-class GroupChat
+class GroupChat extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\GeneratedValue(strategy="AUTO")
+     * \Doctrine\ORM\Mapping\Column(name="id", type="integer")
      *
      **/
-    protected $id=null;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * \Doctrine\ORM\Mapping\Column(type="string", unique=true)
      * @var string
      */
-    protected $uuid;
+    protected string $uuid;
 
     /**
-     * @ORM\Column(type="string", nullable=false, options={"default":"group_chat"})
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false, options={"default":"group_chat"})
      * @var string
      */
-    protected $groupName;
+    protected string $groupName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
      */
-    protected $imageUrl;
+    protected ?string $imageUrl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="groupChats")
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="groupChats")
      * @var MarketUser
      */
     protected $user;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
-     * @var bool
+     * \Doctrine\ORM\Mapping\Column(type="boolean", nullable=false, options={"default":"0"})
+     * @var int
      */
-    protected $isPrivate;
+    protected int  $isPrivate = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="group")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="group")
      * @var PersistentCollection|ArrayCollection
      */
     protected $chats;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Community", inversedBy="groupChats")
-     * @ORM\JoinColumn(name="community_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Community", inversedBy="groupChats")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="community_id", referencedColumnName="id", nullable=true)
      * @var Community|null
      */
     protected $community=null;
 
     /**
-     * @ORM\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
-     * @ORM\JoinColumn(name="tracker_id", referencedColumnName="id", nullable=true)
+     * \Doctrine\ORM\Mapping\OneToOne (targetEntity="\App\Entity\ChatTracker", inversedBy="group")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="tracker_id", referencedColumnName="id", nullable=true)
      * @var ChatTracker|null
      */
     protected $tracker=null;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
-     * @ORM\JoinTable(name="chat_group_market_users")
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="chatGroupMemberships")
+     * \Doctrine\ORM\Mapping\JoinTable(name="chat_group_market_users")
      * @var PersistentCollection|ArrayCollection
      */
     protected $members;
@@ -110,9 +110,9 @@ class GroupChat
     public function getGroupName(): string { return $this->groupName; }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getImageUrl(): string { return $this->imageUrl; }
+    public function getImageUrl(): ?string { return $this->imageUrl; }
 
     /**
      * @return MarketUser
@@ -120,14 +120,14 @@ class GroupChat
     public function getUser(): MarketUser { return $this->user; }
 
     /**
-     * @return bool
+     * @return ?int
      */
-    public function isPrivate(): bool { return $this->isPrivate; }
+    public function isPrivate(): ?int { return $this->isPrivate; }
 
     /**
      * @return PersistentCollection|ArrayCollection
      */
-    public function getChats() { return $this->chats; }
+    public function getChats():PersistentCollection|ArrayCollection { return $this->chats; }
 
     /**
      * @return Community|null
@@ -137,11 +137,11 @@ class GroupChat
     /**
      * @return PersistentCollection|ArrayCollection
      */
-    public function getMembers() { return $this->members; }
+    public function getMembers():PersistentCollection|ArrayCollection { return $this->members; }
 
 
     /**
-     * @return ChatTracker
+     * @return ?ChatTracker
      */
     public function getTracker(): ?ChatTracker { return $this->tracker; }
 
@@ -166,9 +166,9 @@ class GroupChat
     public function setUser(MarketUser $user): void { $this->user = $user; }
 
     /**
-     * @param bool $isPrivate
+     * @param int $isPrivate
      */
-    public function setIsPrivate(bool $isPrivate): void { $this->isPrivate = $isPrivate; }
+    public function setIsPrivate(int $isPrivate): void { $this->isPrivate = $isPrivate; }
 
     /**
      * @param Community|null $community

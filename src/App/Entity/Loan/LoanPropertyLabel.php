@@ -13,6 +13,7 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
+use JetBrains\PhpStorm\ArrayShape;
 
 class LoanPropertyLabel extends EntityRepository
 {
@@ -68,7 +69,7 @@ class LoanPropertyLabel extends EntityRepository
 
 
 
-    private $propertyLabels = [
+    private array $propertyLabels = [
         "id" => null,
         "pool_id" => null,
         "zero_balance_date" => 'zero_balance_date',//
@@ -78,13 +79,13 @@ class LoanPropertyLabel extends EntityRepository
         "state_id" => "state"
     ];
 
-    private $metaDataKeys = ['type', 'nullable', 'columnName'];
+    private array $metaDataKeys = ['type', 'nullable', 'columnName'];
 
-    private $mortgageData = ['documentation', 'purpose','occupancy', 'dwelling', 'loan_type', 'address', 'state_id', 'city', 'zip', 'msa_code_id'];
+    private array $mortgageData = ['documentation', 'purpose','occupancy', 'dwelling', 'loan_type', 'address', 'state_id', 'city', 'zip', 'msa_code_id'];
 
-    private $creditData = ['credit_score', 'front_dti', 'back_dti', 'number_of_borrowers', 'first_time_buyer', 'status', 'payment_string', 'lien_position'];
+    private array $creditData = ['credit_score', 'front_dti', 'back_dti', 'number_of_borrowers', 'first_time_buyer', 'status', 'payment_string', 'lien_position'];
 
-    private $idProp = [
+    private array $idProp = [
         "category"  => "dbData",
         "dbName"    => "id",
         "significance" => self::DB_DATA,
@@ -93,7 +94,7 @@ class LoanPropertyLabel extends EntityRepository
         'id'  => 0
     ];
 
-    private $poolProp = [
+    private array $poolProp = [
         "category"  => "dbData",
         "dbName"    => "pool_id",
         "significance" => self::DB_DATA,
@@ -102,7 +103,7 @@ class LoanPropertyLabel extends EntityRepository
         'id'  => 1
     ];
 
-    private $stateProp = [
+    private array $stateProp = [
         "category"  => "loanData",
         "dbName"    => "state_id",
         "significance" => "required",
@@ -111,7 +112,7 @@ class LoanPropertyLabel extends EntityRepository
         'id'  => 2
     ];
 
-    private $msaProp = [
+    private array $msaProp = [
         "category"  => "loanData",
         "dbName"    => "msa_code_id",
         "significance" => "optional",
@@ -120,7 +121,7 @@ class LoanPropertyLabel extends EntityRepository
         'id'  => 3
     ];
 
-    private $amortizationProp = [
+    private array $amortizationProp = [
         "category"  => "dbData",
         "dbName"    => "amortization_id",
         "significance" => self::DB_DATA,
@@ -129,7 +130,7 @@ class LoanPropertyLabel extends EntityRepository
         'id'  => 4
     ];
 
-    private $descriptionProp = [
+    private array $descriptionProp = [
         "category"  => "dbData",
         "dbName"    => "description_id",
         "significance" => self::DB_DATA,
@@ -138,7 +139,7 @@ class LoanPropertyLabel extends EntityRepository
         'id'  => 5
     ];
 
-    protected $dbTypeSanitizer = [];
+    protected array $dbTypeSanitizer = [];
 
     public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
     {
@@ -174,7 +175,7 @@ class LoanPropertyLabel extends EntityRepository
      * @param bool $addState
      * @return array
      */
-    public function buildTapeUploadArray($data = array(), $count = 0, $addState=true)
+    public function buildTapeUploadArray(array $data = array(), int $count = 0, bool $addState=true):array
     {
         $data = $this->addStateProp($data, $addState);
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
@@ -206,7 +207,7 @@ class LoanPropertyLabel extends EntityRepository
      * @param array $dbProperties
      * @return array
      */
-    public function searchForUserStateValue($userValue, array $searchArray, array $dbProperties)
+    public function searchForUserStateValue(mixed $userValue, array $searchArray, array $dbProperties):array
     {
         $userValue = $this->mappedTypeSanitizer($userValue);
         foreach ($searchArray as $dbData){
@@ -226,12 +227,12 @@ class LoanPropertyLabel extends EntityRepository
     }
 
     /**
-     * @param $userValue
+     * @param mixed $userValue
      * @param array $searchArray
      * @param array $dbProperties
      * @return array
      */
-    public function searchForMappedTypeValue($userValue, array $searchArray, array $dbProperties)
+    public function searchForMappedTypeValue(mixed $userValue, array $searchArray, array $dbProperties):array
     {
         $userValue = $this->mappedTypeSanitizer($userValue);
         foreach ($searchArray as $dbData){
@@ -255,9 +256,9 @@ class LoanPropertyLabel extends EntityRepository
 
     /**
      * @param string $string
-     * @return mixed|string
+     * @return string|array|null
      */
-    public function mappedTypeSanitizer(string $string)
+    public function mappedTypeSanitizer(string $string): string|array|null
     {
         $string = preg_replace('/[^a-zA-Z0-9-_.\/]/', '', $string);
         //Clean up multiple dashes or whitespaces
@@ -273,7 +274,7 @@ class LoanPropertyLabel extends EntityRepository
      * @param array $row
      * @return array
      */
-    public function assignDataType(array $fieldMapping, array $row)
+    public function assignDataType(array $fieldMapping, array $row):array
     {
         if(in_array($fieldMapping[self::ENTITY_COLUMN], $this->creditData)){
             $row[self::CATEGORY] = self::CREDIT_DATA ;
@@ -287,7 +288,7 @@ class LoanPropertyLabel extends EntityRepository
         return $row;
     }
 
-    public function assignSignificance(array $fieldMapping, $row){
+    public function assignSignificance(array $fieldMapping, $row):array {
         if($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
             $row[self::SIGNIFICANCE] = self::CONDITIONAL;
         }elseif ($fieldMapping[self::ENTITY_NULL]){
@@ -303,14 +304,14 @@ class LoanPropertyLabel extends EntityRepository
      * @param bool $addProps
      * @return array
      */
-    private function addStateProp(array $data, $addProps=false){
+    private function addStateProp(array $data, bool $addProps=false):array {
         if($addProps){
-            array_push($data, $this->idProp);
-            array_push($data, $this->poolProp);
-            array_push($data, $this->stateProp);
-            array_push($data, $this->msaProp);
-            array_push($data, $this->amortizationProp);
-            array_push($data, $this->descriptionProp);
+            $data[] = $this->idProp;
+            $data[] = $this->poolProp;
+            $data[] = $this->stateProp;
+            $data[] = $this->msaProp;
+            $data[] = $this->amortizationProp;
+            $data[] = $this->descriptionProp;
         }
         return $data;
     }
@@ -320,7 +321,8 @@ class LoanPropertyLabel extends EntityRepository
      * @param string $search2
      * @return array
      */
-    public function searchVsHaystack(string $search1, string $search2)
+    #[ArrayShape([self::HAY_KEY => "string", self::SEARCH_KEY => "string"])]
+    public function searchVsHaystack(string $search1, string $search2):array
     {
         if(strlen($search1) >= strlen($search2)){
             return [
@@ -335,7 +337,7 @@ class LoanPropertyLabel extends EntityRepository
         }
     }
 
-    public function getPropertyLabels() { return $this->propertyLabels; }
+    public function getPropertyLabels():array { return $this->propertyLabels; }
 
-    public function getDbTypeSanitizer() { return $this->dbTypeSanitizer; }
+    public function getDbTypeSanitizer():array { return $this->dbTypeSanitizer; }
 }

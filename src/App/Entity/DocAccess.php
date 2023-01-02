@@ -7,48 +7,49 @@
 namespace App\Entity;
 
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\DocAccess")
- * @ORM\Table(name="DocAccess")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DocAccess")
+ * \Doctrine\ORM\Mapping\Table(name="DocAccess")
  */
-class DocAccess
+class DocAccess extends AnnotationMappings
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="documents")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\MarketUser
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="documents")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @var MarketUser
      **/
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="documents")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\Deal
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="documents")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @var Deal
      **/
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="docAccess")
-     * @ORM\JoinColumn(name="document_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="docAccess")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="document_id", referencedColumnName="id", nullable=false)
      * @var DealFile
      */
     protected $document;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -56,7 +57,7 @@ class DocAccess
     /**
      * @return MarketUser
      */
-    public function getUser()
+    public function getUser():MarketUser
     {
         return $this->user;
     }
@@ -64,7 +65,7 @@ class DocAccess
     /**
      * @param MarketUser $user
      */
-    public function setUser(MarketUser $user)
+    public function setUser(MarketUser $user):void
     {
         $this->user = $user;
     }
@@ -72,7 +73,7 @@ class DocAccess
     /**
      * @return Deal
      */
-    public function getDeal()
+    public function getDeal():Deal
     {
         return $this->deal;
     }
@@ -80,7 +81,7 @@ class DocAccess
     /**
      * @param Deal $deal
      */
-    public function setDeal(Deal $deal)
+    public function setDeal(Deal $deal):void
     {
         $this->deal = $deal;
     }

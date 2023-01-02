@@ -6,17 +6,43 @@
 
 namespace App\Entity;
 
+use App\Entity\Data\Cbsa;
+use App\Entity\Data\State;
+use App\Entity\Loan\AmortAttribute;
+use App\Entity\Loan\ArmAttribute;
+use App\Entity\Loan\CommAttribute;
+use App\Entity\Loan\DescAttribute;
+use App\Entity\Loan\SaleAttribute;
 use App\Service\CreatePropertiesArrayTrait;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan")
- * @ORM\Table(name="loans")
- * @ChangeTrackingPolicy("NOTIFY")
- * @ORM\DiscriminatorColumn(name="assetClass", type="string")
- * @ORM\DiscriminatorMap({
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Loan")
+ * \Doctrine\ORM\Mapping\Table(name="loans")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\DiscriminatorColumn(name="assetClass", type="string")
+ * \Doctrine\ORM\Mapping\DiscriminatorMap({
  *      "Auto"          = "\App\Entity\AssetType\Auto",
  *      "Residential"   = "\App\Entity\AssetType\Residential",
  *      "Commercial"    = "\App\Entity\AssetType\Commercial",
@@ -43,23 +69,23 @@ class Loan extends DomainObject
     const ACTUAL  = 'Actual';
 
 
-    protected static $amortTypes = array(
+    protected static array $amortTypes = array(
         self::AMORTIZING => 'Amortizing',
         self::REVOLVING  =>  'Revolving',
         //self::AMORTIZING => 'Amortizing',
     );
 
-    protected static $descriptions = array(
+    protected static array $descriptions = array(
         self::ASSUMED => 'Assumed',
         self::ACTUAL  => 'Actual'
     );
 
-    protected $ignoreDbProperties = [
+    protected array $ignoreDbProperties = [
         'bids' => null, 'updates' => null, 'accounts' => null, 'specifics' => null,
         'triggers' => null, 'fees' => null, 'files' => 'null', 'issues' => null
     ];
 
-    protected $addUcIdToPropName = [
+    protected array $addUcIdToPropName = [
         'pool' => null,
         'amortization' => null,
         'description' => null,
@@ -67,317 +93,465 @@ class Loan extends DomainObject
         'msaCode' => null
     ];
 
-    protected $defaultValueProperties = [
+    protected array $defaultValueProperties = [
         'msaCode' => null,
         'seasoning' => null,
         'remainingTerm' => null,
     ];
 
-    /** @ORM\Id @ORM\Column(type="integer") @ORM\GeneratedValue **/
-    protected $id;
+    /**
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     * @var int
+     */
+    protected int $id;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $loanId;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $loanId;
 
 
     /**
-     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\ArmAttribute", mappedBy="loan")
-     * @var \App\Entity\Loan\ArmAttribute
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity = "\App\Entity\Loan\ArmAttribute", mappedBy="loan")
+     * @var ArmAttribute|null
      */
     protected $armAttributes;
 
     /**
-     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\CommAttribute", mappedBy="loan")
-     * @var \App\Entity\Loan\CommAttribute
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity = "\App\Entity\Loan\CommAttribute", mappedBy="loan")
+     * @var CommAttribute|null
      */
     protected $commAttributes;
 
     /**
-     * @ORM\OneToOne(targetEntity = "\App\Entity\Loan\SaleAttribute", mappedBy="loan")
-     * @var \App\Entity\Loan\SaleAttribute
+     * \Doctrine\ORM\Mapping\OneToOne(targetEntity = "\App\Entity\Loan\SaleAttribute", mappedBy="loan")
+     * @var SaleAttribute|null
      */
     protected $saleAttributes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
-     * @ORM\JoinColumn(name="pool_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\Pool
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="pool_id", referencedColumnName="id", nullable=false)
+     * @var Pool
      **/
     protected $pool;
 
-    /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=false) */
-    protected $originalBalance = 0.0;
-
-    /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=false) */
-    protected $currentBalance = 0.0;
-
-    /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=true) **/
-    protected $monthlyPayment = null;
-
-    /** @ORM\Column(type="decimal", precision=16, scale=3, nullable=true) **/
-    protected $issuanceBalance;
-
-    /** @ORM\Column(type="decimal", precision=10, scale=6, nullable=true) **/
-    protected $initialRate;
-
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $seasoning;
-
-    /** @ORM\Column(type="decimal", precision=10, scale=6, nullable=false) **/
-    protected $currentRate;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=false)
+     * @var float
+     */
+    protected float $originalBalance = 0.0;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=false)
+     * @var float
+     */
+    protected float $currentBalance = 0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $monthlyPayment = null;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $issuanceBalance;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=6, nullable=true)
+     * @var ?float
+     */
+    protected ?float $initialRate;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $seasoning;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=6, nullable=false)
+     * @var float
+     */
+    protected float $currentRate=0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $originationDate;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $currentDueforDate;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $firstPaymentDate;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $loanStatus;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $loanStatus='';
 
     /**
-     * @ORM\Column(type = "datetime", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
     protected $finalDueforDate;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $originalTerm;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $remainingTerm;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) **/
-    protected $amortizationTerm;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $ioTerm;
-
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $balloonPeriod;
-
-    /** @ORM\Column(type="decimal", precision=8, scale=4, nullable=false)
-     * @var number
-     **/
-    protected $originalLtv;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @var float
+     */
+    protected float $originalTerm=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
-     *
-     **/
-    protected $originalCltv;
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $remainingTerm;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=4, nullable=false)
-     *
-     **/
-    protected $appraisedValue;
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @var float
+     */
+    protected float $amortizationTerm=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
-     **/
-    protected $creditScore;
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $ioTerm;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
-     * @var number
-     **/
-    protected $frontDti;
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $balloonPeriod;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
-     * @var number
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=4, nullable=false)
+     * @var float
      **/
-    protected $backDti;
+    protected float $originalLtv=0.0;
 
-    /** @ORM\Column(type = "integer", nullable=true) **/
-    protected $numberOfBorrowers;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=4, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $originalCltv;
 
-    /** @ORM\Column(type = "integer", nullable=true) **/
-    protected $firstTimeBuyer;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=16, scale=4, nullable=false)
+     * @var float
+     **/
+    protected float $appraisedValue=0.0;
 
-    /** @ORM\Column(type="integer", nullable=false) **/
-    protected $lienPosition;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $creditScore;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $noteType;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $frontDti;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $loanType;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $backDti;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $documentation;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $numberOfBorrowers;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $purpose;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $firstTimeBuyer;
 
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $occupancy;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @var int
+     */
+    protected int $lienPosition=1;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $dwelling;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $noteType;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $address;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $loanType='';
 
-    /** @ORM\ManyToOne(targetEntity="App\Entity\Data\State", inversedBy="loans") **/
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $documentation='';
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $purpose='';
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
+     * @var string
+     */
+    protected string $occupancy='';
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $dwelling;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $address;
+
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Data\State", inversedBy="loans") *
+     */
     protected $state;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $city;
-
-    /** @ORM\Column(type="string", nullable=false) **/
-    protected $zip;
-
-
-    /** @ORM\Column(type="json", nullable=true) **/
-    protected $assetAttributes;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Data\Cbsa", inversedBy="loans")
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
+     */
+    protected string $zip='';
+
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var ?string
+     */
+    protected ?string $assetAttributes;
+
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Data\Cbsa", inversedBy="loans")
      **/
     protected $msaCode;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $paymentString;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=6, nullable = true) **/
-    protected $servicingfee;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=6, nullable = true) **/
-    protected $lpmiFee;
-
-    /** @ORM\Column(type="decimal", precision=10, scale=4, nullable = true) **/
-    protected $miCoverage;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $paymentString;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan\AmortAttribute", inversedBy="loans")
-     * @var  \App\Entity\Loan\AmortAttribute */
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=6, nullable = true)
+     * @var ?float
+     */
+    protected ?float $servicingfee;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=6, nullable = true)
+     * @var ?float
+     */
+    protected ?float $lpmiFee;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=10, scale=4, nullable = true)
+     * @var ?float
+     */
+    protected ?float $miCoverage;
+
+    /**
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan\AmortAttribute", inversedBy="loans")
+     * @var  AmortAttribute */
     protected $amortization;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan\DescAttribute", inversedBy="loans")
-     * @var  \App\Entity\Loan\DescAttribute */
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan\DescAttribute", inversedBy="loans")
+     * @var  DescAttribute */
     protected $description;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     * @var \dateTime
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @var ?\dateTime
      **/
     protected $foreclosureDate;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     * @var \dateTime
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @var ?\dateTime
      **/
     protected $bankruptcyDate;
 
-    /** @ORM\Column(type = "datetime", nullable=true)
-     * @var \dateTime
+    /**
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @var ?\dateTime
      **/
     protected $reoDate;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     * @var \dateTime
+     * \Doctrine\ORM\Mapping\Column(type = "datetime", nullable=true)
+     * @var ?\dateTime
      **/
     protected $zeroBalanceDate;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @var int $loanHasBeenModified
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int $loanHasBeenModified
      */
-    protected $loanHasBeenModified;
+    protected ?int $loanHasBeenModified;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @var int $lengthOfModification
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int $lengthOfModification
      */
-    protected $endModPeriod;
+    protected ?int $endModPeriod;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $channel;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true) *
+     * @var ?string
+     */
+    protected ?string $channel;
 
-    /** @ORM\Column(type="datetime", nullable=true) **/
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="datetime", nullable=true)
+     * @var ?\DateTime
+     */
     protected $lastPaymentDate;
 
-    /** @ORM\Column(type="integer", nullable=true)   */
-    protected $times_30;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     *@var ?int
+     */
+    protected ?int $times_30;
 
-    /** @ORM\Column(type="integer", nullable=true)   */
-    protected $times_60;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     *@var ?int
+     */
+    protected ?int $times_60;
 
-    /** @ORM\Column(type="integer", nullable=true)   */
-    protected $times_90;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     *@var ?int
+     */
+    protected ?int $times_90;
 
-    /** @ORM\Column(type="integer", nullable=true) **/
-    protected $yearBuilt;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $yearBuilt;
 
-    /** @ORM\Column(type="string", nullable=true) **/
-    protected $newVsUsed;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $newVsUsed;
 
-    /** @ORM\Column(type="decimal", precision=8, scale=2, nullable = true) **/
-    protected $reserves;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @var ?float
+     */
+    protected ?float $reserves;
 
-    /** @ORM\Column(type="decimal", precision=8, scale=2, nullable = true) **/
-    protected $dealerReserve;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @var ?float
+     */
+    protected ?float $dealerReserve;
 
-    /** @ORM\Column(type="integer", nullable=true)   */
-    protected $prepayPenaltyTerm;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int
+     */
+    protected ?int $prepayPenaltyTerm;
 
-    /** @ORM\Column(type="decimal", precision=8, scale=2, nullable = true) **/
-    protected $prepayPenalty;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @var ?float
+     */
+    protected ?float $prepayPenalty;
 
-    /** @ORM\Column(type="json", nullable=true)
-     * @var array
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=true)
+     * @var array|null
      **/
     protected $prepayStepDown;
 
-    /** @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")
+     */
     protected $bids;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="loan") */
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="loan")
+     */
     protected $updates;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\LoanSpecific", mappedBy="loans")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\LoanSpecific", mappedBy="loans")
+     */
     protected $specifics;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\LoanFee", mappedBy="loans")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Fee\LoanFee", mappedBy="loans")
+     */
     protected $fees;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\LoanAccount", mappedBy="loans")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Account\LoanAccount", mappedBy="loans")
+     */
     protected $accounts;
 
-    /** @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\LoanTrigger", mappedBy="loans")   */
+    /**
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\LoanTrigger", mappedBy="loans")
+     */
     protected $triggers;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="loan")
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="loan")
      * @var ArrayCollection
      */
     protected $files;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="loan")
-     * @var ArrayCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="loan")
+     * @var ArrayCollection|PersistentCollection|null
      */
     protected $reviewStatuses;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="loan", cascade={"persist"})
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="loan", cascade={"persist"})
      * @var ArrayCollection  */
     protected $issues;
 
@@ -391,6 +565,7 @@ class Loan extends DomainObject
         $this->files = new ArrayCollection();
         $this->fees = new ArrayCollection();
         $this->reviewStatuses = new ArrayCollection();
+        parent::__construct();
     }
 
     public function addDueDilReviewStatus(DueDilReviewStatus $status)
@@ -405,19 +580,19 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLoanId() { return $this->loanId; }
+    public function getLoanId():string { return $this->loanId; }
 
     /**
-     * @param mixed $loanId
+     * @param string  $loanId
      */
-    public function setLoanId($loanId)
+    public function setLoanId(string $loanId):int
     {
         $this->implementChange($this,'loanId', $this->loanId, $loanId);
     }
@@ -425,575 +600,569 @@ class Loan extends DomainObject
     /**
      * @return Pool
      */
-    public function getPool() { return $this->pool; }
+    public function getPool():Pool { return $this->pool; }
 
     /**
      * @param Pool $pool
      */
-    public function setPool(Pool $pool)
+    public function setPool(Pool $pool):void
     {
         $this->implementChange($this,'pool', $this->pool, $pool);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getOriginalBalance() { return $this->originalBalance; }
+    public function getOriginalBalance():float { return $this->originalBalance; }
 
     /**
-     * @param mixed $originalBalance
+     * @param float $originalBalance
      */
-    public function setOriginalBalance($originalBalance)
+    public function setOriginalBalance(float $originalBalance):void
     {
         $this->implementChange($this,'originalBalance', $this->originalBalance, $originalBalance);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getCurrentBalance() { return $this->currentBalance; }
+    public function getCurrentBalance():float { return $this->currentBalance; }
 
     /**
-     * @param mixed $currentBalance
+     * @param float $currentBalance
      */
-    public function setCurrentBalance($currentBalance)
+    public function setCurrentBalance(float $currentBalance):void
     {
         $this->implementChange($this,'currentBalance', $this->currentBalance, $currentBalance);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getMonthlyPayment() { return $this->monthlyPayment; }
+    public function getMonthlyPayment():?float { return $this->monthlyPayment; }
 
     /**
-     * @param mixed $monthlyPayment
+     * @param float $monthlyPayment
      */
-    public function setMonthlyPayment($monthlyPayment)
+    public function setMonthlyPayment(float $monthlyPayment):void
     {
         $this->implementChange($this,'monthlyPayment', $this->monthlyPayment, $monthlyPayment);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getIssuanceBalance() { return $this->issuanceBalance; }
+    public function getIssuanceBalance():?float { return $this->issuanceBalance; }
 
     /**
-     * @param mixed $issuanceBalance
+     * @param float $issuanceBalance
      */
-    public function setIssuanceBalance($issuanceBalance)
+    public function setIssuanceBalance(float $issuanceBalance):void
     {
         $this->implementChange($this,'issuanceBalance', $this->issuanceBalance, $issuanceBalance);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getInitialRate() { return $this->initialRate; }
+    public function getInitialRate():?float { return $this->initialRate; }
 
     /**
-     * @param mixed $initialRate
+     * @param float $initialRate
      */
-    public function setInitialRate($initialRate)
+    public function setInitialRate(float $initialRate):void
     {
         $this->implementChange($this,'initialRate', $this->initialRate, $initialRate);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getCurrentRate() { return $this->currentRate; }
+    public function getCurrentRate():float { return $this->currentRate; }
 
     /**
-     * @param mixed $currentRate
+     * @param float $currentRate
      */
-    public function setCurrentRate($currentRate)
+    public function setCurrentRate(float $currentRate):void
     {
         $this->implementChange($this,'currentRate', $this->currentRate, $currentRate);
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTime
      */
-    public function getOriginationDate() { return $this->originationDate; }
+    public function getOriginationDate():\DateTime { return $this->originationDate; }
 
     /**
      * @param \DateTime $originationDate
      */
-    public function setOriginationDate(\DateTime $originationDate)
+    public function setOriginationDate(\DateTime $originationDate):void
     {
         $this->implementChange($this,'originationDate', $this->originationDate, $originationDate);
     }
 
     /**
-     * @return \DateTime | null
+     * @return \DateTime
      */
-    public function getCurrentDueforDate() { return $this->currentDueforDate; }
+    public function getCurrentDueforDate():\DateTime { return $this->currentDueforDate; }
 
     /**
      * @param \DateTime $currentDueforDate
      */
-    public function setCurrentDueforDate(\DateTime $currentDueforDate)
+    public function setCurrentDueforDate(\DateTime $currentDueforDate):void
     {
         $this->implementChange($this,'currentDueforDate', $this->currentDueforDate, $currentDueforDate);
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
-    public function getFirstPaymentDate() { return $this->firstPaymentDate; }
+    public function getFirstPaymentDate():\DateTime { return $this->firstPaymentDate; }
 
     /**
      * @param \DateTime $firstPaymentDate
      */
-    public function setFirstPaymentDate(\DateTime $firstPaymentDate)
+    public function setFirstPaymentDate(\DateTime $firstPaymentDate):void
     {
         $this->implementChange($this,'firstPaymentDate', $this->firstPaymentDate, $firstPaymentDate);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLoanStatus() { return $this->loanStatus; }
+    public function getLoanStatus():string { return $this->loanStatus; }
 
     /**
-     * @param mixed $loanStatus
+     * @param string  $loanStatus
      */
-    public function setLoanStatus($loanStatus)
+    public function setLoanStatus(string $loanStatus)
     {
         $this->implementChange($this,'loanStatus', $this->loanStatus, $loanStatus);
     }
 
     /**
-     * @return \DateTime|null
+     * @return \DateTime
      */
-    public function getFinalDueforDate() { return $this->finalDueforDate; }
+    public function getFinalDueforDate():\DateTime { return $this->finalDueforDate; }
 
     /**
      * @param \DateTime $finalDueforDate
      */
-    public function setFinalDueforDate(\DateTime $finalDueforDate)
+    public function setFinalDueforDate(\DateTime $finalDueforDate):void
     {
         $this->implementChange($this,'finalDueforDate', $this->finalDueforDate, $finalDueforDate);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getOriginalTerm() { return $this->originalTerm; }
+    public function getOriginalTerm():float { return $this->originalTerm; }
 
     /**
-     * @param mixed $originalTerm
+     * @param float $originalTerm
      */
-    public function setOriginalTerm($originalTerm)
+    public function setOriginalTerm(float $originalTerm):void
     {
         $this->implementChange($this,'originalTerm', $this->originalTerm, $originalTerm);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getRemainingTerm() { return $this->remainingTerm; }
+    public function getRemainingTerm():?float { return $this->remainingTerm; }
 
     /**
-     * @param mixed $remainingTerm
+     * @param float $remainingTerm
      */
-    public function setRemainingTerm($remainingTerm)
+    public function setRemainingTerm(float $remainingTerm):void
     {
         $this->implementChange($this,'remainingTerm', $this->remainingTerm, $remainingTerm);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getAmortizationTerm() { return $this->amortizationTerm; }
+    public function getAmortizationTerm():float { return $this->amortizationTerm; }
 
     /**
-     * @param mixed $amortizationTerm
+     * @param float $amortizationTerm
      */
-    public function setAmortizationTerm($amortizationTerm)
+    public function setAmortizationTerm(float $amortizationTerm):void
     {
         $this->implementChange($this,'amortizationTerm', $this->amortizationTerm, $amortizationTerm);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getIoTerm() { return $this->ioTerm; }
+    public function getIoTerm():?float { return $this->ioTerm; }
 
     /**
-     * @param mixed $ioTerm
+     * @param float $ioTerm
      */
-    public function setIoTerm($ioTerm)
+    public function setIoTerm(float $ioTerm):void
     {
         $this->implementChange($this,'ioTerm', $this->ioTerm, $ioTerm);
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getBalloonPeriod() { return $this->balloonPeriod; }
+    public function getBalloonPeriod():?int { return $this->balloonPeriod; }
 
     /**
-     * @param mixed $balloonPeriod
+     * @param int  $balloonPeriod
      */
-    public function setBalloonPeriod($balloonPeriod)
+    public function setBalloonPeriod(int $balloonPeriod):void
     {
         $this->implementChange($this,'balloonPeriod', $this->balloonPeriod, $balloonPeriod);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getOriginalLtv() { return $this->originalLtv; }
+    public function getOriginalLtv():float { return $this->originalLtv; }
 
     /**
      * @param mixed $originalLtv
      */
-    public function setOriginalLtv($originalLtv)
+    public function setOriginalLtv(float $originalLtv):void
     {
         $this->implementChange($this,'originalLtv', $this->originalLtv, $originalLtv);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getOriginalCltv() { return $this->originalCltv; }
+    public function getOriginalCltv():?float { return $this->originalCltv; }
 
     /**
-     * @param mixed $originalCltv
+     * @param float $originalCltv
      */
-    public function setOriginalCltv($originalCltv)
+    public function setOriginalCltv(float $originalCltv):void
     {
         $this->implementChange($this,'originalCltv', $this->originalCltv, $originalCltv);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getAppraisedValue() { return $this->appraisedValue; }
+    public function getAppraisedValue():float { return $this->appraisedValue; }
 
     /**
-     * @param mixed $appraisedValue
+     * @param float $appraisedValue
      */
-    public function setAppraisedValue($appraisedValue)
+    public function setAppraisedValue(float $appraisedValue):void
     {
         $this->implementChange($this,'appraisedValue', $this->appraisedValue, $appraisedValue);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getCreditScore() { return $this->creditScore; }
+    public function getCreditScore():?float { return $this->creditScore; }
 
     /**
-     * @param mixed $creditScore
+     * @param float $creditScore
      */
-    public function setCreditScore($creditScore)
+    public function setCreditScore(float $creditScore):void
     {
         $this->implementChange($this,'creditScore', $this->creditScore, $creditScore);
     }
 
     /**
-     * @return number
+     * @return ?float
      */
-    public function getFrontDti() { return $this->frontDti; }
+    public function getFrontDti():?float { return $this->frontDti; }
 
     /**
-     * @param number $frontDti
+     * @param float $frontDti
      */
-    public function setFrontDti($frontDti)
+    public function setFrontDti(float $frontDti):void
     {
         $this->implementChange($this,'frontDti', $this->frontDti, $frontDti);
     }
 
     /**
-     * @return number
+     * @return ?float
      */
-    public function getBackDti() { return $this->backDti; }
+    public function getBackDti():?float { return $this->backDti; }
 
     /**
-     * @param number $backDti
+     * @param float $backDti
      */
-    public function setBackDti($backDti)
+    public function setBackDti(float $backDti):void
     {
         $this->implementChange($this,'backDti', $this->backDti, $backDti);
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getNumberOfBorrowers() { return $this->numberOfBorrowers; }
+    public function getNumberOfBorrowers():?int { return $this->numberOfBorrowers; }
 
     /**
-     * @param mixed $numberOfBorrowers
+     * @param int $numberOfBorrowers
      */
-    public function setNumberOfBorrowers($numberOfBorrowers)
+    public function setNumberOfBorrowers(int $numberOfBorrowers):void
     {
         $this->implementChange($this,'numberOfBorrowers', $this->numberOfBorrowers, $numberOfBorrowers);
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getFirstTimeBuyer() { return $this->firstTimeBuyer; }
+    public function getFirstTimeBuyer():?int { return $this->firstTimeBuyer; }
 
     /**
-     * @param mixed $firstTimeBuyer
+     * @param int $firstTimeBuyer
      */
-    public function setFirstTimeBuyer($firstTimeBuyer)
+    public function setFirstTimeBuyer(int $firstTimeBuyer):void
     {
         $this->implementChange($this,'firstTimeBuyer', $this->firstTimeBuyer, $firstTimeBuyer);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getLienPosition() { return $this->lienPosition; }
+    public function getLienPosition():int { return $this->lienPosition; }
 
     /**
-     * @param mixed $lienPosition
+     * @param int $lienPosition
      */
-    public function setLienPosition($lienPosition)
+    public function setLienPosition(int $lienPosition):void
     {
         $this->implementChange($this,'lienPosition', $this->lienPosition, $lienPosition);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getNoteType() { return $this->noteType; }
+    public function getNoteType():?string { return $this->noteType; }
 
     /**
-     * @param mixed $noteType
+     * @param string $noteType
      */
-    public function setNoteType($noteType)
+    public function setNoteType(string $noteType):void
     {
         $this->implementChange($this,'noteType', $this->noteType, $noteType);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLoanType() { return $this->loanType; }
+    public function getLoanType():string { return $this->loanType; }
 
     /**
-     * @param mixed $loanType
+     * @param string $loanType
      */
-    public function setLoanType($loanType)
+    public function setLoanType(string $loanType):void
     {
         $this->implementChange($this,'loanType', $this->loanType, $loanType);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getDocumentation() { return $this->documentation; }
+    public function getDocumentation():string { return $this->documentation; }
 
     /**
-     * @param mixed $documentation
+     * @param string $documentation
      */
-    public function setDocumentation($documentation)
+    public function setDocumentation(string $documentation):void
     {
         $this->implementChange($this,'documentation', $this->documentation, $documentation);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPurpose() { return $this->purpose; }
+    public function getPurpose():string { return $this->purpose; }
 
     /**
-     * @param mixed $purpose
+     * @param string $purpose
      */
-    public function setPurpose($purpose)
+    public function setPurpose(string $purpose):void
     {
         $this->implementChange($this,'purpose', $this->purpose, $purpose);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getOccupancy() { return $this->occupancy; }
+    public function getOccupancy():string { return $this->occupancy; }
 
     /**
-     * @param mixed $occupancy
+     * @param string $occupancy
      */
-    public function setOccupancy($occupancy)
+    public function setOccupancy(string $occupancy):void
     {
         $this->implementChange($this,'occupancy', $this->occupancy, $occupancy);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getDwelling() { return $this->dwelling; }
+    public function getDwelling():?string { return $this->dwelling; }
 
     /**
-     * @param mixed $dwelling
+     * @param string $dwelling
      */
-    public function setDwelling($dwelling)
+    public function setDwelling(string $dwelling):void
     {
         $this->implementChange($this,'dwelling', $this->dwelling, $dwelling);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getAddress() { return $this->address; }
+    public function getAddress():?string { return $this->address; }
 
     /**
-     * @param mixed $address
+     * @param string $address
      */
-    public function setAddress($address)
+    public function setAddress(string $address):void
     {
         $this->implementChange($this,'address', $this->address, $address);
     }
 
     /**
-     * @return mixed
+     * @return ?State
      */
-    public function getState()
+    public function getState():?State
     { return $this->state; }
 
     /**
-     * @param mixed $state
+     * @param State $state
      */
-    public function setState($state)
+    public function setState(State $state):void
     {
         $this->implementChange($this,'state', $this->state, $state);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getCity() { return $this->city; }
+    public function getCity():?string { return $this->city; }
 
     /**
-     * @param mixed $city
+     * @param string $city
      */
-    public function setCity($city)
+    public function setCity(string $city):void
     {
         $this->implementChange($this,'city', $this->city, $city);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getZip() { return $this->zip; }
+    public function getZip():string { return $this->zip; }
 
     /**
-     * @param mixed $zip
+     * @param string $zip
      */
-    public function setZip($zip)
+    public function setZip(string $zip):void
     {
         $this->implementChange($this,'zip', $this->zip, $zip);
     }
 
     /**
-     * @return string
+     * @return ?Cbsa
      */
-    public function getMsaCode() { return $this->msaCode; }
+    public function getMsaCode():?Cbsa { return $this->msaCode; }
 
     /**
-     * @param string $msaCode
+     * @param Cbsa $msaCode
      */
-    public function setMsaCode($msaCode)
+    public function setMsaCode(Cbsa $msaCode):void
     {
         $this->implementChange($this,'msaCode', $this->msaCode, $msaCode);
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getPaymentString() { return $this->paymentString; }
+    public function getPaymentString():?string { return $this->paymentString; }
 
     /**
-     * @param mixed $paymentString
+     * @param string  $paymentString
      */
-    public function setPaymentString($paymentString)
+    public function setPaymentString(string $paymentString):void
     {
         $this->implementChange($this,'paymentString', $this->paymentString, $paymentString);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getServicingfee() { return $this->servicingfee; }
+    public function getServicingfee():?float { return $this->servicingfee; }
 
     /**
-     * @param mixed $servicingfee
+     * @param float  $servicingfee
      */
-    public function setServicingfee($servicingfee)
+    public function setServicingfee(float $servicingfee):void
     {
         $this->implementChange($this,'servicingfee', $this->servicingfee, $servicingfee);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getLpmiFee() { return $this->lpmiFee; }
+    public function getLpmiFee():?float { return $this->lpmiFee; }
 
     /**
-     * @param mixed $lpmiFee
+     * @param float $lpmiFee
      */
-    public function setLpmiFee($lpmiFee)
+    public function setLpmiFee(float $lpmiFee):void
     {
         $this->implementChange($this,'lpmiFee', $this->lpmiFee, $lpmiFee);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getMiCoverage() { return $this->miCoverage; }
+    public function getMiCoverage():?float { return $this->miCoverage; }
 
     /**
-     * @param mixed $miCoverage
+     * @param float $miCoverage
      */
-    public function setMiCoverage($miCoverage)
+    public function setMiCoverage(float $miCoverage):void
     {
         $this->implementChange($this,'miCoverage', $this->miCoverage, $miCoverage);
     }
 
     /**
-     * @return string
+     * @return ?AmortAttribute
      */
-    public function getAmortization() { return $this->amortization; }
+    public function getAmortization():?AmortAttribute { return $this->amortization; }
 
     /**
-     * @param $amortization
+     * @param AmortAttribute $amortization
      * @throws \Exception
      */
-    public function setAmortization($amortization)
+    public function setAmortization(AmortAttribute $amortization):void
     {
-        if(!array_key_exists(ucfirst(strtolower($amortization)), self::$amortTypes)){
-            throw new \Exception("An amortization type: $amortization does not exist.");
-        }
         $this->implementChange($this,'amortization', $this->amortization, $amortization);
     }
 
     /**
-     * @return string
+     * @return ?DescAttribute
      */
-    public function getDescription() { return $this->description; }
+    public function getDescription():?DescAttribute { return $this->description; }
 
     /**
-     * @param $description
+     * @param DescAttribute  $description
      * @throws \Exception
      */
-    public function setDescription($description)
+    public function setDescription(DescAttribute $description):void
     {
-        if(!array_key_exists(ucfirst(strtolower($description)), self::$descriptions)){
-            throw new \Exception("A loan description type: $description does not exist.");
-        }
         $this->description = $description;
     }
 
     /**
-     * @return \dateTime
+     * @return ?\dateTime
      */
-    public function getForeclosureDate() { return $this->foreclosureDate; }
+    public function getForeclosureDate():?\dateTime { return $this->foreclosureDate; }
 
     /**
      * @param \dateTime $foreclosureDate
@@ -1006,12 +1175,12 @@ class Loan extends DomainObject
     /**
      * @return \dateTime|null
      */
-    public function getBankruptcyDate() { return $this->bankruptcyDate; }
+    public function getBankruptcyDate():?\dateTime { return $this->bankruptcyDate; }
 
     /**
      * @param \DateTime $bankruptcyDate
      */
-    public function setBankruptcyDate(\DateTime $bankruptcyDate)
+    public function setBankruptcyDate(\DateTime $bankruptcyDate):void
     {
         $this->implementChange($this,'bankruptcyDate', $this->bankruptcyDate, $bankruptcyDate);
     }
@@ -1019,12 +1188,12 @@ class Loan extends DomainObject
     /**
      * @return \DateTime|null
      */
-    public function getReoDate() { return $this->reoDate; }
+    public function getReoDate():?\dateTime { return $this->reoDate; }
 
     /**
      * @param mixed $reoDate
      */
-    public function setReoDate(\DateTime $reoDate)
+    public function setReoDate(\DateTime $reoDate):void
     {
         $this->implementChange($this,'reoDate', $this->reoDate, $reoDate);
     }
@@ -1032,53 +1201,53 @@ class Loan extends DomainObject
     /**
      * @return \dateTime
      */
-    public function getZeroBalanceDate() { return $this->zeroBalanceDate; }
+    public function getZeroBalanceDate():?\dateTime { return $this->zeroBalanceDate; }
 
     /**
      * @param \dateTime $zeroBalanceDate
      */
-    public function setZeroBalanceDate(\DateTime $zeroBalanceDate)
+    public function setZeroBalanceDate(\DateTime $zeroBalanceDate):void
     {
         $this->implementChange($this,'zeroBalanceDate', $this->zeroBalanceDate, $zeroBalanceDate);
     }
 
     /**
-     * @return mixed
+     * @return null|ArrayCollection|PersistentCollection
      */
-    public function getUpdates() { return $this->updates; }
+    public function getUpdates():null|ArrayCollection|PersistentCollection { return $this->updates; }
 
     /**
-     * @param mixed $updates
+     * @param ArrayCollection|PersistentCollection $updates
      */
-    public function setUpdates($updates) { $this->updates = $updates; }
+    public function setUpdates(ArrayCollection|PersistentCollection $updates) { $this->updates = $updates; }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getSeasoning() { return $this->seasoning; }
+    public function getSeasoning():?int { return $this->seasoning; }
 
     /**
-     * @param mixed $seasoning
+     * @param int $seasoning
      */
-    public function setSeasoning($seasoning)
+    public function setSeasoning(int $seasoning)
     {
         $this->implementChange($this,'seasoning', $this->seasoning, $seasoning);
     }
 
     /**
-     * @return mixed
+     * @return null|ArrayCollection|PersistentCollection
      */
-    public function getBids() { return $this->bids; }
+    public function getBids():null|ArrayCollection|PersistentCollection { return $this->bids; }
 
     /**
-     * @param mixed $bids
+     * @param ArrayCollection|PersistentCollection $bids
      */
-    public function setBids($bids) { $this->bids = $bids; }
+    public function setBids(ArrayCollection|PersistentCollection $bids) { $this->bids = $bids; }
 
     /**
-     * @return ArrayCollection
+     * @return null|ArrayCollection|PersistentCollection
      */
-    public function getIssues() { return $this->issues; }
+    public function getIssues():null|ArrayCollection|PersistentCollection { return $this->issues; }
 
     /**
      * @return number
@@ -1094,12 +1263,12 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return number
+     * @return ?int
      */
-    public function getEndModPeriod(): int { return $this->endModPeriod; }
+    public function getEndModPeriod(): ?int { return $this->endModPeriod; }
 
     /**
-     * @param number $endModPeriod
+     * @param int $endModPeriod
      */
     public function setEndModPeriod(int $endModPeriod)
     {
@@ -1107,157 +1276,158 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getChannel() { return $this->channel; }
+    public function getChannel():?string { return $this->channel; }
 
     /**
-     * @param mixed $channel
+     * @param string $channel
      */
-    public function setChannel($channel)
+    public function setChannel(string $channel)
     {
         $this->implementChange($this,'channel', $this->channel, $channel);
     }
 
     /**
-     * @return mixed
+     * @return ?\DateTime
      */
-    public function getLastPaymentDate() { return $this->lastPaymentDate; }
+    public function getLastPaymentDate():?\DateTime { return $this->lastPaymentDate; }
 
     /**
-     * @param mixed $lastPaymentDate
+     * @param \DateTime $lastPaymentDate
      */
-    public function setLastPaymentDate($lastPaymentDate)
+    public function setLastPaymentDate(\DateTime $lastPaymentDate):void
     {
         $this->implementChange($this,'lastPaymentDate', $this->lastPaymentDate, $lastPaymentDate);
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getTimes30() { return $this->times_30; }
+    public function getTimes30():?int { return $this->times_30; }
 
     /**
-     * @param mixed $times_30
+     * @param int $times_30
      */
-    public function setTimes30($times_30)
+    public function setTimes30(int $times_30):void
     {
         $this->implementChange($this,'times_30', $this->times_30, $times_30);
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getTimes60() { return $this->times_60; }
+    public function getTimes60():?int { return $this->times_60; }
 
     /**
-     * @param mixed $times_60
+     * @param int $times_60
      */
-    public function setTimes60($times_60)
+    public function setTimes60(int $times_60):void
     {
         $this->implementChange($this,'times_60', $this->times_60, $times_60);
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getTimes90() { return $this->times_90; }
+    public function getTimes90():?int { return $this->times_90; }
 
     /**
-     * @param mixed $times_90
+     * @param int $times_90
      */
-    public function setTimes90($times_90)
+    public function setTimes90(int $times_90):void
     {
         $this->implementChange($this,'times_90', $this->times_90, $times_90);
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getYearBuilt() { return $this->yearBuilt; }
+    public function getYearBuilt():?int { return $this->yearBuilt; }
 
     /**
-     * @param mixed $yearBuilt
+     * @param int $yearBuilt
      */
-    public function setYearBuilt($yearBuilt)
+    public function setYearBuilt(int $yearBuilt):void
     {
         $this->yearBuilt = $yearBuilt;
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getNewVsUsed() { return $this->newVsUsed; }
+    public function getNewVsUsed():?string { return $this->newVsUsed; }
 
     /**
-     * @param mixed $newVsUsed
+     * @param string $newVsUsed
      */
-    public function setNewVsUsed($newVsUsed)
+    public function setNewVsUsed(string $newVsUsed):void
     {
         $this->newVsUsed = $newVsUsed;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getReserves() { return $this->reserves; }
+    public function getReserves():?float { return $this->reserves; }
 
     /**
-     * @param mixed $reserves
+     * @param float $reserves
      */
-    public function setReserves($reserves)
+    public function setReserves(float $reserves):void
     {
         $this->reserves = $reserves;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getDealerReserve() { return $this->dealerReserve; }
+    public function getDealerReserve():?float { return $this->dealerReserve; }
 
     /**
-     * @param mixed $dealerReserve
+     * @param float $dealerReserve
      */
-    public function setDealerReserve($dealerReserve)
+    public function setDealerReserve(float $dealerReserve):void
     {
         $this->dealerReserve = $dealerReserve;
     }
 
     /**
-     * @return mixed
+     * @return ?ArrayCollection|PersistentCollection
      */
-    public function getReviewStatuses() { return $this->reviewStatuses; }
+    public function getReviewStatuses(): ArrayCollection|PersistentCollection|null
+    { return $this->reviewStatuses; }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getPrepayPenaltyTerm() { return $this->prepayPenaltyTerm; }
+    public function getPrepayPenaltyTerm():?int { return $this->prepayPenaltyTerm; }
 
     /**
-     * @param mixed $prepayPenaltyTerm
+     * @param int $prepayPenaltyTerm
      */
-    public function setPrepayPenaltyTerm($prepayPenaltyTerm)
+    public function setPrepayPenaltyTerm(int $prepayPenaltyTerm):void
     {
         $this->implementChange($this,'prepayPenaltyTerm', $this->prepayPenaltyTerm, $prepayPenaltyTerm);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getPrepayPenalty(){  return $this->prepayPenalty; }
+    public function getPrepayPenalty():?float {  return $this->prepayPenalty; }
 
     /**
-     * @param mixed $prepayPenalty
+     * @param float $prepayPenalty
      */
-    public function setPrepayPenalty($prepayPenalty)
+    public function setPrepayPenalty(float $prepayPenalty):void
     {
         $this->implementChange($this,'prepayPenalty', $this->prepayPenalty, $prepayPenalty);
     }
 
     /**
-     * @return array
+     * @return ?array
      */
-    public function getPrepayStepDown(): array { return $this->prepayStepDown; }
+    public function getPrepayStepDown(): ?array { return $this->prepayStepDown; }
 
     /**
      * @param array $prepayStepDown
@@ -1269,19 +1439,19 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return Loan\ArmAttribute|null
+     * @return ArmAttribute|null
      */
-    public function getArmAttributes() { return $this->armAttributes; }
+    public function getArmAttributes():?ArmAttribute { return $this->armAttributes; }
 
     /**
-     * @return Loan\CommAttribute|null
+     * @return CommAttribute|null
      */
-    public function getCommAttributes() { return $this->commAttributes; }
+    public function getCommAttributes():?CommAttribute { return $this->commAttributes; }
 
     /**
-     * @return Loan\SaleAttribute|null
+     * @return SaleAttribute|null
      */
-    public function getSaleAttributes() { return $this->saleAttributes; }
+    public function getSaleAttributes():?SaleAttribute { return $this->saleAttributes; }
 
 
 }

@@ -10,28 +10,30 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\MessageType")
- * @ORM\Table(name="MessageType")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessageType")
+ * \Doctrine\ORM\Mapping\Table(name="MessageType")
  */
-class MessageType
+class MessageType extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      **/
-    protected $type;
+    protected string $type='';
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="type")
-     * @var ArrayCollection
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $messages;
 
@@ -46,9 +48,9 @@ class MessageType
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -56,7 +58,7 @@ class MessageType
     /**
      * @return string
      */
-    public function getType()
+    public function getType():string
     {
         return $this->type;
     }
@@ -70,9 +72,9 @@ class MessageType
     }
 
     /**
-     * @return ArrayCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getMessages()
+    public function getMessages():PersistentCollection|ArrayCollection|null
     {
         return $this->messages;
     }

@@ -11,128 +11,213 @@ namespace App\Entity\Update;
 use App\Entity\DomainObject;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use App\Entity\Bond;
 use App\Entity\Period;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 /**
  * @author Samuel Belu-John
- *
- * @ORM\Entity
- * @ORM\Table(name="BondUpdate")
- * @ChangeTrackingPolicy("NOTIFY")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="BondUpdate")
+ * \Doctrine\ORM\Mapping\ChangeTrackingPolicy("NOTIFY")
  */
 class BondUpdate extends DomainObject
 {   
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      * @var int
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="updates")
-     * @var \App\Entity\Bond
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="updates")
+     * @var Bond
      **/
     protected $bond;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $startingBalance = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $endingBalance = 0;
-
-    /** @ORM\Column(name="reportDate", type = "datetime")
-     * @var \DateTime
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @var  float
      **/
-    protected $reportDate;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $calculatedInterest;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $interestPaid = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $scheduledPrincipalPayment;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $principalPaid;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $unscheduledPrincipalPayment;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
-    protected $principalLoss = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $interestLoss;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $unpaidInterest;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $deferredInterest;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $interestCarry;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $cumulativeRealizedLosses;
-
-    /** @ORM\Column(type="decimal", precision=8, scale=7, nullable=true) **/
-    protected $bondFactor;
-
-    /** @ORM\Column(type="decimal", precision=8, scale=7, nullable=true) **/
-    protected $currentOC;
-
-    /** @ORM\Column(type="decimal", precision=8, scale=7, nullable=true) **/
-    protected $interestShortfall;
-
-    /** @ORM\Column(type="decimal", precision=8, scale=7, nullable=true) **/
-    protected $unsupportedIntShortfall;
+    protected float $startingBalance = 0.0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="bondUpdate")
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @var float
+     **/
+    protected float $endingBalance = 0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(name="reportDate", type = "datetime")
+     * @var \DateTime
+     **/
+    protected  $reportDate;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $calculatedInterest;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @var float
+     **/
+    protected float $interestPaid = 0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $scheduledPrincipalPayment;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $principalPaid;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $unscheduledPrincipalPayment;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2)
+     * @var float
+     **/
+    protected float $principalLoss = 0.0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $interestLoss;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $unpaidInterest;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $deferredInterest;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $interestCarry;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $cumulativeRealizedLosses;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @var ?float
+     */
+    protected ?float $bondFactor;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $currentOC;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     *@var ?float
+     **/
+    protected ?float $interestShortfall;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=8, scale=7, nullable=true)
+     *@var ?float
+     **/
+    protected ?float $unsupportedIntShortfall;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="bondUpdate")
      * @var ArrayCollection
      **/
     protected $components;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="bondUpdates")
-     * @var \App\Entity\Period
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="bondUpdates")
+     * @var Period
      **/
     protected $period;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $startReserveBalance;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $reserveDraw;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $reserveDeposit;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) **/
-    protected $endReserveBalance;
-
-    /** @ORM\Column(type="integer", nullable=true)  **/
-    protected $isHistory = 0;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)  **/
-    protected $netHedge;
-
-    /** @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)  **/
-    protected $accretionAmount;
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     */
+    protected ?float $startReserveBalance;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
      **/
-    protected $updateStatus = 1;
+    protected ?float $reserveDraw;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $reserveDeposit;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $endReserveBalance;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=true)
+     * @var ?int
+     **/
+    protected ?int $isHistory = 0;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $netHedge;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @var ?float
+     **/
+    protected ?float $accretionAmount;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="integer", nullable=false)
+     * @var int
+     **/
+    protected int $updateStatus = 1;
 
     public function __construct()
     {
@@ -143,15 +228,15 @@ class BondUpdate extends DomainObject
     /**
      * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return Bond
+     * @return ?Bond
      */
-    public function getBond()
+    public function getBond():?Bond
     {
         return $this->bond;
     }
@@ -159,39 +244,39 @@ class BondUpdate extends DomainObject
     /**
      * @param Bond $bond
      */
-    public function setBond(Bond $bond)
+    public function setBond(Bond $bond):void
     {
         $this->implementChange($this,'bond', $this->bond, $bond);
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getStartingBalance()
+    public function getStartingBalance():float
     {
         return $this->startingBalance;
     }
 
     /**
-     * @param double $startingBalance
+     * @param float $startingBalance
      */
-    public function setStartingBalance($startingBalance)
+    public function setStartingBalance(float $startingBalance):void
     {
         $this->implementChange($this,'startingBalance', $this->startingBalance, $startingBalance);
     }
 
     /**
-     * @return double
+     * @return float
      */
-    public function getEndingBalance()
+    public function getEndingBalance():float
     {
         return $this->endingBalance;
     }
 
     /**
-     * @param double $endingBalance
+     * @param float $endingBalance
      */
-    public function setEndingBalance($endingBalance)
+    public function setEndingBalance(float $endingBalance):void
     {
         $this->implementChange($this,'endingBalance', $this->endingBalance, $endingBalance);
     }
@@ -199,7 +284,7 @@ class BondUpdate extends DomainObject
     /**
      * @return \DateTime
      */
-    public function getReportDate()
+    public function getReportDate():\DateTime
     {
         return $this->reportDate;
     }
@@ -207,255 +292,255 @@ class BondUpdate extends DomainObject
     /**
      * @param \DateTime $reportDate
      */
-    public function setReportDate(\DateTime $reportDate)
+    public function setReportDate(\DateTime $reportDate):void
     {
         $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }
 
     /**
-     * @return double
+     * @return ?float
      */
-    public function getCalculatedInterest()
+    public function getCalculatedInterest():?float
     {
         return $this->calculatedInterest;
     }
 
     /**
-     * @param double $calculatedInterest
+     * @param float $calculatedInterest
      */
-    public function setCalculatedInterest($calculatedInterest)
+    public function setCalculatedInterest(float $calculatedInterest):void
     {
         $this->implementChange($this,'calculatedInterest', $this->calculatedInterest, $calculatedInterest);
     }
 
     /**
-     * @return double
+     * @return ?float
      */
-    public function getInterestPaid()
+    public function getInterestPaid():?float
     {
         return $this->interestPaid;
     }
 
     /**
-     * @param double $interestPaid
+     * @param float $interestPaid
      */
-    public function setInterestPaid($interestPaid)
+    public function setInterestPaid(float $interestPaid):void
     {
         $this->implementChange($this,'interestPaid', $this->interestPaid, $interestPaid);
     }
 
     /**
-     * @return double
+     * @return ?float
      */
-    public function getScheduledPrincipalPayment()
+    public function getScheduledPrincipalPayment():?float
     {
         return $this->scheduledPrincipalPayment;
     }
 
     /**
-     * @param double $scheduledPrincipalPayment
+     * @param float $scheduledPrincipalPayment
      */
-    public function setScheduledPrincipalPayment($scheduledPrincipalPayment)
+    public function setScheduledPrincipalPayment(float $scheduledPrincipalPayment):void
     {
         $this->implementChange($this,'scheduledPrincipalPayment', $this->scheduledPrincipalPayment, $scheduledPrincipalPayment);
     }
 
     /**
-     * @return double
+     * @return ?float
      */
-    public function getPrincipalPaid()
+    public function getPrincipalPaid():?float
     {
         return $this->principalPaid;
     }
 
     /**
-     * @param double $principalPaid
+     * @param float $principalPaid
      */
-    public function setPrincipalPaid($principalPaid)
+    public function setPrincipalPaid(float $principalPaid):void
     {
         $this->implementChange($this,'principalPaid', $this->principalPaid, $principalPaid);
     }
 
     /**
-     * @return double
+     * @return ?float
      */
-    public function getUnscheduledPrincipalPayment()
+    public function getUnscheduledPrincipalPayment():?float
     {
         return $this->unscheduledPrincipalPayment;
     }
 
     /**
-     * @param double $unscheduledPrincipalPayment
+     * @param float $unscheduledPrincipalPayment
      */
-    public function setUnscheduledPrincipalPayment($unscheduledPrincipalPayment)
+    public function setUnscheduledPrincipalPayment(float $unscheduledPrincipalPayment):void
     {
         $this->implementChange($this,'unscheduledPrincipalPayment', $this->unscheduledPrincipalPayment, $unscheduledPrincipalPayment);
     }
 
     /**
-     * @return double
+     * @return float
      */
-    public function getPrincipalLoss()
+    public function getPrincipalLoss():float
     {
         return $this->principalLoss;
     }
 
     /**
-     * @param double $principalLoss
+     * @param float $principalLoss
      */
-    public function setPrincipalLoss($principalLoss)
+    public function setPrincipalLoss(float $principalLoss):void
     {
         $this->implementChange($this,'principalLoss', $this->principalLoss, $principalLoss);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getInterestLoss()
+    public function getInterestLoss():?float
     {
         return $this->interestLoss;
     }
 
     /**
-     * @param mixed $interestLoss
+     * @param float $interestLoss
      */
-    public function setInterestLoss($interestLoss)
+    public function setInterestLoss(float $interestLoss):void
     {
         $this->implementChange($this,'interestLoss', $this->interestLoss, $interestLoss);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getUnpaidInterest()
+    public function getUnpaidInterest():?float
     {
         return $this->unpaidInterest;
     }
 
     /**
-     * @param mixed $unpaidInterest
+     * @param float $unpaidInterest
      */
-    public function setUnpaidInterest($unpaidInterest)
+    public function setUnpaidInterest(float $unpaidInterest):void
     {
         $this->implementChange($this,'unpaidInterest', $this->unpaidInterest, $unpaidInterest);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getDeferredInterest()
+    public function getDeferredInterest():?float
     {
         return $this->deferredInterest;
     }
 
     /**
-     * @param mixed $deferredInterest
+     * @param float $deferredInterest
      */
-    public function setDeferredInterest($deferredInterest)
+    public function setDeferredInterest(float $deferredInterest):void
     {
         $this->implementChange($this,'deferredInterest', $this->deferredInterest, $deferredInterest);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getInterestCarry()
+    public function getInterestCarry():?float
     {
         return $this->interestCarry;
     }
 
     /**
-     * @param mixed $interestCarry
+     * @param float $interestCarry
      */
-    public function setInterestCarry($interestCarry)
+    public function setInterestCarry(float $interestCarry):void
     {
         $this->implementChange($this,'interestCarry', $this->interestCarry, $interestCarry);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getCumulativeRealizedLosses()
+    public function getCumulativeRealizedLosses():?float
     {
         return $this->cumulativeRealizedLosses;
     }
 
     /**
-     * @param mixed $cumulativeRealizedLosses
+     * @param float $cumulativeRealizedLosses
      */
-    public function setCumulativeRealizedLosses($cumulativeRealizedLosses)
+    public function setCumulativeRealizedLosses(float $cumulativeRealizedLosses):void
     {
         $this->implementChange($this,'cumulativeRealizedLosses', $this->cumulativeRealizedLosses, $cumulativeRealizedLosses);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getBondFactor()
+    public function getBondFactor():?float
     {
         return $this->bondFactor;
     }
 
     /**
-     * @param mixed $bondFactor
+     * @param float $bondFactor
      */
-    public function setBondFactor($bondFactor)
+    public function setBondFactor(float $bondFactor):void
     {
         $this->implementChange($this,'bondFactor', $this->bondFactor, $bondFactor);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getCurrentOC()
+    public function getCurrentOC():?float
     {
         return $this->currentOC;
     }
 
     /**
-     * @param mixed $currentOC
+     * @param float $currentOC
      */
-    public function setCurrentOC($currentOC)
+    public function setCurrentOC(float $currentOC):void
     {
         $this->implementChange($this,'currentOC', $this->currentOC, $currentOC);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getInterestShortfall()
+    public function getInterestShortfall():?float
     {
         return $this->interestShortfall;
     }
 
     /**
-     * @param mixed $interestShortfall
+     * @param float $interestShortfall
      */
-    public function setInterestShortfall($interestShortfall)
+    public function setInterestShortfall(float $interestShortfall):void
     {
         $this->implementChange($this,'interestShortfall', $this->interestShortfall, $interestShortfall);
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getUnsupportedIntShortfall()
+    public function getUnsupportedIntShortfall():?float
     {
         return $this->unsupportedIntShortfall;
     }
 
     /**
-     * @param mixed $unsupportedIntShortfall
+     * @param float $unsupportedIntShortfall
      */
-    public function setUnsupportedIntShortfall($unsupportedIntShortfall)
+    public function setUnsupportedIntShortfall(float $unsupportedIntShortfall):void
     {
         $this->implementChange($this,'unsupportedIntShortfall', $this->unsupportedIntShortfall, $unsupportedIntShortfall);
     }
 
     /**
-     * @return ArrayCollection
+     * @return ?ArrayCollection
      */
-    public function getComponents()
+    public function getComponents():?ArrayCollection
     {
         return $this->components;
     }
@@ -472,7 +557,7 @@ class BondUpdate extends DomainObject
      *
      * @return Period
      */
-    public function getPeriod()
+    public function getPeriod():Period
     {
         return $this->period;
     }
@@ -480,135 +565,135 @@ class BondUpdate extends DomainObject
     /**
      * @param Period $period
      */
-    public function setPeriod(Period $period)
+    public function setPeriod(Period $period):void
     {
         $this->period = $period;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getStartReserveBalance()
+    public function getStartReserveBalance():?float
     {
         return $this->startReserveBalance;
     }
 
     /**
-     * @param mixed $startReserveBalance
+     * @param float $startReserveBalance
      */
-    public function setStartReserveBalance($startReserveBalance)
+    public function setStartReserveBalance(float $startReserveBalance):void
     {
         $this->startReserveBalance = $startReserveBalance;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getReserveDraw()
+    public function getReserveDraw():?float
     {
         return $this->reserveDraw;
     }
 
     /**
-     * @param mixed $reserveDraw
+     * @param float $reserveDraw
      */
-    public function setReserveDraw($reserveDraw)
+    public function setReserveDraw(float $reserveDraw):void
     {
         $this->reserveDraw = $reserveDraw;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getReserveDeposit()
+    public function getReserveDeposit():?float
     {
         return $this->reserveDeposit;
     }
 
     /**
-     * @param mixed $reserveDeposit
+     * @param float $reserveDeposit
      */
-    public function setReserveDeposit($reserveDeposit)
+    public function setReserveDeposit(float $reserveDeposit):void
     {
         $this->reserveDeposit = $reserveDeposit;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getEndReserveBalance()
+    public function getEndReserveBalance():?float
     {
         return $this->endReserveBalance;
     }
 
     /**
-     * @param mixed $endReserveBalance
+     * @param float $endReserveBalance
      */
-    public function setEndReserveBalance($endReserveBalance)
+    public function setEndReserveBalance(float $endReserveBalance):void
     {
         $this->endReserveBalance = $endReserveBalance;
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getIsHistory()
+    public function getIsHistory():?int
     {
         return $this->isHistory;
     }
 
     /**
-     * @param mixed $isHistory
+     * @param int $isHistory
      */
-    public function setIsHistory($isHistory)
+    public function setIsHistory(int $isHistory):void
     {
         $this->isHistory = $isHistory;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getNetHedge()
+    public function getNetHedge():?float
     {
         return $this->netHedge;
     }
 
     /**
-     * @param mixed $netHedge
+     * @param float $netHedge
      */
-    public function setNetHedge($netHedge)
+    public function setNetHedge(float $netHedge):void
     {
         $this->netHedge = $netHedge;
     }
 
     /**
-     * @return mixed
+     * @return ?float
      */
-    public function getAccretionAmount()
+    public function getAccretionAmount():?float
     {
         return $this->accretionAmount;
     }
 
     /**
-     * @param mixed $accretionAmount
+     * @param float $accretionAmount
      */
-    public function setAccretionAmount($accretionAmount)
+    public function setAccretionAmount(float $accretionAmount):void
     {
         $this->accretionAmount = $accretionAmount;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getUpdateStatus()
+    public function getUpdateStatus():int
     {
         return $this->updateStatus;
     }
 
     /**
-     * @param mixed $updateStatus
+     * @param int  $updateStatus
      */
-    public function setUpdateStatus($updateStatus)
+    public function setUpdateStatus(int $updateStatus):void
     {
         $this->updateStatus = $updateStatus;
     }

@@ -8,66 +8,73 @@
 
 namespace App\Entity\Typed;
 
-use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AnnotationMappings;
+//use Doctrine\ORM\Mapping as ORM;
 /**
  * @author Samuel Belu-John
- *
- * @ORM\Entity
- * @ORM\Table(name="FeeType")
+ * \Doctrine\ORM\Mapping\Entity
+ * \Doctrine\ORM\Mapping\Table(name="FeeType")
  */
-class FeeType
+class FeeType extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue */
-    protected $id;
-
-    /** @ORM\Column(type="string") */
-    protected $label;
-
-    /** @ORM\Column(type="string") */
-    protected $slug;
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
+     */
+    protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="type") */
+     * \Doctrine\ORM\Mapping\Column(type="string")
+     */
+    protected string $label;
+
+    /**
+     * \Doctrine\ORM\Mapping\Column(type="string")
+     */
+    protected string $slug;
+
+    /**
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="type")
+     */
     protected $fees;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLabel()
+    public function getLabel():string
     {
         return $this->label;
     }
 
     /**
-     * @param mixed $label
+     * @param string $label
      */
-    public function setLabel($label)
+    public function setLabel(string $label):void
     {
         $this->label = $label;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSlug()
+    public function getSlug():string
     {
         return $this->slug;
     }
 
     /**
-     * @param mixed $slug
+     * @param string $slug
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug):void
     {
         $this->slug = $slug;
     }

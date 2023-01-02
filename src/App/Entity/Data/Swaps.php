@@ -8,33 +8,34 @@
 
 namespace App\Entity\Data;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AnnotationMappings;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\Data\Swaps")
- * @ORM\Table(name="Swaps")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\Data\Swaps")
+ * \Doctrine\ORM\Mapping\Table(name="Swaps")
  */
-class Swaps
+class Swaps extends AnnotationMappings
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id @ORM\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      **/
-    protected $name;
+    protected string $name;
 
-    /** @ORM\Column(type="decimal", precision=9, scale=6, nullable = false) **/
-    protected $value;
+    /** \Doctrine\ORM\Mapping\Column(type="decimal", precision=9, scale=6, nullable = false) **/
+    protected float $value;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId() { return $this->id; }
+    public function getId():int { return $this->id; }
 
     /**
      * @return string
@@ -42,9 +43,9 @@ class Swaps
     public function getName(): string { return $this->name; }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getValue() { return $this->value; }
+    public function getValue():float { return $this->value; }
 
     /**
      * @param mixed $value

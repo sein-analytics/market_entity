@@ -8,51 +8,51 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\DueDilLoanStatus")
- * @ORM\Table(name="DueDilLoanStatus")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\DueDilLoanStatus")
+ * \Doctrine\ORM\Mapping\Table(name="DueDilLoanStatus")
  */
-class DueDilLoanStatus
+class DueDilLoanStatus extends AnnotationMappings
 {
-    protected $logObject = [
+    protected array $logObject = [
         'userId' => null,
         'date' => null,
         'action' => null
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="reviewStatuses")
-     * @ORM\JoinColumn(name="dd_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="reviewStatuses")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="dd_id", referencedColumnName="id", nullable=false)
      * @var DueDiligence
      */
     protected $diligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="reviewStatuses")
-     * @ORM\JoinColumn(name="ln_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="reviewStatuses")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="ln_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
     protected $loan;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDilReviewStatus", inversedBy="reviewStatuses")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
+     * \Doctrine\ORM\Mapping\ManyToOne(targetEntity="\App\Entity\DueDilReviewStatus", inversedBy="reviewStatuses")
+     * \Doctrine\ORM\Mapping\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DueDilReviewStatus
      */
     protected $reviewStatus;
 
     /**
-     * @ORM\Column(type="json", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="json", nullable=false)
      */
     protected $logger;
 
@@ -71,9 +71,9 @@ class DueDilLoanStatus
 
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -86,7 +86,7 @@ class DueDilLoanStatus
     /**
      * @param DueDiligence $diligence
      */
-    public function setDiligence(DueDiligence $diligence) { $this->diligence = $diligence; }
+    public function setDiligence(DueDiligence $diligence):void { $this->diligence = $diligence; }
 
     /**
      * @return Loan
@@ -96,7 +96,7 @@ class DueDilLoanStatus
     /**
      * @param Loan $loan
      */
-    public function setLoan(Loan $loan) { $this->loan = $loan; }
+    public function setLoan(Loan $loan):void { $this->loan = $loan; }
 
     /**
      * @return DueDilReviewStatus
@@ -106,7 +106,7 @@ class DueDilLoanStatus
     /**
      * @param DueDilReviewStatus $reviewStatus
      */
-    public function setReviewStatus(DueDilReviewStatus $reviewStatus)
+    public function setReviewStatus(DueDilReviewStatus $reviewStatus):void
     {
         $this->reviewStatus = $reviewStatus;
     }
@@ -119,7 +119,7 @@ class DueDilLoanStatus
     /**
      * @param array $logger
      */
-    public function setLogger(array $logger)
+    public function setLogger(array $logger):void
     {
         $this->logger = $logger;
     }

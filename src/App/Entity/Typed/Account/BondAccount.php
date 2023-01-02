@@ -14,18 +14,19 @@ use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
 /**
- * @ORM\Entity
+ * \Doctrine\ORM\Mapping\Entity
  */
 class BondAccount extends Account
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Bond", inversedBy = "accounts")
+     * \Doctrine\ORM\Mapping\ManyToMany(targetEntity="\App\Entity\Bond", inversedBy = "accounts")
      *
      */
     protected $bonds;
@@ -39,7 +40,7 @@ class BondAccount extends Account
     /**
      * @return ArrayCollection
      */
-    public function getMappedEntities()
+    public function getMappedEntities():ArrayCollection
     {
         return $this->bonds;
     }
@@ -48,7 +49,8 @@ class BondAccount extends Account
      * @param TypedInterface $entity
      * @return $this|bool
      */
-    public function addAttached(TypedInterface $entity) {
+    public function addAttached(TypedInterface $entity): bool|static
+    {
         if(! $entity instanceof Bond){
             return false;
         }

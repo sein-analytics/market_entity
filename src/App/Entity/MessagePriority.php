@@ -8,38 +8,39 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\MessagePriority")
- * @ORM\Table(name="MessagePriority")
+ * \Doctrine\ORM\Mapping\Entity(repositoryClass="\App\Repository\MessagePriority")
+ * \Doctrine\ORM\Mapping\Table(name="MessagePriority")
  *
  */
-class MessagePriority
+class MessagePriority extends AnnotationMappings
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * \Doctrine\ORM\Mapping\Id
+     * \Doctrine\ORM\Mapping\Column(type="integer")
+     * \Doctrine\ORM\Mapping\GeneratedValue
      **/
-    protected $id;
+    protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * \Doctrine\ORM\Mapping\Column(type="string", nullable=false)
      * @var string
      *   */
-    protected $messagePriority;
+    protected string $messagePriority;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="priority")
-     * @var PersistentCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\Message", mappedBy="priority")
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="priority")
-     * @var PersistentCollection
+     * \Doctrine\ORM\Mapping\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="priority")
+     * @var PersistentCollection|ArrayCollection|null
      */
     protected $issues;
 
@@ -54,13 +55,15 @@ class MessagePriority
     public function getMessagePriority(): string { return $this->messagePriority; }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getMessages() :PersistentCollection { return $this->messages; }
+    public function getMessages() :PersistentCollection|ArrayCollection|null
+    { return $this->messages; }
 
     /**
-     * @return PersistentCollection
+     * @return PersistentCollection|ArrayCollection|null
      */
-    public function getIssues() :PersistentCollection { return $this->issues; }
+    public function getIssues() :PersistentCollection|ArrayCollection|null
+    { return $this->issues; }
 
 }
