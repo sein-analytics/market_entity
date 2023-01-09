@@ -16,7 +16,7 @@ use App\Entity\Period;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\MappedSuperClass
+ * @ORM\MappedSuperclass
  * @ORM\ChangeTrackingPolicy("NOTIFY")
  * */
 abstract class AbstractTypeUpdate extends DomainObject

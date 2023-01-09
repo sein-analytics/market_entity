@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
 /**
- * @ORM\MappedSuperClass
+ * @ORM\MappedSuperclass
  * @ORM\Entity
  * @ORM\Table(name="Account")
  * @ORM\DiscriminatorColumn(name="accountClass", type="string")
