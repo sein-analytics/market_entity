@@ -99,25 +99,25 @@ class DealFile extends EntityRepository
         );
     }
 
-    public function updateFilePathById (int $fileId):mixed
+    public function updateFilePathById (int $fileId, string $filePath):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->updateFilePathByIdSql,
             self::EXECUTE_MTHD,
-            [$fileId]
+            [$filePath, $fileId]
         );
     }
 
-    public function updateAssetIdById (int $fileId)
+    public function updateAssetIdById (int $fileId, string $assetId)
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->updateAssetIdByIdSql,
             self::EXECUTE_MTHD,
-            [$fileId]
+            [$assetId, $fileId]
         );
     }
-    
+
 
 }
