@@ -18,11 +18,11 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 
 class DealFile extends EntityRepository
-    implements SqlManagerTraitInterface, DealFileInterface
+    implements SqlManagerTraitInterface, DealFileInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
-    static $table = [
+    static array $table = [
         self::DF_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         self::DF_DEAL_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         self::DF_USER_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
@@ -39,6 +39,12 @@ class DealFile extends EntityRepository
         self::DF_SIG_ID => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         self::DF_SIG_PATH => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
     ];
+
+    private string $updateAssetIdByIdSql = "UPDATE DealFile SET asset_id=? WHERE id=?";
+
+    private string $updateFilePathByIdSql = "UPDATE DealFile SET public_path=? WHERE id=?";
+
+    private string $fileIdFromPath = "SELECT id FROM DealFile WHERE public_path=?";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -82,4 +88,36 @@ class DealFile extends EntityRepository
     {
         return array_keys(self::$table);
     }
+
+    public function fetchFileIdFromPath(string $path):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fileIdFromPath,
+            self::FETCH_NUMERIC_MTHD,
+            [$path]
+        );
+    }
+
+    public function updateFilePathById (int $fileId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateFilePathByIdSql,
+            self::EXECUTE_MTHD,
+            [$fileId]
+        );
+    }
+
+    public function updateAssetIdById (int $fileId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateAssetIdByIdSql,
+            self::EXECUTE_MTHD,
+            [$fileId]
+        );
+    }
+    
+
 }
