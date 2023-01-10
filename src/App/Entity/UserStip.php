@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="\App\Repository\UserStip")
  * @ORM\Table(name="UserStip")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifeCycleCallbacks()
  */
 class UserStip extends DomainObject
 {

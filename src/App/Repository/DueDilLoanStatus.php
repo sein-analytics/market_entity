@@ -15,7 +15,6 @@ use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use function Lambdish\phunctional\{each};
-use function PHPUnit\TestFixture\func;
 
 class DueDilLoanStatus extends DueDiligenceAbstract
 {

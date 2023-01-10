@@ -573,7 +573,7 @@ class Loan extends DomainObject
     /**
      * @param string  $loanId
      */
-    public function setLoanId(string $loanId):int
+    public function setLoanId(string $loanId):void
     {
         $this->implementChange($this,'loanId', $this->loanId, $loanId);
     }

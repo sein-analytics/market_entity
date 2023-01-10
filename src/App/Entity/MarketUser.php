@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
  * @ORM\Table(name="MarketUser")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifeCycleCallbacks()
  */
 class MarketUser
     extends DomainObject

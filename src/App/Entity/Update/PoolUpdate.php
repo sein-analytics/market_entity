@@ -440,7 +440,7 @@ class PoolUpdate extends DomainObject
     /**
      * @param float $bondRegularPrincipalCalc
      */
-    public function setBondRegularPrincipalCalc(float $bondRegularPrincipalCalc):?float
+    public function setBondRegularPrincipalCalc(float $bondRegularPrincipalCalc):void
     {
         $this->implementChange($this,'bondRegularPrincipalCalc', $this->bondRegularPrincipalCalc, $bondRegularPrincipalCalc);
     }

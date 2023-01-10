@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="\App\Repository\Message")
  * @ORM\Table(name="Message")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifeCycleCallbacks()
  */
 class Message extends DomainObject
 {
