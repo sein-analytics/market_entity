@@ -7,12 +7,13 @@ use App\Entity\Update\BondUpdate;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Bond")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifecycleCallbacks
+ * @HasLifecycleCallbacks
  *
  */
 class Bond extends DomainObject

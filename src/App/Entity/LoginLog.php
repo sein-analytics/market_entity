@@ -11,12 +11,13 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\LoginLog")
  * @ORM\Table(name="LoginLog")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks()
+ * @HasLifecycleCallbacks
  */
 class LoginLog extends DomainObject
 {
