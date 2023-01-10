@@ -18,6 +18,7 @@ use App\Entity\Typed\StatusType;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 
 class MappedUserType
@@ -26,7 +27,7 @@ class MappedUserType
      * @ORM\Entity(repositoryClass="\App\Repository\MappedUserType")
      * @ORM\Table(name="MappedUserType")
      * @ChangeTrackingPolicy("NOTIFY")
-     * @ORM\HasLifeCycleCallbacks
+     * @HasLifecycleCallbacks
      */
 
 

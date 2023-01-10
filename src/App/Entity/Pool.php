@@ -12,12 +12,13 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\Pool")
  * @ORM\Table(name="Pool")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks()
+ * @HasLifecycleCallbacks
  */
 class Pool extends DomainObject
 {

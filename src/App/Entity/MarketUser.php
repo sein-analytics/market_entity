@@ -15,6 +15,7 @@ use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notification;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
  * @ORM\Table(name="MarketUser")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks()
+ * @HasLifecycleCallbacks
  */
 class MarketUser
     extends DomainObject
