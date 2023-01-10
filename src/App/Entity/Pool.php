@@ -17,7 +17,7 @@ use Doctrine\ORM\PersistentCollection;
  * @ORM\Entity(repositoryClass="\App\Repository\Pool")
  * @ORM\Table(name="Pool")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifeCycleCallbacks()
  */
 class Pool extends DomainObject
 {

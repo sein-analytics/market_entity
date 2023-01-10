@@ -15,7 +15,6 @@ use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Result;
 use Doctrine\ORM\Query;
-use JetBrains\PhpStorm\ArrayShape;
 use function Lambdish\phunctional\{each};
 
 class DueDiligence extends DueDiligenceAbstract
@@ -283,7 +282,7 @@ class DueDiligence extends DueDiligenceAbstract
 
     public function returnTablePropsArray ():array { return $this->tableProps; }
 
-    #[ArrayShape([self::MANY_TO_MANY_DD_ID_KEY => "null", self::MANY_TO_MANY_FILE_ID_KEY => "null"])] public function returnDealFileDdManyToManyProps ():array
+    public function returnDealFileDdManyToManyProps ():array
     {
         return [
             self::MANY_TO_MANY_DD_ID_KEY => null,

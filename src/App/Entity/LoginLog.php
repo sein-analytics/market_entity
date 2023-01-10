@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="\App\Repository\LoginLog")
  * @ORM\Table(name="LoginLog")
  * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifeCycleCallbacks()
  */
 class LoginLog extends DomainObject
 {

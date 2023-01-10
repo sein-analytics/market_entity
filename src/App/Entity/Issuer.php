@@ -141,7 +141,7 @@ class Issuer extends AnnotationMappings
     /**
      * @param string $issuerName
      */
-    public function setIssuerName(string $issuerName):string { $this->issuerName = $issuerName; }
+    public function setIssuerName(string $issuerName):void { $this->issuerName = $issuerName; }
 
     /**
      * @param \DateTime $approvedDate

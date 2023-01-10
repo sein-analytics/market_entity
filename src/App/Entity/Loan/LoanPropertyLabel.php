@@ -13,7 +13,6 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
-use JetBrains\PhpStorm\ArrayShape;
 use Doctrine\ORM\Mapping as ORM;
 class LoanPropertyLabel extends EntityRepository
 {
@@ -321,7 +320,6 @@ class LoanPropertyLabel extends EntityRepository
      * @param string $search2
      * @return array
      */
-    #[ArrayShape([self::HAY_KEY => "string", self::SEARCH_KEY => "string"])]
     public function searchVsHaystack(string $search1, string $search2):array
     {
         if(strlen($search1) >= strlen($search2)){
