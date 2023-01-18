@@ -53,11 +53,12 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     public function updateLoggerByStatusId(int $id, array $logger):mixed
     {
+
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->updateLoggerSql,
             self::EXECUTE_MTHD,
-            [$logger, $id]
+            [json_encode($logger), $id]
         );
     }
 
