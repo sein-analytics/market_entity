@@ -50,6 +50,10 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $deleteFromManyToManySql = "DELETE FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
 
+    private string $leadDdIdsUserIdsByDealIdSql = "SELECT id, user_id FROM `DueDiligence` WHERE dd_role_id=1 AND deal_id=?;";
+
+    private string $dueDilIdsUserIdsByDealIdSql = "SELECT id, user_id FROM `DueDiligence` WHERE deal_id=?;";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -288,6 +292,26 @@ class DueDiligence extends DueDiligenceAbstract
             self::MANY_TO_MANY_DD_ID_KEY => null,
             self::MANY_TO_MANY_FILE_ID_KEY => null
         ];
+    }
+
+    public function leadDueDilIdsUserIdsByDealId (int $dealId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->leadDdIdsUserIdsByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+    }
+
+    public function dueDilIdsUserIdsByDealId (int $dealId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->dueDilIdsUserIdsByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
     }
 
 }

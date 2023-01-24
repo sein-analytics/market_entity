@@ -46,6 +46,10 @@ class DealFile extends EntityRepository
 
     private string $fileIdFromPath = "SELECT id FROM DealFile WHERE public_path=?";
 
+    private string $attachFileToLoanSql = "UPDATE DealFile SET loan_id=? WHERE id=?";
+
+    private string $detachFileFromLoanSql = "UPDATE DealFile SET loan_id=NULL WHERE id=?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -116,6 +120,26 @@ class DealFile extends EntityRepository
             $this->updateAssetIdByIdSql,
             self::EXECUTE_MTHD,
             [$assetId, $fileId]
+        );
+    }
+
+    public function attachFileToLoan(int $loanId, int $fileId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->attachFileToLoanSql,
+            self::EXECUTE_MTHD,
+            [$loanId, $fileId]
+        );
+    }
+
+    public function detachFileFromLoan($fileId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->detachFileFromLoanSql,
+            self::EXECUTE_MTHD,
+            [$fileId]
         );
     }
 
