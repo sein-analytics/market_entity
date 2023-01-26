@@ -52,6 +52,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $leadDdIdsUserIdsByDealIdSql = "SELECT id, user_id FROM `DueDiligence` WHERE dd_role_id=1 AND deal_id=?;";
 
+    private string $allDdUserFileAccessSql = "SELECT id, user_id FROM DueDiligence WHERE id IN (SELECT due_diligence_id FROM deal_file_due_diligence WHERE deal_file_id=?)";
+
     private string $dueDilIdsUserIdsByDealIdSql = "SELECT id, user_id FROM `DueDiligence` WHERE deal_id=?;";
 
     public function insertNewDueDiligence(array $params):mixed
@@ -301,6 +303,16 @@ class DueDiligence extends DueDiligenceAbstract
             $this->leadDdIdsUserIdsByDealIdSql,
             self::FETCH_ALL_ASSO_MTHD,
             [$dealId]
+        );
+    }
+
+    public function allDueDilIdsUserIdsByFileId (int $fileId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->allDdUserFileAccessSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$fileId]
         );
     }
 
