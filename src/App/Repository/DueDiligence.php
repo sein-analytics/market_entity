@@ -50,7 +50,7 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $deleteFromManyToManySql = "DELETE FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
 
-    private string $leadDdIdsUserIdsByDealIdSql = "SELECT dueDil.id, dueDil.user_id, dueDil.bid_id, CONCAT(mktUsers.first_name,' ', mktUsers.last_name) AS ddUserName, Issuer.id AS ddUserIssuerId FROM `DueDiligence` dueDil LEFT JOIN MarketUser mktUsers ON mktUsers.id = dueDil.user_id LEFT JOIN Issuer on Issuer.id = mktUsers.issuer_id WHERE dd_role_id=1 AND deal_id=?;";
+    private string $leadDdIdsUserIdsByDealIdSql = "SELECT dueDil.id, dueDil.user_id, dueDil.bid_id, CONCAT(mktUsers.first_name,' ', mktUsers.last_name) AS ddUserName, Issuer.id AS ddUserIssuerId, Issuer.issuer_name AS buyersCompany FROM `DueDiligence` dueDil LEFT JOIN MarketUser mktUsers ON mktUsers.id = dueDil.user_id LEFT JOIN Issuer on Issuer.id = mktUsers.issuer_id WHERE dd_role_id=1 AND deal_id=?;";
 
     private string $allDdUserFileAccessSql = "SELECT id, user_id FROM DueDiligence WHERE id IN (SELECT due_diligence_id FROM deal_file_due_diligence WHERE deal_file_id=?)";
 
