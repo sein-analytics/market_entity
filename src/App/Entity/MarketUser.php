@@ -737,6 +737,9 @@ class MarketUser
     public function getStips() :ArrayCollection|PersistentCollection|null
     { return $this->stips; }
 
+    public function getPhone():string
+    { return $this->phone; }
+
     public function loginToArray()
     {
         return [
