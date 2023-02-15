@@ -54,6 +54,18 @@ interface DueDiligenceInterface
 
     const ANNOTATION_API_KEY = "annotationItem";
 
+    const API_ANNOTATION_ID_KEY = "annotationId";
+
+    const API_ANNOTATION_NOTE_KEY = "note";
+
+    const API_ANNOT_NOTIFY_SELLER_KEY = "notifySeller";
+
+    const API_ANNOT_NOTIFY_TEAM_KEY = "notifyTeam";
+
+    const API_ANNOT_IMPORTANT_KEY = "important";
+
+    const API_ANNOT_IS_ISSUE_KEY = "isIssue";
+
     const DD_USER_API_KEY = "dueDiligenceUser";
 
     const DD_FILE_USER_KEY = "dueDiligenceFileUser";
