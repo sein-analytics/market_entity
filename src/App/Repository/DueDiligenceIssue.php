@@ -55,6 +55,8 @@ class DueDiligenceIssue extends DueDiligenceAbstract
 
     private string $closeIssueSql = "UPDATE DueDiligenceIssue SET status_id=?, closed_date=? WHERE id=?";
 
+    private string $issueIdByAnnotIdSql = "SELECT id FROM DueDiligenceIssue WHERE annotation_id=?";
+
     public function insertNewDueDiligenceIssue(array $params): mixed
     {
         if (array_key_exists(self::ISS_QRY_ID_KEY, $params))
@@ -100,6 +102,16 @@ class DueDiligenceIssue extends DueDiligenceAbstract
             return false;
     }
 
+    public function fetchIssueIdByAnnotationId(string $annotId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->issueIdByAnnotIdSql,
+            self::FETCH_ONE_MTHD,
+            [$annotId]
+        );
+    }
+
     public function fetchAllIssueIds()
     {
         $sql = "SELECT id FROM DueDiligenceIssue";
@@ -133,6 +145,19 @@ class DueDiligenceIssue extends DueDiligenceAbstract
                $base[$key] = $props[self::TBL_PROP_DEFAULT_KEY];
        }, $this->tableProps);
        return $base;
+    }
+
+    public function dueDilIssueApiMapper():array
+    {
+        return [
+            self::QRY_DD_ID_KEY => self::API_DUE_DIL_ID_KEY,
+            self::QRY_FILE_ID_KEY => self::API_DD_FILE_ID_KEY,
+            self::QRY_LOAN_ID_KEY => self::API_LOAN_ID_KEY,
+            self::QRY_ISS_TEXT => self::API_ANNOTATION_NOTE_KEY,
+            self::QRY_NOTIFY_SELLER_KEY => self::API_ANNOT_NOTIFY_SELLER_KEY,
+            self::QRY_NOTIFY_TEAM_KEY => self::API_ANNOT_NOTIFY_TEAM_KEY,
+            self::QRY_ANNO_ID_KEY => self::API_ANNOTATION_ID_KEY
+        ];
     }
 
     public function returnTablePropsArray (): array { return $this->tableProps; }
