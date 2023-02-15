@@ -126,6 +126,8 @@ interface DueDiligenceInterface
 
     const API_DD_PARENT_KEY = "ddParent";
 
+    const API_DD_ISSUE_ID_KEY = "issueId";
+
     const LOGGER_ACTIONS_BASE = [
         self::API_LOGGER_DATE_KEY => '',
         self::API_LOGGER_USER_ID_KEY => '',
