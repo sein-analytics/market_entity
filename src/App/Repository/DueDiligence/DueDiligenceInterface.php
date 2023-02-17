@@ -128,6 +128,26 @@ interface DueDiligenceInterface
 
     const API_DD_ISSUE_ID_KEY = "issueId";
 
+    const API_ANNOT_ISSUE_COMMENT_ACTION_KEY = "annotCommentIssueAction";
+
+    const API_ADD_NEW_ANNOTATION_ACTION = "addAnnotation";
+
+    const API_CREATE_NEW_ISSUE_ACTION = "createIssue";
+
+    const API_CLOSE_ISSUE_ACTION = "closeIssue";
+
+    const API_UPDATE_ANNOT_TEXT_ACTION = "updateAnnotNote";
+
+    const API_ADD_COMMENT_ACTION = "addNewComment";
+
+    const API_UPDATE_COMMENT_ACTION = "updateComment";
+
+    const API_DELETE_ANNOT_ACTION = "deleteAnnot";
+
+    const API_DELETE_COMMENT_ACTION = "deleteComment";
+
+    const API_RESIZE_ANNOT_ACTION = "resizeAnnot";
+
     const LOGGER_ACTIONS_BASE = [
         self::API_LOGGER_DATE_KEY => '',
         self::API_LOGGER_USER_ID_KEY => '',
