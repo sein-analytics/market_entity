@@ -57,6 +57,8 @@ class DueDiligenceIssue extends DueDiligenceAbstract
 
     private string $issueIdByAnnotIdSql = "SELECT id FROM DueDiligenceIssue WHERE annotation_id=?";
 
+    private string $updateIssueStringSql = "UPDATE DueDiligenceIssue SET issue=? WHERE id=?";
+
     public function insertNewDueDiligenceIssue(array $params): mixed
     {
         if (array_key_exists(self::ISS_QRY_ID_KEY, $params))
@@ -66,6 +68,16 @@ class DueDiligenceIssue extends DueDiligenceAbstract
             $this->insertIssueSql,
             self::EXECUTE_MTHD,
             array_values($params)
+        );
+    }
+
+    public function updateDueDiligenceIssueText (int $issueId, string $text):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateIssueStringSql,
+            self::EXECUTE_MTHD,
+            [$text, $issueId]
         );
     }
 
