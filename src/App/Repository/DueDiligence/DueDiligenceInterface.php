@@ -171,4 +171,16 @@ interface DueDiligenceInterface
         self::DD_QRY_BID_ID_KEY => null,
         self::DD_QRY_PARENT_ID_KEY => self::API_DUE_DIL_ID_KEY
     ];
+
+    const DUE_DIF_FILE_ANNOT_COMMENT_ISSUE_ACTIONS= [
+        self::API_ADD_NEW_ANNOTATION_ACTION,
+        self::API_CREATE_NEW_ISSUE_ACTION,
+        self::API_CLOSE_ISSUE_ACTION,
+        self::API_UPDATE_ANNOT_TEXT_ACTION,
+        self::API_ADD_COMMENT_ACTION,
+        self::API_UPDATE_COMMENT_ACTION,
+        self::API_DELETE_ANNOT_ACTION,
+        self::API_DELETE_COMMENT_ACTION,
+        self::API_RESIZE_ANNOT_ACTION
+    ];
 }
