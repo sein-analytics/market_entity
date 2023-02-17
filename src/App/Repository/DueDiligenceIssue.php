@@ -51,7 +51,7 @@ class DueDiligenceIssue extends DueDiligenceAbstract
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY=>self::TBL_PROP_NONE_DEFAULT],
     ];
 
-    private string $insertIssueSql = "INSERT INTO DueDiligenceIssue VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertIssueSql = "INSERT INTO DueDiligenceIssue VALUE (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $closeIssueSql = "UPDATE DueDiligenceIssue SET status_id=?, closed_date=? WHERE id=?";
 
