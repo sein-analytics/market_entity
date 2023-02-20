@@ -63,12 +63,26 @@ class DueDiligenceIssue extends DueDiligenceAbstract
     {
         if (array_key_exists(self::ISS_QRY_ID_KEY, $params))
             unset($params[self::ISS_QRY_ID_KEY]);
+        $params = $this->insertBoolToInt($params);
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->insertIssueSql,
             self::EXECUTE_MTHD,
             array_values($params)
         );
+    }
+
+    protected function insertBoolToInt (array $params):array
+    {
+        if ($params[self::QRY_NOTIFY_SELLER_KEY] === true)
+            $params[self::QRY_NOTIFY_SELLER_KEY] = 1;
+        else
+            $params[self::QRY_NOTIFY_SELLER_KEY] = 0;
+        if ($params[self::QRY_NOTIFY_TEAM_KEY] === true)
+            $params[self::QRY_NOTIFY_TEAM_KEY] = 1;
+        else
+            $params[self::QRY_NOTIFY_TEAM_KEY] = 0;
+        return $params;
     }
 
     public function updateDueDiligenceIssueText (int $issueId, string $text):mixed
