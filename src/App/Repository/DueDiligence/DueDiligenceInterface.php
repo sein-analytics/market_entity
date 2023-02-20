@@ -146,6 +146,10 @@ interface DueDiligenceInterface
 
     const API_DELETE_COMMENT_ACTION = "deleteComment";
 
+    const API_FILE_UPDATE_FILE_KEY = "updateFileData";
+
+    const API_FILE_UPDATE_LOAN_KEY = "updateFileLoanData";
+
     const API_RESIZE_ANNOT_ACTION = "resizeAnnot";
 
     const LOGGER_ACTIONS_BASE = [

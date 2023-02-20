@@ -107,4 +107,15 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         $base[self::DDLS_QRY_LOGGER_KEY][self::TBL_PROP_DEFAULT_KEY] = [json_encode(self::BASE_LOGGER_ARRAY)];
         return $base;
     }
+
+    public function updateLoggerApiIssueId (array $apiLogger, int $issueId):array
+    {
+        foreach ($apiLogger[self::API_FILE_UPDATE_LOAN_KEY][self::API_LOGGER_KEY][0][self::API_FILES_KEY][$apiLogger[self::API_FILE_UPDATE_FILE_KEY][self::API_DD_FILE_ID_KEY]] as $key => $annotArr){
+            if ($annotArr[self::API_ANNOTATION_ID_KEY] === $apiLogger[self::API_LOGGER_ACTION_DATA_KEY][self::API_ANNOTATION_ID_KEY]){
+                $apiLogger[self::API_FILE_UPDATE_LOAN_KEY][self::API_LOGGER_KEY][0][self::API_FILES_KEY][$apiLogger[self::API_FILE_UPDATE_FILE_KEY][self::API_DD_FILE_ID_KEY]][$key][self::API_DD_ISSUE_ID_KEY] = $issueId;
+                break;
+            }
+        }
+        return $apiLogger;
+    }
 }
