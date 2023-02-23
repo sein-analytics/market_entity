@@ -39,6 +39,8 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $updateStatusCodeSql = "UPDATE DueDilLoanStatus SET status_id=? WHERE id=?";
 
+    private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
+
     public function insertNewDueDilLoanStatus (array $params):mixed
     {
         if (array_key_exists(self::DDLS_QRY_ID_KEY , $params))
@@ -90,6 +92,16 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         return $results;
     }
 
+    public function deleteDdLoanStatusByDdIdLoanId(int $ddId, int $lnId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteStatusByDdIdLoanIdSql,
+            self::EXECUTE_MTHD,
+            [$ddId, $lnId]
+        );
+    }
+
     public function returnBaseInsertArray (): array
     {
         $base = [];
@@ -106,6 +118,15 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         $base = $this->tableProps;
         $base[self::DDLS_QRY_LOGGER_KEY][self::TBL_PROP_DEFAULT_KEY] = [json_encode(self::BASE_LOGGER_ARRAY)];
         return $base;
+    }
+
+    public function ddLoanStatusApiMapper ():array
+    {
+        return [
+            self::DDLS_QRY_DD_ID_KEY => self::API_DUE_DIL_ID_KEY,
+            self::DDLS_QRY_LOAN_ID_KEY => self::API_LOAN_ID_KEY,
+            self::DDLS_QRY_LOGGER_KEY => self::API_LOGGER_KEY
+        ];
     }
 
     public function updateLoggerApiIssueId (array $apiLogger, int $issueId):array
