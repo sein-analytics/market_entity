@@ -240,6 +240,9 @@ class LoanPropertyLabel extends EntityRepository
             $searches = preg_split('/\s+/', $dbData[self::SLUG_KEY]);
             foreach ($searches as $slug){
                 $search = $this->searchVsHaystack($userValue, $slug);
+                if(strlen($search[self::SEARCH_KEY]) === 0){
+                    continue;
+                }
                 $pos = strrpos($search[self::HAY_KEY], $search[self::SEARCH_KEY]);
                 if($pos !== FALSE){
                     $dbProperties[self::MAPPED_ID_KEY] =(int) $dbData['id'];
