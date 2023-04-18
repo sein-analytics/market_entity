@@ -8,20 +8,20 @@
 		}
 	],
 	"require-dev": {
-		"php": ">=8.2.5",
-		"doctrine/orm" : "^2.10.3",
-		"laravel-doctrine/orm": "^1.7.12",
+		"php": ">=8.0",
+		"doctrine/orm" : "^2.14.2",
+		"laravel-doctrine/orm": "^1.8.2",
 		"phpunit/phpunit": "^9.4"
 	},
 	"autoload": {
 		"classmap": [ "src/" ]
 	},
 	"require": {
-		"laravel/framework": "^9.0",
+		"laravel/framework": "^9.2",
 		"laravel-doctrine/migrations": "3.0.0",
 		"gedmo/doctrine-extensions": "^3.3.1",
 		"ext-json": "*",
-		"tymon/jwt-auth": "1.0.*",
+		"tymon/jwt-auth": "2.0.0",
 		"lambdish/phunctional": "^2.1",
 		"vlucas/phpdotenv": "v5.5.0"
 	},
