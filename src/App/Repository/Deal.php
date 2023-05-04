@@ -87,7 +87,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
     public function fetchUserMarketDealsFromIds(array $ids, $isMarket=true)
     {
         $sql = 'SELECT Deal.id, Deal.issuer_id, Deal.auction_type_id, Deal.asset_type_id, Deal.bid_type_id, Deal.issue, Deal.cut_off_date, Deal.closing_date, ' .
-                'Deal.current_balance, Deal.views, Deal.status_id, Deal.user_id, ' .
+                'Deal.current_balance, Deal.views, Deal.status_id, Deal.user_id, MarketUser.user_name' .
                 'MarketUser.first_name, MarketUser.last_name FROM Deal INNER JOIN MarketUser ON Deal.user_id = MarketUser.id ';
         if ($isMarket){ $sql .= 'WHERE Deal.status_id = 1 AND Deal.id IN (?) ORDER BY Deal.id ASC'; }
         else { $sql .= 'WHERE Deal.status_id IN (1,4) AND Deal.id IN (?) ORDER BY Deal.id ASC'; }
