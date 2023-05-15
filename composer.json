@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 	"name": "sein-analytics/market_entity",
 	"description": "Doctrine entity plugin for the sein market micro applications",
@@ -30,3 +31,37 @@
 	"minimum-stability": "dev",
 	"prefer-stable": false
 }
+=======
+{
+	"name": "sein-analytics/market_entity",
+	"description": "Doctrine entity plugin for the sein market micro applications",
+	"authors": [
+		{
+			"name": "Samuel Belu-John",
+			"email": "samuel.belujohn@seinanalytics.com"
+		}
+	],
+	"require-dev": {
+		"doctrine/orm" : "^2.14.2",
+		"laravel-doctrine/orm": "^1.8.2",
+		"phpunit/phpunit": "^9",
+		"phpstan/phpstan": "1.11.x-dev"
+	},
+	"autoload": {
+		"classmap": [ "src/" ]
+	},
+	"require": {
+		"php": ">=8.0",
+		"ext-json": "*",
+		"ext-dom": "*",
+		"laravel/framework": "^9.2",
+		"laravel-doctrine/migrations": "3.0.0",
+		"gedmo/doctrine-extensions": "^3.3.1",
+		"tymon/jwt-auth": "2.0.0",
+		"lambdish/phunctional": "^2.1",
+		"vlucas/phpdotenv": "v5.5.0"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": false
+}
+>>>>>>> 3dfa429 (fix: revert some changes from last commit)
