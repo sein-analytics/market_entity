@@ -23,6 +23,10 @@ abstract class DueDiligenceAbstract extends EntityRepository
 
     protected static string $callDiligenceTeamFileOwner = 'call DiligenceTeamFileOwner(:dealId, :fileId, :dueDilParentId)';
 
+    protected static string $callDueDilSellersLoanData = 'call DueDilSellersLoanData(:userIds)';
+
+    protected static string $callDueDilBuyersLoanData = 'call DueDilBuyersLoanData(:userIds)';
+
     protected static string $userPurchaseDueDiligenceDealIdsSql = 'SELECT deal_id AS id FROM `DueDiligence` WHERE user_id = ?';
 
     protected static string $dueDilLoanStatusByDdIdsLoanIdsSql = 'SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)';

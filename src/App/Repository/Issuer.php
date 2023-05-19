@@ -18,9 +18,12 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 
-class Issuer extends EntityRepository implements SqlManagerTraitInterface
+class Issuer extends EntityRepository
+    implements SqlManagerTraitInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
+
+    protected static string $userIdsByIssuerIdSql = 'SELECT id FROM MarketUser WHERE issuer_id=?';
     
     static $table = [
       'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
@@ -36,6 +39,16 @@ class Issuer extends EntityRepository implements SqlManagerTraitInterface
     {
         parent::__construct($em, $class);
         $this->em = $em;
+    }
+
+    public function fetchAllIssuerUserIds(int $issuerId)
+    {
+        $result = $this->buildAndExecuteFromSql($this->getEntityManager(),
+        self::$userIdsByIssuerIdSql, self::FETCH_ALL_KEY_VAL_MTHD, [$issuerId]
+        );
+        if (!is_array($result))
+            return $result;
+        return $this->flattenResultArrayByKey($result, self::QUERY_JUST_ID);
     }
 
     /**
