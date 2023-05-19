@@ -44,7 +44,7 @@ class Issuer extends EntityRepository
     public function fetchAllIssuerUserIds(int $issuerId)
     {
         $result = $this->buildAndExecuteFromSql($this->getEntityManager(),
-        self::$userIdsByIssuerIdSql, self::FETCH_ALL_KEY_VAL_MTHD, [$issuerId]
+        self::$userIdsByIssuerIdSql, self::FETCH_ALL_ASSO_MTHD, [$issuerId]
         );
         if (!is_array($result))
             return $result;
