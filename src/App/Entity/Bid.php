@@ -190,7 +190,7 @@ class Bid extends DomainObject
     /**
      * @return array
      */
-    public function getBidHistory():array
+    public function getBidHistory():?array
     {
         return $this->bidHistory;
     }

@@ -42,7 +42,7 @@ class DueDiligence
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="dueDiligence")
      */
-    protected ArrayCollection $issues;
+    protected $issues;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
@@ -77,17 +77,17 @@ class DueDiligence
      * associated with the user that placed the bid
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="parentId")
      */
-    protected ArrayCollection $ddMembers;
+    protected $ddMembers;
 
     /**
      * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
      */
-    protected ArrayCollection $files;
+    protected $files;
 
     /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
      */
-    protected ArrayCollection  $reviewStatuses;
+    protected $reviewStatuses;
 
     function __construct()
     {
