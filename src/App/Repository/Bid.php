@@ -34,8 +34,11 @@ class Bid extends EntityRepository
     const DD_KEY = 'dueDiligence';
     const LOI_KEY = 'loi';
     const MLPA_KEY = 'mlpa';
+    const EXECUTE_MTHD = 'execute';
 
     private $keepCountKey = false;
+
+    private string $updateBidHistorySql = "UPDATE Bid SET bid_history=? WHERE id=?";
 
     /**
      * @param array $dealIds
@@ -186,5 +189,15 @@ class Bid extends EntityRepository
             && $this->keepCountKey === true)
             return $result;
         return 0;
+    }
+
+    public function updateLoggerByStatusId(int $id, array $history):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateBidHistorySql,
+            self::EXECUTE_MTHD,
+            [json_encode($history), $id]
+        );
     }
 }
