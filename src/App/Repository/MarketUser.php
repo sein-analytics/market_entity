@@ -25,6 +25,8 @@ class MarketUser extends abstractMktUser
 {
     use FetchingTrait, FetchMapperTrait;
 
+    private string $updateUserStatusIdSql = "UPDATE MarketUser SET status_id=? WHERE id=?";
+
     function fetchUsersUuidFromIds(array $userIds)
     {
         $result = $this->executeProcedure([implode(', ', $userIds)],
@@ -305,5 +307,15 @@ class MarketUser extends abstractMktUser
         $query = $this->getEntityManager()->createQuery('SELECT * FROM MarketUser where id=:id');
         $query->setParameter('id', $userId);
         return $query->getResult(AbstractQuery::HYDRATE_OBJECT);
+    }
+
+    public function updateUserStatusById(int $id, int $statusId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateUserStatusIdSql,
+            self::EXECUTE_MTHD,
+            [$statusId, $id]
+        );
     }
 }
