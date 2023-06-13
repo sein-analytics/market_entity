@@ -12,7 +12,9 @@ class KickOutsLoan extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait;
 
-    private string $insertKickOutSql = "INSERT INTO KickOutLoan VALUE (null, ?, ?, ?)";
+    private string $insertKickOutSql = "INSERT INTO KickOutLoan VALUE (null, ?, ?, ?, ?)";
+
+    private string $getKickOusByBidIdSql = "";
 
     private array $tableProps = [
         self::KO_ID_KEY => [self::TBL_PROP_ENTITY_KEY => null,

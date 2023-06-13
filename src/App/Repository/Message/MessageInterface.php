@@ -48,7 +48,7 @@ interface MessageInterface
 
     const MSG_UNREAD_STATUS = 1;
 
-    const MSG_READ_STATUS = 1;
+    const MSG_READ_STATUS = 2;
 
     const PRIORITY_NORMAL = 1;
 
