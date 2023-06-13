@@ -85,7 +85,7 @@ class Bid extends DomainObject
     protected $dueDiligence;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\KickOutLoan", mappedBy="bid")
+     * @ORM\OneToMany(targetEntity="\App\Entity\KickOutsLoan", mappedBy="bid")
      * @var PersistentCollection | ArrayCollection
      */
     protected $carveOuts;
