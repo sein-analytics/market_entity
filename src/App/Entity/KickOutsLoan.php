@@ -24,6 +24,13 @@ class KickOutsLoan
     protected $bid;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan")
+     * @ORM\JoinColumn(name="loanId", referencedColumnName="id", nullable=false)
+     * @var Loan
+     */
+    protected $loan;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool")
      * @ORM\JoinColumn(name="poolId", referencedColumnName="id", nullable=false)
      * @var Pool
@@ -49,6 +56,14 @@ class KickOutsLoan
         return $this->bid;
     }
 
+    /**
+     * @return Loan
+     */
+    public function getLoanId(): Loan
+    {
+        return $this->loan;
+    }
+
     public function getPool():Pool {
         return $this->pool;
     }
@@ -63,6 +78,11 @@ class KickOutsLoan
     public function setBid(Bid $bid): void
     {
         $this->bid = $bid;
+    }
+
+    public function setLoan(Loan $loan)
+    {
+        $this->loan = $loan;
     }
 
     /**
