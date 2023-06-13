@@ -3,6 +3,7 @@
 namespace App\Entity;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -82,6 +83,18 @@ class Bid extends DomainObject
      * @var DueDiligence|null
      */
     protected $dueDiligence;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\KickOutLoan", mappedBy="bid")
+     * @var PersistentCollection | ArrayCollection
+     */
+    protected $carveOuts;
+
+    public function __construct()
+    {
+        $this->carveOuts = new ArrayCollection();
+        parent::__construct();
+    }
 
     /**
      * @return int
@@ -252,5 +265,7 @@ class Bid extends DomainObject
      * @param DueDiligence $dueDiligence
      */
     public function setDueDiligence(DueDiligence $dueDiligence) { $this->dueDiligence = $dueDiligence; }
+
+    public function getCarveOuts ():ArrayCollection|PersistentCollection { return $this->carveOuts; }
 
 }
