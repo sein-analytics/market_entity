@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 
+use App\Repository\Bid\BidInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\Driver\Statement;
@@ -21,20 +22,9 @@ use Doctrine\ORM\Query;
  * @package App\Repository
  */
 class Bid extends EntityRepository
+    implements DbalStatementInterface, BidInterface
 {
     use FetchMapperTrait, FetchingTrait;
-    const BID_DEAL = "deal_id";
-    const DD_STATUS = 4;
-    const LOI_STATUS_1 = 3;
-    const LOI_STATUS_2 = 7;
-    const MLPA_STATUS_1 = 5;
-    const MLPA_STATUS_2 = 10;
-    // Any modifications to the keys below should be reflected in methods
-    // that call the activity count methods below
-    const DD_KEY = 'dueDiligence';
-    const LOI_KEY = 'loi';
-    const MLPA_KEY = 'mlpa';
-    const EXECUTE_MTHD = 'execute';
 
     private $keepCountKey = false;
 
