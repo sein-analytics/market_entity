@@ -14,7 +14,7 @@ class KickOutsLoan extends EntityRepository
 
     private string $insertKickOutSql = "INSERT INTO KickOutLoan VALUE (null, ?, ?, ?, ?)";
 
-    private string $getKickOusByBidIdSql = "";
+    private string $kickOutsByBidIdsSql = "SELECT * FROM KickOutLoan WHERE bidId IN ()";
 
     private array $tableProps = [
         self::KO_ID_KEY => [self::TBL_PROP_ENTITY_KEY => null,
@@ -37,6 +37,19 @@ class KickOutsLoan extends EntityRepository
             self::EXECUTE_MTHD,
             array_values($params)
         );
+    }
+
+    public function fetchKickOutsByBidIds(array $bids)
+    {
+        $stmt = $this->returnMultiIntArraySqlStmt(
+            $this->getEntityManager(), $this->kickOutsByBidIdsSql, $bids
+        );
+        try{
+            $results = $stmt->fetchAllAssociative();
+        }catch (\Doctrine\DBAL\Driver\Exception $err){
+            $results = ["message" => $err->getMessage()];
+        }
+        return $results;
     }
 
     public function returnTablePropsArray () :array { return  $this->tableProps; }
