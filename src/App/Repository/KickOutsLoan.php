@@ -14,7 +14,7 @@ class KickOutsLoan extends EntityRepository
 
     private string $insertKickOutSql = "INSERT INTO KickOutLoan VALUE (null, ?, ?, ?, ?)";
 
-    private string $kickOutsByBidIdsSql = "SELECT * FROM KickOutLoan WHERE bidId IN ()";
+    private string $kickOutsByBidIdsSql = "SELECT * FROM KickOutLoan WHERE bidId IN (?)";
 
     private array $tableProps = [
         self::KO_ID_KEY => [self::TBL_PROP_ENTITY_KEY => null,
