@@ -46,7 +46,7 @@ class KickOutsLoan extends EntityRepository
                 $this->getEntityManager(),
                 $this->kickOutsByBidIdsSql,
                 self::FETCH_ALL_ASSO_MTHD,
-                array_values($bids)
+                [$bids]
             );
         }catch (\Doctrine\DBAL\Driver\Exception $err){
             $results = ["message" => $err->getMessage()];
