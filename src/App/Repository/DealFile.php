@@ -22,6 +22,8 @@ class DealFile extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
+    private static string $callFilesDataByLoanIds = 'call FilesDataByLoanIds(:loanIds)';
+
     static array $table = [
         self::DF_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         self::DF_DEAL_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
@@ -66,6 +68,11 @@ class DealFile extends EntityRepository
         $stmt = $this->em->getConnection()->prepare($sql);
         $stmt->bindValue(1, $dealId);
         return $this->completeIdFetchQuery($stmt);
+    }
+
+    public function fetchDdSalesLoansFilesData (array $loanIds)
+    {
+        return $this->executeProcedure([implode(', ', $loanIds)], self::$callFilesDataByLoanIds);
     }
 
     /**
