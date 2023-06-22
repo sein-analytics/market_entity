@@ -95,4 +95,12 @@ class DocAccess extends EntityRepository
             self::DA_QRY_FILE_ID_KEY => self::API_DD_FILE_ID_KEY
         ];
     }
+
+    public function createInsertParams($userId, $dealId, $documentId):array {
+        return [
+            self::DA_QRY_USER_ID_KEY => $userId,
+            self::DA_QRY_DEAL_ID_KEY => $dealId,
+            self::DA_QRY_FILE_ID_KEY => $documentId
+        ];
+    }
 }
