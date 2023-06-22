@@ -187,4 +187,10 @@ interface DueDiligenceInterface
         self::API_DELETE_COMMENT_ACTION,
         self::API_RESIZE_ANNOT_ACTION
     ];
+
+    const API_REQUESTER_ID_KEY = "requesterId";
+
+    const API_FILES_IDS_KEY = "filesIds";
+
+    const API_BIDDER_ID = "bidderId";
 }
