@@ -145,7 +145,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             self::DDLS_QRY_DD_ID_KEY => $dueDiligenceId,
             self::DDLS_QRY_LOAN_ID_KEY => $loanId,
             self::DDLS_QRY_STATUS_ID_KEY => self::DD_LN_OPEN,
-            self::DDLS_QRY_LOGGER_KEY => self::BASE_LOGGER_ARRAY,
+            self::DDLS_QRY_LOGGER_KEY => json_encode(self::BASE_LOGGER_ARRAY),
         ];
     }
 }
