@@ -197,4 +197,16 @@ interface DueDiligenceInterface
     const API_LOAN_NUMBER_KEY = "loanNumber";
 
     const GRANT_ACCESS_SUBJECT_TEXT = "Request for documents";
+
+    const BID_HISTORY_REQUESTS_KEY = "requests";
+ 
+    const BID_HISTORY_USERS_KEY = "users";
+
+    const BID_HISTORY_MSG_KEY = "message";
+
+    const BID_HISTORY_LOANS_KEY = "loans";
+
+    const BID_HISTORY_LOAN_STATUS_KEY = "status";
+
+    const BID_HISTORY_DOC_REQ_RESOLVED_TEXT = "Resolved";
 }
