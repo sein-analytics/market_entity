@@ -195,4 +195,6 @@ interface DueDiligenceInterface
     const API_BIDDER_ID = "bidderId";
 
     const API_LOAN_NUMBER_KEY = "loanNumber";
+
+    const GRANT_ACCESS_SUBJECT_TEXT = "Request for documents";
 }
