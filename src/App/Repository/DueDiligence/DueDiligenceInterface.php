@@ -193,4 +193,6 @@ interface DueDiligenceInterface
     const API_FILES_IDS_KEY = "filesIds";
 
     const API_BIDDER_ID = "bidderId";
+
+    const API_LOAN_NUMBER_KEY = "loanNumber";
 }
