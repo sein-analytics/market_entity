@@ -22,6 +22,8 @@ class DocAccess extends EntityRepository
 
     private string $deleteFromDocAccessSql = "DELETE FROM DocAccess WHERE user_id=? AND deal_id = ? AND document_id = ?";
 
+    private string $multipleInsertDocAccessSql = "INSERT INTO DocAccess (`user_id`, `deal_id`, `document_id`) VALUES";
+
     private array $tableProps = [
         self::DA_QRY_ID_KEY => [self::TBL_PROP_ENTITY_KEY => null,
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => null],
@@ -102,5 +104,30 @@ class DocAccess extends EntityRepository
             self::DA_QRY_DEAL_ID_KEY => $dealId,
             self::DA_QRY_FILE_ID_KEY => $documentId
         ];
+    }
+
+    public function addUsersDocAccess(array $usersIds, int $dealId, array $documentsIds)
+    {
+        $base = $this->multipleInsertDocAccessSql;
+        $userInsertCount = 0;
+        $docsInsertCount = 0;
+        foreach ($usersIds as $userId) {
+            $userInsertCount++;
+            foreach ($documentsIds as $documentId) {
+                $base = $base . PHP_EOL .
+                    '(' . $userId . ',' . $dealId . ',' . $documentId . ')' .
+                    ($userInsertCount == count($usersIds) &&
+                        $docsInsertCount + 1 == count($documentsIds) *
+                        count($usersIds) ? ';' : ','
+                    );
+                $docsInsertCount++;
+            }
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $base,
+            self::EXECUTE_MTHD,
+            []
+        );
     }
 }
