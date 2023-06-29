@@ -56,6 +56,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $dueDilIdsUserIdsByDealIdSql = "SELECT id, user_id FROM `DueDiligence` WHERE deal_id=?;";
 
+    private string $multipleInsertsDealFileDd = "INSERT INTO deal_file_due_diligence (`due_diligence_id`, `deal_file_id`) VALUES";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -341,4 +343,29 @@ class DueDiligence extends DueDiligenceAbstract
         );
     }
 
+    public function addMultiDealFileDdInputs(array $dueDiligenceIds, array $filesIds)
+    {  
+        $base = $this->multipleInsertsDealFileDd;
+        $ddInsertCount = 0;
+        $fileInsertCount = 0;
+        foreach ($dueDiligenceIds as $ddId) {
+            $ddInsertCount++;
+            foreach($filesIds as $fileId) {
+                $fileInsertCount++;
+                $base = $base . PHP_EOL .
+                '(' . $ddId  . ',' . $fileId . ')'.
+                    (
+                        $ddInsertCount == count($dueDiligenceIds) &&
+                        $fileInsertCount == count($filesIds) *
+                        count($dueDiligenceIds) ? ';' : ','
+                    );
+            }
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $base,
+            self::EXECUTE_MTHD,
+            []
+        );
+    }
 }
