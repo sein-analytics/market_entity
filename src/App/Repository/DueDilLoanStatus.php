@@ -41,6 +41,8 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
 
+    private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`) VALUES";
+
     public function insertNewDueDilLoanStatus (array $params):mixed
     {
         if (array_key_exists(self::DDLS_QRY_ID_KEY , $params))
@@ -147,5 +149,26 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             self::DDLS_QRY_STATUS_ID_KEY => self::DD_LN_OPEN,
             self::DDLS_QRY_LOGGER_KEY => json_encode(self::BASE_LOGGER_ARRAY),
         ];
+    }
+
+    public function addMultiDdLoanStatusInputs(int $loanId, array $dueDiligencesIds)
+    {
+        $base = $this->multipleInsertsDdLoanStatus;
+        $ddInsertCount = 0;
+        foreach ($dueDiligencesIds as $ddId) {
+            $ddInsertCount++;
+            $base = $base . PHP_EOL .
+            '(' .
+                $ddId . ',' . $loanId . ',' .
+                self::DD_LN_OPEN . ',"' . 
+                addslashes(json_encode([self::BASE_LOGGER_ARRAY])) .
+            '")' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $base,
+            self::EXECUTE_MTHD,
+            []
+        );
     }
 }
