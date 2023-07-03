@@ -209,4 +209,6 @@ interface DueDiligenceInterface
     const BID_HISTORY_LOAN_STATUS_KEY = "status";
 
     const BID_HISTORY_DOC_REQ_RESOLVED_TEXT = "Resolved";
+
+    const BID_HISTORY_LOANS_RESOLVED_KEY = "loansResolved";
 }
