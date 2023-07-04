@@ -4,6 +4,8 @@ namespace App\Repository\DueDiligence;
 
 interface DueDilCommentsInterface
 {
+    const DD_COMMENTS_COLLECTION_NAME = "comments";
+
     const DD_COMMENT_MONGO_ID_KEY = "_id";
 
     const DD_COMMENT_LOAN_ID_KEY = "loanId";
@@ -33,4 +35,12 @@ interface DueDilCommentsInterface
     const DD_COMMENT_RESOLVED_ISSUE_KEY = "resolvedIssue";
 
     const DD_COMMENT_ANNOT_PROPERTIES_KEY = "annotationProperties";
+
+    const VALIDATOR_NULLABLE_TYPE = "nullable";
+
+    const VALIDATOR_BOOLEAN_TYPE = "boolean";
+
+    const VALIDATOR_STRING_TYPE = "string";
+
+    const VALIDATOR_DATE_TYPE = "date";
 }
