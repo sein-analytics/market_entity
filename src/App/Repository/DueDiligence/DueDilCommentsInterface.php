@@ -4,6 +4,7 @@ namespace App\Repository\DueDiligence;
 
 interface DueDilCommentsInterface
 {
+
     const DD_COMMENTS_COLLECTION_NAME = "comments";
 
     const DD_COMMENT_MONGO_ID_KEY = "_id";
@@ -49,4 +50,23 @@ interface DueDilCommentsInterface
     const DD_COMMENT_REQ_ERROR_MESSAGE_KEY = "message";
     
     const DD_COMMENT_INVALID_ID_TEXT = "Invalid id sent in request";
+
+    const DD_COMMENT_INVALID_KEYS_TEXT = "Invalid properties sent in request";
+
+    const DD_COMMENTS_VALID_KEYS = [
+        self::DD_COMMENT_LOAN_ID_KEY,
+        self::DD_COMMENT_FILE_ID,
+        self::DD_COMMENT_PARENT_KEY,
+        self::DD_COMMENT_LOAN_SUBJECT_KEY,
+        self::DD_COMMENT_LOAN_NOTE_KEY,
+        self::DD_COMMENT_AUTHOR_ID_KEY,
+        self::DD_COMMENT_AUTHOR_NAME_KEY,
+        self::DD_COMMENT_DATE_KEY,
+        self::DD_COMMENT_IS_ISSUE_KEY,
+        self::DD_COMMENT_IS_IMPORTANT_KEY,
+        self::DD_COMMENT_NOTIFY_SELLER_KEY,
+        self::DD_COMMENT_NOTIFY_TEAM_KEY,
+        self::DD_COMMENT_RESOLVED_ISSUE_KEY,
+        self::DD_COMMENT_ANNOT_PROPERTIES_KEY
+    ];
 }
