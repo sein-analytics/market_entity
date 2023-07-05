@@ -161,7 +161,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             '(' .
                 $ddId . ',' . $loanId . ',' .
                 self::DD_LN_OPEN . ',"' . 
-                addslashes(json_encode([self::BASE_LOGGER_ARRAY])) .
+                $this->baseDdLogger() .
             '")' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
         }
         return $this->buildAndExecuteFromSql(
@@ -170,5 +170,12 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             self::EXECUTE_MTHD,
             []
         );
+    }
+
+    public function baseDdLogger()
+    {
+        $baseLogger = self::BASE_LOGGER_ARRAY;
+        $baseLogger[self::LOG_DATE_KEY] = date('Y-m-d H:i:s');
+        return addslashes(json_encode([$baseLogger]));
     }
 }
