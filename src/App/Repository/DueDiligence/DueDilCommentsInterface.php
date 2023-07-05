@@ -69,4 +69,10 @@ interface DueDilCommentsInterface
         self::DD_COMMENT_RESOLVED_ISSUE_KEY,
         self::DD_COMMENT_ANNOT_PROPERTIES_KEY
     ];
+
+    const MONGO_SET_KEY = '$set';
+
+    const MONGO_BASE_UPDATE_STRUCTURE = [
+        self::MONGO_SET_KEY => []
+    ];
 }
