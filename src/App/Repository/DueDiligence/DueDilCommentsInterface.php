@@ -8,6 +8,8 @@ interface DueDilCommentsInterface
 
     const DD_COMMENT_MONGO_ID_KEY = "_id";
 
+    const DD_COMMENT_REQUEST_ID = "id";
+
     const DD_COMMENT_LOAN_ID_KEY = "loanId";
 
     const DD_COMMENT_FILE_ID = "fileId";
@@ -43,4 +45,8 @@ interface DueDilCommentsInterface
     const VALIDATOR_STRING_TYPE = "string";
 
     const VALIDATOR_DATE_TYPE = "date";
+
+    const DD_COMMENT_REQ_ERROR_MESSAGE_KEY = "message";
+    
+    const DD_COMMENT_INVALID_ID_TEXT = "Invalid id sent in request";
 }
