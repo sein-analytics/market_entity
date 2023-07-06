@@ -39,6 +39,8 @@ interface DueDilCommentsInterface
 
     const DD_COMMENT_ANNOT_PROPERTIES_KEY = "annotationProperties";
 
+    const DD_COMMENTS_REPLIES_KEY = "replies";
+
     const VALIDATOR_NULLABLE_TYPE = "nullable";
 
     const VALIDATOR_BOOLEAN_TYPE = "boolean";
@@ -71,6 +73,24 @@ interface DueDilCommentsInterface
     ];
 
     const MONGO_SET_KEY = '$set';
+
+    const MONGO_MATCH_KEY = '$match';
+
+    const MONGO_ADD_FIELDS_KEY = '$addFields';
+
+    const MONGO_LOOKUP_KEY = '$lookup';
+
+    const MONGO_LOOKUP_FROM_KEY = "from";
+
+    const MONGO_LOOKUP_LOCAL_FIELD_KEY = "localField";
+
+    const MONGO_LOOKUP_FOREIGN_FIELD_KEY = "foreignField";
+
+    const MONGO_LOOKUP_AS_KEY = "as";
+
+    const MONGO_TO_STRING_FUNCTION = '$toString';
+
+    const MONGO_UNIQUE_ID_KEY = '$_id';
 
     const MONGO_BASE_UPDATE_STRUCTURE = [
         self::MONGO_SET_KEY => []
