@@ -80,6 +80,10 @@ interface DueDilCommentsInterface
 
     const MONGO_LOOKUP_KEY = '$lookup';
 
+    const MONGO_UNWIND_KEY = '$unwind';
+
+    const MONGO_SORT_KEY = '$sort';
+
     const MONGO_LOOKUP_FROM_KEY = "from";
 
     const MONGO_LOOKUP_LOCAL_FIELD_KEY = "localField";
