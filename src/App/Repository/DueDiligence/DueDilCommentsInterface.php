@@ -50,7 +50,7 @@ interface DueDilCommentsInterface
     const VALIDATOR_DATE_TYPE = "date";
 
     const DD_COMMENT_REQ_ERROR_MESSAGE_KEY = "message";
-    
+
     const DD_COMMENT_INVALID_ID_TEXT = "Invalid id sent in request";
 
     const DD_COMMENT_INVALID_KEYS_TEXT = "Invalid properties sent in request";
@@ -72,6 +72,12 @@ interface DueDilCommentsInterface
         self::DD_COMMENT_ANNOT_PROPERTIES_KEY
     ];
 
+    const DD_COMMENTS_ANNOT_PROPS_PDF_ANNOT_KEY = "pdfAnnotation";
+
+    const DD_COMMENTS_ANNOT_PROPS_SHAPE_ANNOT_KEY = "shapeAnnotation";
+
+    const DD_COMMENTS_ANNOT_PROPS_PAGE_KEY = "page";
+
     const MONGO_SET_KEY = '$set';
 
     const MONGO_MATCH_KEY = '$match';
@@ -83,6 +89,8 @@ interface DueDilCommentsInterface
     const MONGO_UNWIND_KEY = '$unwind';
 
     const MONGO_SORT_KEY = '$sort';
+
+    const MONGO_PROJECT_KEY = '$project';
 
     const MONGO_LOOKUP_FROM_KEY = "from";
 
@@ -99,4 +107,13 @@ interface DueDilCommentsInterface
     const MONGO_BASE_UPDATE_STRUCTURE = [
         self::MONGO_SET_KEY => []
     ];
+
+    const DD_COMMENTS_ANNOT_PROPS_MONGO_PROJECT = [
+        self::MONGO_PROJECT_KEY => [
+            self::DD_COMMENT_MONGO_ID_KEY => 0,
+            self::DD_COMMENTS_ANNOT_PROPS_PDF_ANNOT_KEY =>
+                '$'.self::DD_COMMENT_ANNOT_PROPERTIES_KEY .
+                '.'. self::DD_COMMENTS_ANNOT_PROPS_PDF_ANNOT_KEY
+          ]
+        ];
 }
