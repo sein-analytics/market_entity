@@ -49,6 +49,10 @@ interface DueDilCommentsInterface
 
     const VALIDATOR_DATE_TYPE = "date";
 
+    const DD_COMMENT_REQ_PAGE_NUMBER_KEY = "pageNumber";
+
+    const DD_COMMENT_REQ_PAGE_SIZE_KEY = "pageSize";
+
     const DD_COMMENT_REQ_ERROR_MESSAGE_KEY = "message";
 
     const DD_COMMENT_INVALID_ID_TEXT = "Invalid id sent in request";
@@ -91,6 +95,10 @@ interface DueDilCommentsInterface
     const MONGO_SORT_KEY = '$sort';
 
     const MONGO_PROJECT_KEY = '$project';
+
+    const MONGO_SKIP_KEY = '$skip';
+
+    const MONGO_LIMIT_KEY = '$limit';
 
     const MONGO_LOOKUP_FROM_KEY = "from";
 
