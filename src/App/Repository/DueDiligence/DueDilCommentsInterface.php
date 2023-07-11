@@ -59,6 +59,12 @@ interface DueDilCommentsInterface
 
     const DD_COMMENT_INVALID_KEYS_TEXT = "Invalid properties sent in request";
 
+    const DD_COMMENT_EVENT_CREATE_ACTION = "Create";
+
+    const DD_COMMENT_EVENT_DELETE_ACTION = "Delete";
+
+    const DD_COMMENT_EVENT_UPDATE_ACTION = "Update";
+
     const DD_COMMENTS_VALID_KEYS = [
         self::DD_COMMENT_LOAN_ID_KEY,
         self::DD_COMMENT_FILE_ID,
