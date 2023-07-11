@@ -41,6 +41,8 @@ interface DueDilCommentsInterface
 
     const DD_COMMENTS_REPLIES_KEY = "replies";
 
+    const DD_COMMENTS_REPLY_KEY = "reply";
+
     const VALIDATOR_NULLABLE_TYPE = "nullable";
 
     const VALIDATOR_BOOLEAN_TYPE = "boolean";
@@ -88,6 +90,20 @@ interface DueDilCommentsInterface
 
     const DD_COMMENTS_ANNOT_PROPS_PAGE_KEY = "page";
 
+    const DD_COMMENTS_ANNOT_PROPS_RECT_KEY = "rect";
+
+    const DD_COMMENTS_ANNOT_RECT_HELPER_KEY = "annotRect";
+
+    const DD_COMMENTS_RESPONSE_DATA_KEY = "data";
+
+    const DD_COMMENTS_RESPONSE_ACTION_KEY = "action";
+
+    const DD_COMMENTS_RESPONSE_TOTAL_COUNT_KEY = "totalCount";
+
+    const DD_COMMENTS_RESPONSE_TOTAL_PAGES_KEY = "totalPages";
+
+    const DD_COMMENTS_RESPONSE_COUNT_KEY = "count";
+
     const MONGO_SET_KEY = '$set';
 
     const MONGO_MATCH_KEY = '$match';
@@ -106,6 +122,18 @@ interface DueDilCommentsInterface
 
     const MONGO_LIMIT_KEY = '$limit';
 
+    const MONGO_COUNT_KEY = '$count';
+
+    const MONGO_FACET_KEY = '$facet';
+
+    const MONGO_MAP_KEY = '$map';
+
+    const MONGO_MERGE_OBJECTS_KEY = '$mergeObjects';
+
+    const MONGO_MAP_INPUT_KEY = "input";
+
+    const MONGO_MAP_IN_KEY = "in";
+
     const MONGO_LOOKUP_FROM_KEY = "from";
 
     const MONGO_LOOKUP_LOCAL_FIELD_KEY = "localField";
@@ -115,6 +143,8 @@ interface DueDilCommentsInterface
     const MONGO_LOOKUP_AS_KEY = "as";
 
     const MONGO_TO_STRING_FUNCTION = '$toString';
+
+    const MONGO_OPTIONS_RETURN_DOCUMENT_KEY = "returnDocument";
 
     const MONGO_UNIQUE_ID_KEY = '$_id';
 
@@ -126,8 +156,57 @@ interface DueDilCommentsInterface
         self::MONGO_PROJECT_KEY => [
             self::DD_COMMENT_MONGO_ID_KEY => 0,
             self::DD_COMMENTS_ANNOT_PROPS_PDF_ANNOT_KEY =>
-                '$'.self::DD_COMMENT_ANNOT_PROPERTIES_KEY .
-                '.'. self::DD_COMMENTS_ANNOT_PROPS_PDF_ANNOT_KEY
-          ]
-        ];
+            '$' . self::DD_COMMENT_ANNOT_PROPERTIES_KEY .
+                '.' . self::DD_COMMENTS_ANNOT_PROPS_PDF_ANNOT_KEY
+        ]
+    ];
+
+    const DD_COMMENTS_ID_AGGREGATION_ADD_FIELDS = [
+        self::MONGO_ADD_FIELDS_KEY => [
+            self::DD_COMMENT_MONGO_ID_KEY => [
+                self::MONGO_TO_STRING_FUNCTION =>
+                self::MONGO_UNIQUE_ID_KEY
+            ],
+            self::DD_COMMENTS_REPLIES_KEY => [
+                self::MONGO_MAP_KEY => [
+                    self::MONGO_MAP_INPUT_KEY =>
+                    '$' . self::DD_COMMENTS_REPLIES_KEY,
+                    self::MONGO_LOOKUP_AS_KEY =>
+                    self::DD_COMMENTS_REPLY_KEY,
+                    self::MONGO_MAP_IN_KEY => [
+                        self::MONGO_MERGE_OBJECTS_KEY => [
+                            '$$' . self::DD_COMMENTS_REPLY_KEY,
+                            [
+                                self::DD_COMMENT_MONGO_ID_KEY => [
+                                    self::MONGO_TO_STRING_FUNCTION =>
+                                    '$$' . self::DD_COMMENTS_REPLY_KEY .
+                                        '.' . self::DD_COMMENT_MONGO_ID_KEY
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ];
+
+    const DD_COMMENTS_RESPONSE_AGGREGATION_PROJECT = [
+        self::MONGO_PROJECT_KEY => [
+            self::DD_COMMENT_MONGO_ID_KEY => 1,
+            self::DD_COMMENT_LOAN_ID_KEY => 1,
+            self::DD_COMMENT_FILE_ID => 1,
+            self::DD_COMMENT_PARENT_KEY => 1,
+            self::DD_COMMENTS_REPLIES_KEY => 1,
+            self::DD_COMMENT_DATE_KEY => 1,
+            self::DD_COMMENT_AUTHOR_ID_KEY => 1,
+            self::DD_COMMENT_AUTHOR_NAME_KEY => 1,
+            self::DD_COMMENT_LOAN_NOTE_KEY => 1,
+            self::DD_COMMENT_IS_ISSUE_KEY => 1,
+            self::DD_COMMENT_IS_IMPORTANT_KEY => 1,
+            self::DD_COMMENT_NOTIFY_SELLER_KEY => 1,
+            self::DD_COMMENT_NOTIFY_TEAM_KEY => 1,
+            self::DD_COMMENT_RESOLVED_ISSUE_KEY => 1,
+            self::DD_COMMENT_ANNOT_PROPERTIES_KEY => 1
+        ]
+    ];
 }
