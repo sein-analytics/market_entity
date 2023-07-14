@@ -2,9 +2,9 @@
 
 namespace App\Repository\DueDiligence;
 
-use App\Repository\MongoKeys;
+use App\Repository\MongoKeysInterface;
 
-interface DueDilCommentsInterface extends MongoKeys
+interface DueDilCommentsInterface extends MongoKeysInterface
 {
 
     const DD_COMMENTS_COLLECTION_NAME = "comments";
