@@ -2,12 +2,12 @@
 
 namespace App\Repository\DueDiligence;
 
-interface DueDilCommentsInterface
+use App\Repository\MongoKeys;
+
+interface DueDilCommentsInterface extends MongoKeys
 {
 
     const DD_COMMENTS_COLLECTION_NAME = "comments";
-
-    const DD_COMMENT_MONGO_ID_KEY = "_id";
 
     const DD_COMMENT_REQUEST_ID = "id";
 
@@ -103,54 +103,6 @@ interface DueDilCommentsInterface
     const DD_COMMENTS_RESPONSE_TOTAL_PAGES_KEY = "totalPages";
 
     const DD_COMMENTS_RESPONSE_COUNT_KEY = "count";
-
-    const MONGO_SET_KEY = '$set';
-
-    const MONGO_MATCH_KEY = '$match';
-
-    const MONGO_ADD_FIELDS_KEY = '$addFields';
-
-    const MONGO_LOOKUP_KEY = '$lookup';
-
-    const MONGO_UNWIND_KEY = '$unwind';
-
-    const MONGO_SORT_KEY = '$sort';
-
-    const MONGO_PROJECT_KEY = '$project';
-
-    const MONGO_SKIP_KEY = '$skip';
-
-    const MONGO_LIMIT_KEY = '$limit';
-
-    const MONGO_COUNT_KEY = '$count';
-
-    const MONGO_FACET_KEY = '$facet';
-
-    const MONGO_MAP_KEY = '$map';
-
-    const MONGO_MERGE_OBJECTS_KEY = '$mergeObjects';
-
-    const MONGO_MAP_INPUT_KEY = "input";
-
-    const MONGO_MAP_IN_KEY = "in";
-
-    const MONGO_LOOKUP_FROM_KEY = "from";
-
-    const MONGO_LOOKUP_LOCAL_FIELD_KEY = "localField";
-
-    const MONGO_LOOKUP_FOREIGN_FIELD_KEY = "foreignField";
-
-    const MONGO_LOOKUP_AS_KEY = "as";
-
-    const MONGO_TO_STRING_FUNCTION = '$toString';
-
-    const MONGO_OPTIONS_RETURN_DOCUMENT_KEY = "returnDocument";
-
-    const MONGO_UNIQUE_ID_KEY = '$_id';
-
-    const MONGO_BASE_UPDATE_STRUCTURE = [
-        self::MONGO_SET_KEY => []
-    ];
 
     const DD_COMMENTS_ANNOT_PROPS_MONGO_PROJECT = [
         self::MONGO_PROJECT_KEY => [
