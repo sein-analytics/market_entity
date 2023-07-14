@@ -30,4 +30,20 @@ interface BidInterface
 
     const KO_DEAL_ID_KEY = "dealId";
 
+    const DD_BID_REQUESTS_COLLECTION_NAME = "bid_requests";
+
+    const DD_BID_REQUESTEDS_LOANS_COLLECTION_NAME = "requested_loans";
+
+    const DD_BID_REQUESTS_REQUEST_KEY = "request";
+
+    const DD_REQUESTED_LOANS_REQUEST_ID_KEY = "requestId";
+
+    const DD_REQUESTED_LOANS_RESOLVED_KEY = "resolved";
+
+    const DD_REQUESTED_LOANS_ALL_RESOLVED_KEY = "allResolved";
+
+    const DD_BIDH_HISTORY_REPLIES_KEY = "replies";
+
+    const DD_BID_HISTORY_LOAN_ITEM_KEY = "loan";
+
 }
