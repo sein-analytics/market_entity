@@ -71,6 +71,10 @@ interface MongoKeysInterface
 
     const MONGO_COND_FUNCTION = 'cond';
 
+    const MONGO_TO_INT_FUNCTION = '$toInt';
+
+    const MONGO_TO_DOUBLE_FUNCTION = '$toDouble';
+
     const MONGO_OPTIONS_RETURN_DOCUMENT_KEY = "returnDocument";
 
     const MONGO_UNIQUE_ID_KEY = '$_id';
