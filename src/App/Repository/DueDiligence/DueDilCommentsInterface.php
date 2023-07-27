@@ -152,6 +152,7 @@ interface DueDilCommentsInterface extends MongoKeysInterface
             self::DD_COMMENT_DATE_KEY => 1,
             self::DD_COMMENT_AUTHOR_ID_KEY => 1,
             self::DD_COMMENT_AUTHOR_NAME_KEY => 1,
+            self::DD_COMMENT_LOAN_SUBJECT_KEY => 1,
             self::DD_COMMENT_LOAN_NOTE_KEY => 1,
             self::DD_COMMENT_IS_ISSUE_KEY => 1,
             self::DD_COMMENT_IS_IMPORTANT_KEY => 1,
