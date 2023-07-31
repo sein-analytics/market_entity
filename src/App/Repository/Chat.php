@@ -11,12 +11,18 @@ use App\Service\FetchMapperTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use function Lambdish\phunctional\{each};
+
 class Chat extends ChatAbstract
     implements ChatInterface
 {
     use FetchingTrait, FetchMapperTrait;
 
     protected string $callContactTrackIds = 'call UserContactsChatTrackerIds(:userId)';
+
+    protected string $callUserContactChatVerifyTrackerId = 'call UserContactChatVerifyTrackerId(:userId, :trackerId)';
+    
+    protected string $callGroupChatVerifyTrackerId = 'call GroupChatVerifyTrackerId(:userId, :groupId, :trackerId)';
 
     protected string $callGroupTrackIds = 'call UserGroupChatTrackerIds(:userId)';
 
@@ -30,11 +36,27 @@ class Chat extends ChatAbstract
 
     protected string $callUserDataForChat = 'call UserDataForChat(:userId)';
 
-    protected string $callChatRecipientDataFromTrackerId = 'call ChatRecipientDataFromTrackerId(:trackerId)';
+    protected string $callChatRecipientDataFromTrackerId = 'call ChatRecipientDataFromTrackerId(:trackerId, :searchKey)';
+    
+    protected string $callMarketUsersFromSearchKey = 'call MarketUsersFromSearchKey(:searchKey, :userId)';
+
+    protected string $callGroupsFromSearchKey = 'call GroupsFromSearchKey(:userId, :searchKey)';
+    
+    protected string $callChatMembersFromTrackerId = 'call ChatMembersFromTrackerId(:trackerId)';
+
+    protected string $callGroupMembersFromTrackerId = 'call GroupMembersFromTrackerId(:trackerId)';
 
     private string $insertIntoChatSql = "insert into Chat value (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    /**
+    private string $insertNewChatSql = 'insert into Chat (`id`, `user_id`, `recipient_id`, `group_id`, `message`, `message_date`, `attachments`, `tracker_id`, `contact_id`, `status_id`, `is_group`) ';
+    
+    private string $insertIntoFollowersSql = "insert into followers value (?, ?)";
+    
+    private string $insertIntoFollowingSql = "insert into following value (?, ?)";
+    
+    private string $insertIntoChatSqlBase = 'insert into Chat (`id`, `user_id`, `recipient_id`, `group_id`, `message`, `message_date`, `attachments`, `tracker_id`, `contact_id`, `status_id`, `is_group`) ';
+
+    /**`
      * @param array $params
      * @return \Exception|mixed
      */
@@ -42,12 +64,84 @@ class Chat extends ChatAbstract
     {
         if (array_key_exists(self::QRY_ID_KEY, $params))
             unset($params[self::QRY_ID_KEY]);
+        
+        $sql = $this->insertNewChatSql . 'VALUE (null,'
+            . $params[self::QRY_USER_ID_KEY] . ','
+            . $params[self::QRY_RECIPIENT_ID_KEY] . ','
+            . $params[self::QRY_GROUP_ID_KEY] . ','
+            . $params[self::CHAT_MSG_MSG_KEY] . ','
+            . '"' . $params[self::QRY_MSG_DATE_KEY] . '",'
+            . $params[self::QRY_MSG_FILES_KEY] . ','
+            . $params[self::QRY_TRACKER_ID_KEY] . ','
+            . $params[self::QRY_CONTACT_ID_KEY] . ','
+            . $params[self::QRY_STATUS_ID_KEY] . ','
+            . $params[self::QRY_IS_GROUP_KEY] . ');';
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            $this->insertIntoChatSql,
+            $sql,
             self::EXECUTE_MTHD,
-            array_values($params)
+            []
         );
+    }
+
+    /**`
+     * @param array $params
+     * @return \Exception|mixed
+     */
+    public function insertNewFollowers(array $params): mixed
+    {
+        if (array_key_exists("user_id", $params) && array_key_exists("follower_id", $params)) {
+            $sql = "insert into followers values (" . $params["user_id"] . ", " . $params["follower_id"] . "), (" . $params["follower_id"] . ", " . $params["user_id"] . ");";
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            []
+        );
+    }
+
+    /**`
+     * @param array $params
+     * @return \Exception|mixed
+     */
+    public function insertNewFollowings(array $params): mixed
+    {
+        if (array_key_exists("user_id", $params) && array_key_exists("following_id", $params)) {
+            $sql = "insert into following values (" . $params["user_id"] . ", " . $params["following_id"] . "), (" . $params["following_id"] . ", " . $params["user_id"] . ");";
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            []
+        );
+    }
+
+    /**
+     * @param array $params
+     * @param array $userIds
+     * @return \Exception|mixed
+     */
+    public function insertNewChatToGroup(array $params, array $userIds): mixed
+    {
+        $base = $this->insertIntoChatSqlBase;
+        
+        $sql = $base . 'VALUES ';
+        $count = 1;
+        each(function ($userId) use(&$sql, &$count, $params, $userIds) {
+            $sql = $sql . PHP_EOL . "(null, " . (int)$userId . ', ' . $params["recipient_id"] . ', ' . (int)$params["group_id"] . ', ' . $params["message"] . ', "' . date('Y-m-d H:i:s') . '", ' . $params["attachments"] . ', ' . (int)$params["tracker_id"] . ', ' . $params["contact_id"] . ', ' . $params["status_id"] . ', ' . (int)$params["is_group"] . ')' . ($count === count($userIds) ? ';' : ',');
+            $count++;
+        }, $userIds);
+        return [
+            "sql" => $sql,
+            "result" => $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $sql,
+                self::EXECUTE_MTHD,
+                []
+            ),
+        ];
     }
 
     /**
@@ -57,6 +151,26 @@ class Chat extends ChatAbstract
     public function fetchUserContactChatTrackerIds(int $userId):mixed
     {
         return $this->executeProcedure([$userId], $this->getCallContactTrackIds());
+    }
+
+    /**
+     * @param int $userId
+     * @param int $trackerId
+     * @return mixed
+     */
+    public function fetchUserContactChatVerifyTrackerId(int $userId, int $trackerId):mixed
+    {
+        return $this->executeProcedure([$userId, $trackerId], $this->getCallUserContactChatVerifyTrackerId());
+    }
+    
+    /**
+     * @param int $userId
+     * @param int $trackerId
+     * @return mixed
+     */
+    public function fetchGroupChatVerifyTrackerId(int $userId, int $groupId, int $trackerId):mixed
+    {
+        return $this->executeProcedure([$userId, $groupId, $trackerId], $this->getCallGroupChatVerifyTrackerId());
     }
 
     /**
@@ -151,10 +265,38 @@ class Chat extends ChatAbstract
         }
     }
 
-    public function contactDataFromChatTrackerId (int $chatId)
+    public function contactDataFromChatTrackerId (int $chatId, string $searchKey)
+    {
+        return $this->executeProcedure([$chatId, $searchKey],
+            $this->getCallChatRecipientDataFromTrackerId()
+        );
+    }
+
+    public function marketUsersDataFromSearchKey(string $searchKey, int $userId)
+    {
+        return $this->executeProcedure([$searchKey, $userId],
+            $this->getCallMarketUsersFromSearchKey()
+        );
+    }
+
+    public function groupsDataFromSearchKey(int $userId, string $searchKey)
+    {
+        return $this->executeProcedure([$userId, $searchKey],
+            $this->getCallGroupsFromSearchKey()
+        );
+    }
+
+    public function chatMembersFromTrackerId (int $chatId)
     {
         return $this->executeProcedure([$chatId],
-            $this->getCallChatRecipientDataFromTrackerId()
+            $this->getCallChatMembersFromTrackerId()
+        );
+    }
+
+    public function groupMembersFromTrackerId (int $chatId)
+    {
+        return $this->executeProcedure([$chatId],
+            $this->getCallGroupMembersFromTrackerId()
         );
     }
 
@@ -162,6 +304,16 @@ class Chat extends ChatAbstract
      * @return string
      */
     public function getCallContactTrackIds(): string { return $this->callContactTrackIds; }
+    
+    /**
+     * @return string
+     */
+    public function getCallUserContactChatVerifyTrackerId(): string { return $this->callUserContactChatVerifyTrackerId; }
+    
+    /**
+     * @return string
+     */
+    public function getCallGroupChatVerifyTrackerId(): string { return $this->callGroupChatVerifyTrackerId; }
 
     /**
      * @return string
@@ -198,6 +350,34 @@ class Chat extends ChatAbstract
      */
     public function getCallChatRecipientDataFromTrackerId(): string {
         return $this->callChatRecipientDataFromTrackerId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallMarketUsersFromSearchKey(): string {
+        return $this->callMarketUsersFromSearchKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallGroupsFromSearchKey(): string {
+        return $this->callGroupsFromSearchKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallChatMembersFromTrackerId(): string {
+        return $this->callChatMembersFromTrackerId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallGroupMembersFromTrackerId(): string {
+        return $this->callGroupMembersFromTrackerId;
     }
 
 
