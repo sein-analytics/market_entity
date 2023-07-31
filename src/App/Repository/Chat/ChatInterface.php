@@ -6,7 +6,7 @@ namespace App\Repository\Chat;
 
 interface ChatInterface
 {
-    CONST QRY_ID_KEY = 'id';
+    const QRY_ID_KEY = 'id';
 
     const QRY_USER_ID_KEY = 'user_id';
 
@@ -126,4 +126,29 @@ interface ChatInterface
     const TRACKER_BY_CONTACT_AND_USER_ID = 'SELECT DISTINCT tracker_id AS id FROM Chat WHERE contact_id = ? ' .
     'AND user_id = ? OR contact_id = ? AND recipient_id = ?';
 
+    const CHAT_MESSAGE_MONGO_COLLECTION = 'message';
+
+    const CHAT_MESSAGE_MONGO_ID_KEY = '_id';
+    
+    const CHAT_MESSAGE_MONGO_CREATED_KEY = 'created';
+    
+    const CHAT_MESSAGE_MONGO_CHAT_KEY = 'chatId';
+    
+    const CHAT_MESSAGE_MONGO_TEXT_KEY = 'text';
+    
+    const CHAT_MESSAGE_MONGO_ATTACHMENTS_KEY = 'attachments';
+    
+    const CHAT_MESSAGE_MONGO_AUTHOR_KEY = 'authorId';
+
+    const MONGO_MATCH_KEY = '$match';
+    const MONGO_IN_KEY = '$in';
+    const MONGO_GROUP_KEY = '$group';
+    const MONGO_LAST_KEY = '$last';
+    const MONGO_PUSH_KEY = '$push';
+    const MONGO_TO_STRING_KEY = '$toString';
+    const MONGO_REPLACE_ROOT_KEY = '$replaceRoot';
+    const MONGO_NEW_ROOT_KEY = '$newRoot';
+    const MONGO_ARRAY_TO_OBJECT_KEY = '$arrayToObject';
+    const MONGO_LAST_MESSAGE_RESULT_KEY = 'lastMessage';
+    const MONGO_RESULT_KEY = 'result';
 }

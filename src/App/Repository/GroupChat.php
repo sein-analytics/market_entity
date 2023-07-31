@@ -66,12 +66,15 @@ class GroupChat extends ChatAbstract
                 $count++;
             }, $userIds);
         }
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $sql,
-            self::EXECUTE_MTHD,
-            []
-        );
+        return [
+            "sql" => $sql,
+            "result" => $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $sql,
+                self::EXECUTE_MTHD,
+                []
+            ),
+        ];
     }
 
     /**

@@ -33,14 +33,13 @@ class ChatTracker extends ChatAbstract
     }
 
     /**
-     * @param string $uuid
      * @return \Exception|mixed
      */
-    public function addNewChatTrackerForUuid(string $uuid)
+    public function addNewChatTrackerForUuid()
     {
-        if (($valid = $this->executeUuidValidation(
-            $uuid, get_class($this), 'addNewChatTrackerForUuid')) instanceof \Exception)
-            return $valid;
+        // if (($valid = $this->executeUuidValidation(
+        //     $uuid, get_class($this), 'addNewChatTrackerForUuid')) instanceof \Exception)
+        //     return $valid;
         $em = $this->getEntityManager();
         $trackerUuid = Str::uuid()->getHex()->toString();
         if (($result = $this->buildAndExecuteFromSql(
