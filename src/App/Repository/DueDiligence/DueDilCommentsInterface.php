@@ -104,6 +104,12 @@ interface DueDilCommentsInterface extends MongoKeysInterface
 
     const DD_COMMENTS_RESPONSE_COUNT_KEY = "count";
 
+    const DD_COMMENTS_REQ_GT_KEY = "gt";
+
+    const DD_COMMENTS_REQ_LT_KEY = "lt";
+    
+    const DD_COMMENTS_REQ_GTE_KEY = "gte";
+
     const DD_COMMENTS_ANNOT_PROPS_MONGO_PROJECT = [
         self::MONGO_PROJECT_KEY => [
             self::DD_COMMENT_MONGO_ID_KEY => 0,
