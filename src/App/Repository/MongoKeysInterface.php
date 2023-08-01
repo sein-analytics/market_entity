@@ -82,4 +82,11 @@ interface MongoKeysInterface
     const MONGO_BASE_UPDATE_STRUCTURE = [
         self::MONGO_SET_KEY => []
     ];
+
+    const MONGO_GT_OPERATOR = '$gt';
+
+    const MONGO_LT_OPERATOR = '$lt';
+
+    const MONGO_GTE_OPERATOR = '$gte';
+
 }
