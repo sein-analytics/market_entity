@@ -309,13 +309,4 @@ class MarketUser extends abstractMktUser
         return $query->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
 
-    public function updateUserStatusById(int $id, int $statusId):mixed
-    {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $this->updateUserStatusIdSql,
-            self::EXECUTE_MTHD,
-            [$statusId, $id]
-        );
-    }
 }
