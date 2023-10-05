@@ -96,6 +96,8 @@ interface DueDilCommentsInterface extends MongoKeysInterface
 
     const DD_COMMENTS_RESPONSE_DATA_KEY = "data";
 
+    const DD_COMMENTS_RESPONSE_CONTAIN_ISSUES_KEY = "containIssues";
+
     const DD_COMMENTS_RESPONSE_ACTION_KEY = "action";
 
     const DD_COMMENTS_RESPONSE_TOTAL_COUNT_KEY = "totalCount";
