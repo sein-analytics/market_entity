@@ -39,6 +39,8 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $updateStatusCodeSql = "UPDATE DueDilLoanStatus SET status_id=? WHERE id=?";
 
+    private string $updateStatusCodeByLoanAndDdId = "UPDATE DueDilLoanStatus SET status_id=? WHERE ln_id=? AND dd_id=?";
+
     private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
 
     private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`) VALUES";
@@ -75,6 +77,18 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             $this->updateStatusCodeSql,
             self::EXECUTE_MTHD,
             [$codeId, $id]
+        );
+    }
+
+    public function setStatusCodeByLoanAndDdId(int $loanId, int $dueDiligenceId, int $codeId):mixed
+    {
+        if (!in_array($codeId, self::DD_LN_STATUS_ARRAY))
+            return false;
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateStatusCodeByLoanAndDdId,
+            self::EXECUTE_MTHD,
+            [$codeId, $loanId, $dueDiligenceId]
         );
     }
 
