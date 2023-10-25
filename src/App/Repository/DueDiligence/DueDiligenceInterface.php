@@ -40,6 +40,8 @@ interface DueDiligenceInterface
 
     const DD_REJECTED_STATUS = 4;
 
+    const DD_ACCEPT_STATUS = 5;
+
     const FILE_DD_MANY_TO_MANY_TBL = 'deal_file_due_diligence';
 
     const MANY_TO_MANY_DD_ID_KEY = 'due_diligence_id';
