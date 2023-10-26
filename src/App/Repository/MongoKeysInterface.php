@@ -19,6 +19,8 @@ interface MongoKeysInterface
 
     const MONGO_UNWIND_KEY = '$unwind';
 
+    const MONGO_UNWIND_PATH_KEY = "path";
+
     const MONGO_SORT_KEY = '$sort';
 
     const MONGO_SKIP_KEY = '$skip';
@@ -63,6 +65,8 @@ interface MongoKeysInterface
 
     const MONGO_EQ_FUNCTION = '$eq';
 
+    const MONGO_NE_FUNCTION = '$ne';
+
     const MONGO_PUSH_FUNCTION = '$push';
 
     const MONGO_ARRAY_TO_OBJ_FUNCTION = '$arrayToObject';
@@ -74,6 +78,12 @@ interface MongoKeysInterface
     const MONGO_TO_INT_FUNCTION = '$toInt';
 
     const MONGO_TO_DOUBLE_FUNCTION = '$toDouble';
+
+    const MONGO_AND_FUNCTION = '$and';
+
+    const MONGO_SUM_FUNCTION = '$sum';
+
+    const MONGO_GROUP_COUNT_KEY = "count";
 
     const MONGO_OPTIONS_RETURN_DOCUMENT_KEY = "returnDocument";
 

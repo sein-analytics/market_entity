@@ -24,6 +24,8 @@ interface DueDiligenceInterface
 
     const DD_OPEN_TEXT = "Open";
 
+    const DD_ACCEPT_TEXT = "Accept";
+
     const DD_OPEN_STATUS = 1;
 
     const DD_CLOSED_TEXT = "Closed";
@@ -37,6 +39,8 @@ interface DueDiligenceInterface
     const DD_REJECTED_TEXT = "Rejected";
 
     const DD_REJECTED_STATUS = 4;
+
+    const DD_ACCEPT_STATUS = 5;
 
     const FILE_DD_MANY_TO_MANY_TBL = 'deal_file_due_diligence';
 
@@ -213,4 +217,11 @@ interface DueDiligenceInterface
     const BID_HISTORY_LOANS_RESOLVED_KEY = "loansResolved";
 
     const BID_HISTORY_REQUEST_ID_KEY = "requestId";
+    
+    const DD_FILE_ACTION_RESPONSE_ACCEPTED_KEY = "accepted";
+
+    const DD_COMMENTS_ISSUES_COUNT_KEY = "issuesCount";
+
+    const DD_ACTIONS_ACCEPT_COUNT_KEY = "acceptActionsCount";
+
 }
