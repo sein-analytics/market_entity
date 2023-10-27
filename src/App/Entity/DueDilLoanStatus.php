@@ -56,6 +56,11 @@ class DueDilLoanStatus
      */
     protected $logger;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $issuesCount = 0;
+
     public function __construct()
     {
         $this->logger = $this->logObject;
@@ -122,6 +127,19 @@ class DueDilLoanStatus
     public function setLogger(array $logger):void
     {
         $this->logger = $logger;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIssuesCount(): int { return $this->issuesCount; }
+
+    /**
+     * @param int $issuesCount
+     */
+    public function setIssuesCount(int $issuesCount):void
+    {
+        $this->issuesCount = $issuesCount;
     }
 
 }
