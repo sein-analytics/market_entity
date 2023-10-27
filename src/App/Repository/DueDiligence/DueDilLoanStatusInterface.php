@@ -14,6 +14,8 @@ interface DueDilLoanStatusInterface
 
     const DDLS_QRY_LOGGER_KEY = 'logger';
 
+    const DDLS_QRY_ISSUES_COUNT_KEY = 'issues_count';
+
     const LOG_ACTION_KEY = "action";
 
     const LOG_DATE_KEY = "date";
