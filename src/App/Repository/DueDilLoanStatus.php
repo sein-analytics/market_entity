@@ -43,7 +43,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
 
-    private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`) VALUES";
+    private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`) VALUES";
 
     public function insertNewDueDilLoanStatus (array $params):mixed
     {
@@ -176,7 +176,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
                 $ddId . ',' . $loanId . ',' .
                 self::DD_LN_OPEN . ',"' . 
                 $this->baseDdLogger() .
-            '")' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
+            '",' . 0 . ')' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
         }
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
