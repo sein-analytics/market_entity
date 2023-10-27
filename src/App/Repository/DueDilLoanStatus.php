@@ -39,11 +39,11 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $updateStatusCodeSql = "UPDATE DueDilLoanStatus SET status_id=? WHERE id=?";
 
-    private string $updateStatusCodeByLoanAndDdId = "UPDATE DueDilLoanStatus SET status_id=? WHERE ln_id=? AND dd_id=?";
+    private string $updateStatusCodeByLoanAndDdId = "UPDATE DueDilLoanStatus SET status_id=?, issues_count=? WHERE ln_id=? AND dd_id=?";
 
     private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
 
-    private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`) VALUES";
+    private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`) VALUES";
 
     public function insertNewDueDilLoanStatus (array $params):mixed
     {
@@ -80,7 +80,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         );
     }
 
-    public function setStatusCodeByLoanAndDdId(int $loanId, int $dueDiligenceId, int $codeId):mixed
+    public function setStatusCodeByLoanAndDdId(int $loanId, int $dueDiligenceId, int $codeId, int $issuesCount):mixed
     {
         if (!in_array($codeId, self::DD_LN_STATUS_ARRAY))
             return false;
@@ -88,7 +88,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             $this->getEntityManager(),
             $this->updateStatusCodeByLoanAndDdId,
             self::EXECUTE_MTHD,
-            [$codeId, $loanId, $dueDiligenceId]
+            [$codeId, $issuesCount, $loanId, $dueDiligenceId]
         );
     }
 
@@ -176,7 +176,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
                 $ddId . ',' . $loanId . ',' .
                 self::DD_LN_OPEN . ',"' . 
                 $this->baseDdLogger() .
-            '")' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
+            '",' . 0 . ')' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
         }
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
