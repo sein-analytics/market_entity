@@ -49,7 +49,7 @@ class Chat
     protected $group;
 
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="blob", nullable=true)
      * @var string
      */
     protected string $message;
