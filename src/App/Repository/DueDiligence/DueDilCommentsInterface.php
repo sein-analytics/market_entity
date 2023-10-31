@@ -17,7 +17,7 @@ interface DueDilCommentsInterface extends MongoKeysInterface
 
     const DD_COMMENT_DD_ID_KEY = "ddId";
 
-    const DD_COMMENT_DD_PARENT_ID_KEY = "ddParent";
+    const DD_COMMENT_DD_PARENT_ID_KEY = "ddParentId";
 
     const DD_COMMENT_PARENT_KEY = "parent";
 
