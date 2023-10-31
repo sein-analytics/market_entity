@@ -17,6 +17,8 @@ interface DueDilCommentsInterface extends MongoKeysInterface
 
     const DD_COMMENT_DD_ID_KEY = "ddId";
 
+    const DD_COMMENT_DD_PARENT_ID_KEY = "ddParent";
+
     const DD_COMMENT_PARENT_KEY = "parent";
 
     const DD_COMMENT_LOAN_SUBJECT_KEY = "subject";
@@ -72,6 +74,7 @@ interface DueDilCommentsInterface extends MongoKeysInterface
     const DD_COMMENTS_VALID_KEYS = [
         self::DD_COMMENT_LOAN_ID_KEY,
         self::DD_COMMENT_DD_ID_KEY,
+        self::DD_COMMENT_DD_PARENT_ID_KEY,
         self::DD_COMMENT_FILE_ID,
         self::DD_COMMENT_PARENT_KEY,
         self::DD_COMMENT_LOAN_SUBJECT_KEY,
@@ -158,6 +161,7 @@ interface DueDilCommentsInterface extends MongoKeysInterface
             self::DD_COMMENT_MONGO_ID_KEY => 1,
             self::DD_COMMENT_LOAN_ID_KEY => 1,
             self::DD_COMMENT_DD_ID_KEY => 1,
+            self::DD_COMMENT_DD_PARENT_ID_KEY => 1,
             self::DD_COMMENT_FILE_ID => 1,
             self::DD_COMMENT_PARENT_KEY => 1,
             self::DD_COMMENTS_REPLIES_KEY => 1,
