@@ -83,6 +83,8 @@ interface MongoKeysInterface
 
     const MONGO_SUM_FUNCTION = '$sum';
 
+    const MONGO_ARRAY_ELEM_AT_FUNCTION = '$arrayElemAt';
+
     const MONGO_GROUP_COUNT_KEY = "count";
 
     const MONGO_OPTIONS_RETURN_DOCUMENT_KEY = "returnDocument";
