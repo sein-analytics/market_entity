@@ -234,7 +234,6 @@ class DueDilLoanStatus extends DueDiligenceAbstract
     public function baseDdLogger()
     {
         $baseLogger = self::BASE_LOGGER_ARRAY;
-        $baseLogger[self::LOG_DATE_KEY] = date('Y-m-d H:i:s');
         return addslashes(json_encode([$baseLogger]));
     }
 }
