@@ -179,4 +179,14 @@ class DueDiligence
      */
     public function setBid(Bid $bid):void { $this->bid = $bid; }
 
+        /**
+     * @return DueDiligence
+     */
+    public function getParent(): DueDiligence { return $this->parentId; }
+
+    /**
+     * @param DueDiligence $parentId
+     */
+    public function setParent(DueDiligence $parentId):void { $this->parentId = $parentId; }
+
 }
