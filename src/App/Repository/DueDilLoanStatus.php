@@ -33,13 +33,13 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => null],
     ];
 
-    private string $insertDueDilLoanStatusSql = "INSERT INTO DueDilLoanStatus VALUE (null, ?, ?, ?, ?)";
+    private string $insertDueDilLoanStatusSql = "INSERT INTO DueDilLoanStatus VALUES (?, ?, ?, ?, ?, ?)";
 
     private string $updateLoggerSql = "UPDATE DueDilLoanStatus SET logger=? WHERE id=?";
 
     private string $updateStatusCodeSql = "UPDATE DueDilLoanStatus SET status_id=? WHERE id=?";
 
-    private string $updateStatusCodeByLoanAndDdId = "UPDATE DueDilLoanStatus SET status_id=?, issues_count=?, last_modified=? WHERE ln_id=? AND dd_id=?";
+    private string $updateStatusCodeByLoanAndDdId = "UPDATE DueDilLoanStatus SET status_id=?, issues_count=?, last_modified=?, logger=? WHERE ln_id=? AND dd_id=?";
 
     private string $updateLastModifiedByLoanAndDdId = "UPDATE DueDilLoanStatus SET last_modified=? WHERE ln_id=? AND dd_id=?";
 
@@ -82,7 +82,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         );
     }
 
-    public function setStatusCodeByLoanAndDdId(int $loanId, int $dueDiligenceId, int $codeId, int $issuesCount, string $date):mixed
+    public function setStatusCodeByLoanAndDdId(int $loanId, int $dueDiligenceId, int $codeId, int $issuesCount, ?string $date, string $logger):mixed
     {
         if (!in_array($codeId, self::DD_LN_STATUS_ARRAY))
             return false;
@@ -90,7 +90,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             $this->getEntityManager(),
             $this->updateStatusCodeByLoanAndDdId,
             self::EXECUTE_MTHD,
-            [$codeId, $issuesCount, $date, $loanId, $dueDiligenceId]
+            [$codeId, $issuesCount, $date, $logger, $loanId, $dueDiligenceId]
         );
     }
 
