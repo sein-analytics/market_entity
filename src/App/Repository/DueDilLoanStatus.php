@@ -33,7 +33,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => null],
     ];
 
-    private string $insertDueDilLoanStatusSql = "INSERT INTO DueDilLoanStatus VALUES (?, ?, ?, ?, ?, ?)";
+    private string $insertDueDilLoanStatusSql = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`, `last_modified`) VALUES (?,?,?,?,?,?)";
 
     private string $updateLoggerSql = "UPDATE DueDilLoanStatus SET logger=? WHERE id=?";
 
