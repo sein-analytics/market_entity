@@ -63,7 +63,7 @@ class DueDilLoanStatus
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
+     * @var \DateTime|null
      **/
     protected $lastModified = null;
 
@@ -151,7 +151,7 @@ class DueDilLoanStatus
     /**
      * @return \DateTime
      */
-    public function getLastModified() : \DateTime
+    public function getLastModified() : ?\DateTime
     {
         return $this->lastModified;
     }
