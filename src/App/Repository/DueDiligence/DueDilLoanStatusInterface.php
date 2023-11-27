@@ -16,6 +16,8 @@ interface DueDilLoanStatusInterface
 
     const DDLS_QRY_ISSUES_COUNT_KEY = 'issues_count';
 
+    const DDLS_QRY_LAST_MODIFIED_KEY = 'last_modified';
+
     const LOG_ACTION_KEY = "action";
 
     const LOG_DATE_KEY = "date";
@@ -27,9 +29,6 @@ interface DueDilLoanStatusInterface
     const LOG_TEMP_KEY = "temp";
 
     const BASE_LOGGER_ARRAY = [
-        self::LOG_ACTION_KEY => null,
-        self::LOG_DATE_KEY => null,
-        self::LOG_USER_ID_KEY => null,
         self::LOG_FILES_KEY => [
             self::LOG_TEMP_KEY => []
         ]
@@ -55,4 +54,9 @@ interface DueDilLoanStatusInterface
         self::DD_LN_ACCEPT,
         self::DD_LN_REJECT
     ];
+
+    const DDLS_LN_ID_ALIAS_KEY = 'loan';
+
+    const DDLS_DD_ID_ALIAS_KEY = 'diligence';
+
 }

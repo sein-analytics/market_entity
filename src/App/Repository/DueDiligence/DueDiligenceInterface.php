@@ -224,4 +224,7 @@ interface DueDiligenceInterface
 
     const DD_ACTIONS_ACCEPT_COUNT_KEY = "acceptActionsCount";
 
+    const DD_COMMENTS_FILE_ISSUES_COUNT_KEY = "fileIssuesCount";
+
+    const DD_ACTIONS_FILE_ACCEPT_COUNT_KEY = "fileAcceptCount";
 }

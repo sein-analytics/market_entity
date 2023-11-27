@@ -61,6 +61,12 @@ class DueDilLoanStatus
      */
     protected $issuesCount = 0;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected $lastModified = null;
+
     public function __construct()
     {
         $this->logger = $this->logObject;
@@ -140,6 +146,22 @@ class DueDilLoanStatus
     public function setIssuesCount(int $issuesCount):void
     {
         $this->issuesCount = $issuesCount;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastModified() : ?\DateTime
+    {
+        return $this->lastModified;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setLastModified(\DateTime $lastModified)
+    {
+        $this->lastModified = $lastModified;
     }
 
 }

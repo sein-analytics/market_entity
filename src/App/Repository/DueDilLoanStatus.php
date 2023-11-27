@@ -33,17 +33,19 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => null],
     ];
 
-    private string $insertDueDilLoanStatusSql = "INSERT INTO DueDilLoanStatus VALUE (null, ?, ?, ?, ?)";
+    private string $insertDueDilLoanStatusSql = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`, `last_modified`) VALUES (?,?,?,?,?,?)";
 
     private string $updateLoggerSql = "UPDATE DueDilLoanStatus SET logger=? WHERE id=?";
 
     private string $updateStatusCodeSql = "UPDATE DueDilLoanStatus SET status_id=? WHERE id=?";
 
-    private string $updateStatusCodeByLoanAndDdId = "UPDATE DueDilLoanStatus SET status_id=?, issues_count=? WHERE ln_id=? AND dd_id=?";
+    private string $updateStatusCodeByLoanAndDdId = "UPDATE DueDilLoanStatus SET status_id=?, issues_count=?, last_modified=?, logger=? WHERE ln_id=? AND dd_id=?";
+
+    private string $updateLastModifiedByLoanAndDdId = "UPDATE DueDilLoanStatus SET last_modified=? WHERE ln_id=? AND dd_id=?";
 
     private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
 
-    private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`) VALUES";
+    private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`, `last_modified`) VALUES";
 
     public function insertNewDueDilLoanStatus (array $params):mixed
     {
@@ -80,7 +82,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         );
     }
 
-    public function setStatusCodeByLoanAndDdId(int $loanId, int $dueDiligenceId, int $codeId, int $issuesCount):mixed
+    public function setStatusCodeByLoanAndDdId(int $loanId, int $dueDiligenceId, int $codeId, int $issuesCount, ?string $date, string $logger):mixed
     {
         if (!in_array($codeId, self::DD_LN_STATUS_ARRAY))
             return false;
@@ -88,7 +90,49 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             $this->getEntityManager(),
             $this->updateStatusCodeByLoanAndDdId,
             self::EXECUTE_MTHD,
-            [$codeId, $issuesCount, $loanId, $dueDiligenceId]
+            [$codeId, $issuesCount, $date, $logger, $loanId, $dueDiligenceId]
+        );
+    }
+
+    public function setLastModifiedByLoanAndDdId(int $loanId, int $dueDiligenceId, string $date):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateLastModifiedByLoanAndDdId,
+            self::EXECUTE_MTHD,
+            [$date, $loanId, $dueDiligenceId]
+        );
+    }
+
+    public function multipleSetStatusCodeByLoanAndDdId(int $loanId, array $dueDiligenceIds, int $codeId, int $issuesCount, string $date, array $logger):mixed
+    {
+        $logger = json_encode($logger);
+        $dueDiligenceIds = count($dueDiligenceIds) > 1
+            ? implode(', ', $dueDiligenceIds)
+            : implode('', $dueDiligenceIds);
+        $sql = "UPDATE DueDilLoanStatus SET status_id=?, issues_count=?, last_modified=?, logger=? WHERE ln_id=? AND dd_id IN ($dueDiligenceIds)";
+        if (!in_array($codeId, self::DD_LN_STATUS_ARRAY))
+            return false;
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            [$codeId, $issuesCount, $date, $logger, $loanId]
+        );
+    }
+
+    public function multipleSetLastModifiedByLoanAndDdId(int $loanId, array $dueDiligenceIds, string $date, array $logger):mixed
+    {
+        $logger = json_encode($logger);
+        $dueDiligenceIds = count($dueDiligenceIds) > 1
+            ? implode(', ', $dueDiligenceIds)
+            : implode('', $dueDiligenceIds);
+        $sql = "UPDATE DueDilLoanStatus SET last_modified=?, logger=? WHERE ln_id=? AND dd_id IN ($dueDiligenceIds)";
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            [$date, $logger, $loanId]
         );
     }
 
@@ -168,6 +212,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
     public function addMultiDdLoanStatusInputs(int $loanId, array $dueDiligencesIds)
     {
         $base = $this->multipleInsertsDdLoanStatus;
+        $nullValue = "NULL";
         $ddInsertCount = 0;
         foreach ($dueDiligencesIds as $ddId) {
             $ddInsertCount++;
@@ -176,7 +221,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
                 $ddId . ',' . $loanId . ',' .
                 self::DD_LN_OPEN . ',"' . 
                 $this->baseDdLogger() .
-            '",' . 0 . ')' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
+            '",' . 0 . ", $nullValue" . ')' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
         }
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
@@ -189,7 +234,6 @@ class DueDilLoanStatus extends DueDiligenceAbstract
     public function baseDdLogger()
     {
         $baseLogger = self::BASE_LOGGER_ARRAY;
-        $baseLogger[self::LOG_DATE_KEY] = date('Y-m-d H:i:s');
         return addslashes(json_encode([$baseLogger]));
     }
 }

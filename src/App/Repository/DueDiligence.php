@@ -46,6 +46,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $teamMemberDdIdSql = "SELECT id FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=?;";
 
+    private string $teamMemberDdsSql = "SELECT id, user_id, bid_id, parent_id FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=? OR id=?;";
+
     private string $manyToManyFileIdSql = "SELECT deal_file_id FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
 
     private string $deleteFromManyToManySql = "DELETE FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
@@ -55,6 +57,8 @@ class DueDiligence extends DueDiligenceAbstract
     private string $allDdUserFileAccessSql = "SELECT id, user_id FROM DueDiligence WHERE id IN (SELECT due_diligence_id FROM deal_file_due_diligence WHERE deal_file_id=?)";
 
     private string $dueDilIdsUserIdsByDealIdSql = "SELECT id, user_id FROM `DueDiligence` WHERE deal_id=?;";
+
+    private string $userDueDiligenceIdsSql = "SELECT id FROM `DueDiligence` WHERE user_id=?";
 
     private string $multipleInsertsDealFileDd = "INSERT INTO deal_file_due_diligence (`due_diligence_id`, `deal_file_id`) VALUES";
 
@@ -153,6 +157,16 @@ class DueDiligence extends DueDiligenceAbstract
             $this->teamMemberDdIdSql,
             self::FETCH_ONE_MTHD,
             [$dealId, $userId, $parentId]
+        );
+    }
+
+    public function fetchTeamMembersDueDiligenceForDeal (int $dealId, int $userId, int $dueDiligenceId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->teamMemberDdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId, $userId, $dueDiligenceId, $dueDiligenceId]
         );
     }
 
@@ -341,6 +355,22 @@ class DueDiligence extends DueDiligenceAbstract
             self::FETCH_ALL_ASSO_MTHD,
             [$dealId]
         );
+    }
+
+    public function dueDilIdsByUserId (int $userId):mixed
+    {
+        $query = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->userDueDiligenceIdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+        if (count($query) > 0) {
+            $query = array_map(function($item) {
+                return $item[self::DD_QRY_ID_KEY];
+            }, $query);
+        }
+        return $query;
     }
 
     public function addMultiDealFileDdInputs(array $dueDiligenceIds, array $filesIds)
