@@ -30,6 +30,8 @@ class Bid extends EntityRepository
 
     private string $updateBidHistorySql = "UPDATE Bid SET bid_history=? WHERE id=?";
 
+    private string $fetchIssuerActiveUserBids = "SELECT deal_id, user_id FROM Bid WHERE user_id IN (?) AND status_id >= 3";
+
     /**
      * @param array $dealIds
      * @param bool $mapBidsToDeals
@@ -190,4 +192,19 @@ class Bid extends EntityRepository
             [json_encode($history), $id]
         );
     }
+
+    public function fetchIssuerActiveUserBids(array $userIds):mixed
+    {
+        try {
+            $stmt = $this->returnInArraySqlDriver(
+                $this->getEntityManager(),
+                $userIds,
+                $this->fetchIssuerActiveUserBids
+            );
+            return $stmt->fetchAllAssociative();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
 }
