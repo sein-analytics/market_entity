@@ -18,6 +18,10 @@ interface DueDiligenceInterface
 
     const DD_QRY_PARENT_ID_KEY = 'parent_id';
 
+    const DD_QRY_DEAL_KEY = 'deal';
+
+    const DD_QRY_USER_KEY = 'user';
+
     const LEADER_ROLE = 1;
 
     const MEMBER_ROLE = 2;
