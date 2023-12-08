@@ -61,7 +61,7 @@ class DueDiligence
      * @ORM\OneToOne(targetEntity="\App\Entity\Bid", inversedBy="dueDiligence")
      * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
      */
-    protected Bid $bid;
+    protected ?Bid $bid;
 
     /**
      * All other members of the Due Diligence team will have a reference due diligence ID
@@ -70,7 +70,7 @@ class DueDiligence
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      *
      */
-    protected DueDiligence $parentId;
+    protected ?DueDiligence $parentId;
 
     /**
      * All other members of the Due Diligence team will have a reference due diligence ID
@@ -182,7 +182,7 @@ class DueDiligence
         /**
      * @return DueDiligence
      */
-    public function getParent(): DueDiligence { return $this->parentId; }
+    public function getParent(): DueDiligence|null { return $this->parentId; }
 
     /**
      * @param DueDiligence $parentId

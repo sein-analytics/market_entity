@@ -62,6 +62,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $multipleInsertsDealFileDd = "INSERT INTO deal_file_due_diligence (`due_diligence_id`, `deal_file_id`) VALUES";
 
+    private string $selectDealFileDueDiligenceByDdsAndFileId  = "SELECT due_diligence_id FROM deal_file_due_diligence WHERE due_diligence_id IN (?) AND deal_file_id=?";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -398,4 +400,21 @@ class DueDiligence extends DueDiligenceAbstract
             []
         );
     }
+
+    public function fetchUserCurrentDealFileDd(array $ddIds, int $fileId):mixed
+    {
+        try {
+            $stmt = $this->returnMultiIntArraySqlStmt(
+                $this->getEntityManager(), 
+                $this->selectDealFileDueDiligenceByDdsAndFileId,
+                $ddIds,
+                [$fileId]
+            );
+            $results = $stmt->fetchAllAssociative();
+            return $results;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
 }
