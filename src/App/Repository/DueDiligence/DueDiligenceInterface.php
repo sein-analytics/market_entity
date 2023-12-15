@@ -234,6 +234,8 @@ interface DueDiligenceInterface
 
     const DD_REQUEST_LOAN_DOCS_SUBJECT_KEY = 'subject';
 
+    const DD_NOTIFY_LOAN_ISSUE_APP_URL_KEY = 'appUrl';
+
     const DD_REQUEST_LOAN_DOCS_VALIDATIONS = [
         self::DD_REQUEST_LOAN_DOCS_SUBJECT_KEY => 'required|string',
         self::BID_HISTORY_LOANS_KEY => 'required|array',
@@ -243,6 +245,14 @@ interface DueDiligenceInterface
             self::API_LOAN_ID_KEY => 'required|integer',
         self::API_DEAL_ID_KEY => 'required|integer',
         self::API_BID_ID_KEY => 'required|integer'
+    ];
+
+    const DD_NOTIFY_LOAN_ISSUES_VALIDATIONS = [
+        self::API_LOAN_NUMBER_KEY => 'required|string',
+        self::BID_HISTORY_MSG_KEY => 'required|string',
+        self::DD_NOTIFY_LOAN_ISSUE_APP_URL_KEY => 'required|string',
+        self::API_DEAL_ID_KEY => 'required|integer',
+        self::API_LOAN_ID_KEY => 'required|integer'
     ];
 
 }
