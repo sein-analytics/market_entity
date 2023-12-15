@@ -184,7 +184,7 @@ interface DueDiligenceInterface
         self::DD_QRY_PARENT_ID_KEY => self::API_DUE_DIL_ID_KEY
     ];
 
-    const DUE_DIF_FILE_ANNOT_COMMENT_ISSUE_ACTIONS= [
+    const DUE_DIF_FILE_ANNOT_COMMENT_ISSUE_ACTIONS = [
         self::API_ADD_NEW_ANNOTATION_ACTION,
         self::API_CREATE_NEW_ISSUE_ACTION,
         self::API_CLOSE_ISSUE_ACTION,
@@ -207,7 +207,7 @@ interface DueDiligenceInterface
     const GRANT_ACCESS_SUBJECT_TEXT = "Request for documents";
 
     const BID_HISTORY_REQUESTS_KEY = "requests";
- 
+
     const BID_HISTORY_USERS_KEY = "users";
 
     const BID_HISTORY_MSG_KEY = "message";
@@ -221,7 +221,7 @@ interface DueDiligenceInterface
     const BID_HISTORY_LOANS_RESOLVED_KEY = "loansResolved";
 
     const BID_HISTORY_REQUEST_ID_KEY = "requestId";
-    
+
     const DD_FILE_ACTION_RESPONSE_ACCEPTED_KEY = "accepted";
 
     const DD_COMMENTS_ISSUES_COUNT_KEY = "issuesCount";
@@ -231,4 +231,18 @@ interface DueDiligenceInterface
     const DD_COMMENTS_FILE_ISSUES_COUNT_KEY = "fileIssuesCount";
 
     const DD_ACTIONS_FILE_ACCEPT_COUNT_KEY = "fileAcceptCount";
+
+    const DD_REQUEST_LOAN_DOCS_SUBJECT_KEY = 'subject';
+
+    const DD_REQUEST_LOAN_DOCS_VALIDATIONS = [
+        self::DD_REQUEST_LOAN_DOCS_SUBJECT_KEY => 'required|string',
+        self::BID_HISTORY_LOANS_KEY => 'required|array',
+        self::BID_HISTORY_LOANS_KEY . '.*.' .
+            self::API_LOAN_NUMBER_KEY => 'required|string',
+        self::BID_HISTORY_LOANS_KEY . '.*.' .
+            self::API_LOAN_ID_KEY => 'required|integer',
+        self::API_DEAL_ID_KEY => 'required|integer',
+        self::API_BID_ID_KEY => 'required|integer'
+    ];
+
 }
