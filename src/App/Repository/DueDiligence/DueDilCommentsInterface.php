@@ -3,8 +3,9 @@
 namespace App\Repository\DueDiligence;
 
 use App\Repository\MongoKeysInterface;
+use App\Repository\DueDiligence\DueDiligenceInterface;
 
-interface DueDilCommentsInterface extends MongoKeysInterface
+interface DueDilCommentsInterface extends MongoKeysInterface, DueDiligenceInterface
 {
 
     const DD_COMMENTS_COLLECTION_NAME = "comments";
@@ -178,4 +179,34 @@ interface DueDilCommentsInterface extends MongoKeysInterface
             self::DD_COMMENT_ANNOT_PROPERTIES_KEY => 1
         ]
     ];
+
+    const DD_CREATE_COMMENT_REQ_BODY_KEYS = [
+        self::DD_COMMENT_LOAN_ID_KEY,
+        self::DD_COMMENT_FILE_ID,
+        self::DD_COMMENT_PARENT_KEY,
+        self::DD_COMMENT_LOAN_SUBJECT_KEY,
+        self::DD_COMMENT_LOAN_NOTE_KEY,
+        self::DD_COMMENT_IS_ISSUE_KEY,
+        self::DD_COMMENT_IS_IMPORTANT_KEY,
+        self::DD_COMMENT_NOTIFY_SELLER_KEY,
+        self::DD_COMMENT_RESOLVED_ISSUE_KEY,
+        self::DD_COMMENT_ANNOT_PROPERTIES_KEY,
+        self::DD_COMMENT_DD_ID_KEY,
+        self::DD_COMMENT_DD_PARENT_ID_KEY,
+    ];
+
+    const DD_REGISTER_FILE_ACTION_REQ_BODY_KEYS = [
+        self::API_LOAN_ID_KEY,
+        self::API_DD_FILE_ID_KEY,
+        self::API_LOGGER_ACTION_KEY,
+        self::DD_COMMENT_DD_ID_KEY,
+        self::DD_COMMENT_DD_PARENT_ID_KEY
+    ];
+
+    const DD_GET_FILE_IS_ACCEPTED_REQ_BODY_KEYS = [
+        self::API_LOAN_ID_KEY,
+        self::API_DD_FILE_ID_KEY,
+        self::DD_COMMENT_DD_PARENT_ID_KEY
+    ];
+
 }
