@@ -138,6 +138,8 @@ interface DueDiligenceInterface
 
     const API_DD_TREEVIEW_ID_KEY = "treeViewId";
 
+    const API_DD_IS_MAIN_NODE_KEY = "isMainNode";
+
     const API_ANNOT_ISSUE_COMMENT_ACTION_KEY = "annotCommentIssueAction";
 
     const API_ADD_NEW_ANNOTATION_ACTION = "addAnnotation";
