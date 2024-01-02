@@ -136,6 +136,8 @@ interface DueDiligenceInterface
 
     const API_DD_ISSUE_ID_KEY = "issueId";
 
+    const API_DD_TREEVIEW_ID_KEY = "treeViewId";
+
     const API_ANNOT_ISSUE_COMMENT_ACTION_KEY = "annotCommentIssueAction";
 
     const API_ADD_NEW_ANNOTATION_ACTION = "addAnnotation";
