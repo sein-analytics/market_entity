@@ -48,6 +48,8 @@ class Chat extends ChatAbstract
 
     protected string $callGroupMembersFromTrackerId = 'call GroupMembersFromTrackerId(:trackerId)';
 
+    protected string $callGroupMembersFromTrackerIds = 'call GroupMembersFromTrackerIds(:trackerIds)';
+
     private string $insertIntoChatSql = "insert into Chat value (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $insertNewChatSql = 'insert into Chat (`id`, `user_id`, `recipient_id`, `group_id`, `message`, `message_date`, `attachments`, `tracker_id`, `contact_id`, `status_id`, `is_group`) ';
@@ -310,6 +312,14 @@ class Chat extends ChatAbstract
         );
     }
 
+    public function groupMembersFromTrackerIds (array $chatIds)
+    {
+        $trackerIds = implode(',', $chatIds);
+        return $this->executeProcedure([$trackerIds],
+            $this->getCallGroupMembersFromTrackerIds()
+        );
+    }
+
     /**
      * @return string
      */
@@ -392,6 +402,10 @@ class Chat extends ChatAbstract
      */
     public function getCallGroupMembersFromTrackerId(): string {
         return $this->callGroupMembersFromTrackerId;
+    }
+
+    public function getCallGroupMembersFromTrackerIds(): string {
+        return $this->callGroupMembersFromTrackerIds;
     }
 
 
