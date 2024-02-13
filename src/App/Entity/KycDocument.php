@@ -5,10 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="\App\Repository\DealContract")
- * @ORM\Table(name="DealContract")
+ * @ORM\Entity(repositoryClass="\App\Repository\KycDocument")
+ * @ORM\Table(name="KycDocument")
  */
-class DealContract
+class KycDocument
 {
 
     /**
@@ -20,22 +20,35 @@ class DealContract
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="contracts")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
+     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
      */
-    protected Deal $deal;
+    protected Issuer $issuer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
-     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    protected MarketUser $buyer;
+    protected MarketUser $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=false)
+     */
+    protected MarketUser $communityUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
+     * @ORM\JoinColumn(name="community_issuer_id", referencedColumnName="id", nullable=false)
+     */
+    protected Issuer $communityIssuer;
+    
+        /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\ContractType")
      * @ORM\JoinColumn(name="contract_type_id", referencedColumnName="id", nullable=false)
      */
     protected ContractType $contractType;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
@@ -45,9 +58,9 @@ class DealContract
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
-     * @ORM\JoinColumn(name="deal_asset_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="kyc_asset_type_id", referencedColumnName="id", nullable=true)
      */
-    protected ?DealAsset $dealAsset;
+    protected ?DealAsset $assetType;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -63,8 +76,10 @@ class DealContract
 
     function __construct()
     {
-        $this->deal = new Deal();
-        $this->buyer = new MarketUser();
+        $this->issuer = new Issuer();
+        $this->user = new MarketUser();
+        $this->communityIssuer = new Issuer();
+        $this->communityUser = new MarketUser();
         $this->contractType = new ContractType();
         $this->contractStatus = new ContractStatus();
     }
@@ -74,26 +89,46 @@ class DealContract
      */
     public function getId():int { return $this->id; }
     
-    /**
-     * @return Deal
+   /**
+     * @return Issuer
      */
-    public function getDeal():Deal { return $this->deal; }
+    public function getIssuer():Issuer { return $this->issuer; }
 
     /**
-     * @param Deal $deal
+     * @param Issuer $issuer
      */
-    public function setDeal(Deal $deal):void { $this->deal = $deal; }
+    public function setIssuer(Issuer $issuer):void { $this->issuer = $issuer; }
+   
+    /**
+     * @return MarketUser
+     */
+    public function getUser():MarketUser { return $this->user; }
+
+    /**
+     * @param MarketUser $user
+     */
+    public function setUser(MarketUser $user):void { $this->user = $user; }
 
     /**
      * @return MarketUser
      */
-    public function getBuyer():MarketUser { return $this->buyer; }
+    public function getCommunityUser():MarketUser { return $this->communityUser; }
 
     /**
-     * @param MarketUser $buyer
+     * @param MarketUser $communityUser
      */
-    public function setBuyer(MarketUser $buyer):void { $this->buyer = $buyer; }
-   
+    public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
+
+    /**
+     * @return Issuer
+     */
+    public function getCommunityIssuer():Issuer { return $this->communityIssuer; }
+
+    /**
+     * @param Issuer $communityIssuer
+     */
+    public function setCommunityIssuer(Issuer $communityIssuer):void { $this->communityIssuer = $communityIssuer; }
+
     /**
      * @return ContractType
      */
@@ -103,7 +138,7 @@ class DealContract
      * @param ContractType $contractType
      */
     public function setContractType(ContractType $contractType):void { $this->contractType = $contractType; }
-    
+
     /**
      * @return ContractStatus
      */
@@ -113,17 +148,17 @@ class DealContract
      * @param ContractStatus $contractStatus
      */
     public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
-    
+
     /**
      * @return DealAsset|null
      */
-    public function getDealAsset():DealAsset|null { return $this->dealAsset; }
+    public function getAssetType():DealAsset|null { return $this->assetType; }
 
     /**
-     * @param DealAsset $dealAsset
+     * @param DealAsset $assetType
      */
-    public function setDealAsset(DealAsset $dealAsset):void { $this->dealAsset = $dealAsset; }
-    
+    public function setAssetType(DealAsset $assetType):void { $this->assetType = $assetType; }
+
     /**
      * @return string
      */
