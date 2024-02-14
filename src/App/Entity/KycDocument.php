@@ -52,9 +52,9 @@ class KycDocument
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
-     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=true)
      */
-    protected ContractStatus $contractStatus;
+    protected ?ContractStatus $contractStatus;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
@@ -81,7 +81,6 @@ class KycDocument
         $this->communityIssuer = new Issuer();
         $this->communityUser = new MarketUser();
         $this->contractType = new ContractType();
-        $this->contractStatus = new ContractStatus();
     }
 
     /**
@@ -140,9 +139,9 @@ class KycDocument
     public function setContractType(ContractType $contractType):void { $this->contractType = $contractType; }
 
     /**
-     * @return ContractStatus
+     * @return ContractStatus|null
      */
-    public function getContractStatus():ContractStatus { return $this->contractStatus; }
+    public function getContractStatus():ContractStatus|null { return $this->contractStatus; }
 
     /**
      * @param ContractStatus $contractStatus
