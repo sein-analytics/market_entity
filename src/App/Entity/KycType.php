@@ -28,7 +28,7 @@ class KycType
     protected string $type;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, nullable=true)
      * @var string
      */
     protected string $label;
@@ -49,9 +49,9 @@ class KycType
     public function setType(string $type):void { $this->type = $type; }
     
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLabel(): string { return $this->label; }
+    public function getLabel(): string|null { return $this->label; }
     
     /**
      * @param string
