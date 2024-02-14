@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+//TODO ANY CHANGES TO THE TABLE MUST BE REFLECTED IN CLODUINARY ISSUER KYC FOLDERS
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="KycType")
@@ -26,6 +28,12 @@ class KycType
     protected string $type;
 
     /**
+     * @ORM\Column(type="string", unique=true)
+     * @var string
+     */
+    protected string $label;
+
+    /**
      * @return int
      */
     public function getId(): int { return $this->id; }
@@ -39,5 +47,14 @@ class KycType
      * @param string
      */
     public function setType(string $type):void { $this->type = $type; }
-
+    
+    /**
+     * @return string
+     */
+    public function getLabel(): string { return $this->label; }
+    
+    /**
+     * @param string
+     */
+    public function setLabel(string $label):void { $this->label = $label; }
 }
