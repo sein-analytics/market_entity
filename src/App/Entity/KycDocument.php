@@ -63,6 +63,13 @@ class KycDocument
     protected ?DealAsset $assetType;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KycType")
+     * @ORM\JoinColumn(name="kyc_type_id", referencedColumnName="id", nullable=false)
+     */
+    protected KycType $kycType;
+
+
+    /**
      * @ORM\Column(type="string", nullable=false)
      * @var string
      */
@@ -157,6 +164,16 @@ class KycDocument
      * @param DealAsset $assetType
      */
     public function setAssetType(DealAsset $assetType):void { $this->assetType = $assetType; }
+    
+    /**
+     * @return KycType
+     */
+    public function getKycType():KycType { return $this->kycType; }
+
+    /**
+     * @param KycType $kycType
+     */
+    public function setKycType(KycType $kycType):void { $this->kycType = $kycType; }
 
     /**
      * @return string
