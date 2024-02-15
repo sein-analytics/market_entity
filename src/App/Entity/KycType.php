@@ -28,12 +28,6 @@ class KycType
     protected string $type;
 
     /**
-     * @ORM\Column(type="string", unique=true, nullable=true)
-     * @var string
-     */
-    protected string $label;
-
-    /**
      * @return int
      */
     public function getId(): int { return $this->id; }
@@ -48,13 +42,4 @@ class KycType
      */
     public function setType(string $type):void { $this->type = $type; }
     
-    /**
-     * @return string|null
-     */
-    public function getLabel(): string|null { return $this->label; }
-    
-    /**
-     * @param string
-     */
-    public function setLabel(string $label):void { $this->label = $label; }
 }
