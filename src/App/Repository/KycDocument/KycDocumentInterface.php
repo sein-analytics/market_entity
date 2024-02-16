@@ -15,6 +15,8 @@ interface KycDocumentInterface
 
     const KD_QRY_ASSET_TYPE_ID = 'kyc_asset_type_id';
 
+    const KD_QRY_KYC_TYPE_KEY = 'kyc_type_id';
+
     const KD_ISSUER_ID_KEY = 'issuerId';
 
     const KD_USER_ID_KEY = 'userId';
@@ -24,5 +26,7 @@ interface KycDocumentInterface
     const KD_COMMUNITY_ISSUER_ID_KEY = 'communityIssuerId';
 
     const KD_ASSET_TYPE_ID = 'kycAssetTypeId';
+
+    const KD_KYC_TYPE_KEY = 'kycTypeId';
 
 }
