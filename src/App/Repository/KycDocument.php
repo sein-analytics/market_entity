@@ -11,7 +11,7 @@ class KycDocument extends KycDocumentAbstract
 
     use FetchMapperTrait, FetchingTrait;
 
-    private string $insertKycDocumentSql = "INSERT INTO KycDocument VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertKycDocumentSql = "INSERT INTO KycDocument VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $updateKycDocumentStatusSql = "UPDATE KycDocument SET contract_status_id=? WHERE id=?";
 
