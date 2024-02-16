@@ -81,6 +81,12 @@ class KycDocument
      */
     protected string $secureUrl = '';
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+     protected ?string $fileName;
+
     function __construct()
     {
         $this->issuer = new Issuer();
@@ -194,5 +200,15 @@ class KycDocument
      * @param string
      */
     public function setSecureUrl(string $secureUrl):void { $this->secureUrl = $secureUrl; }
+
+    /**
+     * @return null|string
+     */
+    public function getFileName():string|null { return $this->fileName; }
+
+    /**
+     * @param string
+     */
+    public function setFileName(string $fileName):void { $this->fileName = $fileName; }
 
 }

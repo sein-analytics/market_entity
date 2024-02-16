@@ -61,6 +61,12 @@ class DealContract
      */
     protected string $secureUrl = '';
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+     protected ?string $fileName;
+
     function __construct()
     {
         $this->deal = new Deal();
@@ -143,5 +149,15 @@ class DealContract
      * @param string
      */
     public function setSecureUrl(string $secureUrl):void { $this->secureUrl = $secureUrl; }
+
+    /**
+     * @return null|string
+     */
+    public function getFileName():?string { return $this->fileName; }
+
+    /**
+     * @param string
+     */
+    public function setFileName(string $fileName):void { $this->fileName = $fileName; }
 
 }
