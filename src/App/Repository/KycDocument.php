@@ -40,14 +40,10 @@ class KycDocument extends KycDocumentAbstract
         ); 
     }
 
-    public function fetchUserKycDocumentsByIssuer(int $userId, int $communityId, int $communityUserId):mixed
+    public function fetchUserKycDocumentsByIssuer(int $userId, int $communityUserId, int $communityIssuerId, int $assetTypeId):mixed
     {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $this->fetchUserKycDocumentsByIssuerSql,
-            self::FETCH_ALL_ASSO_MTHD,
-            [$userId, $communityId, $communityUserId]
-        );
+        return $this->executeProcedure([$userId, $communityUserId, $communityIssuerId, $assetTypeId],
+            self::$callKycDocumentsByUserAndIssuer);
     }
 
 }
