@@ -21,13 +21,13 @@ class KycDocStatus
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=true)
      */
     protected Issuer $issuer;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected MarketUser $user;
 
@@ -64,9 +64,9 @@ class KycDocStatus
     public function getId():int { return $this->id; }
 
     /**
-     * @return Issuer
+     * @return Issuer|null
      */
-    public function getIssuer():Issuer { return $this->issuer; }
+    public function getIssuer():Issuer|null { return $this->issuer; }
 
     /**
      * @param Issuer $issuer
@@ -74,9 +74,9 @@ class KycDocStatus
     public function setIssuer(Issuer $issuer):void { $this->issuer = $issuer; }
    
     /**
-     * @return MarketUser
+     * @return MarketUser|null
      */
-    public function getUser():MarketUser { return $this->user; }
+    public function getUser():MarketUser|null { return $this->user; }
 
     /**
      * @param MarketUser $user
