@@ -33,15 +33,15 @@ class KycDocument
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=true)
      */
-    protected MarketUser $communityUser;
+    protected ?MarketUser $communityUser;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="community_issuer_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="community_issuer_id", referencedColumnName="id", nullable=true)
      */
-    protected Issuer $communityIssuer;
+    protected ?Issuer $communityIssuer;
     
         /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\ContractType")
@@ -122,9 +122,9 @@ class KycDocument
     public function setUser(MarketUser $user):void { $this->user = $user; }
 
     /**
-     * @return MarketUser
+     * @return MarketUser|null
      */
-    public function getCommunityUser():MarketUser { return $this->communityUser; }
+    public function getCommunityUser():MarketUser|null { return $this->communityUser; }
 
     /**
      * @param MarketUser $communityUser
@@ -132,9 +132,9 @@ class KycDocument
     public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
 
     /**
-     * @return Issuer
+     * @return Issuer|null
      */
-    public function getCommunityIssuer():Issuer { return $this->communityIssuer; }
+    public function getCommunityIssuer():Issuer|null { return $this->communityIssuer; }
 
     /**
      * @param Issuer $communityIssuer
