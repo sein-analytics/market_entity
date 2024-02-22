@@ -37,4 +37,6 @@ interface KycDocumentInterface
 
     const KD_RECEIVER_SIGNATURE_KEY = 'receiverSignature';
 
+    const KD_DOCUMENTS_API_KEY = 'documents';
+
 }

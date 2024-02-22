@@ -23,7 +23,7 @@ class KycType extends KycDocumentAbstract
         );
         $keyResults = [];
         foreach($results as $result) {
-            $result['documents'] = [];
+            $result[self::KD_DOCUMENTS_API_KEY] = [];
             $keyResults[$result[self::QUERY_JUST_ID]] = $result;
         }
         return $keyResults;
