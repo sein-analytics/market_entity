@@ -14,10 +14,6 @@ abstract class KycDocumentAbstract extends EntityRepository
 
     use FetchingTrait, FetchMapperTrait;
 
-    protected static string $callKycDocumentsByUserAndIssuer = 'call KycDocumentsByUserAndIssuer(:userId, :communityUserId, :communityIssuerId, :assetTypeId)';
-
-    protected static string $callCommunityMemberKycDocuments = 'call CommunityMemberKycDocuments(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)';
-
-    protected static string $callCommunityIssuerKycDocuments = 'call CommunityIssuerKycDocuments(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)';
+    protected static string $callKycDocumentsByUserAndIssuer = 'call KycDocumentsByUserAndIssuer(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)';
 
 }
