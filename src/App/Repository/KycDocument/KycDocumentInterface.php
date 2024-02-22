@@ -17,6 +17,10 @@ interface KycDocumentInterface
 
     const KD_QRY_KYC_TYPE_KEY = 'kyc_type_id';
 
+    const KD_QRY_SENDER_SIGNATURE_KEY = 'sender_signature';
+
+    const KD_QRY_RECEIVER_SIGNATURE_KEY = 'receiver_signature';
+
     const KD_ISSUER_ID_KEY = 'issuerId';
 
     const KD_USER_ID_KEY = 'userId';
@@ -28,5 +32,9 @@ interface KycDocumentInterface
     const KD_ASSET_TYPE_ID = 'kycAssetTypeId';
 
     const KD_KYC_TYPE_KEY = 'kycTypeId';
+
+    const KD_SENDER_SIGNATURE_KEY = 'senderSignature';
+
+    const KD_RECEIVER_SIGNATURE_KEY = 'receiverSignature';
 
 }
