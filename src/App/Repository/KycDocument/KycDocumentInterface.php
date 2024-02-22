@@ -41,4 +41,6 @@ interface KycDocumentInterface
 
     const KD_ISSUER_PARAM_API_KEY = 'issuer';
 
+    const KD_ASSET_TYPE_ID_KEY = 'assetTypeId';
+    
 }
