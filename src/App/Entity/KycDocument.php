@@ -99,6 +99,12 @@ class KycDocument
      */
      protected ?string $receiverSignature;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected $date = null;
+
     function __construct()
     {
         $this->issuer = new Issuer();
@@ -243,4 +249,14 @@ class KycDocument
      */
     public function setReceiverSignature(string $receiverSignature):void { $this->receiverSignature = $receiverSignature; }
 
+    /**
+     * @return \DateTime
+     */
+    public function getDate() : ?\DateTime { return $this->date; }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date) { $this->date = $date; }
+    
 }
