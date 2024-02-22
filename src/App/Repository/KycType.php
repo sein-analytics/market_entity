@@ -15,12 +15,18 @@ class KycType extends KycDocumentAbstract
 
     public function fetchKycTypes():mixed
     {
-        return $this->buildAndExecuteFromSql(
+        $results = $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchKycTypesSql,
             self::FETCH_ALL_ASSO_MTHD,
             []
         );
+        $keyResults = [];
+        foreach($results as $result) {
+            $result['documents'] = [];
+            $keyResults[$result[self::QUERY_JUST_ID]] = $result;
+        }
+        return $keyResults;
     }
 
 }
