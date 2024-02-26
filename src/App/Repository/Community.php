@@ -113,4 +113,19 @@ class Community extends CommunityAbstract
     {
         return array_keys(self::$table);
     }
+
+    public function fetchCommunityUserRecentPurchases(int $userId, int $communityUserId, int $communityIssuerId)
+    {
+        return $this->executeProcedure(
+            [$userId, $communityUserId, $communityIssuerId],
+            self::$callCommunityUserRecentPurchases);
+    }
+
+    public function fetchCommunityUserRecentSales(int $userId, int $communityUserId, int $communityIssuerId)
+    {
+        return $this->executeProcedure(
+            [$userId, $communityUserId, $communityIssuerId],
+            self::$callCommunityUserRecentSales);
+    }
+
 }
