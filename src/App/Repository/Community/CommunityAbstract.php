@@ -37,7 +37,7 @@ abstract class CommunityAbstract extends EntityRepository
 
     protected static string $callCommunitiesByUserId = 'call CommunitiesByUserId(:userId)';
 
-    protected static string $callCommunityUserRecentPurchases = 'call CommunityUserRecentPurchases(:userId, :communityUserId, :communityIssuerId)';
+    protected static string $callCommunityUserRecentPurchases = 'call CommunityUserRecentPurchases(:userId, :communityUserId)';
 
     protected static string $callCommunityUserRecentSales = 'call CommunityUserRecentSales(:userId, :communityUserId, :communityIssuerId)';
 
