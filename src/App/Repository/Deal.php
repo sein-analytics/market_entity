@@ -45,6 +45,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         'latest_period_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
     ];
 
+    private string $fetchUserDealAccessSql = "SELECT * FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -193,4 +195,15 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
             return $exception->getMessage();
         }
     }
+
+    public function fetchUserDealAccess(int $userId, int $dealId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserDealAccessSql,
+            'fetchOne',
+            [$userId, $dealId]
+        );
+    }
+
 }
