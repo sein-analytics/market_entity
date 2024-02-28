@@ -8,6 +8,7 @@ use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 abstract class DealAbstract extends EntityRepository
     implements SqlManagerTraitInterface, DbalStatementInterface, DealInterface
