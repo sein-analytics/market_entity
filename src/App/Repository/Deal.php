@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class Deal extends EntityRepository implements SqlManagerTraitInterface
+class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
     
@@ -201,7 +201,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchUserDealAccessSql,
-            'fetchOne',
+            self::FETCH_ONE_MTHD,
             [$userId, $dealId]
         );
     }
