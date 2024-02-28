@@ -13,9 +13,6 @@ use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use App\Repository\Deal\DealAbstract;
 
 class Deal extends DealAbstract
@@ -45,12 +42,6 @@ class Deal extends DealAbstract
     ];
 
     private string $fetchUserDealAccessSql = "SELECT * FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
-
-    public function __construct(EntityManager $em, ClassMetadata $class)
-    {
-        parent::__construct($em, $class);
-        $this->em = $em;
-    }
 
     public function fetchDealPoolIdsByDealId(int $id)
     {
