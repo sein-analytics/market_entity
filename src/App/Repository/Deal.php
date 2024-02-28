@@ -11,15 +11,14 @@ namespace App\Repository;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
-use App\Service\SqlManagerTraitInterface;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use App\Repository\Deal\DealAbstract;
 
-class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalStatementInterface
+class Deal extends DealAbstract
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
     
