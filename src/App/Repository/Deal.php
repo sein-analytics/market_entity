@@ -47,6 +47,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $fetchUserDealAccessSql = "SELECT * FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
 
+    private string $callDealStatsStips = 'call DealStatsStips(:dealId)';
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -204,6 +206,13 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             self::FETCH_ONE_MTHD,
             [$userId, $dealId]
         );
+    }
+
+    public function fetchDealStatsStips(int $dealId)
+    {
+        return $this->executeProcedure(
+            [$dealId],
+            $this->callDealStatsStips);
     }
 
 }
