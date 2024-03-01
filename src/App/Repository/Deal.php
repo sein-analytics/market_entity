@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: ac1189
@@ -22,9 +23,9 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
-    
+
     static $table = [
-        'id'=> [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'issuer_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'status_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'auction_type_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
@@ -49,6 +50,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callDealStatsStips = 'call DealStatsStips(:dealId)';
 
+    private string $callDealAuthorizedDetails = 'call DealAuthorizedDetails(:dealId)';
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -60,7 +63,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         $sql = "SELECT id FROM Pool Where deal_id = :deal_id";
         try {
             $stmt = $this->em->getConnection()->prepare($sql);
-        } catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return false;
         }
         $stmt->bindValue('deal_id', $id);
@@ -75,7 +78,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             $stmt->bindValue(1, $id);
             $stmt->execute();
             $result = $stmt->fetchAllAssociative();
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return $exception->getMessage();
         }
         if (is_array($result))
@@ -88,13 +91,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
      * @param bool $isMarket
      * @return array|bool
      */
-    public function fetchUserMarketDealsFromIds(array $ids, $isMarket=true)
+    public function fetchUserMarketDealsFromIds(array $ids, $isMarket = true)
     {
         $sql = 'SELECT Deal.id, Deal.issuer_id, Deal.auction_type_id, Deal.asset_type_id, Deal.bid_type_id, Deal.issue, Deal.cut_off_date, Deal.closing_date, ' .
-                'Deal.current_balance, Deal.views, Deal.status_id, Deal.user_id, MarketUser.user_name,' .
-                'MarketUser.first_name, MarketUser.last_name FROM Deal INNER JOIN MarketUser ON Deal.user_id = MarketUser.id ';
-        if ($isMarket){ $sql .= 'WHERE Deal.status_id = 1 AND Deal.id IN (?) ORDER BY Deal.id ASC'; }
-        else { $sql .= 'WHERE Deal.status_id IN (1,4) AND Deal.id IN (?) ORDER BY Deal.id ASC'; }
+            'Deal.current_balance, Deal.views, Deal.status_id, Deal.user_id, MarketUser.user_name,' .
+            'MarketUser.first_name, MarketUser.last_name FROM Deal INNER JOIN MarketUser ON Deal.user_id = MarketUser.id ';
+        if ($isMarket) {
+            $sql .= 'WHERE Deal.status_id = 1 AND Deal.id IN (?) ORDER BY Deal.id ASC';
+        } else {
+            $sql .= 'WHERE Deal.status_id IN (1,4) AND Deal.id IN (?) ORDER BY Deal.id ASC';
+        }
         return $this->fetchByIntArray($this->em, $ids, $sql);
     }
 
@@ -121,13 +127,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
     {
         $sql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?)";
         try {
-            $stmt = $this->em->getConnection()->executeQuery($sql,
+            $stmt = $this->em->getConnection()->executeQuery(
+                $sql,
                 array($userIds, $statusIds),
-                array(Connection::PARAM_INT_ARRAY,
-                    Connection::PARAM_INT_ARRAY)
+                array(
+                    Connection::PARAM_INT_ARRAY,
+                    Connection::PARAM_INT_ARRAY
+                )
             );
             $result = $stmt->fetchAllAssociative();
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             return $exception->getMessage();
         }
         return $this->flattenResultArrayByKey($result, 'id');
@@ -143,7 +152,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         try {
             $stmt = $this->em->getConnection()->executeQuery($sql);
             $result = $stmt->execute();
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             return $exception->getMessage();
         }
         return $result;
@@ -160,7 +169,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         try {
             $stmt = $this->em->getConnection()->executeQuery($sql);
             return $stmt->execute();
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return $exception->getMessage();
         }
     }
@@ -198,7 +207,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         }
     }
 
-    public function fetchUserDealAccess(int $userId, int $dealId):mixed
+    public function fetchUserDealAccess(int $userId, int $dealId): mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
@@ -210,9 +219,21 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     public function fetchDealStatsStips(int $dealId)
     {
-        return $this->executeProcedure(
+        $result = $this->executeProcedure(
             [$dealId],
-            $this->callDealStatsStips);
+            $this->callDealStatsStips
+        );
+        return count($result) > 0
+            ? $result[0] : [];
     }
 
+    public function fetchDealAuthorizedDetails(int $dealId)
+    {
+        $result =  $this->executeProcedure(
+            [$dealId],
+            $this->callDealAuthorizedDetails
+        );
+        return count($result) > 0
+            ? $result[0] : [];
+    }
 }
