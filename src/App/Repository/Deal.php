@@ -52,7 +52,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callDealAuthorizedDetails = 'call DealAuthorizedDetails(:dealId)';
 
-    private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :limitValue, :offsetValue)';
+    private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :loanId, :limitValue, :flag)';
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -239,10 +239,10 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             ? $result[0] : [];
     }
 
-    public function fetchPaginatedDealLoans(int $dealId, int $limit, int $offset)
+    public function fetchPaginatedDealLoans(int $dealId, int $loanId, int $limit, string $flag)
     {
         return $this->executeProcedure(
-            [$dealId, $limit, $offset], 
+            [$dealId, $loanId, $limit, $flag], 
             $this->callDealLoansPaginated
         );
     }
