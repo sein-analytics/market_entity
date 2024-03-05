@@ -241,10 +241,14 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     public function fetchPaginatedDealLoans(int $dealId, int $loanId, int $limit, string $flag)
     {
-        return $this->executeProcedure(
+        $results = $this->executeProcedure(
             [$dealId, $loanId, $limit, $flag], 
             $this->callDealLoansPaginated
         );
+        if (count($results) > 0 && $flag == 'previous') {
+            $results = array_reverse($results);
+        }
+        return $results;
     }
 
 }
