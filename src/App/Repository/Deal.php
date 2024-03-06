@@ -48,6 +48,12 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $fetchUserDealAccessSql = "SELECT * FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
 
+    private string $fetchUserFavoriteDealSql = "SELECT * FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
+
+    private string $insertUserFavoriteDealSql = "INSERT INTO user_favorite_deals VALUE (?, ?)";
+
+    private string $deleteUserFavoriteDealSql = "DELETE FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
+
     private string $callDealStatsStips = 'call DealStatsStips(:dealId)';
 
     private string $callDealAuthorizedDetails = 'call DealAuthorizedDetails(:dealId)';
@@ -249,6 +255,36 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             $results = array_reverse($results);
         }
         return $results;
+    }
+
+    public function fetchUserFavoriteDeal(int $userId, int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserFavoriteDealSql,
+            self::FETCH_ONE_MTHD,
+            [$userId, $dealId]
+        );
+    }
+    
+    public function insertUserFavoriteDeal(int $userId, int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertUserFavoriteDealSql,
+            self::EXECUTE_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
+    public function deleteUserFavoriteDeal(int $userId, int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteUserFavoriteDealSql,
+            self::EXECUTE_MTHD,
+            [$userId, $dealId]
+        );
     }
 
 }
