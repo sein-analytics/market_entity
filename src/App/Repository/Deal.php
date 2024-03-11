@@ -54,6 +54,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $deleteUserFavoriteDealSql = "DELETE FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
 
+    private string $fetchDealByIdSql = "SELECT * FROM Deal WHERE id=?";
+
     private string $callDealStatsStips = 'call DealStatsStips(:dealId)';
 
     private string $callDealAuthorizedDetails = 'call DealAuthorizedDetails(:dealId)';
@@ -264,6 +266,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             $this->fetchUserFavoriteDealSql,
             self::FETCH_ONE_MTHD,
             [$userId, $dealId]
+        );
+    }
+    
+    public function fetchDealById(int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDealByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$dealId]
         );
     }
     
