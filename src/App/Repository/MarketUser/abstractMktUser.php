@@ -35,6 +35,8 @@ implements MktUserInterface
 
     protected string $callUsersUuidsFromIds = 'call UsersUuidsFromIds(:userIds)';
 
+    private static string $userFavoriteDealSql = "SELECT * FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
+
     /** @return string */
     public static function getUserDealIdsSql(): string
     { return self::$userDealIdsSql; }
@@ -86,6 +88,10 @@ implements MktUserInterface
     /** @return string */
     public static function getUpdateAuthTokenByUsrIdSql(): string
     { return self::$updateAuthTokenByUsrIdSql; }
+
+    /** @return string */
+    public static function getUserFavoriteDealSql(): string
+    { return self::$userFavoriteDealSql; }
 
 
 }

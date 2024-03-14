@@ -309,4 +309,14 @@ class MarketUser extends abstractMktUser
         return $query->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
 
+    public function fetchUserFavoriteDeal(int $userId, int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->getUserFavoriteDealSql(),
+            self::FETCH_ONE_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
 }
