@@ -8,7 +8,7 @@ implements MktUserInterface
 {
     private static string $userDealIdsSql = 'SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?';
 
-    private static string $usrWatchlistIdsSql = 'SELECT favorite_deal_id FROM user_favorite_deals WHERE  user_id = ?"';
+    private static string $usrWatchlistIdsSql = 'SELECT favorite_deal_id FROM user_favorite_deals WHERE user_id=?';
 
     private static string $rmvFromWatchlistSql = 'DELETE FROM user_favorite_deals WHERE user_id=? AND `favorite_deal_id`=?';
 
