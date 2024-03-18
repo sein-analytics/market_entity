@@ -59,7 +59,7 @@ class MarketUser extends abstractMktUser
         return $this->flattenResultArrayByKey($results, self::MKT_DEAL_ID_KEY);
     }
 
-    public function fetchUserWatchlistDealIds(int $userId)
+    public function fetchUserWatchlistDealIds(int $userId, bool $indexedResults = false)
     {
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare(self::getUsrWatchlistIdsSql());
@@ -74,7 +74,11 @@ class MarketUser extends abstractMktUser
         }
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $stmt->closeCursor();
-        return $this->flattenResultArrayByKey($results, self::FAV_DEAL_ID_KEY);
+        $dealIds = $this->flattenResultArrayByKey($results, self::FAV_DEAL_ID_KEY, false);
+        $results = !$indexedResults
+            ? $dealIds
+            : $this->mapRequestIdsToResults($dealIds, $results, self::FAV_DEAL_ID_KEY);
+        return $results;
     }
 
     /**
