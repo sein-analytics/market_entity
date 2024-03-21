@@ -68,6 +68,14 @@ interface CommunityInterface
 
     const RECENT_SALES_JSON_KEY = 'recentSales';
 
+    const RECENT_SALES_LABEL = 'Sales';
+
+    const RECENT_PURCHASES_LABEL = 'Purchases';
+
+    const RECENT_DEALS_TITLE_KEY = 'title';
+
+    const RECENT_DEALS_LIST_KEY = 'deals';
+
     const CALL_REPORT_JSON_KEY = 'callReportData';
 
     const PROFILE_USER_JSON_KEY = 'profileUser';

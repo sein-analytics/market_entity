@@ -8,7 +8,7 @@ implements MktUserInterface
 {
     private static string $userDealIdsSql = 'SELECT deal_id FROM deal_market_user WHERE  market_user_id = ?';
 
-    private static string $usrWatchlistIdsSql = 'SELECT favorite_deal_id FROM user_favorite_deals WHERE  user_id = ?"';
+    private static string $usrWatchlistIdsSql = 'SELECT favorite_deal_id FROM user_favorite_deals WHERE user_id=?';
 
     private static string $rmvFromWatchlistSql = 'DELETE FROM user_favorite_deals WHERE user_id=? AND `favorite_deal_id`=?';
 
@@ -34,6 +34,8 @@ implements MktUserInterface
     private static string $updateAuthTokenByUsrIdSql = "UPDATE `MarketUser` SET `authy_token`= ? WHere id= ?";
 
     protected string $callUsersUuidsFromIds = 'call UsersUuidsFromIds(:userIds)';
+
+    private static string $userFavoriteDealSql = "SELECT * FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
 
     /** @return string */
     public static function getUserDealIdsSql(): string
@@ -86,6 +88,10 @@ implements MktUserInterface
     /** @return string */
     public static function getUpdateAuthTokenByUsrIdSql(): string
     { return self::$updateAuthTokenByUsrIdSql; }
+
+    /** @return string */
+    public static function getUserFavoriteDealSql(): string
+    { return self::$userFavoriteDealSql; }
 
 
 }

@@ -256,6 +256,12 @@ class Deal extends DealAbstract
      */
     protected ?int $views;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealContract", mappedBy="deal")
+     * @var ArrayCollection|PersistentCollection|null
+     */
+    protected $contracts;
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
@@ -271,6 +277,7 @@ class Deal extends DealAbstract
         $this->issuer = new Issuer();
         $this->ratings = new ArrayCollection();
         $this->stips = new ArrayCollection();
+        $this->contracts = new ArrayCollection();
         parent::__construct();
     }
 
@@ -567,5 +574,10 @@ class Deal extends DealAbstract
 
     public function getStips() :ArrayCollection { return $this->stips; }
 
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getContracts():ArrayCollection|PersistentCollection|null { return $this->contracts; }
 
 }

@@ -393,6 +393,12 @@ class MarketUser
      * */
     protected $mappedTypes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\App\Entity\DealContract", mappedBy="buyer")
+     * @var ArrayCollection|PersistentCollection|null
+     */
+    protected $contracts;
+
     public function __construct()
     {
         $this->bids = new ArrayCollection();
@@ -415,6 +421,7 @@ class MarketUser
         $this->myCommunities = new ArrayCollection();
         $this->communityInvites = new ArrayCollection();
         $this->failedAttempts = new FailedLogin();
+        $this->contracts = new ArrayCollection();
         parent::__construct();
     }
 
@@ -754,5 +761,10 @@ class MarketUser
             'role' => $this->getRole()->getId()
         ];
     }
+
+    /**
+     * @return ArrayCollection|PersistentCollection|null
+     */
+    public function getContracts():ArrayCollection|PersistentCollection|null { return $this->contracts; }
 
 }
