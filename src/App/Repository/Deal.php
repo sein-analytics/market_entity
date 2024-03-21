@@ -56,6 +56,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :loanId, :limitValue, :flag)';
 
+    private string $callLoansByDealId = 'call LoansByDealId(:dealId)';
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -261,6 +263,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             self::FETCH_ASSO_MTHD,
             [$dealId]
         );
+    }
+
+
+    public function fetchLoansByDealId(int $dealId)
+    {
+        $results = $this->executeProcedure(
+            [$dealId], 
+            $this->callLoansByDealId
+        );
+        return $results;
     }
 
 }
