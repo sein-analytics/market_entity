@@ -35,6 +35,8 @@ implements MktUserInterface
 
     protected string $callUsersUuidsFromIds = 'call UsersUuidsFromIds(:userIds)';
 
+    protected string $callFetchUserRequestedKycDocuments = "call FetchUserRequestedKycDocuments(:userId, :issuerId, :assetTypeId)";
+
     private static string $userFavoriteDealSql = "SELECT * FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
 
     /** @return string */
