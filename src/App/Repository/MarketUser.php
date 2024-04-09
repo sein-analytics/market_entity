@@ -323,4 +323,12 @@ class MarketUser extends abstractMktUser
         );
     }
 
+    public function fetchUserRequestedKycDocuments(int $userId, int $issuerId, int $assetTypeId)
+    {
+        $result = $this->executeProcedure([$userId, $issuerId, $assetTypeId],
+            $this->callFetchUserRequestedKycDocuments
+        );
+        return $result;
+    }
+
 }
