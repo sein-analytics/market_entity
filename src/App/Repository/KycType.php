@@ -21,12 +21,7 @@ class KycType extends KycDocumentAbstract
             self::FETCH_ALL_ASSO_MTHD,
             []
         );
-        $keyResults = [];
-        foreach($results as $result) {
-            $result[self::KD_DOCUMENTS_API_KEY] = [];
-            $keyResults[$result[self::QUERY_JUST_ID]] = $result;
-        }
-        return $keyResults;
+        return $results;
     }
 
 }
