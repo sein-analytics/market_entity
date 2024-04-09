@@ -39,6 +39,8 @@ interface KycDocumentInterface
 
     const KD_DOCUMENTS_API_KEY = 'documents';
 
+    const KD_REQUESTS_API_KEY = 'requests';
+
     const KD_ISSUER_PARAM_API_KEY = 'issuer';
 
     const KD_ASSET_TYPE_ID_KEY = 'assetTypeId';
