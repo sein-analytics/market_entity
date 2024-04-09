@@ -39,7 +39,7 @@ implements MktUserInterface
 
     private static string $userFavoriteDealSql = "SELECT * FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
 
-    protected string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (?, ?, ?, ?, ?, ?, ?, ?)";
+    protected string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     /** @return string */
     public static function getUserDealIdsSql(): string
