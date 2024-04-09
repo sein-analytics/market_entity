@@ -21,13 +21,13 @@ class KycDocRequest
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=false)
      */
     protected MarketUser $communityUser;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="community_issuer_id", referencedColumnName="id", nullable=false)
      */
     protected Issuer $communityIssuer;
 
