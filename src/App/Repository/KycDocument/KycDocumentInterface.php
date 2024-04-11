@@ -45,4 +45,6 @@ interface KycDocumentInterface
 
     const KD_ASSET_TYPE_ID_KEY = 'assetTypeId';
     
+    const KD_DATE_KEY = 'date';
+
 }
