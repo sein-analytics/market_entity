@@ -15,6 +15,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $updateKycDocumentStatusSql = "UPDATE KycDocument SET contract_status_id=? WHERE id=?";
 
+    private string $updateKycDocumentSignIds = "UPDATE KycDocument SET sender_signature=?, receiver_signature=? WHERE id=?;";
+
     private string $fetchUserKycDocumentsByIssuerSql = "SELECT * FROM KycDocument WHERE user_id=? AND community_issuer_id=? AND community_user_id=?";
 
     public function insertNewKycDocument(array $params):mixed
@@ -44,6 +46,16 @@ class KycDocument extends KycDocumentAbstract
     {
         return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId],
             self::$callKycDocumentsByUserAndIssuer);
+    }
+
+    public function updateKycDocumentSignIds(string $senderSignId, string $receiverSignId, string $kycDocId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateKycDocumentSignIds,
+            self::EXECUTE_MTHD,
+            [$senderSignId, $receiverSignId, $kycDocId]
+        ); 
     }
 
 }
