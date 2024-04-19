@@ -65,7 +65,7 @@ class KycDocument extends KycDocumentAbstract
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchKycDocumentBySignatureIdSql,
-            self::FETCH_ONE_MTHD,
+            self::FETCH_ASSO_MTHD,
             [$signatureId, $signatureId]
         );
     }
