@@ -19,6 +19,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchUserKycDocumentsByIssuerSql = "SELECT * FROM KycDocument WHERE user_id=? AND community_issuer_id=? AND community_user_id=?";
 
+    private string $fetchKycDocumentBySignatureIdSql = "SELECT * FROM KycDocument WHERE sender_signature=? OR receiver_signature=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -56,6 +58,16 @@ class KycDocument extends KycDocumentAbstract
             self::EXECUTE_MTHD,
             [$senderSignId, $receiverSignId, $kycDocId]
         ); 
+    }
+
+    public function fetchKycDocumentBySignatureId(string $signatureId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchKycDocumentBySignatureIdSql,
+            self::FETCH_ONE_MTHD,
+            [$signatureId, $signatureId]
+        );
     }
 
 }
