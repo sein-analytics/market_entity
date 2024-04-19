@@ -11,7 +11,7 @@ interface KycDocumentInterface
 
     const KD_QRY_COMMUNITY_USER_ID_KEY = 'community_user_id';
 
-    const KD_QRY_COMMUNITY_ISSUER_ID_KEY = 'community_issuer_id'; 
+    const KD_QRY_COMMUNITY_ISSUER_ID_KEY = 'community_issuer_id';
 
     const KD_QRY_ASSET_TYPE_ID = 'kyc_asset_type_id';
 
@@ -46,9 +46,14 @@ interface KycDocumentInterface
     const KD_ISSUER_PARAM_API_KEY = 'issuer';
 
     const KD_ASSET_TYPE_ID_KEY = 'assetTypeId';
-    
+
     const KD_DATE_KEY = 'date';
 
     const KD_REQ_QRY_DESCRIPTION_KEY = 'description';
+
+    const KD_CONTRACT_STATUS_ID_MAPPER = [
+        self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
+        self::KD_QRY_RECEIVER_SIGNATURE_KEY => 3
+    ];
 
 }
