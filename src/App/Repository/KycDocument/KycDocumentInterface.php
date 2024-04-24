@@ -23,6 +23,8 @@ interface KycDocumentInterface
 
     const KD_QRY_DATE_KEY = 'date';
 
+    const KD_QRY_FILE_NAME = 'file_name';
+
     const KD_ISSUER_ID_KEY = 'issuerId';
 
     const KD_USER_ID_KEY = 'userId';
