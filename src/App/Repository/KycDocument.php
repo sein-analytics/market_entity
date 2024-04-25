@@ -15,7 +15,7 @@ class KycDocument extends KycDocumentAbstract
 
     private string $updateKycDocumentStatusSql = "UPDATE KycDocument SET contract_status_id=? WHERE id=?";
 
-    private string $updateKycDocumentSignIds = "UPDATE KycDocument SET sender_signature=?, receiver_signature=? WHERE id=?;";
+    private string $updateKycDocumentSignIds = "UPDATE KycDocument SET sender_signature=?, receiver_signature=?, contract_status_id=1 WHERE id=?;";
 
     private string $fetchUserKycDocumentsByIssuerSql = "SELECT * FROM KycDocument WHERE user_id=? AND community_issuer_id=? AND community_user_id=?";
 
