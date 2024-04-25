@@ -58,4 +58,10 @@ interface KycDocumentInterface
         self::KD_QRY_RECEIVER_SIGNATURE_KEY => 4
     ];
 
+    const KD_TYPE_NO_ASSET_ID_MAP = [
+        1 => null,
+        7 => null,
+        8 => null
+    ];
+
 }
