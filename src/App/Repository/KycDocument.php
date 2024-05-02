@@ -25,6 +25,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $deleteIssuerKycDocsAccessSql = "DELETE FROM issuer_kyc_document WHERE issuer_id=? AND kyc_document_id IN (?)";
 
+    private string $fetchKycDocsIdsByIssuerAndAssetSql = "SELECT id FROM KycDocument WHERE issuer_id=? AND (kyc_asset_type_id=? OR kyc_asset_type_id IS NULL)";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -101,6 +103,18 @@ class KycDocument extends KycDocumentAbstract
             self::EXECUTE_MTHD,
             [$issuerId, $ids]
         );
+    }
+
+    public function fetchKycDocsIdsByIssuerAndAsset(int $issuerId, int $assetTypeId)
+    {
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchKycDocsIdsByIssuerAndAssetSql,
+            self::FETCH_ASSO_MTHD,
+            [$issuerId, $assetTypeId]
+        );
+        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID);
+        return $results;
     }
 
 }
