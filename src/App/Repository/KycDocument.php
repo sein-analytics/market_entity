@@ -21,6 +21,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchKycDocumentBySignatureIdSql = "SELECT * FROM KycDocument WHERE sender_signature=? OR receiver_signature=?";
 
+    private string $insertIntoIssuerKycDocSql = "INSERT INTO issuer_kyc_document (`issuer_id`, `kyc_document_id`) VALUES";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -67,6 +69,24 @@ class KycDocument extends KycDocumentAbstract
             $this->fetchKycDocumentBySignatureIdSql,
             self::FETCH_ASSO_MTHD,
             [$signatureId, $signatureId]
+        );
+    }
+
+    public function addMultiIssuerKycDocAccess(int $issuerId, array $kycDocsIds)
+    {
+        $base = $this->insertIntoIssuerKycDocSql;
+        $insertCount = 0;
+        foreach ($kycDocsIds as $kycDocId) {
+            $insertCount++;
+            $base = $base . PHP_EOL .
+                '(' . $issuerId  . ',' . $kycDocId . ')'.
+                    ($insertCount == count($kycDocsIds) ? ';' : ',');
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $base,
+            self::EXECUTE_MTHD,
+            []
         );
     }
 
