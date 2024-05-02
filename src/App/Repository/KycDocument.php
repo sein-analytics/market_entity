@@ -110,10 +110,10 @@ class KycDocument extends KycDocumentAbstract
         $results = $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchKycDocsIdsByIssuerAndAssetSql,
-            self::FETCH_ASSO_MTHD,
+            self::FETCH_ALL_ASSO_MTHD,
             [$issuerId, $assetTypeId]
         );
-        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID);
+        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
         return $results;
     }
 
