@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\KycDocument")
@@ -105,6 +106,12 @@ class KycDocument
      **/
     protected $date = null;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Issuer", mappedBy="kycDocuments")
+     * @var ArrayCollection
+     */
+    protected $accessIssuer;
+
     function __construct()
     {
         $this->issuer = new Issuer();
@@ -112,6 +119,7 @@ class KycDocument
         $this->communityIssuer = new Issuer();
         $this->communityUser = new MarketUser();
         $this->contractType = new ContractType();
+        $this->accessIssuer = new ArrayCollection();
     }
 
     /**
@@ -259,4 +267,14 @@ class KycDocument
      */
     public function setDate(\DateTime $date) { $this->date = $date; }
     
+    public function addAccessIssuer(Issuer $accessIssuer)
+    {
+        $this->accessIssuer->add($accessIssuer);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAccessIssuer():ArrayCollection { return $this->accessIssuer; }
+
 }
