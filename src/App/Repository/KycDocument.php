@@ -23,6 +23,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $insertIntoIssuerKycDocSql = "INSERT INTO issuer_kyc_document (`issuer_id`, `kyc_document_id`) VALUES";
 
+    private string $deleteIssuerKycDocsAccessSql = "DELETE FROM issuer_kyc_document WHERE issuer_id=? AND kyc_document_id IN (?)";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -87,6 +89,17 @@ class KycDocument extends KycDocumentAbstract
             $base,
             self::EXECUTE_MTHD,
             []
+        );
+    }
+
+    public function deleteIssuerKycDocAccess(int $issuerId, array $kycDocsIds)
+    {
+        $ids = implode(',', $kycDocsIds);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteIssuerKycDocsAccessSql,
+            self::EXECUTE_MTHD,
+            [$issuerId, $ids]
         );
     }
 
