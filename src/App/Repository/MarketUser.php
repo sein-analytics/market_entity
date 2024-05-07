@@ -59,7 +59,7 @@ class MarketUser extends abstractMktUser
         return $this->flattenResultArrayByKey($results, self::MKT_DEAL_ID_KEY);
     }
 
-    public function fetchUserWatchlistDealIds(int $userId)
+    public function fetchUserWatchlistDealIds(int $userId, bool $indexedResults = false)
     {
         try {
             $stmt = $this->getEntityManager()->getConnection()->prepare(self::getUsrWatchlistIdsSql());
@@ -74,7 +74,11 @@ class MarketUser extends abstractMktUser
         }
         $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
         $stmt->closeCursor();
-        return $this->flattenResultArrayByKey($results, self::FAV_DEAL_ID_KEY);
+        $dealIds = $this->flattenResultArrayByKey($results, self::FAV_DEAL_ID_KEY, false);
+        $results = !$indexedResults
+            ? $dealIds
+            : $this->mapRequestIdsToResults($dealIds, $results, self::FAV_DEAL_ID_KEY);
+        return $results;
     }
 
     /**
@@ -307,6 +311,34 @@ class MarketUser extends abstractMktUser
         $query = $this->getEntityManager()->createQuery('SELECT * FROM MarketUser where id=:id');
         $query->setParameter('id', $userId);
         return $query->getResult(AbstractQuery::HYDRATE_OBJECT);
+    }
+
+    public function fetchUserFavoriteDeal(int $userId, int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->getUserFavoriteDealSql(),
+            self::FETCH_ONE_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
+    public function fetchUserRequestedKycDocuments(int $userId, int $issuerId, int $assetTypeId)
+    {
+        $result = $this->executeProcedure([$userId, $issuerId, $assetTypeId],
+            $this->callFetchUserRequestedKycDocuments
+        );
+        return $result;
+    }
+
+    public function insertNewKycDocument(array $params):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertKycDocRequestSql,
+            self::EXECUTE_MTHD,
+            array_values($params)
+        );
     }
 
 }

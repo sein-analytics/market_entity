@@ -9,6 +9,7 @@ use App\Entity\Data\CuBase;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\Issuer")
@@ -98,8 +99,14 @@ class Issuer extends AnnotationMappings
      */
     private $cuMain;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="\App\Entity\KycDocument", inversedBy="accessIssuer")
+     */
+    protected $kycDocuments;
+
     function __construct()
     {
+        $this->kycDocuments = new ArrayCollection();
     }
 
     function addDeal(Deal $deal){ $this->getDeals()->add($deal); }
@@ -158,6 +165,11 @@ class Issuer extends AnnotationMappings
      */
     public function setCuMain(CuBase $cuMain): void { $this->cuMain = $cuMain; }
 
+    public function addKycDocToIssuer(KycDocument $kycDoc):void
+    {
+        $this->kycDocuments->add($kycDoc);
+    }
 
+    public function getKycDocuments():ArrayCollection { return $this->kycDocuments; }
 
 }
