@@ -21,6 +21,8 @@ interface KycDocumentInterface
 
     const KD_QRY_RECEIVER_SIGNATURE_KEY = 'receiver_signature';
 
+    const KD_QRY_CONTRACT_STATUS_ID_KEY = 'contract_status_id';
+
     const KD_QRY_DATE_KEY = 'date';
 
     const KD_QRY_FILE_NAME = 'file_name';
@@ -52,6 +54,8 @@ interface KycDocumentInterface
     const KD_DATE_KEY = 'date';
 
     const KD_REQ_QRY_DESCRIPTION_KEY = 'description';
+
+    const KD_CONTRACT_STATUS_ID_KEY = 'contractStatusId';
 
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
