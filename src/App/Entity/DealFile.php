@@ -168,6 +168,30 @@ class DealFile extends DomainObject
      */
     protected $diligence;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?MarketUser $communityUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
+     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?ContractStatus $contractStatus;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $senderSignature;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $receiverSignature;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
@@ -396,5 +420,45 @@ class DealFile extends DomainObject
      * @param MimeType $mime
      */
     public function setMime(MimeType $mime):void { $this->mime = $mime;  }
+
+    /**
+     * @return MarketUser|null
+     */
+    public function getCommunityUser():MarketUser|null { return $this->communityUser; }
+
+    /**
+     * @param MarketUser $communityUser
+     */
+    public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
+
+    /**
+     * @return ContractStatus|null
+     */
+    public function getContractStatus():ContractStatus|null { return $this->contractStatus; }
+
+    /**
+     * @param ContractStatus $contractStatus
+     */
+    public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
+
+    /**
+     * @return null|string
+     */
+    public function getSenderSignature():string|null { return $this->senderSignature; }
+
+    /**
+     * @param string
+     */
+    public function setSenderSignature(string $senderSignature):void { $this->senderSignature = $senderSignature; }
+
+    /**
+     * @return null|string
+     */
+    public function getReceiverSignature():string|null { return $this->receiverSignature; }
+
+    /**
+     * @param string
+     */
+    public function setReceiverSignature(string $receiverSignature):void { $this->receiverSignature = $receiverSignature; }
 
 }
