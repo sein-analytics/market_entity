@@ -341,4 +341,14 @@ class MarketUser extends abstractMktUser
         );
     }
 
+    public function fetchUserDealsByStatus(int $userId, int $statusId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->getFetchDealsByUserAndStatusSql(),
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId, $statusId]
+        );
+    }
+
 }
