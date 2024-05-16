@@ -41,6 +41,8 @@ implements MktUserInterface
 
     protected string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+    private static string $fetchDealsByUserAndStatusSql = "SELECT * FROM Deal WHERE user_id=? AND status_id=?";
+
     /** @return string */
     public static function getUserDealIdsSql(): string
     { return self::$userDealIdsSql; }
@@ -97,5 +99,8 @@ implements MktUserInterface
     public static function getUserFavoriteDealSql(): string
     { return self::$userFavoriteDealSql; }
 
+    /** @return string */
+    public static function getFetchDealsByUserAndStatusSql(): string
+    { return self::$fetchDealsByUserAndStatusSql; }
 
 }
