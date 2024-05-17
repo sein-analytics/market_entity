@@ -23,6 +23,8 @@ interface DocTypeInterface
 
     const ANCILLARY_KEY  = 'ancillary';
 
+    const NDA_KEY = 'nda';
+
     const OTHER_KEY  = 'KEY';
 
     const DOC_TYPE_KEY_TO_ID = [
@@ -34,6 +36,7 @@ interface DocTypeInterface
         self::LOI_KEY => 6,
         self::PURCHASE_CONTRACT_KEY => 7,
         self::ANCILLARY_KEY => 8,
-        self::OTHER_KEY => self::DEFAULT_DOC_TYPE_ID
+        self::OTHER_KEY => self::DEFAULT_DOC_TYPE_ID,
+        self::NDA_KEY => 10
     ];
 }
