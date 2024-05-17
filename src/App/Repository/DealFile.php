@@ -39,7 +39,11 @@ class DealFile extends EntityRepository
         self::DF_ACC_MODE => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         self::DF_PUB_PATH => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         self::DF_SIG_ID => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        self::DF_SIG_PATH => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
+        self::DF_SIG_PATH => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::DF_COMMUNITY_USER_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::DF_CONTRACT_STATUS_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
+        self::DF_SENDER_SIGNATURE => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        self::DF_RECEIVER_SIGNATURE => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
     ];
 
     private string $updateAssetIdByIdSql = "UPDATE DealFile SET asset_id=? WHERE id=?";
