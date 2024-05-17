@@ -46,6 +46,8 @@ interface DealFileInterface
 
     const DF_ACC_MODE = 'access_id';
 
+    const DF_COMMUNITY_USER_ID = 'community_user_id';
+
     /**
      * ToDo any changes in the DAM JSON API
      * should be reflected below
@@ -93,5 +95,6 @@ interface DealFileInterface
         self::DF_PUB_PATH => null,
         self::DF_SIG_ID => null,
         self::DF_SIG_PATH => null,
+        self::DF_COMMUNITY_USER_ID => null,
     ];
 }
