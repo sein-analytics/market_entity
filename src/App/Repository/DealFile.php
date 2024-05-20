@@ -56,6 +56,8 @@ class DealFile extends EntityRepository
 
     private string $detachFileFromLoanSql = "UPDATE DealFile SET loan_id=NULL WHERE id=?";
 
+    private string $updateDealFileSignIdsSql = "UPDATE DealFile SET sender_signature=?, receiver_signature=?, contract_status_id=1 WHERE id=?;";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -155,4 +157,13 @@ class DealFile extends EntityRepository
     }
 
 
+    public function updateDealFileSignIds(string $senderSignId, int $receiverSignId, int $dealFileId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateDealFileSignIdsSql,
+            self::EXECUTE_MTHD,
+            [$senderSignId, $receiverSignId, $dealFileId]
+        );
+    }
 }
