@@ -75,11 +75,13 @@ interface DealFileInterface
 
     const DAM_ACC_MODE = 'access_mode';
 
+    const DAM_SECURE_URL = 'secure_url';
+
     const DAM_TO_DF_ARR = [
         self::DAM_FILE_NAME => self::DF_FILE_NAME,
         self::DAM_FILE_SIZE => self::DF_FILE_SIZE,
         self::DAM_ASSET_ID => self::DF_ASSET_ID,
-        self::DAM_PUB_PATH => self::DF_PUB_PATH,
+        self::DAM_SECURE_URL => self::DF_PUB_PATH,
         self::DAM_ACC_MODE => self::DF_ACC_MODE,
         self::DAM_LOAN_API => self::DF_LOAN_ID,
         self::DAM_FILE_TYPE => self::DF_MIME_ID
