@@ -14,6 +14,8 @@ class ContractSignature extends EntityRepository implements DbalStatementInterfa
 
     private string $insertContractSignatureSql = "INSERT INTO ContractSignature VALUE (null, ?, ?, ?, ?, ?, ?, ?)";
 
+    private string $updateContractSignatureStatusSql = "UPDATE ContractSignature SET contract_status_id=? WHERE id=?";
+
     public function insertNewContractSignature(array $params):mixed
     {
         if (array_key_exists(self::QUERY_JUST_ID, $params))
@@ -24,6 +26,16 @@ class ContractSignature extends EntityRepository implements DbalStatementInterfa
             $this->insertContractSignatureSql,
             self::EXECUTE_MTHD,
             array_values($params)
+        );
+    }
+
+    public function updateContractSignatureStatus(int $statusId, int $id):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateContractSignatureStatusSql,
+            self::EXECUTE_MTHD,
+            [$statusId, $id]
         );
     }
 
