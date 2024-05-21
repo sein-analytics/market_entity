@@ -192,6 +192,12 @@ class DealFile extends DomainObject
      */
     protected ?string $receiverSignature;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
+     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
+     */
+    protected ?ContractSignature $contractSignature;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
@@ -460,5 +466,15 @@ class DealFile extends DomainObject
      * @param string
      */
     public function setReceiverSignature(string $receiverSignature):void { $this->receiverSignature = $receiverSignature; }
+
+    /**
+     * @return ContractSignature|null
+     */
+    public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
+
+    /**
+     * @param ContractSignature $contractSignature
+     */
+    public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
 
 }
