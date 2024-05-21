@@ -157,7 +157,7 @@ class DealFile extends EntityRepository
     }
 
 
-    public function updateDealFileSignIds(string $senderSignId, int $receiverSignId, int $dealFileId)
+    public function updateDealFileSignIds(string $senderSignId, string $receiverSignId, int $dealFileId)
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
