@@ -69,4 +69,12 @@ interface ContractSignatureInterface
         self::CONTRACT_STATUS_SENDER_SIGNED =>
             self::GET_RECEIVER_SIGNATURE_KEY
     ];
+
+    const CONTRACT_SIGNATURE_STATUS_UPDATE_MAP = [
+        self::CONTRACT_STATUS_SIGN_PENDING =>
+            self::CONTRACT_STATUS_SENDER_SIGNED,
+        self::CONTRACT_STATUS_SENDER_SIGNED =>
+            self::CONTRACT_STATUS_EXECUTED
+    ];
+    
 }
