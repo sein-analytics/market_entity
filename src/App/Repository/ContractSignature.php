@@ -16,6 +16,8 @@ class ContractSignature extends EntityRepository implements DbalStatementInterfa
 
     private string $updateContractSignatureStatusSql = "UPDATE ContractSignature SET contract_status_id=? WHERE id=?";
 
+    private string $fetchIdFromSignIdSql = "SELECT id FROM ContractSignature WHERE signature_id=?";
+
     public function insertNewContractSignature(array $params):mixed
     {
         if (array_key_exists(self::QUERY_JUST_ID, $params))
@@ -36,6 +38,16 @@ class ContractSignature extends EntityRepository implements DbalStatementInterfa
             $this->updateContractSignatureStatusSql,
             self::EXECUTE_MTHD,
             [$statusId, $id]
+        );
+    }
+
+    public function fetchContractStatusIdBySignId(string $signatureId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchIdFromSignIdSql,
+            self::FETCH_NUMERIC_MTHD,
+            [$signatureId]
         );
     }
 
