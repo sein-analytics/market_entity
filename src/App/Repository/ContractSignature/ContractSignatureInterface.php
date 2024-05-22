@@ -32,4 +32,30 @@ interface ContractSignatureInterface
 
     const CS_PUBLIC_ID_KEY = 'publicId';
 
+    const CONTRACT_STATUS_SIGN_PENDING = 'signature_pending';
+
+    const CONTRACT_STATUS_SENDER_SIGNED = 'sender_signed';
+
+    const CONTRACT_STATUS_RECEIVER_SIGNED = 'receiver_signed';
+
+    const CONTRACT_STATUS_EXECUTED = 'executed';
+
+    const CONTRACT_STATUS_SIGN_PENDING_ID = 1;
+
+    const CONTRACT_STATUS_SENDER_SIGNED_ID = 2;
+
+    const CONTRACT_STATUS_RECEIVER_SIGNED_ID = 3;
+
+    const CONTRACT_STATUS_EXECUTED_ID = 4; 
+
+    const CONTRACT_STATUS_IDS_MAP = [
+        self::CONTRACT_STATUS_SIGN_PENDING =>
+            self::CONTRACT_STATUS_SIGN_PENDING_ID,
+        self::CONTRACT_STATUS_SENDER_SIGNED =>
+            self::CONTRACT_STATUS_SENDER_SIGNED_ID,
+        self::CONTRACT_STATUS_RECEIVER_SIGNED =>
+            self::CONTRACT_STATUS_RECEIVER_SIGNED_ID,
+        self::CONTRACT_STATUS_EXECUTED =>
+            self::CONTRACT_STATUS_EXECUTED_ID
+    ];
 }
