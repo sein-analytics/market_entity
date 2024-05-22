@@ -27,6 +27,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchKycDocsIdsByIssuerAndAssetSql = "SELECT id FROM KycDocument WHERE issuer_id=? AND (community_issuer_id=? OR community_issuer_id IS NULL) AND (kyc_asset_type_id=? OR kyc_asset_type_id IS NULL)";
 
+    private string $updateContractSignatureIdSql = "UPDATE KycDocument SET contract_signature_id=? WHERE id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -164,6 +166,16 @@ class KycDocument extends KycDocumentAbstract
         );
 
         return $results;
+    }
+
+    public function updateContractSignature(int $contractSignId, int $kycDocId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateContractSignatureIdSql,
+            self::EXECUTE_MTHD,
+            [$contractSignId, $kycDocId]
+        ); 
     }
 
 }
