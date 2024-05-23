@@ -32,6 +32,8 @@ interface ContractSignatureInterface
 
     const CS_PUBLIC_ID_KEY = 'publicId';
 
+    const CS_CONTRACT_SIGNATURE_ID_KEY = 'contractSignatureId';
+
     const CONTRACT_STATUS_SIGN_PENDING = 'signature_pending';
 
     const CONTRACT_STATUS_SENDER_SIGNED = 'sender_signed';
