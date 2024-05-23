@@ -89,18 +89,6 @@ class KycDocument
      protected ?string $fileName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
-     protected ?string $senderSignature;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
-     protected ?string $receiverSignature;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime|null
      **/
@@ -242,26 +230,6 @@ class KycDocument
      * @param string
      */
     public function setFileName(string $fileName):void { $this->fileName = $fileName; }
-
-    /**
-     * @return null|string
-     */
-    public function getSenderSignature():string|null { return $this->senderSignature; }
-
-    /**
-     * @param string
-     */
-    public function setSenderSignature(string $senderSignature):void { $this->senderSignature = $senderSignature; }
-
-    /**
-     * @return null|string
-     */
-    public function getReceiverSignature():string|null { return $this->receiverSignature; }
-
-    /**
-     * @param string
-     */
-    public function setReceiverSignature(string $receiverSignature):void { $this->receiverSignature = $receiverSignature; }
 
     /**
      * @return \DateTime
