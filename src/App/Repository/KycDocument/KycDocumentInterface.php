@@ -27,6 +27,8 @@ interface KycDocumentInterface
 
     const KD_QRY_FILE_NAME = 'file_name';
 
+    const KD_QRY_CONTRACT_SIGNATURE_ID_KEY = 'contract_signature_id';
+
     const KD_ISSUER_ID_KEY = 'issuerId';
 
     const KD_USER_ID_KEY = 'userId';
