@@ -50,13 +50,6 @@ class KycDocument
      */
     protected ContractType $contractType;
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
-     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=true)
-     */
-    protected ?ContractStatus $contractStatus;
-
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
      * @ORM\JoinColumn(name="kyc_asset_type_id", referencedColumnName="id", nullable=true)
@@ -170,16 +163,6 @@ class KycDocument
      * @param ContractType $contractType
      */
     public function setContractType(ContractType $contractType):void { $this->contractType = $contractType; }
-
-    /**
-     * @return ContractStatus|null
-     */
-    public function getContractStatus():ContractStatus|null { return $this->contractStatus; }
-
-    /**
-     * @param ContractStatus $contractStatus
-     */
-    public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
 
     /**
      * @return DealAsset|null
