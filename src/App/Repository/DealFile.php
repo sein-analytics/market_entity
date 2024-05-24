@@ -41,9 +41,7 @@ class DealFile extends EntityRepository
         self::DF_SIG_ID => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         self::DF_SIG_PATH => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         self::DF_COMMUNITY_USER_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        self::DF_CONTRACT_STATUS_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        self::DF_SENDER_SIGNATURE => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        self::DF_RECEIVER_SIGNATURE => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL']
+        self::DF_CONTRACT_SIGNATURE_ID => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
     ];
 
     private string $updateAssetIdByIdSql = "UPDATE DealFile SET asset_id=? WHERE id=?";
@@ -55,8 +53,6 @@ class DealFile extends EntityRepository
     private string $attachFileToLoanSql = "UPDATE DealFile SET loan_id=? WHERE id=?";
 
     private string $detachFileFromLoanSql = "UPDATE DealFile SET loan_id=NULL WHERE id=?";
-
-    private string $updateDealFileSignIdsSql = "UPDATE DealFile SET sender_signature=?, receiver_signature=?, contract_status_id=1 WHERE id=?;";
 
     private string $updateContractSignatureIdSql = "UPDATE DealFile SET contract_signature_id=? WHERE id=?";
 
@@ -155,17 +151,6 @@ class DealFile extends EntityRepository
             $this->detachFileFromLoanSql,
             self::EXECUTE_MTHD,
             [$fileId]
-        );
-    }
-
-
-    public function updateDealFileSignIds(string $senderSignId, string $receiverSignId, int $dealFileId)
-    {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $this->updateDealFileSignIdsSql,
-            self::EXECUTE_MTHD,
-            [$senderSignId, $receiverSignId, $dealFileId]
         );
     }
 
