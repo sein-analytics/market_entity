@@ -48,11 +48,7 @@ interface DealFileInterface
 
     const DF_COMMUNITY_USER_ID = 'community_user_id';
 
-    const DF_CONTRACT_STATUS_ID = 'contract_status_id';
-
-    const DF_SENDER_SIGNATURE = 'sender_signature';
-
-    const DF_RECEIVER_SIGNATURE = 'receiver_signature';
+    const DF_CONTRACT_SIGNATURE_ID = 'contract_signature_id'; 
 
     /**
      * ToDo any changes in the DAM JSON API
@@ -104,8 +100,6 @@ interface DealFileInterface
         self::DF_SIG_ID => null,
         self::DF_SIG_PATH => null,
         self::DF_COMMUNITY_USER_ID => null,
-        self::DF_CONTRACT_STATUS_ID => null,
-        self::DF_SENDER_SIGNATURE => null,
-        self::DF_RECEIVER_SIGNATURE => null,
+        self::DF_CONTRACT_SIGNATURE_ID => null,
     ];
 }
