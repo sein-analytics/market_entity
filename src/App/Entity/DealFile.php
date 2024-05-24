@@ -175,24 +175,6 @@ class DealFile extends DomainObject
     protected ?MarketUser $communityUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
-     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=true)
-     */
-    protected ?ContractStatus $contractStatus;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
-    protected ?string $senderSignature;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
-    protected ?string $receiverSignature;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
      * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
      */
@@ -436,36 +418,6 @@ class DealFile extends DomainObject
      * @param MarketUser $communityUser
      */
     public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
-
-    /**
-     * @return ContractStatus|null
-     */
-    public function getContractStatus():ContractStatus|null { return $this->contractStatus; }
-
-    /**
-     * @param ContractStatus $contractStatus
-     */
-    public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
-
-    /**
-     * @return null|string
-     */
-    public function getSenderSignature():string|null { return $this->senderSignature; }
-
-    /**
-     * @param string
-     */
-    public function setSenderSignature(string $senderSignature):void { $this->senderSignature = $senderSignature; }
-
-    /**
-     * @return null|string
-     */
-    public function getReceiverSignature():string|null { return $this->receiverSignature; }
-
-    /**
-     * @param string
-     */
-    public function setReceiverSignature(string $receiverSignature):void { $this->receiverSignature = $receiverSignature; }
 
     /**
      * @return ContractSignature|null
