@@ -61,6 +61,18 @@ interface KycDocumentInterface
 
     const KD_ALLOW_DOC_SIGN_KEY = 'allowDocSign';
 
+    const KYC_TYPE_NDA_ID = 8;
+    
+    const KYC_TYPE_LOI_ID = 9;
+
+    const KYC_TYPE_LPA_ID = 10;
+
+    const DOC_TYPE_LPA_ID = 7;
+
+    const DOC_TYPE_LOI_ID = 6;
+
+    const DOC_TYPE_NDA_ID = 10;
+
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
         self::KD_QRY_RECEIVER_SIGNATURE_KEY => 4
@@ -70,6 +82,12 @@ interface KycDocumentInterface
         1 => null,
         7 => null,
         8 => null
+    ];
+
+    const DOC_TYPE_KYC_TYPE_MAP = [
+        self::DOC_TYPE_NDA_ID => self::KYC_TYPE_NDA_ID,
+        self::DOC_TYPE_LOI_ID => self::KYC_TYPE_LOI_ID,
+        self::DOC_TYPE_LPA_ID => self::KYC_TYPE_LPA_ID
     ];
 
 }
