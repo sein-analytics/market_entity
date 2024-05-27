@@ -56,7 +56,7 @@ class DealFile extends EntityRepository
 
     private string $updateContractSignatureIdSql = "UPDATE DealFile SET contract_signature_id=? WHERE id=?";
 
-    private string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId)";
+    private string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :assetTypeId)";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -166,9 +166,9 @@ class DealFile extends EntityRepository
         ); 
     }
 
-    public function fetchUserDealFilesContracts(int $userId)
+    public function fetchUserDealFilesContracts(int $userId, int $assetTypeId)
     {
-        return $this->executeProcedure([$userId], self::$callFetchUserDealFilesContracts);
+        return $this->executeProcedure([$userId, $assetTypeId], self::$callFetchUserDealFilesContracts);
     }
 
 }
