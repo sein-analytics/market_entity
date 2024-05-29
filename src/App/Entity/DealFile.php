@@ -180,6 +180,12 @@ class DealFile extends DomainObject
      */
     protected ?ContractSignature $contractSignature;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected $date = null;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
@@ -428,5 +434,15 @@ class DealFile extends DomainObject
      * @param ContractSignature $contractSignature
      */
     public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate() : ?\DateTime { return $this->date; }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date) { $this->date = $date; }
 
 }
