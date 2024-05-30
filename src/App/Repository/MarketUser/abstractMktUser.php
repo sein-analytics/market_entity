@@ -43,6 +43,8 @@ implements MktUserInterface
 
     private static string $fetchDealsByUserAndStatusSql = "SELECT * FROM Deal WHERE user_id=? AND status_id=?";
 
+    private static string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId)';
+
     /** @return string */
     public static function getUserDealIdsSql(): string
     { return self::$userDealIdsSql; }
@@ -102,5 +104,9 @@ implements MktUserInterface
     /** @return string */
     public static function getFetchDealsByUserAndStatusSql(): string
     { return self::$fetchDealsByUserAndStatusSql; }
+    
+    /** @return string */
+    public static function getCallFetchAllowedDealsNonDisclosure(): string
+    { return self::$callFetchAllowedDealsNonDisclosure; }
 
 }
