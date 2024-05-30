@@ -353,12 +353,10 @@ class MarketUser extends abstractMktUser
 
     public function fetchAllowedDealsNonDisclosure(int $userId, int $communityIssuerId): mixed
     {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $this->getCallFetchAllowedDealsNonDisclosure(),
-            self::FETCH_ALL_ASSO_MTHD,
-            [$userId, $communityIssuerId]
+        $result = $this->executeProcedure([$userId, $communityIssuerId],
+            $this->getCallFetchAllowedDealsNonDisclosure()
         );
+        return $result;
     }
 
 }
