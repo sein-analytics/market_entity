@@ -45,6 +45,8 @@ implements MktUserInterface
 
     private static string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId)';
 
+    private static string $callFetchAllowedDealsByBidStatusAndDocType = 'call FetchAllowedDealsByBidStatusAndDocType(:userId, :communityUserId, :docTypeId, :bidsStatusIds)';
+
     /** @return string */
     public static function getUserDealIdsSql(): string
     { return self::$userDealIdsSql; }
@@ -108,5 +110,9 @@ implements MktUserInterface
     /** @return string */
     public static function getCallFetchAllowedDealsNonDisclosure(): string
     { return self::$callFetchAllowedDealsNonDisclosure; }
+    
+    /** @return string */
+    public static function getCallFetchAllowedDealsByBidStatusAndDocType(): string
+    { return self::$callFetchAllowedDealsByBidStatusAndDocType; }
 
 }
