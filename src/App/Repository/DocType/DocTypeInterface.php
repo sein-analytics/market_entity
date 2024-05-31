@@ -39,4 +39,10 @@ interface DocTypeInterface
         self::OTHER_KEY => self::DEFAULT_DOC_TYPE_ID,
         self::NDA_KEY => 10
     ];
+
+    const DOC_TYPE_KEY_TO_BID_STATUS_IDS = [
+        self::LOI_KEY => [1, 2],
+        self::PURCHASE_CONTRACT_KEY => [4]
+    ];
+
 }
