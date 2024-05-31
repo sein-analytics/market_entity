@@ -359,4 +359,12 @@ class MarketUser extends abstractMktUser
         return $result;
     }
 
+    public function fetchAllowedDealsByBidStatusAndDocType(int $userId, int $communityUserId, int $docTypeId, array $bidsStatusIds): mixed
+    {
+        $result = $this->executeProcedure([$userId, $communityUserId, $docTypeId, implode(', ', $bidsStatusIds)],
+            $this->getCallFetchAllowedDealsByBidStatusAndDocType()
+        );
+        return $result;
+    }
+
 }
