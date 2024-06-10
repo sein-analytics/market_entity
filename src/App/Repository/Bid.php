@@ -226,7 +226,7 @@ class Bid extends EntityRepository
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchBidByIdSql,
-            self::FETCH_ONE_MTHD,
+            self::FETCH_ASSO_MTHD,
             [$bidId]
         );
     }
