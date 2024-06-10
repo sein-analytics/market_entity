@@ -49,6 +49,8 @@ interface BidInterface
 
     const DD_BID_HISTORY_LOAN_ITEM_KEY = "loan";
 
+    const BID_QRY_STATUS_ID_KEY = "status_id";
+
     const BID_STATUS_UPDATE_ID_MAP = [
         self::OVERRIDDEN_STATUS => self::LOI_STATUS_2,
         self::PLACED_STATUS => self::LOI_STATUS_2,
