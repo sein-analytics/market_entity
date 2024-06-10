@@ -34,6 +34,8 @@ class Bid extends EntityRepository
 
     private string $updateBidStatusSql = "UPDATE Bid SET status_id=? WHERE id=?";
 
+    private string $fetchBidByIdSql = "SELECT * FROM Bid WHERE id=?";
+
     /**
      * @param array $dealIds
      * @param bool $mapBidsToDeals
@@ -216,6 +218,16 @@ class Bid extends EntityRepository
             $this->updateBidStatusSql,
             self::EXECUTE_MTHD,
             [$statusId, $bidId]
+        );
+    }
+
+    public function fetchBidByIdSql(int $bidId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchBidByIdSql,
+            self::FETCH_ONE_MTHD,
+            [$bidId]
         );
     }
 
