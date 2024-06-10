@@ -9,11 +9,14 @@ use App\Entity\Pool;
 interface BidInterface
 {
     const BID_DEAL = "deal_id";
+    const OVERRIDDEN_STATUS = 1;
+    const PLACED_STATUS = 2;
     const DD_STATUS = 4;
     const LOI_STATUS_1 = 3;
     const LOI_STATUS_2 = 7;
     const MLPA_STATUS_1 = 5;
     const MLPA_STATUS_2 = 10;
+    const CLOSED_STATUS = 13;
     // Any modifications to the keys below should be reflected in methods
     // that call the activity count methods below
     const DD_KEY = 'dueDiligence';
@@ -45,5 +48,13 @@ interface BidInterface
     const DD_BIDH_HISTORY_REPLIES_KEY = "replies";
 
     const DD_BID_HISTORY_LOAN_ITEM_KEY = "loan";
+
+    const BID_STATUS_UPDATE_ID_MAP = [
+        self::OVERRIDDEN_STATUS => self::LOI_STATUS_2,
+        self::PLACED_STATUS => self::LOI_STATUS_2,
+        self::LOI_STATUS_2 => self::DD_STATUS,
+        self::DD_STATUS => self::MLPA_STATUS_2,
+        self::MLPA_STATUS_2 => self::CLOSED_STATUS,
+    ];
 
 }
