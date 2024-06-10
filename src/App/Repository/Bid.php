@@ -32,6 +32,8 @@ class Bid extends EntityRepository
 
     private string $fetchIssuerActiveUserBids = "SELECT deal_id, user_id FROM Bid WHERE user_id IN (?) AND status_id >= 3";
 
+    private string $updateBidStatusSql = "UPDATE Bid SET status_id=? WHERE id=?";
+
     /**
      * @param array $dealIds
      * @param bool $mapBidsToDeals
@@ -205,6 +207,16 @@ class Bid extends EntityRepository
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    public function updateBidStatus(int $statusId, int $bidId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateBidStatusSql,
+            self::EXECUTE_MTHD,
+            [$statusId, $bidId]
+        );
     }
 
 }
