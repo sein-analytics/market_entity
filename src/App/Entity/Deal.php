@@ -262,6 +262,12 @@ class Deal extends DealAbstract
      */
     protected $contracts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @var null|bool
+     */
+    protected ?bool $requiresNda; 
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
@@ -579,5 +585,18 @@ class Deal extends DealAbstract
      * @return ArrayCollection
      */
     public function getContracts():ArrayCollection|PersistentCollection|null { return $this->contracts; }
+
+    /**
+     * @return bool|null
+     */
+    public function getRequiresNda() :null|bool { return $this->requiresNda; }
+
+    /**
+     * @param bool $notify
+     */
+    public function setRequiresNda(bool $requiresNda):void
+    {
+        $this->requiresNda = $requiresNda;
+    }
 
 }
