@@ -62,6 +62,12 @@ class KycDocRequest
     protected string $description = '';
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
+     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?Bid $bid;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime|null
      **/
@@ -210,4 +216,21 @@ class KycDocRequest
     {
         $this->date = $date;
     }
+
+    /**
+     * @return Bid|null
+     */
+    public function getBid(): Bid|null
+    {
+        return $this->bid;
+    }
+
+    /**
+     * @param Bid $Bid
+     */
+    public function setBid(Bid $bid): void
+    {
+        $this->bid = $bid;
+    }
+
 }
