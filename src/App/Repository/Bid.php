@@ -36,6 +36,8 @@ class Bid extends EntityRepository
 
     private string $fetchBidByIdSql = "SELECT * FROM Bid WHERE id=?";
 
+    private string $callFetchDealIssuersLoiActiveBids = 'call FetchDealIssuersLoiActiveBids(:dealId, :bidsStatusIds)';
+
     /**
      * @param array $dealIds
      * @param bool $mapBidsToDeals
@@ -229,6 +231,12 @@ class Bid extends EntityRepository
             self::FETCH_ASSO_MTHD,
             [$bidId]
         );
+    }
+
+    public function fetchDealIssuersLoiActiveBids(int $dealId, array $bidsStatusIds):mixed
+    {
+        return $this->executeProcedure([$dealId, implode(', ', $bidsStatusIds)],
+            self::$callFetchDealIssuersLoiActiveBids);
     }
 
 }
