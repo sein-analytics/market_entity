@@ -97,7 +97,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
      * @param bool $isMarket
      * @return array|bool
      */
-    public function fetchUserMarketDealsFromIds(array $ids, $isMarket = true)
+    public function fetchUserMarketDealsFromIds(array $ids, $isMarket = true, $mapById = false)
     {
         $sql = 'SELECT Deal.id, Deal.issuer_id, Deal.auction_type_id, Deal.asset_type_id, Deal.bid_type_id, Deal.issue, Deal.cut_off_date, Deal.closing_date, ' .
             'Deal.current_balance, Deal.views, Deal.status_id, Deal.user_id, MarketUser.user_name,' .
@@ -107,7 +107,11 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         } else {
             $sql .= 'WHERE Deal.status_id IN (1,4) AND Deal.id IN (?) ORDER BY Deal.id ASC';
         }
-        return $this->fetchByIntArray($this->em, $ids, $sql);
+        $results = $this->fetchByIntArray($this->em, $ids, $sql);
+        if ($mapById) {
+            $results = $this->mapRequestIdsToResults($ids, $results, self::QUERY_JUST_ID, true);
+        }
+        return $results;
     }
 
     /**
