@@ -236,7 +236,7 @@ class Bid extends EntityRepository
     public function fetchDealIssuersLoiActiveBids(int $dealId, array $bidsStatusIds):mixed
     {
         return $this->executeProcedure([$dealId, implode(', ', $bidsStatusIds)],
-            self::$callFetchDealIssuersLoiActiveBids);
+            $this->callFetchDealIssuersLoiActiveBids);
     }
 
 }
