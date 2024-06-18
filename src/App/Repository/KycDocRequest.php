@@ -16,8 +16,15 @@ class KycDocRequest extends KycDocumentAbstract
         " VALUES";
 
 
-    public function insertMultiKycDocRequests(int $communityIssuerId, int $communityUserId, int $assetTypeId, int $kycTypeId, string $description, \DateTime $date, array $bids)
-    {
+    public function insertMultiKycDocRequests(
+        int $communityIssuerId,
+        int $communityUserId,
+        int $assetTypeId,
+        int $kycTypeId,
+        string $description,
+        string $date,
+        array $bids
+    ) {
         $base = $this->insertMultiKycDocRequestsSql;
         $insertCount = 0;
         foreach ($bids as $bid) {
