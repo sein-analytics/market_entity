@@ -13,7 +13,7 @@ class KycDocRequest extends KycDocumentAbstract
 
     private string $insertMultiKycDocRequestsSql = "INSERT INTO KycDocRequest " .
         "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`)" .
-        " VALUES";
+        " VALUES ";
 
 
     public function insertMultiKycDocRequests(
@@ -33,7 +33,7 @@ class KycDocRequest extends KycDocumentAbstract
                 '(' .
                 $communityUserId . ',' . $communityIssuerId . ',' .
                 $bid['userId'] . ',' . $bid['issuerId'] . ',' . $kycTypeId . ',' .
-                $assetTypeId . ',' . $description . ',' . $date . ',' . $bid['bidId'] .
+                $assetTypeId . ',' . "'" . $description . "'" . ',' .  "'" . $date . "'" . ',' . $bid['bidId'] .
                 ')' . ($insertCount == count($bids) ? ';' : ',');
         }
         return $this->buildAndExecuteFromSql(
