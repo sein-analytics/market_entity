@@ -59,7 +59,7 @@ class DealFile extends EntityRepository
 
     private static string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :issuerId, :assetTypeId)";
 
-    private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :communityUserId, :assetTypeId)";
+    private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -174,9 +174,9 @@ class DealFile extends EntityRepository
         return $this->executeProcedure([$userId, $issuerId, $assetTypeId], self::$callFetchUserDealFilesContracts);
     }
 
-    public function fetchDealFilesContractsByUser(int $userId, int $communityUserId, int $assetTypeId)
+    public function fetchDealFilesContractsByUser(int $userId, int $issuerId, int $communityUserId, int $communityIssuerId, int $assetTypeId)
     {
-        return $this->executeProcedure([$userId, $communityUserId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
+        return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
     }
 
 }
