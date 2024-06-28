@@ -58,6 +58,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callLoansByDealId = 'call LoansByDealId(:dealId)';
 
+    private string $callFetchUserAllowedLpaDealsBySeller = 'call FetchUserAllowedLpaDealsBySeller(:sellerId, :buyerId)';
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -275,6 +277,15 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         $results = $this->executeProcedure(
             [$dealId], 
             $this->callLoansByDealId
+        );
+        return $results;
+    }
+
+    public function fetchUserAllowedLpaDealsBySeller(int $sellerId, int $buyerId)
+    {
+        $results = $this->executeProcedure(
+            [$sellerId, $buyerId], 
+            $this->callFetchUserAllowedLpaDealsBySeller
         );
         return $results;
     }
