@@ -301,4 +301,24 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $results;
     }
 
+    public function findByUsersAndStatusAndAssets(array $userIds, array $statusIds, array $assetTypeIds)
+    {
+        $sql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?) AND asset_type_id IN (?)";
+        try {
+            $stmt = $this->em->getConnection()->executeQuery(
+                $sql,
+                array($userIds, $statusIds, $assetTypeIds),
+                array(
+                    Connection::PARAM_INT_ARRAY,
+                    Connection::PARAM_INT_ARRAY,
+                    Connection::PARAM_INT_ARRAY,
+                )
+            );
+            $result = $stmt->fetchAllAssociative();
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
+        return $this->flattenResultArrayByKey($result, 'id');
+    }
+
 }
