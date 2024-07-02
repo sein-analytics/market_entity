@@ -58,9 +58,9 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callLoansByDealId = 'call LoansByDealId(:dealId)';
 
-    private string $callFetchUserAllowedLpaDealsBySeller = 'call FetchUserAllowedLpaDealsBySeller(:sellerId, :buyerId)';
+    private string $callFetchUserAllowedLpaDealsBySeller = 'call FetchUserAllowedLpaDealsBySeller(:sellerId, :buyerId, :assetTypeId)';
 
-    private string $callFetchUserAllowedLpaDeals = 'call FetchUserAllowedLpaDeals(:userId)';
+    private string $callFetchUserAllowedLpaDeals = 'call FetchUserAllowedLpaDeals(:userId, :assetTypeId)';
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -283,19 +283,19 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $results;
     }
 
-    public function fetchUserAllowedLpaDealsBySeller(int $sellerId, int $buyerId)
+    public function fetchUserAllowedLpaDealsBySeller(int $sellerId, int $buyerId, int $assetTypeId)
     {
         $results = $this->executeProcedure(
-            [$sellerId, $buyerId], 
+            [$sellerId, $buyerId, $assetTypeId], 
             $this->callFetchUserAllowedLpaDealsBySeller
         );
         return $results;
     }
 
-    public function fetchUserAllowedLpaDeals(int $userId)
+    public function fetchUserAllowedLpaDeals(int $userId, int $assetTypeId)
     {
         $results = $this->executeProcedure(
-            [$userId], 
+            [$userId, $assetTypeId], 
             $this->callFetchUserAllowedLpaDeals
         );
         return $results;
