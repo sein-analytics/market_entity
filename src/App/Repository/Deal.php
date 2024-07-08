@@ -62,6 +62,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callFetchUserAllowedLpaDeals = 'call FetchUserAllowedLpaDeals(:userId, :assetTypeId)';
 
+    private string $callFetchDealRequestedLpas = 'call FetchDealRequestedLpas(:userId, :dealId)';
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -319,6 +321,15 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             return $exception->getMessage();
         }
         return $this->flattenResultArrayByKey($result, 'id');
+    }
+
+    public function fetchDealRequestedLpas(int $userId, int $dealId)
+    {
+        $results = $this->executeProcedure(
+            [$userId, $dealId], 
+            $this->callFetchDealRequestedLpas
+        );
+        return $results;
     }
 
 }
