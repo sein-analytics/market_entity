@@ -68,6 +68,12 @@ class KycDocRequest
     protected ?Bid $bid;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?Deal $deal;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime|null
      **/
@@ -231,6 +237,22 @@ class KycDocRequest
     public function setBid(Bid $bid): void
     {
         $this->bid = $bid;
+    }
+    
+    /**
+     * @return Deal|null
+     */
+    public function getDeal(): Deal|null
+    {
+        return $this->deal;
+    }
+
+    /**
+     * @param Deal $deal
+     */
+    public function setDeal(Deal $deal): void
+    {
+        $this->deal = $deal;
     }
 
 }
