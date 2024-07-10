@@ -64,6 +64,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callFetchDealRequestedLpas = 'call FetchDealRequestedLpas(:userId, :dealId)';
 
+    private string $callFetchUserAllowedNdaDealsBySeller = 'call FetchUserAllowedNdaDealsBySeller(:sellerId, :issuerId, :assetTypeId)';
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -328,6 +330,15 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         $results = $this->executeProcedure(
             [$userId, $dealId], 
             $this->callFetchDealRequestedLpas
+        );
+        return $results;
+    }
+
+    public function fetchUserAllowedNdaDealsBySeller(int $sellerId, int $issuerId, int $assetTypeId)
+    { 
+        $results = $this->executeProcedure(
+            [$sellerId, $issuerId, $assetTypeId], 
+            $this->callFetchUserAllowedNdaDealsBySeller
         );
         return $results;
     }
