@@ -341,14 +341,6 @@ class MarketUser extends abstractMktUser
         );
     }
 
-    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityIssuerId): mixed
-    {
-        $result = $this->executeProcedure([$userId, $communityIssuerId],
-            $this->getCallFetchAllowedDealsNonDisclosure()
-        );
-        return $result;
-    }
-
     public function fetchAllowedDealsByBidStatusAndDocType(int $userId, int $communityUserId, int $docTypeId, array $bidsStatusIds): mixed
     {
         $result = $this->executeProcedure([$userId, $communityUserId, $docTypeId, implode(', ', $bidsStatusIds)],
