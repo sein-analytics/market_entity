@@ -15,6 +15,8 @@ class KycDocRequest extends KycDocumentAbstract
         "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`, `deal_id`)" .
         " VALUES ";
 
+    private string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
     private string $deleteKycDocRequestByIdSql = "DELETE FROM KycDocRequest WHERE id=?";
 
     public function insertMultiKycDocRequests(
@@ -44,7 +46,17 @@ class KycDocRequest extends KycDocumentAbstract
             []
         );
     }
- 
+
+    public function insertNewKycDocRequest(array $params)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertKycDocRequestSql,
+            self::EXECUTE_MTHD,
+            array_values($params)
+        );
+    }
+
     public function deleteKycDocRequestById(int $kycDocRequestId) 
     {
         return $this->buildAndExecuteFromSql(

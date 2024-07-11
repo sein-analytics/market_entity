@@ -331,16 +331,6 @@ class MarketUser extends abstractMktUser
         return $result;
     }
 
-    public function insertNewKycDocument(array $params):mixed
-    {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $this->insertKycDocRequestSql,
-            self::EXECUTE_MTHD,
-            array_values($params)
-        );
-    }
-
     public function fetchUserDealsByStatus(int $userId, int $statusId): mixed
     {
         return $this->buildAndExecuteFromSql(
