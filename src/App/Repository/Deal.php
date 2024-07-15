@@ -48,6 +48,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $fetchUserDealAccessSql = "SELECT * FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
 
+    private string $insertDealMarketUserSql = "INSERT INTO deal_market_user VALUE (?, ?)";
+
     private string $fetchDealByIdSql = "SELECT * FROM Deal WHERE id=?";
 
     private string $callDealStatsStips = 'call DealStatsStips(:dealId)';
@@ -233,6 +235,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             $this->getEntityManager(),
             $this->fetchUserDealAccessSql,
             self::FETCH_ONE_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
+    public function insertDealMarketUser(int $userId, int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertDealMarketUserSql,
+            self::EXECUTE_MTHD,
             [$userId, $dealId]
         );
     }
