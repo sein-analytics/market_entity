@@ -79,13 +79,14 @@ class KycDocRequest extends KycDocumentAbstract
             $fetchCommIssuerRequestsByTypeAndAssetSql =
                 $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id IS NULL";
         } else {
-            $fetchCommIssuerRequestsByTypeAndAssetSql = " AND kyc_asset_type_id=?";
+            $fetchCommIssuerRequestsByTypeAndAssetSql = 
+                $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id=?";
             $queryParams[] = $assetTypeId;
         }
 
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            $this->fetchCommIssuerRequestsByTypeAndAssetSql,
+            $fetchCommIssuerRequestsByTypeAndAssetSql,
             self::FETCH_ALL_ASSO_MTHD,
             $queryParams
         );
