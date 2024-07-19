@@ -20,7 +20,7 @@ class KycDocRequest extends KycDocumentAbstract
     private string $deleteKycDocRequestByIdSql = "DELETE FROM KycDocRequest WHERE id=?";
 
     private string $fetchCommIssuerRequestsByTypeAndAssetSql =
-        "SELECT * FROM KycDocRequest WHERE issuer_id=? AND community_issuer_id=? AND kyc_type_id=? AND kyc_asset_type_id=?";
+        "SELECT * FROM KycDocRequest WHERE issuer_id=? AND community_issuer_id=? AND kyc_type_id=?";
 
     public function insertMultiKycDocRequests(
         int $communityIssuerId,
@@ -70,13 +70,24 @@ class KycDocRequest extends KycDocumentAbstract
         );
     }
 
-    public function fetchCommIssuerRequestsByTypeAndAsset(int $issuerId, int $communityIssuerId, int $kycTypeId, int $assetTypeId) 
+    public function fetchCommIssuerRequestsByTypeAndAsset(int $issuerId, int $communityIssuerId, int $kycTypeId, ?int $assetTypeId) 
     {
+        $fetchCommIssuerRequestsByTypeAndAssetSql = $this->fetchCommIssuerRequestsByTypeAndAssetSql;
+        $queryParams = [$issuerId, $communityIssuerId, $kycTypeId];
+
+        if (is_null($assetTypeId)) {
+            $fetchCommIssuerRequestsByTypeAndAssetSql =
+                $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id IS NULL";
+        } else {
+            $fetchCommIssuerRequestsByTypeAndAssetSql = " AND kyc_asset_type_id=?";
+            $queryParams[] = $assetTypeId;
+        }
+
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchCommIssuerRequestsByTypeAndAssetSql,
             self::FETCH_ALL_ASSO_MTHD,
-            [$issuerId, $communityIssuerId, $kycTypeId, $assetTypeId]
+            $queryParams
         );
     }
 
