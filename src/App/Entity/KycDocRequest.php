@@ -33,9 +33,9 @@ class KycDocRequest
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
-    protected MarketUser $user;
+    protected ?MarketUser $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
@@ -82,7 +82,6 @@ class KycDocRequest
     function __construct()
     {
         $this->issuer = new Issuer();
-        $this->user = new MarketUser();
         $this->communityIssuer = new Issuer();
         $this->communityUser = new MarketUser();
     }
@@ -112,9 +111,9 @@ class KycDocRequest
     }
 
     /**
-     * @return MarketUser
+     * @return MarketUser|null
      */
-    public function getUser(): MarketUser
+    public function getUser(): MarketUser|null
     {
         return $this->user;
     }
