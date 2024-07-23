@@ -63,6 +63,20 @@ interface KycDocumentInterface
 
     const KD_ALLOW_DOC_SIGN_KEY = 'allowDocSign';
 
+    const KYC_TYPE_FINANCIAL_ID = 1;
+    
+    const KYC_TYPE_SERVICING_ID = 2;
+
+    const KYC_TYPE_COLLECTION_ID = 3;
+
+    const KYC_TYPE_CONSUMER_ID = 4;
+
+    const KYC_TYPE_UNDERWRITING_ID = 5;
+
+    const KYC_TYPE_RISK_POLICIES_ID = 6;
+    
+    const KYC_TYPE_INSURANCE_ID = 7;
+
     const KYC_TYPE_NDA_ID = 8;
     
     const KYC_TYPE_LOI_ID = 9;
@@ -74,6 +88,8 @@ interface KycDocumentInterface
     const DOC_TYPE_LOI_ID = 6;
 
     const DOC_TYPE_NDA_ID = 10;
+
+    const KYC_SIGN_ACTION = 'sign';
 
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
@@ -92,4 +108,17 @@ interface KycDocumentInterface
         self::DOC_TYPE_LPA_ID => self::KYC_TYPE_LPA_ID
     ];
 
+    const KYC_TYPES_IDS_ACTIONS = [
+        self::KYC_TYPE_FINANCIAL_ID => null,
+        self::KYC_TYPE_SERVICING_ID => null,
+        self::KYC_TYPE_COLLECTION_ID => null,
+        self::KYC_TYPE_CONSUMER_ID => null,
+        self::KYC_TYPE_UNDERWRITING_ID => null,
+        self::KYC_TYPE_RISK_POLICIES_ID => null,
+        self::KYC_TYPE_INSURANCE_ID => null,
+        self::KYC_TYPE_NDA_ID => self::KYC_SIGN_ACTION,
+        self::KYC_TYPE_LOI_ID => self::KYC_SIGN_ACTION,
+        self::KYC_TYPE_LPA_ID => self::KYC_SIGN_ACTION,
+    ];
+    
 }
