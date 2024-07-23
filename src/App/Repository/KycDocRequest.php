@@ -118,13 +118,17 @@ class KycDocRequest extends KycDocumentAbstract
         );
     }
 
-    public function deleteCommUserRequestSql(int $userId, int $communityUserId, int $kycTypeId, ?int $assetTypeId)
+    public function deleteCommUserRequestSql(int $userId, int $communityUserId, int $kycTypeId, ?int $assetTypeId, ?int $dealId)
     {
         $deleteCommUserRequestSql = $this->deleteCommUserRequestSql;
         $queryParams = [$userId, $communityUserId, $kycTypeId];
 
         if (is_null($assetTypeId)) {
             $deleteCommUserRequestSql = $deleteCommUserRequestSql . " AND kyc_asset_type_id IS NULL";
+        } elseif(!is_null($dealId)) {
+            $deleteCommUserRequestSql =
+                $deleteCommUserRequestSql . " AND kyc_asset_type_id=? AND deal_id=?";
+            $queryParams = array_merge($queryParams, [$assetTypeId, $dealId]);
         } else {
             $deleteCommUserRequestSql = $deleteCommUserRequestSql . " AND kyc_asset_type_id=?";
             $queryParams[] = $assetTypeId;
