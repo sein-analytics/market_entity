@@ -27,6 +27,8 @@ interface DocTypeInterface
 
     const OTHER_KEY  = 'KEY';
 
+    const DC_DOC_TYPE_ID_KEY = 'docTypeId';
+
     const DOC_TYPE_KEY_TO_ID = [
         self::INCOME_CREDIT_KEY => 1,
         self::ASSET_VALUE_KEY => 2,
