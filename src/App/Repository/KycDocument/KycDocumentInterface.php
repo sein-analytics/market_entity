@@ -91,6 +91,8 @@ interface KycDocumentInterface
 
     const KYC_SIGN_ACTION = 'sign';
 
+    const KT_TYPE_KEY = 'type';
+
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
         self::KD_QRY_RECEIVER_SIGNATURE_KEY => 4
