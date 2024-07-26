@@ -63,6 +63,8 @@ interface KycDocumentInterface
 
     const KD_ALLOW_DOC_SIGN_KEY = 'allowDocSign';
 
+    const KD_REQUEST_ID_KEY = 'requestId';
+
     const KYC_TYPE_FINANCIAL_ID = 1;
     
     const KYC_TYPE_SERVICING_ID = 2;
