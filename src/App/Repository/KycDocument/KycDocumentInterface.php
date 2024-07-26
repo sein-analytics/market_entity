@@ -65,6 +65,8 @@ interface KycDocumentInterface
 
     const KD_REQUEST_ID_KEY = 'requestId';
 
+    const KD_DOCUMENT_REQUEST_ID = 'documentRequestId';
+
     const KYC_TYPE_FINANCIAL_ID = 1;
     
     const KYC_TYPE_SERVICING_ID = 2;
