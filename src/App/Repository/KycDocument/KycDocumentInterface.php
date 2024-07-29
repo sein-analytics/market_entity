@@ -114,6 +114,12 @@ interface KycDocumentInterface
         self::DOC_TYPE_LPA_ID => self::KYC_TYPE_LPA_ID
     ];
 
+    const KYC_TYPE_DOC_TYPE_MAP = [
+        self::KYC_TYPE_NDA_ID => self::DOC_TYPE_NDA_ID,
+        self::KYC_TYPE_LOI_ID => self::DOC_TYPE_LOI_ID,
+        self::KYC_TYPE_LPA_ID => self::DOC_TYPE_LPA_ID,
+    ];
+
     const KYC_TYPES_IDS_ACTIONS = [
         self::KYC_TYPE_FINANCIAL_ID => null,
         self::KYC_TYPE_SERVICING_ID => null,
