@@ -121,10 +121,10 @@ class Community extends CommunityAbstract
             self::$callCommunityUserRecentPurchases);
     }
 
-    public function fetchCommunityUserRecentSales(int $userId, int $communityUserId, int $communityIssuerId)
+    public function fetchCommunityUserRecentSales(int $userId, int $issuerId, int $communityUserId, int $communityIssuerId)
     {
         return $this->executeProcedure(
-            [$userId, $communityUserId, $communityIssuerId],
+            [$userId, $issuerId, $communityUserId, $communityIssuerId],
             self::$callCommunityUserRecentSales);
     }
 
