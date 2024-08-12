@@ -45,9 +45,9 @@ class KycDocRequest
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\KycType")
-     * @ORM\JoinColumn(name="kyc_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="kyc_type_id", referencedColumnName="id", nullable=true)
      */
-    protected KycType $kycType;
+    protected ?KycType $kycType;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
@@ -56,10 +56,10 @@ class KycDocRequest
     protected ?DealAsset $assetType;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     * @var string|null
      */
-    protected string $description = '';
+    protected ?string $description = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
@@ -175,9 +175,9 @@ class KycDocRequest
     }
 
     /**
-     * @return KycType
+     * @return KycType|null
      */
-    public function getKycType(): KycType
+    public function getKycType(): KycType|null
     {
         return $this->kycType;
     }
@@ -191,9 +191,9 @@ class KycDocRequest
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): string|null
     {
         return $this->description;
     }
