@@ -26,6 +26,8 @@ class KycDocRequest extends KycDocumentAbstract
 
     private string $deleteCommUserRequestSql = "DELETE FROM KycDocRequest WHERE user_id=? AND community_user_id=? AND kyc_type_id=?";
 
+    private string $callFetchUserDealsAccessRequests = 'call FetchUserDealsAccessRequests(:userId, :assetTypeId)';
+
     public function insertMultiKycDocRequests(
         int $communityIssuerId,
         int $communityUserId,
@@ -140,6 +142,16 @@ class KycDocRequest extends KycDocumentAbstract
             self::EXECUTE_MTHD,
             $queryParams
         );
+    }
+
+    public function fetchUserDealsAccessRequests(int $userId, int $assetTypeId):mixed
+    {
+        $results = $this->executeProcedure(
+            [$userId, $assetTypeId],
+            $this->callFetchUserDealsAccessRequests
+        );
+
+        return $results;
     }
 
 }
