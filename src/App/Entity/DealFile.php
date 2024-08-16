@@ -174,11 +174,11 @@ class DealFile extends DomainObject
      */
     protected ?MarketUser $communityUser;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
-     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
-     */
-    protected ?ContractSignature $contractSignature;
+    // /**
+    //  * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
+    //  * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
+    //  */
+    // protected ?ContractSignature $contractSignature;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -425,15 +425,15 @@ class DealFile extends DomainObject
      */
     public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
 
-    /**
-     * @return ContractSignature|null
-     */
-    public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
+    // /**
+    //  * @return ContractSignature|null
+    //  */
+    // public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
 
-    /**
-     * @param ContractSignature $contractSignature
-     */
-    public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
+    // /**
+    //  * @param ContractSignature $contractSignature
+    //  */
+    // public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
 
     /**
      * @return \DateTime
