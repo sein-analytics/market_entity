@@ -50,13 +50,6 @@ class KycDocument
      */
     protected ContractType $contractType;
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
-     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=true)
-     */
-    protected ?ContractStatus $contractStatus;
-
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
      * @ORM\JoinColumn(name="kyc_asset_type_id", referencedColumnName="id", nullable=true)
@@ -89,18 +82,6 @@ class KycDocument
      protected ?string $fileName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
-     protected ?string $senderSignature;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
-     protected ?string $receiverSignature;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime|null
      **/
@@ -111,6 +92,12 @@ class KycDocument
      * @var ArrayCollection
      */
     protected $accessIssuer;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
+     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
+     */
+    protected ?ContractSignature $contractSignature;
 
     function __construct()
     {
@@ -178,16 +165,6 @@ class KycDocument
     public function setContractType(ContractType $contractType):void { $this->contractType = $contractType; }
 
     /**
-     * @return ContractStatus|null
-     */
-    public function getContractStatus():ContractStatus|null { return $this->contractStatus; }
-
-    /**
-     * @param ContractStatus $contractStatus
-     */
-    public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
-
-    /**
      * @return DealAsset|null
      */
     public function getAssetType():DealAsset|null { return $this->assetType; }
@@ -238,26 +215,6 @@ class KycDocument
     public function setFileName(string $fileName):void { $this->fileName = $fileName; }
 
     /**
-     * @return null|string
-     */
-    public function getSenderSignature():string|null { return $this->senderSignature; }
-
-    /**
-     * @param string
-     */
-    public function setSenderSignature(string $senderSignature):void { $this->senderSignature = $senderSignature; }
-
-    /**
-     * @return null|string
-     */
-    public function getReceiverSignature():string|null { return $this->receiverSignature; }
-
-    /**
-     * @param string
-     */
-    public function setReceiverSignature(string $receiverSignature):void { $this->receiverSignature = $receiverSignature; }
-
-    /**
      * @return \DateTime
      */
     public function getDate() : ?\DateTime { return $this->date; }
@@ -276,5 +233,15 @@ class KycDocument
      * @return ArrayCollection
      */
     public function getAccessIssuer():ArrayCollection { return $this->accessIssuer; }
+
+    /**
+     * @return ContractSignature|null
+     */
+    public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
+
+    /**
+     * @param ContractSignature $contractSignature
+     */
+    public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
 
 }

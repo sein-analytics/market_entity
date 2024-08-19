@@ -21,9 +21,13 @@ interface KycDocumentInterface
 
     const KD_QRY_RECEIVER_SIGNATURE_KEY = 'receiver_signature';
 
+    const KD_QRY_CONTRACT_STATUS_ID_KEY = 'contract_status_id';
+
     const KD_QRY_DATE_KEY = 'date';
 
     const KD_QRY_FILE_NAME = 'file_name';
+
+    const KD_QRY_CONTRACT_SIGNATURE_ID_KEY = 'contract_signature_id';
 
     const KD_ISSUER_ID_KEY = 'issuerId';
 
@@ -43,6 +47,8 @@ interface KycDocumentInterface
 
     const KD_DOCUMENTS_API_KEY = 'documents';
 
+    const KD_DEALS_API_KEY = 'deals';
+
     const KD_REQUESTS_API_KEY = 'requests';
 
     const KD_ISSUER_PARAM_API_KEY = 'issuer';
@@ -52,6 +58,44 @@ interface KycDocumentInterface
     const KD_DATE_KEY = 'date';
 
     const KD_REQ_QRY_DESCRIPTION_KEY = 'description';
+
+    const KD_CONTRACT_STATUS_ID_KEY = 'contractStatusId';
+
+    const KD_ALLOW_DOC_SIGN_KEY = 'allowDocSign';
+
+    const KD_REQUEST_ID_KEY = 'requestId';
+
+    const KD_DOCUMENT_REQUEST_ID = 'documentRequestId';
+
+    const KYC_TYPE_FINANCIAL_ID = 1;
+    
+    const KYC_TYPE_SERVICING_ID = 2;
+
+    const KYC_TYPE_COLLECTION_ID = 3;
+
+    const KYC_TYPE_CONSUMER_ID = 4;
+
+    const KYC_TYPE_UNDERWRITING_ID = 5;
+
+    const KYC_TYPE_RISK_POLICIES_ID = 6;
+    
+    const KYC_TYPE_INSURANCE_ID = 7;
+
+    const KYC_TYPE_NDA_ID = 8;
+    
+    const KYC_TYPE_LOI_ID = 9;
+
+    const KYC_TYPE_LPA_ID = 10;
+
+    const DOC_TYPE_LPA_ID = 7;
+
+    const DOC_TYPE_LOI_ID = 6;
+
+    const DOC_TYPE_NDA_ID = 10;
+
+    const KYC_SIGN_ACTION = 'sign';
+
+    const KT_TYPE_KEY = 'type';
 
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
@@ -64,4 +108,29 @@ interface KycDocumentInterface
         8 => null
     ];
 
+    const DOC_TYPE_KYC_TYPE_MAP = [
+        self::DOC_TYPE_NDA_ID => self::KYC_TYPE_NDA_ID,
+        self::DOC_TYPE_LOI_ID => self::KYC_TYPE_LOI_ID,
+        self::DOC_TYPE_LPA_ID => self::KYC_TYPE_LPA_ID
+    ];
+
+    const KYC_TYPE_DOC_TYPE_MAP = [
+        self::KYC_TYPE_NDA_ID => self::DOC_TYPE_NDA_ID,
+        self::KYC_TYPE_LOI_ID => self::DOC_TYPE_LOI_ID,
+        self::KYC_TYPE_LPA_ID => self::DOC_TYPE_LPA_ID,
+    ];
+
+    const KYC_TYPES_IDS_ACTIONS = [
+        self::KYC_TYPE_FINANCIAL_ID => null,
+        self::KYC_TYPE_SERVICING_ID => null,
+        self::KYC_TYPE_COLLECTION_ID => null,
+        self::KYC_TYPE_CONSUMER_ID => null,
+        self::KYC_TYPE_UNDERWRITING_ID => null,
+        self::KYC_TYPE_RISK_POLICIES_ID => null,
+        self::KYC_TYPE_INSURANCE_ID => null,
+        self::KYC_TYPE_NDA_ID => self::KYC_SIGN_ACTION,
+        self::KYC_TYPE_LOI_ID => self::KYC_SIGN_ACTION,
+        self::KYC_TYPE_LPA_ID => self::KYC_SIGN_ACTION,
+    ];
+    
 }

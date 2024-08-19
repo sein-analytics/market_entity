@@ -168,6 +168,24 @@ class DealFile extends DomainObject
      */
     protected $diligence;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?MarketUser $communityUser;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
+     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
+     */
+    protected ?ContractSignature $contractSignature;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected $date = null;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
@@ -396,5 +414,35 @@ class DealFile extends DomainObject
      * @param MimeType $mime
      */
     public function setMime(MimeType $mime):void { $this->mime = $mime;  }
+
+    /**
+     * @return MarketUser|null
+     */
+    public function getCommunityUser():MarketUser|null { return $this->communityUser; }
+
+    /**
+     * @param MarketUser $communityUser
+     */
+    public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
+
+    /**
+     * @return ContractSignature|null
+     */
+    public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
+
+    /**
+     * @param ContractSignature $contractSignature
+     */
+    public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate() : ?\DateTime { return $this->date; }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date) { $this->date = $date; }
 
 }

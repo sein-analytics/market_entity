@@ -32,6 +32,12 @@ class Bid extends EntityRepository
 
     private string $fetchIssuerActiveUserBids = "SELECT deal_id, user_id FROM Bid WHERE user_id IN (?) AND status_id >= 3";
 
+    private string $updateBidStatusSql = "UPDATE Bid SET status_id=? WHERE id=?";
+
+    private string $fetchBidByIdSql = "SELECT * FROM Bid WHERE id=?";
+
+    private string $callFetchDealIssuersLoiActiveBids = 'call FetchDealIssuersLoiActiveBids(:dealId, :bidsStatusIds)';
+
     /**
      * @param array $dealIds
      * @param bool $mapBidsToDeals
@@ -205,6 +211,32 @@ class Bid extends EntityRepository
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    public function updateBidStatus(int $statusId, int $bidId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateBidStatusSql,
+            self::EXECUTE_MTHD,
+            [$statusId, $bidId]
+        );
+    }
+
+    public function fetchBidByIdSql(int $bidId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchBidByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$bidId]
+        );
+    }
+
+    public function fetchDealIssuersLoiActiveBids(int $dealId, array $bidsStatusIds):mixed
+    {
+        return $this->executeProcedure([$dealId, implode(', ', $bidsStatusIds)],
+            $this->callFetchDealIssuersLoiActiveBids);
     }
 
 }

@@ -331,14 +331,22 @@ class MarketUser extends abstractMktUser
         return $result;
     }
 
-    public function insertNewKycDocument(array $params):mixed
+    public function fetchUserDealsByStatus(int $userId, int $statusId): mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            $this->insertKycDocRequestSql,
-            self::EXECUTE_MTHD,
-            array_values($params)
+            $this->getFetchDealsByUserAndStatusSql(),
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId, $statusId]
         );
+    }
+
+    public function fetchAllowedDealsByBidStatusAndDocType(int $userId, int $communityUserId, int $docTypeId, array $bidsStatusIds): mixed
+    {
+        $result = $this->executeProcedure([$userId, $communityUserId, $docTypeId, implode(', ', $bidsStatusIds)],
+            $this->getCallFetchAllowedDealsByBidStatusAndDocType()
+        );
+        return $result;
     }
 
 }

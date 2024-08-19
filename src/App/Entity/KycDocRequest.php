@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\KycDocRequest")
  * @ORM\Table(name="KycDocRequest")
  */
 class KycDocRequest
@@ -33,9 +33,9 @@ class KycDocRequest
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
-    protected MarketUser $user;
+    protected ?MarketUser $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
@@ -45,9 +45,9 @@ class KycDocRequest
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\KycType")
-     * @ORM\JoinColumn(name="kyc_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="kyc_type_id", referencedColumnName="id", nullable=true)
      */
-    protected KycType $kycType;
+    protected ?KycType $kycType;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
@@ -56,10 +56,22 @@ class KycDocRequest
     protected ?DealAsset $assetType;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     * @var string|null
      */
-    protected string $description = '';
+    protected ?string $description = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
+     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?Bid $bid;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal")
+     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?Deal $deal;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -70,7 +82,6 @@ class KycDocRequest
     function __construct()
     {
         $this->issuer = new Issuer();
-        $this->user = new MarketUser();
         $this->communityIssuer = new Issuer();
         $this->communityUser = new MarketUser();
     }
@@ -100,9 +111,9 @@ class KycDocRequest
     }
 
     /**
-     * @return MarketUser
+     * @return MarketUser|null
      */
-    public function getUser(): MarketUser
+    public function getUser(): MarketUser|null
     {
         return $this->user;
     }
@@ -164,9 +175,9 @@ class KycDocRequest
     }
 
     /**
-     * @return KycType
+     * @return KycType|null
      */
-    public function getKycType(): KycType
+    public function getKycType(): KycType|null
     {
         return $this->kycType;
     }
@@ -180,9 +191,9 @@ class KycDocRequest
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): string|null
     {
         return $this->description;
     }
@@ -210,4 +221,37 @@ class KycDocRequest
     {
         $this->date = $date;
     }
+
+    /**
+     * @return Bid|null
+     */
+    public function getBid(): Bid|null
+    {
+        return $this->bid;
+    }
+
+    /**
+     * @param Bid $Bid
+     */
+    public function setBid(Bid $bid): void
+    {
+        $this->bid = $bid;
+    }
+    
+    /**
+     * @return Deal|null
+     */
+    public function getDeal(): Deal|null
+    {
+        return $this->deal;
+    }
+
+    /**
+     * @param Deal $deal
+     */
+    public function setDeal(Deal $deal): void
+    {
+        $this->deal = $deal;
+    }
+
 }

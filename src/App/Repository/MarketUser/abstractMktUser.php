@@ -39,7 +39,9 @@ implements MktUserInterface
 
     private static string $userFavoriteDealSql = "SELECT * FROM user_favorite_deals WHERE user_id=? AND favorite_deal_id=?";
 
-    protected string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static string $fetchDealsByUserAndStatusSql = "SELECT * FROM Deal WHERE user_id=? AND status_id=?";
+
+    private static string $callFetchAllowedDealsByBidStatusAndDocType = 'call FetchAllowedDealsByBidStatusAndDocType(:userId, :communityUserId, :docTypeId, :bidsStatusIds)';
 
     /** @return string */
     public static function getUserDealIdsSql(): string
@@ -97,5 +99,12 @@ implements MktUserInterface
     public static function getUserFavoriteDealSql(): string
     { return self::$userFavoriteDealSql; }
 
+    /** @return string */
+    public static function getFetchDealsByUserAndStatusSql(): string
+    { return self::$fetchDealsByUserAndStatusSql; }
+    
+    /** @return string */
+    public static function getCallFetchAllowedDealsByBidStatusAndDocType(): string
+    { return self::$callFetchAllowedDealsByBidStatusAndDocType; }
 
 }

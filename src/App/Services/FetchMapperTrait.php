@@ -24,7 +24,7 @@ trait FetchMapperTrait
      * @param string $fetcherKey
      * @return array
      */
-    public function mapRequestIdsToResults(array $requestedIds, array $results, string $fetcherKey)
+    public function mapRequestIdsToResults(array $requestedIds, array $results, string $fetcherKey, bool $unique = false)
     {
         $data = [];
         foreach ($requestedIds as $requestedId)
@@ -34,8 +34,12 @@ trait FetchMapperTrait
             {
                 if($result[$fetcherKey] == $requestedId)
                 {
-                    array_push($data[$requestedId], $result);
-                    unset($results[$int]);
+                    if ($unique) {
+                        $data[$requestedId] = $result;
+                    } else {
+                        array_push($data[$requestedId], $result);
+                        unset($results[$int]);
+                    }
                 }
             }
         }

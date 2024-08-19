@@ -39,7 +39,7 @@ abstract class CommunityAbstract extends EntityRepository
 
     protected static string $callCommunityUserRecentPurchases = 'call CommunityUserRecentPurchases(:userId, :communityUserId)';
 
-    protected static string $callCommunityUserRecentSales = 'call CommunityUserRecentSales(:userId, :communityUserId, :communityIssuerId)';
+    protected static string $callCommunityUserRecentSales = 'call CommunityUserRecentSales(:userId, :issuerId, :communityUserId, :communityIssuerId)';
 
     public function __construct(EntityManagerInterface $em, ClassMetadata $class)
     {

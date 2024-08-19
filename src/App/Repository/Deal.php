@@ -48,6 +48,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $fetchUserDealAccessSql = "SELECT * FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
 
+    private string $insertDealMarketUserSql = "INSERT INTO deal_market_user VALUE (?, ?)";
+
     private string $fetchDealByIdSql = "SELECT * FROM Deal WHERE id=?";
 
     private string $callDealStatsStips = 'call DealStatsStips(:dealId)';
@@ -57,6 +59,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
     private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :loanId, :limitValue, :flag)';
 
     private string $callLoansByDealId = 'call LoansByDealId(:dealId)';
+
+    private string $callFetchUserAllowedLpaDealsBySeller = 'call FetchUserAllowedLpaDealsBySeller(:sellerId, :buyerId, :assetTypeId)';
+
+    private string $callFetchUserAllowedLpaDeals = 'call FetchUserAllowedLpaDeals(:userId, :assetTypeId)';
+
+    private string $callFetchDealRequestedLpas = 'call FetchDealRequestedLpas(:userId, :dealId)';
+
+    private string $callFetchUserAllowedNdaDealsBySeller = 'call FetchUserAllowedNdaDealsBySeller(:sellerId, :issuerId, :assetTypeId)';
+
+    private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId, :assetTypeId)';
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -97,7 +109,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
      * @param bool $isMarket
      * @return array|bool
      */
-    public function fetchUserMarketDealsFromIds(array $ids, $isMarket = true)
+    public function fetchUserMarketDealsFromIds(array $ids, $isMarket = true, $mapById = false)
     {
         $sql = 'SELECT Deal.id, Deal.issuer_id, Deal.auction_type_id, Deal.asset_type_id, Deal.bid_type_id, Deal.issue, Deal.cut_off_date, Deal.closing_date, ' .
             'Deal.current_balance, Deal.views, Deal.status_id, Deal.user_id, MarketUser.user_name,' .
@@ -107,7 +119,11 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         } else {
             $sql .= 'WHERE Deal.status_id IN (1,4) AND Deal.id IN (?) ORDER BY Deal.id ASC';
         }
-        return $this->fetchByIntArray($this->em, $ids, $sql);
+        $results = $this->fetchByIntArray($this->em, $ids, $sql);
+        if ($mapById) {
+            $results = $this->mapRequestIdsToResults($ids, $results, self::QUERY_JUST_ID, true);
+        }
+        return $results;
     }
 
     /**
@@ -223,6 +239,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         );
     }
 
+    public function insertDealMarketUser(int $userId, int $dealId): mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->insertDealMarketUserSql,
+            self::EXECUTE_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
     public function fetchDealStatsStips(int $dealId)
     {
         $result = $this->executeProcedure(
@@ -273,6 +299,70 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             $this->callLoansByDealId
         );
         return $results;
+    }
+
+    public function fetchUserAllowedLpaDealsBySeller(int $sellerId, int $buyerId, int $assetTypeId)
+    {
+        $results = $this->executeProcedure(
+            [$sellerId, $buyerId, $assetTypeId], 
+            $this->callFetchUserAllowedLpaDealsBySeller
+        );
+        return $results;
+    }
+
+    public function fetchUserAllowedLpaDeals(int $userId, int $assetTypeId)
+    {
+        $results = $this->executeProcedure(
+            [$userId, $assetTypeId], 
+            $this->callFetchUserAllowedLpaDeals
+        );
+        return $results;
+    }
+
+    public function findByUsersAndStatusAndAssets(array $userIds, array $statusIds, array $assetTypeIds)
+    {
+        $sql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?) AND asset_type_id IN (?)";
+        try {
+            $stmt = $this->em->getConnection()->executeQuery(
+                $sql,
+                array($userIds, $statusIds, $assetTypeIds),
+                array(
+                    Connection::PARAM_INT_ARRAY,
+                    Connection::PARAM_INT_ARRAY,
+                    Connection::PARAM_INT_ARRAY,
+                )
+            );
+            $result = $stmt->fetchAllAssociative();
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
+        return $this->flattenResultArrayByKey($result, 'id');
+    }
+
+    public function fetchDealRequestedLpas(int $userId, int $dealId)
+    {
+        $results = $this->executeProcedure(
+            [$userId, $dealId], 
+            $this->callFetchDealRequestedLpas
+        );
+        return $results;
+    }
+
+    public function fetchUserAllowedNdaDealsBySeller(int $sellerId, int $issuerId, int $assetTypeId)
+    { 
+        $results = $this->executeProcedure(
+            [$sellerId, $issuerId, $assetTypeId], 
+            $this->callFetchUserAllowedNdaDealsBySeller
+        );
+        return $results;
+    }
+
+    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityIssuerId, int $assetTypeId): mixed
+    {
+        $result = $this->executeProcedure([$userId, $communityIssuerId, $assetTypeId],
+            $this->callFetchAllowedDealsNonDisclosure
+        );
+        return $result;
     }
 
 }

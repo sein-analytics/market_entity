@@ -46,6 +46,12 @@ interface DealFileInterface
 
     const DF_ACC_MODE = 'access_id';
 
+    const DF_COMMUNITY_USER_ID = 'community_user_id';
+
+    const DF_CONTRACT_SIGNATURE_ID = 'contract_signature_id'; 
+
+    const DF_DATE = 'date';
+
     /**
      * ToDo any changes in the DAM JSON API
      * should be reflected below
@@ -67,14 +73,18 @@ interface DealFileInterface
 
     const DAM_ACC_MODE = 'access_mode';
 
+    const DAM_SECURE_URL = 'secure_url';
+
+    const DAM_CREATED_AT = 'created_at';
+
     const DAM_TO_DF_ARR = [
         self::DAM_FILE_NAME => self::DF_FILE_NAME,
         self::DAM_FILE_SIZE => self::DF_FILE_SIZE,
         self::DAM_ASSET_ID => self::DF_ASSET_ID,
-        self::DAM_PUB_PATH => self::DF_PUB_PATH,
+        self::DAM_SECURE_URL => self::DF_PUB_PATH,
         self::DAM_ACC_MODE => self::DF_ACC_MODE,
         self::DAM_LOAN_API => self::DF_LOAN_ID,
-        self::DAM_FILE_TYPE => self::DF_MIME_ID
+        self::DAM_FILE_TYPE => self::DF_MIME_ID,
     ];
 
     const BASE_INSERT_ARR = [
@@ -93,5 +103,8 @@ interface DealFileInterface
         self::DF_PUB_PATH => null,
         self::DF_SIG_ID => null,
         self::DF_SIG_PATH => null,
+        self::DF_COMMUNITY_USER_ID => null,
+        self::DF_CONTRACT_SIGNATURE_ID => null,
+        self::DF_DATE => null,
     ];
 }

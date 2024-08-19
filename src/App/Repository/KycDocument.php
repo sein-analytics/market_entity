@@ -11,7 +11,7 @@ class KycDocument extends KycDocumentAbstract
 
     use FetchMapperTrait, FetchingTrait;
 
-    private string $insertKycDocumentSql = "INSERT INTO KycDocument VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertKycDocumentSql = "INSERT INTO KycDocument VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $updateKycDocumentStatusSql = "UPDATE KycDocument SET contract_status_id=? WHERE id=?";
 
@@ -25,7 +25,9 @@ class KycDocument extends KycDocumentAbstract
 
     private string $deleteIssuerKycDocsAccessSql = "DELETE FROM issuer_kyc_document WHERE issuer_id=? AND kyc_document_id IN (?)";
 
-    private string $fetchKycDocsIdsByIssuerAndAssetSql = "SELECT id FROM KycDocument WHERE issuer_id=? AND (kyc_asset_type_id=? OR kyc_asset_type_id IS NULL)";
+    private string $fetchKycDocsIdsByIssuerAndAssetSql = "SELECT id FROM KycDocument WHERE issuer_id=? AND (community_issuer_id=? OR community_issuer_id IS NULL) AND (kyc_asset_type_id=? OR kyc_asset_type_id IS NULL)";
+
+    private string $updateContractSignatureIdSql = "UPDATE KycDocument SET contract_signature_id=? WHERE id=?";
 
     public function insertNewKycDocument(array $params):mixed
     {
@@ -96,25 +98,84 @@ class KycDocument extends KycDocumentAbstract
 
     public function deleteIssuerKycDocAccess(int $issuerId, array $kycDocsIds)
     {
-        $ids = implode(',', $kycDocsIds);
-        return $this->buildAndExecuteFromSql(
+        $stmt = $this->returnMultiIntArraySqlStmt(
             $this->getEntityManager(),
             $this->deleteIssuerKycDocsAccessSql,
-            self::EXECUTE_MTHD,
-            [$issuerId, $ids]
+            [$issuerId],
+            $kycDocsIds
         );
+        $stmt->execute();
     }
 
-    public function fetchKycDocsIdsByIssuerAndAsset(int $issuerId, int $assetTypeId)
+    public function fetchKycDocsIdsByIssuerAndAsset(int $issuerId, int $communityIssuerId, int $assetTypeId)
     {
         $results = $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchKycDocsIdsByIssuerAndAssetSql,
             self::FETCH_ALL_ASSO_MTHD,
-            [$issuerId, $assetTypeId]
+            [$issuerId, $communityIssuerId, $assetTypeId]
         );
         $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
         return $results;
+    }
+
+    public function fetchIssuersByAssetAndKycDocsRequests(int $issuerId, int $assetTypeId)
+    {
+        $sql = "SELECT DISTINCT issuers.id AS issuerId, issuers.issuer_name AS issuerName FROM Issuer AS issuers"
+            . " INNER JOIN KycDocRequest AS requests ON issuers.id = requests.community_issuer_id"
+                . " WHERE requests.issuer_id=? AND (requests.kyc_asset_type_id=? OR requests.kyc_asset_type_id IS NULL)";
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$issuerId, $assetTypeId]
+        );
+        return $results;
+    }
+
+    public function fetchAllowedKycDocumentsIds(int $issuerId, int $communityIssuerId, int $assetTypeId):mixed
+    {
+        $results = $this->executeProcedure([$issuerId, $communityIssuerId, $assetTypeId],
+            self::$callFetchAllowedKycDocumentsIds);
+        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
+        return $results;
+    }
+
+    public function fetchIssuersKycDocumentsAccess(int $issuerId, int $assetTypeId):mixed
+    {
+        $results = $this->executeProcedure([$issuerId, $assetTypeId],
+            self::$callFetchIssuersKycDocumentsAccess);
+        return $results;
+    }
+
+    public function fetchKycDocumentByIssuerAndUser(int $userId, int $issuerId, int $communityUserId, int $communityIssuerId, int $assetTypeId):mixed
+    {
+        $results = $this->executeProcedure(
+            [$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId],
+            self::$callFetchKycDocumentByIssuerAndUser
+        );
+
+        return $results;
+    }
+
+    public function fetchUserKycDocuments(int $userId, int $issuerId, int $assetTypeId):mixed
+    {
+        $results = $this->executeProcedure(
+            [$userId, $issuerId, $assetTypeId],
+            self::$callFetchUserKycDocuments
+        );
+
+        return $results;
+    }
+
+    public function updateContractSignature(int $contractSignId, int $kycDocId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateContractSignatureIdSql,
+            self::EXECUTE_MTHD,
+            [$contractSignId, $kycDocId]
+        ); 
     }
 
 }
