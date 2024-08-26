@@ -69,6 +69,14 @@ interface KycDocumentInterface
 
     const KD_FILE_NAME_KEY = 'fileName';
 
+    const KD_USER_KEY = 'user';
+
+    const KD_ISSUER_KEY = 'issuer';
+
+    const KD_COMMUNITY_USER_KEY = 'communityUser';
+
+    const KD_COMMUNITY_ISSUER_KEY = 'communityIssuer';
+
     const KYC_TYPE_FINANCIAL_ID = 1;
     
     const KYC_TYPE_SERVICING_ID = 2;
