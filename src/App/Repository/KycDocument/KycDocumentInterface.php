@@ -77,6 +77,10 @@ interface KycDocumentInterface
 
     const KD_COMMUNITY_ISSUER_KEY = 'communityIssuer';
 
+    const KD_INFO_KEY = 'info';
+
+    const KD_ADDITIONAL_INFO_KEY = 'additionalInfo';
+
     const KYC_TYPE_FINANCIAL_ID = 1;
     
     const KYC_TYPE_SERVICING_ID = 2;
@@ -107,6 +111,7 @@ interface KycDocumentInterface
 
     const KT_TYPE_KEY = 'type';
 
+    
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
         self::KD_QRY_RECEIVER_SIGNATURE_KEY => 4
