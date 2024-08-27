@@ -28,6 +28,8 @@ class KycDocRequest extends KycDocumentAbstract
 
     private string $callFetchUserDealsAccessRequests = 'call FetchUserDealsAccessRequests(:userId, :assetTypeId)';
 
+    private string $fetchNonDealRequestByTypeAndUsers = "SELECT * FROM KycDocRequest WHERE kyc_type_id=? AND user_id=? AND community_user_id=? AND deal_id IS NULL";
+
     public function insertMultiKycDocRequests(
         int $communityIssuerId,
         int $communityUserId,
@@ -152,6 +154,16 @@ class KycDocRequest extends KycDocumentAbstract
         );
 
         return $results;
+    }
+
+    public function fetchNonDealRequestByTypeAndUsers(int $typeId, int $userId, $communityUserId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchNonDealRequestByTypeAndUsers,
+            self::FETCH_ASSO_MTHD,
+            [$typeId, $userId, $communityUserId]
+        );
     }
 
 }
