@@ -29,6 +29,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $updateContractSignatureIdSql = "UPDATE KycDocument SET contract_signature_id=? WHERE id=?";
 
+    private string $fetchDocumentByTypeAndUsers = "SELECT * FROM KycDocument WHERE kyc_type_id=? AND user_id=? AND community_user_id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -176,6 +178,16 @@ class KycDocument extends KycDocumentAbstract
             self::EXECUTE_MTHD,
             [$contractSignId, $kycDocId]
         ); 
+    }
+
+    public function fetchDocumentByTypeAndUsers(int $typeId, int $userId, $communityUserId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByTypeAndUsers,
+            self::FETCH_ASSO_MTHD,
+            [$typeId, $userId, $communityUserId]
+        );
     }
 
 }
