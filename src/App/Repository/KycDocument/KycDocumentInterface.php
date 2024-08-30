@@ -101,6 +101,8 @@ interface KycDocumentInterface
 
     const KYC_TYPE_LPA_ID = 10;
 
+    const KYC_TYPE_GENERAL_ID = 11;
+
     const DOC_TYPE_LPA_ID = 7;
 
     const DOC_TYPE_LOI_ID = 6;
