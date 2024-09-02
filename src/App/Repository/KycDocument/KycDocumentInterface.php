@@ -148,6 +148,7 @@ interface KycDocumentInterface
         self::KYC_TYPE_NDA_ID => self::KYC_SIGN_ACTION,
         self::KYC_TYPE_LOI_ID => self::KYC_SIGN_ACTION,
         self::KYC_TYPE_LPA_ID => self::KYC_SIGN_ACTION,
+        self::KYC_TYPE_GENERAL_ID => null,
     ];
     
 }
