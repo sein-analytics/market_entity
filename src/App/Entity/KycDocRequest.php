@@ -81,7 +81,7 @@ class KycDocRequest
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\KycDocRequestStatus")
-     * @ORM\JoinColumn(name="kyc_doc_request_status", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="kyc_doc_request_status_id", referencedColumnName="id", nullable=true)
      */
     protected ?KycDocRequestStatus $status;
 
