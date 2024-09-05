@@ -59,6 +59,8 @@ interface KycDocumentInterface
 
     const KD_REQ_QRY_DESCRIPTION_KEY = 'description';
 
+    const KD_REQ_QRY_STATUS_ID_KEY = 'kyc_doc_request_status_id';
+
     const KD_CONTRACT_STATUS_ID_KEY = 'contractStatusId';
 
     const KD_ALLOW_DOC_SIGN_KEY = 'allowDocSign';
