@@ -113,6 +113,9 @@ interface KycDocumentInterface
 
     const KT_TYPE_KEY = 'type';
 
+    const KR_STATUS_OPEN_ID = 1;
+
+    const KR_STATUS_CLOSED_ID = 2;
     
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
