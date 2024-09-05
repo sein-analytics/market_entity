@@ -79,6 +79,12 @@ class KycDocRequest
      **/
     protected $date = null;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KycDocRequestStatus")
+     * @ORM\JoinColumn(name="kyc_doc_request_status", referencedColumnName="id", nullable=true)
+     */
+    protected ?KycDocRequestStatus $status;
+
     function __construct()
     {
         $this->issuer = new Issuer();
@@ -252,6 +258,22 @@ class KycDocRequest
     public function setDeal(Deal $deal): void
     {
         $this->deal = $deal;
+    }
+    
+    /**
+     * @return KycDocRequestStatus|null
+     */
+    public function getStatus(): KycDocRequestStatus|null
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param KycDocRequestStatus $status
+     */
+    public function setStatus(KycDocRequestStatus $status): void
+    {
+        $this->status = $status;
     }
 
 }
