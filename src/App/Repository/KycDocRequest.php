@@ -12,10 +12,10 @@ class KycDocRequest extends KycDocumentAbstract
     use FetchMapperTrait, FetchingTrait;
 
     private string $insertMultiKycDocRequestsSql = "INSERT INTO KycDocRequest " .
-        "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`, `deal_id`)" .
+        "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`, `deal_id`, `kyc_doc_request_status`)" .
         " VALUES ";
 
-    private string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $deleteKycDocRequestByIdSql = "DELETE FROM KycDocRequest WHERE id=?";
 
@@ -48,7 +48,7 @@ class KycDocRequest extends KycDocumentAbstract
                 $communityUserId . ',' . $communityIssuerId . ',' .
                 $bid['userId'] . ',' . $bid['issuerId'] . ',' . $kycTypeId . ',' .
                 $assetTypeId . ',' . "'" . $description . "'" . ',' .  "'" . $date . "'" . ',' . 
-                $bid['bidId'] . ',' . $bid['dealId'] . ')' . ($insertCount == count($bids) ? ';' : ',');
+                $bid['bidId'] . ',' . $bid['dealId'] . ',' . self::KR_STATUS_OPEN_ID . ')' . ($insertCount == count($bids) ? ';' : ',');
         }
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
