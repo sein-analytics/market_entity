@@ -117,7 +117,9 @@ interface KycDocumentInterface
 
     const KR_STATUS_OPEN_ID = 1;
 
-    const KR_STATUS_CLOSED_ID = 2;
+    const KR_STATUS_ACCESS_GRANTED_ID = 2;
+
+    const KR_STATUS_ACCESS_REVOKED_ID = 3;
     
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
