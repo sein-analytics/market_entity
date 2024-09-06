@@ -12,7 +12,7 @@ class KycDocRequest extends KycDocumentAbstract
     use FetchMapperTrait, FetchingTrait;
 
     private string $insertMultiKycDocRequestsSql = "INSERT INTO KycDocRequest " .
-        "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`, `deal_id`, `kyc_doc_request_status`)" .
+        "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`, `deal_id`, `kyc_doc_request_status_id`)" .
         " VALUES ";
 
     private string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -29,6 +29,8 @@ class KycDocRequest extends KycDocumentAbstract
     private string $callFetchUserDealsAccessRequests = 'call FetchUserDealsAccessRequests(:userId, :assetTypeId)';
 
     private string $fetchNonDealRequestByTypeAndUsers = "SELECT * FROM KycDocRequest WHERE kyc_type_id=? AND user_id=? AND community_user_id=? AND deal_id IS NULL";
+
+    private string $updateDocRequestStatusSql = "UPDATE KycDocRequest SET kyc_doc_request_status_id=? WHERE id=?";
 
     public function insertMultiKycDocRequests(
         int $communityIssuerId,
@@ -163,6 +165,16 @@ class KycDocRequest extends KycDocumentAbstract
             $this->fetchNonDealRequestByTypeAndUsers,
             self::FETCH_ASSO_MTHD,
             [$typeId, $userId, $communityUserId]
+        );
+    }
+
+    public function updateDocRequestStatus(int $kycDocRequestId, int $statusId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateDocRequestStatusSql,
+            self::EXECUTE_MTHD,
+            [$kycDocRequestId, $statusId]
         );
     }
 
