@@ -102,6 +102,31 @@ class KycDocRequest extends KycDocumentAbstract
         );
     }
 
+    public function fetchCommIssuerOpenRequestsByTypeAndAsset(int $issuerId, int $communityIssuerId, int $kycTypeId, ?int $assetTypeId)
+    {
+        $fetchCommIssuerRequestsByTypeAndAssetSql = $this->fetchCommIssuerRequestsByTypeAndAssetSql;
+        $queryParams = [$issuerId, $communityIssuerId, $kycTypeId];
+
+        if (is_null($assetTypeId)) {
+            $fetchCommIssuerRequestsByTypeAndAssetSql =
+                $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id IS NULL";
+        } else {
+            $fetchCommIssuerRequestsByTypeAndAssetSql = 
+                $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id=?";
+            $queryParams[] = $assetTypeId;
+        }
+
+        $fetchCommIssuerRequestsByTypeAndAssetSql = 
+            $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_doc_request_status_id =" . self::KR_STATUS_OPEN_ID;
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $fetchCommIssuerRequestsByTypeAndAssetSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $queryParams
+        );
+    }
+
     public function deleteIssuerRequestsByTypeAndAsset(int $issuerId, int $kycTypeId, ?int $assetTypeId)
     {
         $deleteIssuerRequestsByTypeAndAssetSql = $this->deleteIssuerRequestsByTypeAndAssetSql;
