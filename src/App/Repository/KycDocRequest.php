@@ -174,7 +174,7 @@ class KycDocRequest extends KycDocumentAbstract
             $this->getEntityManager(),
             $this->updateDocRequestStatusSql,
             self::EXECUTE_MTHD,
-            [$kycDocRequestId, $statusId]
+            [$statusId, $kycDocRequestId]
         );
     }
 
