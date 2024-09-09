@@ -121,6 +121,33 @@ class KycDocument extends KycDocumentAbstract
         return $results;
     }
 
+    public function fetchKycDocsIdsByIssuerAndAssetAndType(int $issuerId, ?int $assetTypeId, int $kycTypeId)
+    {
+        $baseQry = "SELECT id FROM KycDocument WHERE issuer_id=? AND community_issuer IS NULL";
+        $baseQryParams = [$issuerId];
+
+        if (is_null($assetTypeId) || $kycTypeId == self::KYC_TYPE_GENERAL_ID) {
+            $baseQry = $baseQry . " AND kyc_asset_type_id IS NULL";
+        } else {
+            $baseQry = $baseQry . " AND kyc_asset_type_id=?";
+            $baseQryParams[] = $assetTypeId;
+        }
+
+        if ($kycTypeId != self::KYC_TYPE_GENERAL_ID) {
+            $baseQry = $baseQry . " AND kyc_type_id=?";
+            $baseQryParams[] = $kycTypeId;
+        }
+
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $baseQry,
+            self::FETCH_ALL_ASSO_MTHD,
+            $baseQryParams
+        );
+        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
+        return $results;
+    }
+
     public function fetchIssuersByAssetAndKycDocsRequests(int $issuerId, int $assetTypeId)
     {
         $sql = "SELECT DISTINCT issuers.id AS issuerId, issuers.issuer_name AS issuerName FROM Issuer AS issuers"
