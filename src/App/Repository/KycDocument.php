@@ -98,6 +98,24 @@ class KycDocument extends KycDocumentAbstract
         );
     }
 
+    public function addMultiKycDocIssuersAccess(int $kycDocId, array $issuersIds)
+    {
+        $base = $this->insertIntoIssuerKycDocSql;
+        $insertCount = 0;
+        foreach ($issuersIds as $issuerId) {
+            $insertCount++;
+            $base = $base . PHP_EOL .
+                '(' . $issuerId  . ',' . $kycDocId . ')'.
+                    ($insertCount == count($issuersIds) ? ';' : ',');
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $base,
+            self::EXECUTE_MTHD,
+            []
+        );
+    }
+
     public function deleteIssuerKycDocAccess(int $issuerId, array $kycDocsIds)
     {
         $stmt = $this->returnMultiIntArraySqlStmt(
