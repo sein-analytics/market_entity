@@ -188,6 +188,14 @@ class KycDocument extends KycDocumentAbstract
         return $results;
     }
 
+    public function fetchAllowedGrantAccessIssuersIds(int $issuerId, int $assetTypeId, int $kycTypeId):mixed
+    {
+        $results = $this->executeProcedure([$issuerId, $assetTypeId, $kycTypeId],
+            self::$callFetchAllowedGrantAccessIssuersIds);
+        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
+        return $results;
+    }
+
     public function fetchIssuersKycDocumentsAccess(int $issuerId, int $assetTypeId):mixed
     {
         $results = $this->executeProcedure([$issuerId, $assetTypeId],
