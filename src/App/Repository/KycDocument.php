@@ -31,6 +31,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchDocumentByTypeAndUsers = "SELECT * FROM KycDocument WHERE kyc_type_id=? AND user_id=? AND community_user_id=?";
 
+    private string $fetchDocumentByAssetIdSql = "SELECT * FROM KycDocument WHERE asset_id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -240,6 +242,16 @@ class KycDocument extends KycDocumentAbstract
             $this->fetchDocumentByTypeAndUsers,
             self::FETCH_ASSO_MTHD,
             [$typeId, $userId, $communityUserId]
+        );
+    }
+
+    public function fetchDocumentByAssetId(string $assetId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByAssetIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$assetId]
         );
     }
 
