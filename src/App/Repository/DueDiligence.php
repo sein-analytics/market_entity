@@ -54,6 +54,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $leadDdIdsUserIdsByDealIdSql = "SELECT dueDil.id, dueDil.user_id, dueDil.bid_id, CONCAT(mktUsers.first_name,' ', mktUsers.last_name) AS ddUserName, Issuer.id AS ddUserIssuerId, Issuer.issuer_name AS buyersCompany FROM `DueDiligence` dueDil LEFT JOIN MarketUser mktUsers ON mktUsers.id = dueDil.user_id LEFT JOIN Issuer on Issuer.id = mktUsers.issuer_id WHERE dd_role_id=1 AND deal_id=?;";
 
+    private string $ddLeadsByDealIdLoanIdSql = "SELECT dueDil.id, dueDil.user_id, dueDil.bid_id, CONCAT(mktUsers.first_name,' ', mktUsers.last_name) AS ddUserName, Issuer.id AS ddUserIssuerId, Issuer.issuer_name AS buyersCompany FROM `DueDiligence` dueDil LEFT JOIN MarketUser mktUsers ON mktUsers.id = dueDil.user_id LEFT JOIN Issuer on Issuer.id = mktUsers.issuer_id WHERE dd_role_id=1 AND deal_id=? and dueDil.id IN(SELECT dd_id FROM DueDilLoanStatus WHERE ln_id = ?)";
+
     private string $allDdUserFileAccessSql = "SELECT id, user_id FROM DueDiligence WHERE id IN (SELECT due_diligence_id FROM deal_file_due_diligence WHERE deal_file_id=?)";
 
     private string $dueDilIdsUserIdsByDealIdSql = "SELECT id, user_id FROM `DueDiligence` WHERE deal_id=?;";
@@ -327,6 +329,16 @@ class DueDiligence extends DueDiligenceAbstract
             self::MANY_TO_MANY_DD_ID_KEY => null,
             self::MANY_TO_MANY_FILE_ID_KEY => null
         ];
+    }
+
+    public function dueDilLeadsByDealIdLoanId(int $dealId, int $loanId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->ddLeadsByDealIdLoanIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId, $loanId]
+        );
     }
 
     public function leadDueDilIdsUserIdsByDealId (int $dealId):mixed
