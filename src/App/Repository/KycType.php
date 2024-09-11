@@ -11,13 +11,20 @@ class KycType extends KycDocumentAbstract
 
     use FetchMapperTrait, FetchingTrait;
 
-    private string $fetchKycTypesSql = "SELECT * FROM KycType;";
+    private string $fetchKycTypesSql = "SELECT * FROM KycType";
 
-    public function fetchKycTypes():mixed
+    public function fetchKycTypes(array $noFetchIds = []):mixed
     {
+        $baseQry = $this->fetchKycTypesSql;
+
+        if (count($noFetchIds) > 0) {
+            $baseQry = $baseQry .
+                " WHERE ID NOT IN (" . implode(',', $noFetchIds) . ")";
+        }
+
         $results = $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            $this->fetchKycTypesSql,
+            $baseQry,
             self::FETCH_ALL_ASSO_MTHD,
             []
         );
