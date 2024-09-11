@@ -158,4 +158,17 @@ interface KycDocumentInterface
         self::KYC_TYPE_GENERAL_ID => null,
     ];
     
+
+    const ASSET_TYPE_KYC_TYPE_EXCLUSION_MAP = [
+        0 => [
+            self::KYC_TYPE_LOI_ID, 
+            self::KYC_TYPE_LPA_ID
+        ],
+        1 => [],
+        2 => [],
+        3 => [],
+        4 => [],
+        5 => [],
+    ];
+
 }
