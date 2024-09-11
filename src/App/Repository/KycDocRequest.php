@@ -116,7 +116,7 @@ class KycDocRequest extends KycDocumentAbstract
             $queryParams[] = $assetTypeId;
         }
 
-        $fetchCommIssuerRequestsByTypeAndAssetSql = 
+        $fetchCommIssuerRequestsByTypeAndAssetSql =
             $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_doc_request_status_id =" . self::KR_STATUS_OPEN_ID;
 
         return $this->buildAndExecuteFromSql(

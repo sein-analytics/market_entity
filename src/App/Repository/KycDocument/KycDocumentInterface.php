@@ -127,7 +127,8 @@ interface KycDocumentInterface
     ];
 
     const KD_TYPE_NO_ASSET_ID_MAP = [
-        self::KYC_TYPE_NDA_ID => null
+        self::KYC_TYPE_NDA_ID => null,
+        self::KYC_TYPE_GENERAL_ID => null
     ];
 
     const DOC_TYPE_KYC_TYPE_MAP = [
