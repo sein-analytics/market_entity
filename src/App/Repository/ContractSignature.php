@@ -20,6 +20,8 @@ class ContractSignature extends EntityRepository implements DbalStatementInterfa
 
     private string $deleteContractSignatureByIdSql = "DELETE FROM ContractSignature WHERE id=?";
 
+    private string $fetchContractSignatureBySignIdSql = "SELECT * FROM ContractSignature WHERE signature_id=?";
+
     public function insertNewContractSignature(array $params):mixed
     {
         if (array_key_exists(self::QUERY_JUST_ID, $params))
@@ -49,6 +51,16 @@ class ContractSignature extends EntityRepository implements DbalStatementInterfa
             $this->getEntityManager(),
             $this->fetchIdFromSignIdSql,
             self::FETCH_NUMERIC_MTHD,
+            [$signatureId]
+        );
+    }
+
+    public function fetchContractSignatureBySignId(string $signatureId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchContractSignatureBySignIdSql,
+            self::FETCH_ASSO_MTHD,
             [$signatureId]
         );
     }
