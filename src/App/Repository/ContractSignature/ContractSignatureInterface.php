@@ -79,4 +79,11 @@ interface ContractSignatureInterface
             self::CONTRACT_STATUS_EXECUTED
     ];
     
+    const CONTRACT_SIGNATURE_STATUS_ID_UPDATE_MAP = [
+        self::CONTRACT_STATUS_SIGN_PENDING_ID =>
+            self::CONTRACT_STATUS_SENDER_SIGNED_ID,
+        self::CONTRACT_STATUS_SENDER_SIGNED_ID =>
+            self::CONTRACT_STATUS_EXECUTED_ID
+    ];
+    
 }
