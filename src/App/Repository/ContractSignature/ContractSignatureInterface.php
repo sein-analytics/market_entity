@@ -86,4 +86,11 @@ interface ContractSignatureInterface
             self::CONTRACT_STATUS_EXECUTED_ID
     ];
     
+    const CONTRACT_SIGNATURE_STATUS_SIGN_ID_COLUMN_MAP = [
+        self::CONTRACT_STATUS_SIGN_PENDING_ID => 
+            self::CS_QRY_SENDER_SIGNATURE_KEY,
+        self::CONTRACT_STATUS_SENDER_SIGNED_ID =>
+            self::CS_QRY_RECEIVER_SIGNATURE_KEY
+    ];
+
 }
