@@ -193,6 +193,43 @@ class KycDocRequest extends KycDocumentAbstract
         );
     }
 
+    public function fetchUsersOpenIndividualRequests(
+        int $userId, 
+        int $communityUserId, 
+        ?int $assetTypeId, 
+        ?int $typeId,
+        ?int $dealId,
+        ?int $bidId
+    ) {
+        $query = "SELECT * FROM KycDocRequest WHERE user_id=? AND community_user_id=? AND kyc_doc_request_status_id=?";
+        $params = [$userId, $communityUserId, self::KR_STATUS_OPEN_ID];
+
+        $queryConditionsMap = [
+            self::KD_QRY_ASSET_TYPE_ID => $assetTypeId,
+            self::KD_QRY_KYC_TYPE_KEY => $typeId,
+            'deal_id' => $dealId,
+            'bid_id' => $bidId
+        ];
+
+        foreach($queryConditionsMap as $field => $value) {
+
+            if (is_null($value)) {
+                $query .= " AND $field IS NULL";
+            } else {
+                $query .= " AND $field=?";
+                $params[] = $value;
+            }
+
+        }
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $params
+        );
+    }
+
     public function updateDocRequestStatus(int $kycDocRequestId, int $statusId)
     {
         return $this->buildAndExecuteFromSql(
