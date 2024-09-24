@@ -123,9 +123,11 @@ class KycDocRequest extends KycDocumentAbstract
 
         $fetchCommIssuerRequestsByTypeAndAssetSql =
             $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_doc_request_status_id" .
-                count($statusIds) > 0
+                (
+                    count($statusIds) > 0
                     ? " IN" . " (" . implode(',', $statusIds) . ")"
-                    : "=" . self::KR_STATUS_OPEN_ID;
+                    : "=" . self::KR_STATUS_OPEN_ID
+                );
 
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
