@@ -102,8 +102,13 @@ class KycDocRequest extends KycDocumentAbstract
         );
     }
 
-    public function fetchCommIssuerOpenRequestsByTypeAndAsset(int $issuerId, int $communityIssuerId, int $kycTypeId, ?int $assetTypeId)
-    {
+    public function fetchCommIssuerOpenRequestsByTypeAndAsset(
+        int $issuerId,
+        int $communityIssuerId,
+        int $kycTypeId,
+        ?int $assetTypeId,
+        array $statusIds = []
+    ) {
         $fetchCommIssuerRequestsByTypeAndAssetSql = $this->fetchCommIssuerRequestsByTypeAndAssetSql;
         $queryParams = [$issuerId, $communityIssuerId, $kycTypeId];
 
@@ -117,7 +122,10 @@ class KycDocRequest extends KycDocumentAbstract
         }
 
         $fetchCommIssuerRequestsByTypeAndAssetSql =
-            $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_doc_request_status_id =" . self::KR_STATUS_OPEN_ID;
+            $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_doc_request_status_id" .
+                count($statusIds) > 0
+                    ? " IN" . " (" . implode(',', $statusIds) . ")"
+                    : "=" . self::KR_STATUS_OPEN_ID;
 
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
