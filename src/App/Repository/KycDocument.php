@@ -255,4 +255,31 @@ class KycDocument extends KycDocumentAbstract
         );
     }
 
+    public function fetchIssuerDocumentsCountByAssetAndType(int $issuerId, ?int $kycTypeId, ?int $assetTypeId)
+    {
+        $query = "SELECT COUNT(id) AS count FROM KycDocument WHERE issuer_id=? AND community_issuer_id IS NULL";
+        $params = [$issuerId];
+
+        if (!is_null($assetTypeId)) {
+            $query = $query . " AND kyc_asset_type_id=?";
+            $params[] =  $assetTypeId;
+        } else {
+            $query = $query . " AND kyc_asset_type_id IS NULL";
+        }
+
+        if (!is_null($kycTypeId)) {
+            $query = $query . " AND kyc_type_id=?";
+            $params[] =  $kycTypeId;
+        }
+
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $params
+        );
+
+        return $results[self::COUNT_DB_KEY];
+    }
+
 }
