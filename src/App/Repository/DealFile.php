@@ -55,6 +55,8 @@ class DealFile extends EntityRepository
 
     private string $detachFileFromLoanSql = "UPDATE DealFile SET loan_id=NULL WHERE id=?";
 
+    private string $detachDeleteDueDilFileRecordsSql = "DELETE FROM deal_file_due_diligence WHERE deal_file_id=?";
+
     private string $updateContractSignatureIdSql = "UPDATE DealFile SET contract_signature_id=? WHERE id=?";
 
     private static string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :issuerId, :assetTypeId)";
@@ -154,6 +156,16 @@ class DealFile extends EntityRepository
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->detachFileFromLoanSql,
+            self::EXECUTE_MTHD,
+            [$fileId]
+        );
+    }
+
+    public function detachDueDilFileRecordsByFileId(int $fileId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->detachDeleteDueDilFileRecordsSql,
             self::EXECUTE_MTHD,
             [$fileId]
         );
