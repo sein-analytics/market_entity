@@ -59,6 +59,8 @@ interface KycDocumentInterface
 
     const KD_REQ_QRY_DESCRIPTION_KEY = 'description';
 
+    const KD_REQ_QRY_STATUS_ID_KEY = 'kyc_doc_request_status_id';
+
     const KD_CONTRACT_STATUS_ID_KEY = 'contractStatusId';
 
     const KD_ALLOW_DOC_SIGN_KEY = 'allowDocSign';
@@ -66,6 +68,20 @@ interface KycDocumentInterface
     const KD_REQUEST_ID_KEY = 'requestId';
 
     const KD_DOCUMENT_REQUEST_ID = 'documentRequestId';
+
+    const KD_FILE_NAME_KEY = 'fileName';
+
+    const KD_USER_KEY = 'user';
+
+    const KD_ISSUER_KEY = 'issuer';
+
+    const KD_COMMUNITY_USER_KEY = 'communityUser';
+
+    const KD_COMMUNITY_ISSUER_KEY = 'communityIssuer';
+
+    const KD_INFO_KEY = 'info';
+
+    const KD_ADDITIONAL_INFO_KEY = 'additionalInfo';
 
     const KYC_TYPE_FINANCIAL_ID = 1;
     
@@ -87,6 +103,8 @@ interface KycDocumentInterface
 
     const KYC_TYPE_LPA_ID = 10;
 
+    const KYC_TYPE_GENERAL_ID = 11;
+
     const DOC_TYPE_LPA_ID = 7;
 
     const DOC_TYPE_LOI_ID = 6;
@@ -97,15 +115,22 @@ interface KycDocumentInterface
 
     const KT_TYPE_KEY = 'type';
 
+    const KR_STATUS_OPEN_ID = 1;
+
+    const KR_STATUS_ACCESS_GRANTED_ID = 2;
+
+    const KR_STATUS_ACCESS_REVOKED_ID = 3;
+    
+    const KR_STATUS_RESOLVED_ID = 4;
+
     const KD_CONTRACT_STATUS_ID_MAPPER = [
         self::KD_QRY_SENDER_SIGNATURE_KEY => 2,
         self::KD_QRY_RECEIVER_SIGNATURE_KEY => 4
     ];
 
     const KD_TYPE_NO_ASSET_ID_MAP = [
-        1 => null,
-        7 => null,
-        8 => null
+        self::KYC_TYPE_NDA_ID => null,
+        self::KYC_TYPE_GENERAL_ID => null
     ];
 
     const DOC_TYPE_KYC_TYPE_MAP = [
@@ -131,6 +156,20 @@ interface KycDocumentInterface
         self::KYC_TYPE_NDA_ID => self::KYC_SIGN_ACTION,
         self::KYC_TYPE_LOI_ID => self::KYC_SIGN_ACTION,
         self::KYC_TYPE_LPA_ID => self::KYC_SIGN_ACTION,
+        self::KYC_TYPE_GENERAL_ID => null,
     ];
     
+
+    const ASSET_TYPE_KYC_TYPE_EXCLUSION_MAP = [
+        0 => [
+            self::KYC_TYPE_LOI_ID, 
+            self::KYC_TYPE_LPA_ID
+        ],
+        1 => [],
+        2 => [],
+        3 => [],
+        4 => [],
+        5 => [],
+    ];
+
 }

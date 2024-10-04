@@ -29,6 +29,10 @@ class KycDocument extends KycDocumentAbstract
 
     private string $updateContractSignatureIdSql = "UPDATE KycDocument SET contract_signature_id=? WHERE id=?";
 
+    private string $fetchDocumentByTypeAndUsers = "SELECT * FROM KycDocument WHERE kyc_type_id=? AND user_id=? AND community_user_id=?";
+
+    private string $fetchDocumentByAssetIdSql = "SELECT * FROM KycDocument WHERE asset_id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -96,6 +100,24 @@ class KycDocument extends KycDocumentAbstract
         );
     }
 
+    public function addMultiKycDocIssuersAccess(int $kycDocId, array $issuersIds)
+    {
+        $base = $this->insertIntoIssuerKycDocSql;
+        $insertCount = 0;
+        foreach ($issuersIds as $issuerId) {
+            $insertCount++;
+            $base = $base . PHP_EOL .
+                '(' . $issuerId  . ',' . $kycDocId . ')'.
+                    ($insertCount == count($issuersIds) ? ';' : ',');
+        }
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $base,
+            self::EXECUTE_MTHD,
+            []
+        );
+    }
+
     public function deleteIssuerKycDocAccess(int $issuerId, array $kycDocsIds)
     {
         $stmt = $this->returnMultiIntArraySqlStmt(
@@ -119,6 +141,33 @@ class KycDocument extends KycDocumentAbstract
         return $results;
     }
 
+    public function fetchKycDocsIdsByIssuerAndAssetAndType(int $issuerId, ?int $assetTypeId, int $kycTypeId)
+    {
+        $baseQry = "SELECT id FROM KycDocument WHERE issuer_id=? AND community_issuer_id IS NULL";
+        $baseQryParams = [$issuerId];
+
+        if (is_null($assetTypeId) || $kycTypeId == self::KYC_TYPE_GENERAL_ID) {
+            $baseQry = $baseQry . " AND kyc_asset_type_id IS NULL";
+        } else {
+            $baseQry = $baseQry . " AND kyc_asset_type_id=?";
+            $baseQryParams[] = $assetTypeId;
+        }
+
+        if ($kycTypeId != self::KYC_TYPE_GENERAL_ID) {
+            $baseQry = $baseQry . " AND kyc_type_id=?";
+            $baseQryParams[] = $kycTypeId;
+        }
+
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $baseQry,
+            self::FETCH_ALL_ASSO_MTHD,
+            $baseQryParams
+        );
+        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
+        return $results;
+    }
+
     public function fetchIssuersByAssetAndKycDocsRequests(int $issuerId, int $assetTypeId)
     {
         $sql = "SELECT DISTINCT issuers.id AS issuerId, issuers.issuer_name AS issuerName FROM Issuer AS issuers"
@@ -133,10 +182,18 @@ class KycDocument extends KycDocumentAbstract
         return $results;
     }
 
-    public function fetchAllowedKycDocumentsIds(int $issuerId, int $communityIssuerId, int $assetTypeId):mixed
+    public function fetchAllowedKycDocumentsIds(int $issuerId, int $communityIssuerId, int $assetTypeId, int $kycTypeId):mixed
     {
-        $results = $this->executeProcedure([$issuerId, $communityIssuerId, $assetTypeId],
+        $results = $this->executeProcedure([$issuerId, $communityIssuerId, $assetTypeId, $kycTypeId],
             self::$callFetchAllowedKycDocumentsIds);
+        $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
+        return $results;
+    }
+
+    public function fetchAllowedGrantAccessIssuersIds(int $issuerId, int $assetTypeId, int $kycTypeId):mixed
+    {
+        $results = $this->executeProcedure([$issuerId, $assetTypeId, $kycTypeId],
+            self::$callFetchAllowedGrantAccessIssuersIds);
         $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID, false);
         return $results;
     }
@@ -176,6 +233,53 @@ class KycDocument extends KycDocumentAbstract
             self::EXECUTE_MTHD,
             [$contractSignId, $kycDocId]
         ); 
+    }
+
+    public function fetchDocumentByTypeAndUsers(int $typeId, int $userId, $communityUserId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByTypeAndUsers,
+            self::FETCH_ASSO_MTHD,
+            [$typeId, $userId, $communityUserId]
+        );
+    }
+
+    public function fetchDocumentByAssetId(string $assetId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByAssetIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$assetId]
+        );
+    }
+
+    public function fetchIssuerDocumentsCountByAssetAndType(int $issuerId, ?int $kycTypeId, ?int $assetTypeId)
+    {
+        $query = "SELECT COUNT(id) AS count FROM KycDocument WHERE issuer_id=? AND community_issuer_id IS NULL";
+        $params = [$issuerId];
+
+        if (!is_null($assetTypeId)) {
+            $query = $query . " AND kyc_asset_type_id=?";
+            $params[] =  $assetTypeId;
+        } else {
+            $query = $query . " AND kyc_asset_type_id IS NULL";
+        }
+
+        if (!is_null($kycTypeId)) {
+            $query = $query . " AND kyc_type_id=?";
+            $params[] =  $kycTypeId;
+        }
+
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $params
+        );
+
+        return $results[self::COUNT_DB_KEY];
     }
 
 }

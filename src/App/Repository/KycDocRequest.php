@@ -12,10 +12,10 @@ class KycDocRequest extends KycDocumentAbstract
     use FetchMapperTrait, FetchingTrait;
 
     private string $insertMultiKycDocRequestsSql = "INSERT INTO KycDocRequest " .
-        "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`, `deal_id`)" .
+        "(`community_user_id`, `community_issuer_id`, `user_id`, `issuer_id`, `kyc_type_id`, `kyc_asset_type_id`, `description`, `date`, `bid_id`, `deal_id`, `kyc_doc_request_status_id`)" .
         " VALUES ";
 
-    private string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertKycDocRequestSql = "INSERT INTO KycDocRequest VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $deleteKycDocRequestByIdSql = "DELETE FROM KycDocRequest WHERE id=?";
 
@@ -27,6 +27,10 @@ class KycDocRequest extends KycDocumentAbstract
     private string $deleteCommUserRequestSql = "DELETE FROM KycDocRequest WHERE user_id=? AND community_user_id=? AND kyc_type_id=?";
 
     private string $callFetchUserDealsAccessRequests = 'call FetchUserDealsAccessRequests(:userId, :assetTypeId)';
+
+    private string $fetchNonDealRequestByTypeAndUsers = "SELECT * FROM KycDocRequest WHERE kyc_type_id=? AND user_id=? AND community_user_id=? AND deal_id IS NULL";
+
+    private string $updateDocRequestStatusSql = "UPDATE KycDocRequest SET kyc_doc_request_status_id=? WHERE id=?";
 
     public function insertMultiKycDocRequests(
         int $communityIssuerId,
@@ -46,7 +50,7 @@ class KycDocRequest extends KycDocumentAbstract
                 $communityUserId . ',' . $communityIssuerId . ',' .
                 $bid['userId'] . ',' . $bid['issuerId'] . ',' . $kycTypeId . ',' .
                 $assetTypeId . ',' . "'" . $description . "'" . ',' .  "'" . $date . "'" . ',' . 
-                $bid['bidId'] . ',' . $bid['dealId'] . ')' . ($insertCount == count($bids) ? ';' : ',');
+                $bid['bidId'] . ',' . $bid['dealId'] . ',' . self::KR_STATUS_OPEN_ID . ')' . ($insertCount == count($bids) ? ';' : ',');
         }
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
@@ -89,6 +93,41 @@ class KycDocRequest extends KycDocumentAbstract
                 $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id=?";
             $queryParams[] = $assetTypeId;
         }
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $fetchCommIssuerRequestsByTypeAndAssetSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $queryParams
+        );
+    }
+
+    public function fetchCommIssuerOpenRequestsByTypeAndAsset(
+        int $issuerId,
+        int $communityIssuerId,
+        int $kycTypeId,
+        ?int $assetTypeId,
+        array $statusIds = []
+    ) {
+        $fetchCommIssuerRequestsByTypeAndAssetSql = $this->fetchCommIssuerRequestsByTypeAndAssetSql;
+        $queryParams = [$issuerId, $communityIssuerId, $kycTypeId];
+
+        if (is_null($assetTypeId)) {
+            $fetchCommIssuerRequestsByTypeAndAssetSql =
+                $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id IS NULL";
+        } else {
+            $fetchCommIssuerRequestsByTypeAndAssetSql = 
+                $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_asset_type_id=?";
+            $queryParams[] = $assetTypeId;
+        }
+
+        $fetchCommIssuerRequestsByTypeAndAssetSql =
+            $fetchCommIssuerRequestsByTypeAndAssetSql . " AND kyc_doc_request_status_id" .
+                (
+                    count($statusIds) > 0
+                    ? " IN" . " (" . implode(',', $statusIds) . ")"
+                    : "=" . self::KR_STATUS_OPEN_ID
+                );
 
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
@@ -152,6 +191,85 @@ class KycDocRequest extends KycDocumentAbstract
         );
 
         return $results;
+    }
+
+    public function fetchNonDealRequestByTypeAndUsers(int $typeId, int $userId, $communityUserId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchNonDealRequestByTypeAndUsers,
+            self::FETCH_ASSO_MTHD,
+            [$typeId, $userId, $communityUserId]
+        );
+    }
+
+    public function fetchUsersOpenIndividualRequests(
+        int $userId, 
+        int $communityUserId, 
+        ?int $assetTypeId, 
+        ?int $typeId,
+        ?int $dealId,
+        ?int $bidId
+    ) {
+        $query = "SELECT * FROM KycDocRequest WHERE user_id=? AND community_user_id=? AND kyc_doc_request_status_id=?";
+        $params = [$userId, $communityUserId, self::KR_STATUS_OPEN_ID];
+
+        $queryConditionsMap = [
+            self::KD_QRY_ASSET_TYPE_ID => $assetTypeId,
+            self::KD_QRY_KYC_TYPE_KEY => $typeId,
+            'deal_id' => $dealId,
+            'bid_id' => $bidId
+        ];
+
+        foreach($queryConditionsMap as $field => $value) {
+
+            if (is_null($value)) {
+                $query .= " AND $field IS NULL";
+            } else {
+                $query .= " AND $field=?";
+                $params[] = $value;
+            }
+
+        }
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $params
+        );
+    }
+
+    public function updateDocRequestStatus(int $kycDocRequestId, int $statusId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateDocRequestStatusSql,
+            self::EXECUTE_MTHD,
+            [$statusId, $kycDocRequestId]
+        );
+    }
+
+    public function fetchIssuersRequestsCountByAssetAndType(int $issuerId, int $communityIssuerId, int $typeId, ?int $assetTypeId)
+    {
+        $query = "SELECT COUNT(id) AS count FROM KycDocRequest WHERE issuer_id=? AND community_issuer_id=? AND kyc_type_id=?";
+        $params = [$issuerId, $communityIssuerId, $typeId];
+
+        if (!is_null($assetTypeId)) {
+            $query = $query . " AND kyc_asset_type_id=?";
+            $params[] =  $assetTypeId;
+        } else {
+            $query = $query . " AND kyc_asset_type_id IS NULL";
+        }
+
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $params
+        );
+
+        return $results[self::COUNT_DB_KEY];
     }
 
 }
