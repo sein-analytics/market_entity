@@ -282,4 +282,29 @@ class KycDocument extends KycDocumentAbstract
         return $results[self::COUNT_DB_KEY];
     }
 
+    public function updateKycDocumentById(int $kycDocId, array $columnsValues)
+    {
+        $query = "UPDATE KycDocument SET ";
+        $values = [];
+        $count = 0;
+
+        foreach($columnsValues as $key => $value) {
+            $count++;
+            $columnToSet = "$key=?" . ($count == count($columnsValues)
+                ? " " : ", ");
+            $query = $query . $columnToSet;
+            $values[] = $value;
+        }
+
+        $query = $query . "WHERE id=?";
+        $values[] = $kycDocId;
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::EXECUTE_MTHD,
+            $values
+        );
+    }
+
 }
