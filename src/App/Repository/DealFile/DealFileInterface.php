@@ -52,6 +52,8 @@ interface DealFileInterface
 
     const DF_DATE = 'date';
 
+    const DF_BID_ID = 'bid_id';
+
     /**
      * ToDo any changes in the DAM JSON API
      * should be reflected below
@@ -106,5 +108,6 @@ interface DealFileInterface
         self::DF_COMMUNITY_USER_ID => null,
         self::DF_CONTRACT_SIGNATURE_ID => null,
         self::DF_DATE => null,
+        self::DF_BID_ID => null,
     ];
 }
