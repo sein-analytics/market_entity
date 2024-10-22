@@ -186,6 +186,12 @@ class DealFile extends DomainObject
      **/
     protected $date = null;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
+     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?Bid $bid;
+
     public function __construct()
     {
         $this->replacements = new ArrayCollection();
@@ -444,5 +450,21 @@ class DealFile extends DomainObject
      * @param \DateTime $date
      */
     public function setDate(\DateTime $date) { $this->date = $date; }
+
+    /**
+     * @return Bid|null
+     */
+    public function getBid(): Bid|null
+    {
+        return $this->bid;
+    }
+
+    /**
+     * @param Bid $Bid
+     */
+    public function setBid(Bid $bid): void
+    {
+        $this->bid = $bid;
+    }
 
 }
