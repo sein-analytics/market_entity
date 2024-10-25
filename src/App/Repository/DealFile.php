@@ -192,6 +192,33 @@ class DealFile extends EntityRepository
         return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
     }
 
+    public function fetchDealFileByProps(
+        int $dealId, 
+        int $docTypeId, 
+        int $userId, 
+        int $communityUserId,
+        ?int $bidId
+    ) {
+        $query = 
+            "SELECT FROM DealFile WHERE deal_id=? AND doc_type_id=? " .
+                "AND user_id=? AND community_user_id=?";
+        $params = [$dealId, $docTypeId, $userId, $communityUserId];
+
+        if (!is_null($bidId)) {
+            $query = $query . " AND bid_id=?";
+            $params[] = $bidId;
+        } else {
+            $query = $query . " AND bid_id IS NULL";
+        }
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $params
+        );
+    }
+
     public function updateDealFileById(int $dealFileId, array $columnsValues)
     {
         $query = "UPDATE DealFile SET ";
