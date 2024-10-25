@@ -200,7 +200,7 @@ class DealFile extends EntityRepository
         ?int $bidId
     ) {
         $query = 
-            "SELECT FROM DealFile WHERE deal_id=? AND doc_type_id=? " .
+            "SELECT * FROM DealFile WHERE deal_id=? AND doc_type_id=? " .
                 "AND user_id=? AND community_user_id=?";
         $params = [$dealId, $docTypeId, $userId, $communityUserId];
 
