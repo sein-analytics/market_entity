@@ -33,6 +33,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchDocumentByAssetIdSql = "SELECT * FROM KycDocument WHERE asset_id=?";
 
+    private string $fetchKycDocumentByIdSql = "SELECT * FROM KycDocument WHERE id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -304,6 +306,16 @@ class KycDocument extends KycDocumentAbstract
             $query,
             self::EXECUTE_MTHD,
             $values
+        );
+    }
+
+    public function fetchKycDocumentById(int $kycDocId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchKycDocumentByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$kycDocId]
         );
     }
 
