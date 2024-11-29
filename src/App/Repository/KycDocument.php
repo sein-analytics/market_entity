@@ -319,4 +319,9 @@ class KycDocument extends KycDocumentAbstract
         );
     }
 
+    public function fetchKycDocumentDetails(int $kycDocumentId, int $userId)
+    {
+        return $this->executeProcedure([$kycDocumentId, $userId], self::$callFetchKycDocumentDetails);
+    }
+
 }

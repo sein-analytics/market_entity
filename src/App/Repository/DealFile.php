@@ -64,6 +64,8 @@ class DealFile extends EntityRepository
 
     private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)";
 
+    private static string $callFetchDealFileDetails = "call FetchDealFileDetails(:dealFileId, :userId)";
+
     private string $fetchDealFileByIdSql = "SELECT * FROM DealFile WHERE id=?";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
@@ -254,6 +256,11 @@ class DealFile extends EntityRepository
             self::FETCH_ASSO_MTHD,
             [$dealFileId]
         );
+    }
+
+    public function fetchDealFileDetails(int $dealFileId, int $userId)
+    {
+        return $this->executeProcedure([$dealFileId, $userId], self::$callFetchDealFileDetails);
     }
 
 }
