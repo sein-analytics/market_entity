@@ -68,6 +68,8 @@ class DealFile extends EntityRepository
 
     private string $fetchDealFileByIdSql = "SELECT * FROM DealFile WHERE id=?";
 
+    private string $fetchDocumentByAssetIdSql = "SELECT * FROM DealFile WHERE asset_id=?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -245,6 +247,16 @@ class DealFile extends EntityRepository
             $query,
             self::EXECUTE_MTHD,
             $values
+        );
+    }
+
+    public function fetchDocumentByAssetId(string $assetId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByAssetIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$assetId]
         );
     }
 
