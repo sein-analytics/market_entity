@@ -70,6 +70,8 @@ class DealFile extends EntityRepository
 
     private string $fetchDocumentByAssetIdSql = "SELECT * FROM DealFile WHERE asset_id=?";
 
+    private string $deleteFileByIdSql = "DELETE FROM DealFile WHERE id=?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -273,6 +275,16 @@ class DealFile extends EntityRepository
     public function fetchDealFileDetails(int $dealFileId, int $userId)
     {
         return $this->executeProcedure([$dealFileId, $userId], self::$callFetchDealFileDetails);
+    }
+
+    public function deleteFileById(int $dealFileId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteFileByIdSql,
+            self::EXECUTE_MTHD,
+            [$dealFileId]
+        );
     }
 
 }

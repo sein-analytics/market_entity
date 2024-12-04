@@ -35,6 +35,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchKycDocumentByIdSql = "SELECT * FROM KycDocument WHERE id=?";
 
+    private string $deleteDocumentByIdSql = "DELETE FROM KycDocument WHERE id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -322,6 +324,16 @@ class KycDocument extends KycDocumentAbstract
     public function fetchKycDocumentDetails(int $kycDocumentId, int $userId)
     {
         return $this->executeProcedure([$kycDocumentId, $userId], self::$callFetchKycDocumentDetails);
+    }
+
+    public function deleteDocumentById(int $kycDocumentId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteDocumentByIdSql,
+            self::EXECUTE_MTHD,
+            [$kycDocumentId]
+        );
     }
 
 }
