@@ -69,7 +69,7 @@ class ContractSignature extends EntityRepository
         );
     }
 
-    public function fetchContractSignatureById(string $contractSignatureId)
+    public function fetchContractSignatureById(int $contractSignatureId)
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
