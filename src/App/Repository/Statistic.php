@@ -58,10 +58,12 @@ class Statistic extends EntityRepository
     public function fetchDealStatisticsByDealIds(array $dealIds, bool $mapStatisticsToDeal=true)
     {
         $results = $this->fetchByIntArray($this->em, $dealIds, self::SELECT_ALL_BY_DEAL_SQL);
-        if(count($results) > 0 && $mapStatisticsToDeal){
-            $results = $this->mapRequestIdsToResults($dealIds, $results, self::STATS_DEAL_ID_KEY);
+        if(is_array($results)
+            &&count($results) > 0
+            && $mapStatisticsToDeal){
+            return $this->mapRequestIdsToResults($dealIds, $results, self::STATS_DEAL_ID_KEY);
         }
-        return $results;
+        return [];
     }
 
     /**

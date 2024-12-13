@@ -48,11 +48,12 @@ class Bid extends EntityRepository
         $sql = 'SELECT * FROM Bid WHERE deal_id IN (?) ORDER BY deal_id ASC, id ASC';
         $results = $this->fetchByIntArray($this->getEntityManager(), $dealIds, $sql);
         if ($mapBidsToDeals
+            && is_array($results)
             && count($results ) > 0)
         {
-            $results = $this->mapRequestIdsToResults($dealIds, $results, self::BID_DEAL);
+            return $this->mapRequestIdsToResults($dealIds, $results, self::BID_DEAL);
         }
-        return $results;
+        return [];
     }
 
     /**
