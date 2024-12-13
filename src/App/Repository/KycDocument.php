@@ -33,6 +33,10 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchDocumentByAssetIdSql = "SELECT * FROM KycDocument WHERE asset_id=?";
 
+    private string $fetchKycDocumentByIdSql = "SELECT * FROM KycDocument WHERE id=?";
+
+    private string $deleteDocumentByIdSql = "DELETE FROM KycDocument WHERE id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -280,6 +284,56 @@ class KycDocument extends KycDocumentAbstract
         );
 
         return $results[self::COUNT_DB_KEY];
+    }
+
+    public function updateKycDocumentById(int $kycDocId, array $columnsValues)
+    {
+        $query = "UPDATE KycDocument SET ";
+        $values = [];
+        $count = 0;
+
+        foreach($columnsValues as $key => $value) {
+            $count++;
+            $columnToSet = "$key=?" . ($count == count($columnsValues)
+                ? " " : ", ");
+            $query = $query . $columnToSet;
+            $values[] = $value;
+        }
+
+        $query = $query . "WHERE id=?";
+        $values[] = $kycDocId;
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::EXECUTE_MTHD,
+            $values
+        );
+    }
+
+    public function fetchKycDocumentById(int $kycDocId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchKycDocumentByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$kycDocId]
+        );
+    }
+
+    public function fetchKycDocumentDetails(int $kycDocumentId, int $userId)
+    {
+        return $this->executeProcedure([$kycDocumentId, $userId], self::$callFetchKycDocumentDetails);
+    }
+
+    public function deleteDocumentById(int $kycDocumentId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteDocumentByIdSql,
+            self::EXECUTE_MTHD,
+            [$kycDocumentId]
+        );
     }
 
 }

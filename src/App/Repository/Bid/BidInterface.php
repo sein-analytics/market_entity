@@ -59,4 +59,11 @@ interface BidInterface
         self::MLPA_STATUS_2 => self::CLOSED_STATUS,
     ];
 
+    const BID_STATUS_ROLLBACK_ID_MAP = [
+        self::CLOSED_STATUS => self::MLPA_STATUS_2,
+        self::MLPA_STATUS_2 => self::DD_STATUS,
+        self::DD_STATUS => self::LOI_STATUS_2,
+        self::LOI_STATUS_2 => self::PLACED_STATUS,
+    ];
+
 }

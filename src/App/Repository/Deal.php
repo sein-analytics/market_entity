@@ -68,7 +68,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callFetchUserAllowedNdaDealsBySeller = 'call FetchUserAllowedNdaDealsBySeller(:sellerId, :issuerId, :assetTypeId)';
 
-    private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId, :assetTypeId)';
+    private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId, :communityUserId, :assetTypeId)';
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -361,9 +361,9 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $results;
     }
 
-    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityIssuerId, int $assetTypeId): mixed
+    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityIssuerId, int $communityUserId, int $assetTypeId): mixed
     {
-        $result = $this->executeProcedure([$userId, $communityIssuerId, $assetTypeId],
+        $result = $this->executeProcedure([$userId, $communityIssuerId, $communityUserId, $assetTypeId],
             $this->callFetchAllowedDealsNonDisclosure
         );
         return $result;

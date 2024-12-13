@@ -29,6 +29,10 @@ interface KycDocumentInterface
 
     const KD_QRY_CONTRACT_SIGNATURE_ID_KEY = 'contract_signature_id';
 
+    const KD_QRY_ASSET_ID_KEY = 'asset_id';
+
+    const KD_QRY_SECURE_URL_KEY = 'secure_url';
+
     const KD_ISSUER_ID_KEY = 'issuerId';
 
     const KD_USER_ID_KEY = 'userId';

@@ -43,6 +43,7 @@ class DealFile extends EntityRepository
         self::DF_COMMUNITY_USER_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
         self::DF_CONTRACT_SIGNATURE_ID => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         self::DF_DATE => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        self::DF_BID_ID => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
     ];
 
     private string $updateAssetIdByIdSql = "UPDATE DealFile SET asset_id=? WHERE id=?";
@@ -62,6 +63,14 @@ class DealFile extends EntityRepository
     private static string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :issuerId, :assetTypeId)";
 
     private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)";
+
+    private static string $callFetchDealFileDetails = "call FetchDealFileDetails(:dealFileId, :userId)";
+
+    private string $fetchDealFileByIdSql = "SELECT * FROM DealFile WHERE id=?";
+
+    private string $fetchDocumentByAssetIdSql = "SELECT * FROM DealFile WHERE asset_id=?";
+
+    private string $deleteFileByIdSql = "DELETE FROM DealFile WHERE id=?";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -189,6 +198,93 @@ class DealFile extends EntityRepository
     public function fetchDealFilesContractsByUser(int $userId, int $issuerId, int $communityUserId, int $communityIssuerId, int $assetTypeId)
     {
         return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
+    }
+
+    public function fetchDealFileByProps(
+        int $dealId, 
+        int $docTypeId, 
+        int $userId, 
+        int $communityUserId,
+        ?int $bidId
+    ) {
+        $query = 
+            "SELECT * FROM DealFile WHERE deal_id=? AND doc_type_id=? " .
+                "AND user_id=? AND community_user_id=?";
+        $params = [$dealId, $docTypeId, $userId, $communityUserId];
+
+        if (!is_null($bidId)) {
+            $query = $query . " AND bid_id=?";
+            $params[] = $bidId;
+        } else {
+            $query = $query . " AND bid_id IS NULL";
+        }
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $params
+        );
+    }
+
+    public function updateDealFileById(int $dealFileId, array $columnsValues)
+    {
+        $query = "UPDATE DealFile SET ";
+        $values = [];
+        $count = 0;
+
+        foreach($columnsValues as $key => $value) {
+            $count++;
+            $columnToSet = "$key=?" . ($count == count($columnsValues)
+                ? " " : ", ");
+            $query = $query . $columnToSet;
+            $values[] = $value;
+        }
+
+        $query = $query . "WHERE id=?";
+        $values[] = $dealFileId;
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::EXECUTE_MTHD,
+            $values
+        );
+    }
+
+    public function fetchDocumentByAssetId(string $assetId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByAssetIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$assetId]
+        );
+    }
+
+    public function fetchDealFileById(int $dealFileId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDealFileByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$dealFileId]
+        );
+    }
+
+    public function fetchDealFileDetails(int $dealFileId, int $userId)
+    {
+        return $this->executeProcedure([$dealFileId, $userId], self::$callFetchDealFileDetails);
+    }
+
+    public function deleteFileById(int $dealFileId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteFileByIdSql,
+            self::EXECUTE_MTHD,
+            [$dealFileId]
+        );
     }
 
 }

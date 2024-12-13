@@ -6,8 +6,10 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Repository\DbalStatementInterface;
 use Doctrine\ORM\EntityRepository;
+use App\Repository\ContractSignature\ContractSignatureInterface;
 
-class ContractSignature extends EntityRepository implements DbalStatementInterface
+class ContractSignature extends EntityRepository 
+    implements DbalStatementInterface, ContractSignatureInterface
 {
 
     use FetchMapperTrait, FetchingTrait;
@@ -67,7 +69,7 @@ class ContractSignature extends EntityRepository implements DbalStatementInterfa
         );
     }
 
-    public function fetchContractSignatureById(string $contractSignatureId)
+    public function fetchContractSignatureById(int $contractSignatureId)
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
