@@ -78,7 +78,6 @@ class Community
     protected ?string $avatar;
 
     /**
-     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", unique=true)
      * @var string
      */
