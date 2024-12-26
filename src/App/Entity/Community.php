@@ -20,7 +20,7 @@ class Community
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
     protected int $id;
