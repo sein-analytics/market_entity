@@ -10,13 +10,17 @@ namespace App\Repository;
 
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
+use App\Repository\DbalStatementInterface;
 
 class DealAsset extends EntityRepository
+    implements DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait;
+
+    private string $fetchObjectDealAssetTypesSql = "SELECT t FROM \App\Entity\DealAsset t WHERE t.id > 0";
+
+    private string $fetchAllDealAssetTypesSql = "SELECT * FROM DealAsset";
 
     /**
      * @param bool $object
@@ -25,10 +29,15 @@ class DealAsset extends EntityRepository
     function fetchDealAssetTypes($object = true)
     {
         if($object){
-            $query = $this->getEntityManager()->createQuery("SELECT t FROM \App\Entity\DealAsset t WHERE t.id > 0");
+            $query = $this->getEntityManager()->createQuery($this->fetchObjectDealAssetTypesSql);
             $result = $query->getResult();
         }else {
-            $result = $query = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM DealAsset");
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchAllDealAssetTypesSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                []
+            );
         }
         return $result;
     }
