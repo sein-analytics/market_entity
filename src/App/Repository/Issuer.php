@@ -57,12 +57,13 @@ class Issuer extends EntityRepository
      */
     public function fetchIssuerDataForBidReportById(int $id)
     {
-        $sql = "SELECT id, issuer_name, main_contact, phone FROM Issuer WHERE id = ?";
-        $stmt = $this->em->getConnection()
-            ->prepare($sql);
-        $stmt->bindValue(1, $id);
-        $stmt->execute();
-        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            "SELECT id, issuer_name, main_contact, phone FROM Issuer WHERE id=?",
+            self::FETCH_ASSO_MTHD,
+            [$id]
+        );
+
         return $result;
     }
 
