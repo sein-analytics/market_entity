@@ -43,38 +43,27 @@ class MarketUser extends abstractMktUser
      */
     function fetchUserMarketDealIds(int $userId)
     {
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare(self::getUserDealIdsSql());
-        } catch (\Exception $exception){
-            return $exception->getMessage();
-        }
-        $stmt->bindValue(1, $userId);
-        try{
-            $stmt->execute();
-        }catch (\Exception $exception){
-            return $exception->getMessage();
-        }
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::getUserDealIdsSql(),
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+
         return $this->flattenResultArrayByKey($results, self::MKT_DEAL_ID_KEY);
     }
 
     public function fetchUserWatchlistDealIds(int $userId, bool $indexedResults = false)
     {
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare(self::getUsrWatchlistIdsSql());
-        } catch (\Exception $exception){
-            return $exception->getMessage();
-        }
-        $stmt->bindValue(1, $userId);
-        try{
-            $stmt->execute();
-        }catch (\Exception $exception){
-            return $exception->getMessage();
-        }
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::getUsrWatchlistIdsSql(),
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+
         $dealIds = $this->flattenResultArrayByKey($results, self::FAV_DEAL_ID_KEY, false);
+
         $results = !$indexedResults
             ? $dealIds
             : $this->mapRequestIdsToResults($dealIds, $results, self::FAV_DEAL_ID_KEY);
@@ -89,18 +78,13 @@ class MarketUser extends abstractMktUser
      */
     protected function completeWatchlistSql(int $userId, int $dealId, $sql)
     {
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        } catch (\Exception $exception){
-            return $exception;
-        }
-        $stmt->bindParam(1, $userId);
-        $stmt->bindParam(2, $dealId);
-        try {
-            $stmt->execute();
-        }catch (\Exception $exception){
-            return $exception;
-        }
+        $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            [$userId, $dealId]
+        );
+
         return true;
     }
 
@@ -155,20 +139,13 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserDataForBidByUserId(int $id)
     {
-        $sql = "SELECT CONCAT(first_name, ' ', last_name) AS first_last, id, user_name, issuer_id  FROM MarketUser WHERE  id = ?";
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        }catch (\Exception $exception){
-            return $exception->getMessage();
-        }
-        $stmt->bindValue(1, $id);
-        try {
-            $stmt->execute();
-        }catch (\Exception $exception){
-            return $exception->getMessage();
-        }
-        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            "SELECT CONCAT(first_name, ' ', last_name) AS first_last, id, user_name, issuer_id FROM MarketUser WHERE id=?",
+            self::FETCH_ASSO_MTHD,
+            [$id]
+        );
+
         return $result;
     }
 
