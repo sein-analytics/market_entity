@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 class Statistic extends EntityRepository
-    implements SqlManagerTraitInterface, StatisticInterface
+    implements SqlManagerTraitInterface, StatisticInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
