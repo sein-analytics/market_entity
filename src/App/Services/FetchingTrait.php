@@ -66,7 +66,7 @@ trait FetchingTrait
     {
         $stmt = $em->getConnection()->executeQuery($sql,
             array($keys),
-            array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+            array(\Doctrine\DBAL\ArrayParameterType::INTEGER)
         );
         return $stmt;
     }
