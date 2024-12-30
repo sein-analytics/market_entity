@@ -133,11 +133,12 @@ trait FetchingTrait
      */
     public function executeStatementFetchMethod(Statement $stmt, string $fetchMethod)
     {
-        if (!method_exists($stmt, $fetchMethod)){
+        if (!method_exists(\Doctrine\DBAL\Result::class, $fetchMethod) && $fetchMethod != self::EXECUTE_MTHD) {
             $msg = "Method $fetchMethod does not exist in Doctrine\DBAL\Statement";
             Log::warning($msg);
             return new \Exception($msg);
         }
+
         try {
             $stmt = $stmt->executeQuery();
             if ($fetchMethod === self::EXECUTE_MTHD)
@@ -179,8 +180,8 @@ trait FetchingTrait
         EntityManager|EntityManagerInterface $em, 
         string $sql, 
         string $fetchMethod,
-        array $orderedParams, 
-        bool $useIntArr=false
+        array $orderedParams = [],
+        bool $useIntArr = false
     ):mixed {
         if (!$useIntArr){
             if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams) ) instanceof \Exception)
