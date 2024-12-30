@@ -37,7 +37,7 @@ trait FetchingTrait
     public function fetchByIntArray(EntityManager $em, array $keys, string $sql){
         if(!count($keys) > 0) { return false; }
         $stmt = $this->returnInArraySqlStmt($em, $keys, $sql);
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY); //$stmt->fetchAllAssociative();
+        $results = $stmt->{self::FETCH_ALL_ASSO_MTHD}();
         return $results;
     }
 
@@ -56,7 +56,6 @@ trait FetchingTrait
     }
 
     /**
-     * @deprecated
      * @param EntityManager $em
      * @param array $keys
      * @param string $sql
@@ -82,7 +81,7 @@ trait FetchingTrait
         try {
             return $em->getConnection()->executeQuery($sql,
                 array($keys),
-                array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+                array(\Doctrine\DBAL\ArrayParameterType::INTEGER)
             );
         }catch (\Exception $err){
             return $err->getMessage();
@@ -100,7 +99,7 @@ trait FetchingTrait
         $intParams = [];
         $base = array_reduce($keys, function ($result, $item) use(&$intParams) {
             $result[] = $item;
-            array_push($intParams, Connection::PARAM_INT_ARRAY);
+            array_push($intParams, \Doctrine\DBAL\ArrayParameterType::INTEGER);
             return $result;
         }, []);
         try {
@@ -176,9 +175,13 @@ trait FetchingTrait
      * @param bool $useIntArr
      * @return mixed|\Exception
      */
-    private function buildAndExecuteFromSql(EntityManager|EntityManagerInterface $em, string $sql, string $fetchMethod,
-                                            array $orderedParams, bool $useIntArr=false):mixed
-    {
+    private function buildAndExecuteFromSql(
+        EntityManager|EntityManagerInterface $em, 
+        string $sql, 
+        string $fetchMethod,
+        array $orderedParams, 
+        bool $useIntArr=false
+    ):mixed {
         if (!$useIntArr){
             if (($stmt = $this->buildStmtFromSql($em, $sql, $orderedParams) ) instanceof \Exception)
                 return $stmt;
