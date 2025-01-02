@@ -109,6 +109,31 @@ trait FetchingTrait
         }
     }
 
+
+    public function buildAndExecuteMultiIntStmt(EntityManager $em, string $sql, string $fetchMethod, array ...$keys)
+    {
+        $stmt = $this->returnMultiIntArraySqlStmt($em, $sql, $keys);
+        $results = $stmt;
+
+        if ($fetchMethod != self::EXECUTE_MTHD) {
+            $results = $stmt->{$fetchMethod}();
+        }
+
+        return $results;
+    }
+
+    public function buildAndExecuteIntArrayStmt(EntityManager $em, string $sql, string $fetchMethod, array $inValues) {
+        $stmt = $this->returnInArraySqlStmt($em, $inValues, $sql);
+
+        $results = $stmt;
+
+        if ($fetchMethod != self::EXECUTE_MTHD) {
+            $results = $stmt->{$fetchMethod}();
+        }
+
+        return $results;
+    }
+
     /**
      * @param EntityManager $em
      * @param string $sql
