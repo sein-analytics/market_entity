@@ -105,6 +105,12 @@ class Loan extends EntityRepository
         self::PP_PNLTY_STEP_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
     ];
 
+    private string $fetchLoanIdsByPoolIdsSql = "SELECT id FROM loans WHERE pool_id IN (?)";
+
+    private string $deleteLoansByIdsSql = "DELETE FROM loans WHERE id IN (?)";
+
+    private string $fetchLoanIdFromIdSql = "SELECT loan_id FROM loans WHERE id = ?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -172,9 +178,20 @@ class Loan extends EntityRepository
      */
     public function fetchLoanIdsByPoolIds(array $poolIds)
     {
-        $sql = "SELECT id FROM loans WHERE pool_id IN (?)";
-        $stmt = $this->returnInArraySqlStmt($this->em, $poolIds, $sql);
-        return $this->completeIdFetchQuery($stmt);
+        $results = $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $this->fetchLoanIdsByPoolIdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $poolIds
+        );
+
+        if (count($results) > 0) {
+            $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID);
+        } else {
+            $results = false;
+        }
+
+        return $results;
     }
 
     /**
@@ -183,15 +200,18 @@ class Loan extends EntityRepository
      */
     public function fetchLoanNumbersByLoanIds(array $loanIds)
     {
-        $stmt = $this->returnInArraySqlDriver($this->em, $loanIds, self::LOAN_NUMS_BY_IDS_SQL);
-        if (is_string($stmt))
-            return $stmt;
         try {
-            $result = $stmt->fetchAllAssociative();
+
+            $results = $this->buildAndExecuteIntArrayStmt(
+                $this->em,
+                self::LOAN_NUMS_BY_IDS_SQL,
+                self::FETCH_ALL_ASSO_MTHD,
+                $loanIds
+            );
         } catch (\Doctrine\DBAL\Driver\Exception $err){
             return $err->getMessage();
         }
-        return $this->flattenByKeyValue($result, self::LOAN_ID_KEY, self::ID_KEY,
+        return $this->flattenByKeyValue($results, self::LOAN_ID_KEY, self::ID_KEY,
             $this->dbValueSubStringFromCharClosure(self::APPEND_UNDER_SCORE),
             $this->dbValueToIntClosure()
         );
@@ -203,10 +223,12 @@ class Loan extends EntityRepository
      */
     public function deleteLoansByIds(array $ids)
     {
-        $sql = 'DELETE FROM loans WHERE id IN (?)';
-        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
-        $result = $stmt->execute();
-        return $result;
+        return $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $this->deleteLoansByIdsSql,
+            self::EXECUTE_MTHD,
+            $ids
+        );
     }
 
     public function fetchLoanIdsIdsByPoolIds(array $poolIds)
@@ -217,24 +239,28 @@ class Loan extends EntityRepository
             'LEFT JOIN MarketUser users ON users.id=user_id ' .
             'LEFT JOIN DueDilReviewStatus revStat on revStat.id=ddStat.status_id ' .
             'WHERE pool_id IN (?) ORDER BY id ASC';
-        $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql,
-            array($poolIds), array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+
+        return $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $poolIds
         );
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $result;
     }
 
     public function fetchLoanIdFromId(int $id)
     {
-        $sql = "SELECT loan_id FROM loans WHERE id = ?";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue(1, $id);
-        $result = $stmt->execute();
-        $result = $stmt->fetch();
-        $stmt->closeCursor();
-        if (is_array($result) && array_key_exists('loan_id', $result))
+        $result = $this->buildAndExecuteFromSql(
+            $this->em,
+            $this->fetchLoanIdFromIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$id]
+        );
+
+        if (is_array($result) && array_key_exists('loan_id', $result)) {
             return $result['loan_id'];
+        }
+        
         return $result;
     }
 

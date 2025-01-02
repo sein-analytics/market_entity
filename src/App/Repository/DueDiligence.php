@@ -66,6 +66,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $selectDealFileDueDiligenceByDdsAndFileId  = "SELECT due_diligence_id FROM deal_file_due_diligence WHERE due_diligence_id IN (?) AND deal_file_id=?";
 
+    private string $fetchDdIdsByUserIdsDealIdsSql = "SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -192,14 +194,20 @@ class DueDiligence extends DueDiligenceAbstract
      */
     public function fetchDdIdsByUserIdsDealIds(array $userIds, array $dealIds, array $exceptIds=[0]):array|string
     {
-        $sql = 'SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)';
-        $stmt = $this->returnMultiIntArraySqlStmt($this->getEntityManager(), $sql, $userIds, $dealIds, $exceptIds);
+        $results = $this->buildAndExecuteMultiIntStmt(
+            $this->getEntityManager(),
+            $this->fetchDdIdsByUserIdsDealIdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $userIds, $dealIds, $exceptIds
+        );
+
         try {
-            $results = $stmt->fetchAllAssociative();
-            if(count($results)){
-                return $this->flattenResultArrayByKey($results, 'id');
+            if(count($results)) {
+                $results = $this->flattenResultArrayByKey($results, 'id');
+            } else {
+                $results = [];
             }
-            return [];
+            return $results;
         }catch (\Doctrine\DBAL\Driver\Exception $err){
             return $err->getMessage();
         }
@@ -272,11 +280,13 @@ class DueDiligence extends DueDiligenceAbstract
      */
     public function fetchDdLoanStatusByDdIdLoanId(array $ddIds, $loanIds):mixed
     {
-        $stmt = $this->returnMultiIntArraySqlStmt(
-            $this->getEntityManager(), self::$dueDilLoanStatusByDdIdsLoanIdsSql,
-            $ddIds, $loanIds);
         try {
-            $results = $stmt->fetchAllAssociative();
+            $results = $this->buildAndExecuteMultiIntStmt(
+                $this->getEntityManager(),
+                self::$dueDilLoanStatusByDdIdsLoanIdsSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                $ddIds, $loanIds
+            );
         }catch (\Doctrine\DBAL\Driver\Exception  $err){
             $results = ['message' => $err->getMessage()];
         }
@@ -416,14 +426,12 @@ class DueDiligence extends DueDiligenceAbstract
     public function fetchUserCurrentDealFileDd(array $ddIds, int $fileId):mixed
     {
         try {
-            $stmt = $this->returnMultiIntArraySqlStmt(
-                $this->getEntityManager(), 
+            return $this->buildAndExecuteMultiIntStmt(
+                $this->getEntityManager(),
                 $this->selectDealFileDueDiligenceByDdsAndFileId,
-                $ddIds,
-                [$fileId]
+                self::FETCH_ALL_ASSO_MTHD,
+                $ddIds, [$fileId]
             );
-            $results = $stmt->fetchAllAssociative();
-            return $results;
         } catch (\Exception $e) {
             throw $e;
         }

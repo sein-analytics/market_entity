@@ -216,12 +216,12 @@ class Bid extends EntityRepository
     public function fetchIssuerActiveUserBids(array $userIds):mixed
     {
         try {
-            $stmt = $this->returnInArraySqlDriver(
+            return $this->buildAndExecuteIntArrayStmt(
                 $this->getEntityManager(),
-                $userIds,
-                $this->fetchIssuerActiveUserBids
+                $this->fetchIssuerActiveUserBids,
+                self::FETCH_ALL_ASSO_MTHD,
+                $userIds
             );
-            return $stmt->fetchAllAssociative();
         } catch (\Exception $e) {
             throw $e;
         }

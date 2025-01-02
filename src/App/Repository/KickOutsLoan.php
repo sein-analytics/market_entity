@@ -41,19 +41,18 @@ class KickOutsLoan extends EntityRepository
 
     public function fetchKickOutsByBidIds(array $bids)
     {
-        try{
-            $stmt = $this->returnInArraySqlDriver(
+        try {
+            $results = $this->buildAndExecuteIntArrayStmt(
                 $this->getEntityManager(),
-                $bids,
-                $this->kickOutsByBidIdsSql
+                $this->kickOutsByBidIdsSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                $bids
             );
-            if (!is_string($stmt))
-                $results = $stmt->fetchAllAssociative();
-            else
-                $results = $stmt;
-        }catch (\Doctrine\DBAL\Driver\Exception $err){
+
+        } catch (\Doctrine\DBAL\Driver\Exception $err){
             $results = ["message" => $err->getMessage()];
         }
+        
         return $results;
     }
 

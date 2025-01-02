@@ -17,7 +17,8 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 
-class Pool extends EntityRepository implements SqlManagerTraitInterface
+
+class Pool extends EntityRepository implements SqlManagerTraitInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
     
@@ -36,6 +37,10 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
       'add_reserve_to_credit_support' => [self::DATA_TYPE => 'tinyint', self::DATA_DEFAULT => 'NULL']
     ];
 
+    private string $fetchPoolIdsByDealIdSql = "SELECT id FROM Pool Where deal_id=?";
+
+    private string $deletePoolByIdsSql = "DELETE FROM Pool WHERE id IN (?)";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -48,10 +53,20 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
      */
     public function fetchPoolIdsByDealId(int $dealId)
     {
-        $sql = "SELECT id FROM Pool Where deal_id = ?";
-        $stmt = $this->em->getConnection()->prepare($sql);
-        $stmt->bindValue(1, $dealId);
-        return $this->completeIdFetchQuery($stmt);
+        $results = $this->buildAndExecuteFromSql(
+            $this->em,
+            $this->fetchPoolIdsByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+
+        if (count($results) > 0) {
+            $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID);
+        } else {
+            $results = false;
+        }
+
+        return $results;
     }
 
     /**
@@ -60,10 +75,12 @@ class Pool extends EntityRepository implements SqlManagerTraitInterface
      */
     public function deletePoolByIds(array $ids)
     {
-        $sql = 'DELETE FROM Pool WHERE id IN (?)';
-        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
-        $result = $stmt->execute();
-        return $result;
+        return $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $this->deletePoolByIdsSql,
+            self::EXECUTE_MTHD,
+            $ids
+        );
     }
 
     /**

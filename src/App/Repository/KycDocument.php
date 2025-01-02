@@ -124,13 +124,12 @@ class KycDocument extends KycDocumentAbstract
 
     public function deleteIssuerKycDocAccess(int $issuerId, array $kycDocsIds)
     {
-        $stmt = $this->returnMultiIntArraySqlStmt(
+        return $this->buildAndExecuteMultiIntStmt(
             $this->getEntityManager(),
             $this->deleteIssuerKycDocsAccessSql,
-            [$issuerId],
-            $kycDocsIds
+            self::EXECUTE_MTHD,
+            [$issuerId], $kycDocsIds
         );
-        $stmt->execute();
     }
 
     public function fetchKycDocsIdsByIssuerAndAsset(int $issuerId, int $communityIssuerId, int $assetTypeId)

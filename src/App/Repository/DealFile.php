@@ -72,6 +72,8 @@ class DealFile extends EntityRepository
 
     private string $deleteFileByIdSql = "DELETE FROM DealFile WHERE id=?";
 
+    private string $deleteDealFileByIdsSql = "DELETE FROM DealFile WHERE id IN (?)";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -101,9 +103,12 @@ class DealFile extends EntityRepository
      */
     public function deleteDealFileByIds(array $ids)
     {
-        $sql = "DELETE FROM DealFile WHERE id IN (?)";
-        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
-        $result = $stmt->execute();
+        return $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $this->deleteDealFileByIdsSql,
+            self::EXECUTE_MTHD,
+            $ids
+        );
         return $result;
     }
 

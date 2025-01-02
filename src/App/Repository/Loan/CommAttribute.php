@@ -8,6 +8,7 @@
 
 namespace App\Repository\Loan;
 
+use App\Repository\DbalStatementInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
@@ -15,7 +16,8 @@ use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
-class CommAttribute extends EntityRepository implements SqlManagerTraitInterface
+class CommAttribute extends EntityRepository 
+    implements SqlManagerTraitInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
@@ -34,11 +36,24 @@ class CommAttribute extends EntityRepository implements SqlManagerTraitInterface
         'cap_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
 
+    private string $fetchCommAttributeIdsByLoanIdsSql = "SELECT id FROM CommAttribute Where loan_id in (?)";
+
     public function fetchCommAttributeIdsByLoanIds(array $loanIds)
     {
-        $sql = "SELECT id FROM CommAttribute Where loan_id in (?)";
-        $stmt = $this->returnInArraySqlStmt($this->em, $loanIds, $sql);
-        return $this->completeIdFetchQuery($stmt);
+        $results = $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $this->fetchCommAttributeIdsByLoanIdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $loanIds
+        );
+
+        if (count($results) > 0) {
+            $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID);
+        } else {
+            $results = false;
+        }
+
+        return $results;
     }
 
     /**
