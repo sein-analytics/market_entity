@@ -46,18 +46,14 @@ trait FetchMapperTrait
         return $data;
     }
 
-    public function completeIdFetchQuery(Statement $stmt)
-    {
-        try {
-            $stmt->execute();
-            $result = $stmt->fetchAllAssociative();
-        }catch (\Exception $exception){
-            return false;
+    public function completeIdFetchQuery(array $results) {
+
+        if (count($results) > 0) {
+            $results = $this->flattenResultArrayByKey($results, 'id');
+        } else {
+            $results = false;
         }
-        if (count($result) > 0){
-            return $this->flattenResultArrayByKey($result, 'id');
-        }
-        return false;
+        return $results;
     }
 
     /**
