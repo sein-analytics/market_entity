@@ -162,13 +162,16 @@ class Loan extends EntityRepository
             }
         }
         $sql = "SELECT loans.*, lnState.abbreviation AS state FROM loans LEFT JOIN State lnState ON lnState.id=loans.state_id WHERE pool_id IN (?) AND loans.id NOT IN (?) ORDER BY loans.id ASC";
-        $stmt = $this->em->getConnection()->executeQuery($sql,
-            array($ids, $loansId),
-            array(Connection::PARAM_INT_ARRAY,
-                Connection::PARAM_INT_ARRAY)
+        
+        $noArms = $this->buildAndExecuteMultiIntStmt(
+            $this->em,
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $ids, $loansId
         );
-        $noArms = $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        
         $results = array_merge($noArms, $armLoans);
+        
         return $results;
     }
 

@@ -8,14 +8,24 @@
 
 namespace App\Repository;
 
-
 use Doctrine\ORM\EntityRepository;
+use App\Service\FetchMapperTrait;
+use App\Service\FetchingTrait;
 
-class MappedUserType extends EntityRepository
+class MappedUserType extends EntityRepository implements DbalStatementInterface
 {
+
+    use FetchingTrait, FetchMapperTrait;
+
+    private string $fetchUserMappedTypesSql = "SELECT * FROM MappedUserType WHERE user_id=?";
+
     public function fetchUserMappedTypes($userId)
     {
-        $result = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM MappedUserType WHERE user_id=$userId");
-        return $result;
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserMappedTypesSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
     }
 }

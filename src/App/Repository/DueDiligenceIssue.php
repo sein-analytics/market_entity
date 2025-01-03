@@ -59,6 +59,8 @@ class DueDiligenceIssue extends DueDiligenceAbstract
 
     private string $updateIssueStringSql = "UPDATE DueDiligenceIssue SET issue=? WHERE id=?";
 
+    private string $updateIssueStatusSql = "UPDATE DueDiligenceIssue SET status_id=? WHERE id=?";
+
     public function insertNewDueDiligenceIssue(array $params): mixed
     {
         if (array_key_exists(self::ISS_QRY_ID_KEY, $params))
@@ -115,17 +117,22 @@ class DueDiligenceIssue extends DueDiligenceAbstract
 
     public function updateIssueStatus(int $status, int  $id):bool
     {
-        $sql = "UPDATE DueDiligenceIssue SET status_id = $status WHERE id = $id";
         try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->updateIssueStatusSql,
+                self::EXECUTE_MTHD,
+                [$status, $id]
+            );
         } catch (\Exception $e){
             return false;
         }
-        $result = $stmt->execute();
-        if ($result)
+
+        if ($result) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     public function fetchIssueIdByAnnotationId(string $annotId):mixed
@@ -136,19 +143,6 @@ class DueDiligenceIssue extends DueDiligenceAbstract
             self::FETCH_ONE_MTHD,
             [$annotId]
         );
-    }
-
-    public function fetchAllIssueIds()
-    {
-        $sql = "SELECT id FROM DueDiligenceIssue";
-        try{
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        } catch (\Exception $exception){
-            return false;
-        }
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $result;
     }
 
     public function returnRandomUUid ():string {

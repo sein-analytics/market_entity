@@ -3,14 +3,14 @@
 namespace App\Repository;
 
 use App\Service\FetchMapperTrait;
+use App\Service\FetchingTrait;
 use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\Statement;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 
 class LoginLog extends EntityRepository
+    implements DbalStatementInterface
 {
-    use FetchMapperTrait;
+    use FetchingTrait, FetchMapperTrait;
 
     const INSERT_STMT = '';
 
@@ -30,23 +30,30 @@ class LoginLog extends EntityRepository
 
     const LAST_SEEN_KEY = 'last_seen';
 
+    private string $fetchIpsByUserIdSql = "SELECT ip FROM LoginLog WHERE mobile_confirmation IS NOT NULL AND user_id=?";
+
+    private string $updateSessionEndByUserIdSql = "UPDATE LoginLog SET end_time=(NOW() + INTERVAL ? MINUTE) WHERE user_id=? AND mobile_confirmation IS NOT NULL";
+
+    private string $updateSessionDurationByUserIdSql = "UPDATE LoginLog SET `session_duration`= TIMEDIFF(start_time, end_time) WHERE user_id =? AND mobile_confirmation IS NOT NULL";
+
+    private string $nullifyAuthyAtLogoutByUserIdSql = "UPDATE LoginLog SET mobile_confirmation=NULL WHERE user_id = ? AND mobile_confirmation IS NOT NULL";
+
     /**
      * @param int $id
      * @return array|DBALException|\Exception
      */
     function fetchIpsByUserId(int $id)
     {
-        $sql = "SELECT ip FROM LoginLog WHERE mobile_confirmation IS NOT NULL AND user_id=?";
-        if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
-            return $stmt;
-        $stmt->bindValue(1, $id);
-        if(!($stmt = $this->executeStmt($stmt)))
-            return $stmt;
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        if (is_array($result))
-            return $this->flattenResultArrayByKey($result, self::IP_KEY);
-        return $result;
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchIpsByUserIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$id]
+        );
+
+        $results = $this->flattenResultArrayByKey($results, self::IP_KEY);
+
+        return $results;
     }
 
     /**
@@ -73,12 +80,12 @@ class LoginLog extends EntityRepository
      */
     function updateSessionEndByUserId(int $id, $minutes=0)
     {
-        $sql = "UPDATE LoginLog SET end_time=(NOW() + INTERVAL ? MINUTE) WHERE user_id=? AND mobile_confirmation IS NOT NULL";
-        if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
-            return $stmt;
-        $stmt->bindValue(1, $minutes);
-        $stmt->bindValue(2, $id);
-        return $this->executeStmt($stmt);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateSessionEndByUserIdSql,
+            self::EXECUTE_MTHD,
+            [$minutes, $id]
+        );
     }
 
     /**
@@ -87,11 +94,12 @@ class LoginLog extends EntityRepository
      */
     function updateSessionDurationByUserId(int $id)
     {
-        $sql = "UPDATE LoginLog SET `session_duration`= TIMEDIFF(start_time, end_time) WHERE user_id =? AND mobile_confirmation IS NOT NULL";
-        if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
-            return $stmt;
-        $stmt->bindValue(1, $id);
-        return $this->executeStmt($stmt);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateSessionDurationByUserIdSql,
+            self::EXECUTE_MTHD,
+            [$id]
+        );
     }
 
     /**
@@ -100,11 +108,12 @@ class LoginLog extends EntityRepository
      */
     function nullifyAuthyAtLogoutByUserId(int $id)
     {
-        $sql = "UPDATE LoginLog SET mobile_confirmation=NULL WHERE user_id = ? AND mobile_confirmation IS NOT NULL";
-        if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
-            return $stmt;
-        $stmt->bindValue(1, $id);
-        return $this->executeStmt($stmt);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->nullifyAuthyAtLogoutByUserIdSql,
+            self::EXECUTE_MTHD,
+            [$id]
+        );
     }
 
     /**
@@ -119,18 +128,13 @@ class LoginLog extends EntityRepository
         $sql .= '(' . 0 . ',' . $credentials[self::ID_KEY] . ',' . '"' . $credentials[self::IP_KEY] . '"' . ',' . '"' . $credentials[self::EMAIL_KEY];
         $sql .= '"' . ',' . $credentials[self::TOKEN_KEY] . ',' . '"' . $credentials[self::START_KEY] . '"' .',';
         $sql .= '"'. $credentials[self::END_KEY] . '"' . ',' . '"' . self::BASE_DUR . '"' . ',' . '"' . $credentials[self::START_KEY] . '"' . ');';
-        $stmt = $this->prepareSql($sql);
-        return $this->executeStmt($stmt);
-    }
 
-    function updateLastSeenByUserId(\DateTime $lastSeen, int $userId)
-    {
-        $sql = 'Update LoginLog set `last_seen`=? WHERE `user_id`=? AND mobile_confirmation IS NOT NULL';
-        if(!($stmt = $this->prepareSql($sql)) instanceof Statement)
-            return $stmt;
-        $stmt->bindValue(1, $lastSeen->format('Y-m-d H:i:s'));
-        $stmt->bindValue(2, $userId);
-        return $this->executeStmt($stmt);
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            []
+        );
     }
 
     /**
@@ -158,31 +162,4 @@ class LoginLog extends EntityRepository
         return $credentials;
     }
 
-    /**
-     * @param $sql
-     * @return DBALException|\Doctrine\DBAL\Statement|\Exception
-     */
-    protected function prepareSql($sql)
-    {
-        try{
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        } catch (DBALException $e){
-            return $e;
-        }
-        return $stmt;
-    }
-
-    /**
-     * @param Statement $stmt
-     * @return DBALException|Statement|\Exception
-     */
-    protected function executeStmt(Statement $stmt)
-    {
-        try {
-            $stmt->execute();
-        }catch (DBALException $e){
-            return $e;
-        }
-        return $stmt;
-    }
 }

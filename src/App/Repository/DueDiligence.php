@@ -305,13 +305,14 @@ class DueDiligence extends DueDiligenceAbstract
         $sql = 'SELECT user_id FROM DueDiligence dd ' .
             'LEFT JOIN MarketUser users on users.id=user_id ' .
             'WHERE issuer_id = ? AND dd.dd_role_id=1 AND dd.deal_id=?';
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindParam(1, $issuerId);
-        $stmt->bindParam(2, $dealId);
         try {
-            $result = $stmt->executeQuery()
-            ->fetchAssociative();
-        }catch (\Doctrine\DBAL\Driver\Exception $err){}
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $sql,
+                self::FETCH_ASSO_MTHD,
+                [$issuerId, $dealId]
+            );
+        } catch (\Doctrine\DBAL\Driver\Exception $err){}
 
         if(array_key_exists('user_id', $result)){
             return (int)$result['user_id'];

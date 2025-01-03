@@ -12,9 +12,7 @@ namespace App\Repository;
 use App\Repository\Message\MessageAbstract;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
-use Doctrine\DBAL\DBALException;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
+
 use function Lambdish\phunctional\{each};
 
 class Message extends MessageAbstract
@@ -29,6 +27,10 @@ class Message extends MessageAbstract
         "(`user_id`, `deal_id`, `loan_id`, `type_id`, `originator_id`, `status_id`, `priority_id`, 
         `action_id`, `issue_id`, `date`, `subject`, `message`, `send_status`, `msg_recipient_ids`)" . 
         " VALUES";
+
+    private string $fetchMessageIdsFromUserMessageSql = "SELECT message_id FROM market_user_message WHERE market_user_id = ?";
+
+    private string $deleteFromMarketUserMessageSql = "DELETE FROM market_user_message WHERE message_id = ? AND  market_user_id = ?";
 
     private array $tableProps = [
         self::MSG_QRY_ID_KEY => [self::TBL_PROP_ENTITY_KEY => null,
@@ -87,13 +89,16 @@ class Message extends MessageAbstract
 
     public function fetchMessageIdsFromUserMessage(int $userId)
     {
-        $sql = "SELECT message_id FROM market_user_message WHERE market_user_id = ?";
-        $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue(1, $userId);
-        $stmt->execute();
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $this->flattenResultArrayByKey($results, 'message_id');
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchMessageIdsFromUserMessageSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+
+        $results = $this->flattenResultArrayByKey($results, 'message_id');
+
+        return $results;
     }
 
     /**
@@ -103,15 +108,12 @@ class Message extends MessageAbstract
      */
     public function deleteFromMarketUserMessage(int $msgId, int $userId)
     {
-        $sql = "DELETE FROM market_user_message WHERE message_id = ? AND  market_user_id = ?";
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-            $stmt->bindValue(1, $msgId);
-            $stmt->bindValue(2, $userId);
-        }catch (DBALException $e){
-            return $e->getMessage();
-        }
-        $stmt->execute();
+        $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteFromMarketUserMessageSql,
+            self::EXECUTE_MTHD,
+            [$msgId, $userId]
+        );
         return true;
     }
 

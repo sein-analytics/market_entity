@@ -144,12 +144,13 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             'LEFT JOIN MarketUser users ON users.id=user_id ' .
             'LEFT JOIN DueDilReviewStatus revStat on revStat.id=ddStat.status_id ' .
             'WHERE dd_id = ? ORDER BY id ASC';
-        $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue(1, $ddId);
-        $stmt->execute();
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $results;
+
+        return  $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$ddId]
+        );
     }
 
     public function deleteDdLoanStatusByDdIdLoanId(int $ddId, int $lnId):mixed
