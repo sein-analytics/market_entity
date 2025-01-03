@@ -86,7 +86,7 @@ trait QueryManagerTrait
         }
         try {
             $meta = $this->em->getMetadataFactory()->getMetadataFor(self::$base . $tableName);
-            return $meta->getColumnNames();
+            return $meta->getFieldNames();
         }catch (\Exception $exception){
             return false;
         }
@@ -94,7 +94,7 @@ trait QueryManagerTrait
 
     public function doesEntityTableExist($tableName)
     {
-        $schemaManager = $this->em->getConnection()->getSchemaManager();
+        $schemaManager = $this->em->getConnection()->createSchemaManager();
         return $schemaManager->tablesExist($tableName);
     }
 
