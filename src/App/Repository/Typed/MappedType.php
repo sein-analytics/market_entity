@@ -8,11 +8,14 @@
 
 namespace App\Repository\Typed;
 
-
+use App\Repository\DbalStatementInterface;
+use App\Service\FetchingTrait;
 use Doctrine\ORM\EntityRepository;
 
-class MappedType extends EntityRepository
+class MappedType extends EntityRepository implements DbalStatementInterface
 {
+    use FetchingTrait;
+
     protected $mappedRepos = [
         'armIndexType' => 'rateIndex',
         'purposeType' => 'purpose',
@@ -32,10 +35,15 @@ class MappedType extends EntityRepository
      */
     public function fetchAllMappedTypeData()
     {
-        $result =[];
-        foreach ($this->mappedRepos as $db => $propName){
+        $result = [];
+        foreach ($this->mappedRepos as $db => $propName) {
             $name =ucfirst($db);
-            $result[$propName] = $this->getEntityManager()->getConnection()->fetchAll("SELECT * FROM $name");
+
+            $result[$propName] = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                "SELECT * FROM $name",
+                self::FETCH_ALL_ASSO_MTHD
+            );
         }
         return $result;
     }
