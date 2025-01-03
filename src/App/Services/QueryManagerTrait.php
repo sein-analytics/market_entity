@@ -43,14 +43,14 @@ trait QueryManagerTrait
      */
     public function fetchNextAvailableTableId(string $tableName) :bool|int
     {
-        $schemaManager = $this->em->getConnection()->getSchemaManager();
+        $schemaManager = $this->em->getConnection()->createSchemaManager();
         if(!$schemaManager->tablesExist(array($tableName))){
             return false;
         }
         $sql = "SELECT MAX(id) FROM $tableName";
         $stmt = $this->em->getConnection()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC)['MAX(id)'] + 1;
+        $stmt = $stmt->executeQuery();
+        $result = $stmt->fetchAssociative()['MAX(id)'] + 1;
         return $result;
     }
 
