@@ -112,7 +112,7 @@ trait FetchingTrait
 
     public function buildAndExecuteMultiIntStmt(EntityManager $em, string $sql, string $fetchMethod, array ...$keys)
     {
-        $stmt = $this->returnMultiIntArraySqlStmt($em, $sql, $keys);
+        $stmt = $this->returnMultiIntArraySqlStmt($em, $sql, ...$keys);
         $results = $stmt;
 
         if ($fetchMethod != self::EXECUTE_MTHD) {
