@@ -25,7 +25,7 @@
 		"gedmo/doctrine-extensions": "^3.3.1",
 		"tymon/jwt-auth": "2.0.0",
 		"lambdish/phunctional": "^2.1",
-		"vlucas/phpdotenv": "v5.5.0"
+		"vlucas/phpdotenv": "^5.6.1"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": false
