@@ -3,12 +3,15 @@
 
 namespace App\Repository\Data;
 
-
+use App\Repository\DbalStatementInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
+use App\Service\FetchingTrait;
 
-abstract class Rates extends EntityRepository
+abstract class Rates extends EntityRepository implements DbalStatementInterface
 {
+
+    use FetchingTrait;
+
     const LABELS_KEY = 'labels';
 
     const RATES_KEY = 'rates';
@@ -27,13 +30,16 @@ abstract class Rates extends EntityRepository
 
     public function fetchRates(string $table)
     {
-        $sql = "SELECT name, value FROM $table";
         try {
-            $stmt = $this->getEntityManager()->getConnection()->executeQuery($sql);
+            $results = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                "SELECT name, value FROM $table",
+                self::FETCH_ALL_ASSO_MTHD
+            );
         } catch (\Exception $e){
             return false;
         }
-        return $stmt->fetchAll(Query::HYDRATE_ARRAY);
+        return $results;
     }
 
     /**

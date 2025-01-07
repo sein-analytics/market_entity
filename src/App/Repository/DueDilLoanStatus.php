@@ -144,12 +144,13 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             'LEFT JOIN MarketUser users ON users.id=user_id ' .
             'LEFT JOIN DueDilReviewStatus revStat on revStat.id=ddStat.status_id ' .
             'WHERE dd_id = ? ORDER BY id ASC';
-        $stmt= $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue(1, $ddId);
-        $stmt->execute();
-        $results = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        return $results;
+
+        return  $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$ddId]
+        );
     }
 
     public function deleteDdLoanStatusByDdIdLoanId(int $ddId, int $lnId):mixed
@@ -236,4 +237,23 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         $baseLogger = self::BASE_LOGGER_ARRAY;
         return addslashes(json_encode([$baseLogger]));
     }
+
+    public function fetchDueDilLoanStatusByDdAndLn(int $ddId, int $lnId)
+    {
+        $baseQry = "SELECT ddLnStatus.dd_id AS ddId, ddLnStatus.ln_id AS loanId, ddLnStatus.status_id AS statusId, " . 
+            "ddLnStatus.issues_count AS issuesCount, ddLnStatus.last_modified AS lastModified, ddLnStatus.logger, " .
+            "dds.parent_id AS ddParentId, dds.deal_id AS dealId, dds.user_id AS userId, user.issuer_id AS issuerId " .
+            "FROM DueDilLoanStatus AS ddLnStatus " .
+            "LEFT JOIN DueDiligence AS dds ON dds.id = ddLnStatus.dd_id " .
+            "LEFT JOIN MarketUser AS user ON user.id = dds.user_id " .
+            "WHERE ddLnStatus.dd_id=? AND ddLnStatus.ln_id=?";
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $baseQry,
+            self::FETCH_ASSO_MTHD,
+            [$ddId, $lnId]
+        );
+    }
+
 }

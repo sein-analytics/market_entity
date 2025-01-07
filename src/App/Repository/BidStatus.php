@@ -15,19 +15,25 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
 class BidStatus extends EntityRepository
+    implements DbalStatementInterface
 {
     use FetchMapperTrait, FetchingTrait;
+
+    private string $fetchAllBidStatusSql = "SELECT * FROM BidStatus";
+
     /**
      * @return array
      * @throws \Exception
      */
     public function fetchAllBidStatus()
     {
-        $sql = "SELECT * FROM BidStatus";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $temp = $stmt->execute();
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAllBidStatusSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            []
+        );
+
         if(!$result) { throw new \Exception("Could not fetch BidStatus data", 400); }
         return $this->idToStatusMapper($result);
     }

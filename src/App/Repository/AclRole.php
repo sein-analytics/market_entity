@@ -18,20 +18,5 @@ class AclRole extends EntityRepository
 {
     use FetchMapperTrait, FetchingTrait;
 
-    /**
-     * @param int $userId
-     * @return array|bool|string
-     */
-    public function fetchUserRoleIdFromUserId(int $userId)
-    {
-        $sql = "SELECT role_id AS id FROM MarketUser WHERE MarketUser.id=?";
-        try{
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-            $stmt->bindValue(1, $userId);
-        } catch (\Exception $e){
-            return $e->getMessage();
-        }
-        return $this->completeIdFetchQuery($stmt);
-    }
 
 }

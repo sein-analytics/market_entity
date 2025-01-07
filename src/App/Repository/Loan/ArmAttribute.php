@@ -8,6 +8,7 @@
 
 namespace App\Repository\Loan;
 
+use App\Repository\DbalStatementInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
@@ -16,7 +17,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 
-class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
+class ArmAttribute extends EntityRepository 
+    implements SqlManagerTraitInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
@@ -38,6 +40,10 @@ class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
       'pmnt_increase_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
     ];
 
+    private $deleteArmAttributesByIdsSql = "DELETE FROM ArmAttribute WHERE id IN (?)";
+
+    private $fetchArmAttributeIdsByLoanIdsSql = "SELECT id FROM ArmAttribute Where loan_id in (?)";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -50,9 +56,13 @@ class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
      */
     public function deleteArmAttributesByIds(array $ids)
     {
-        $sql = 'DELETE FROM ArmAttribute WHERE id IN (?)';
-        $stmt = $this->returnInArraySqlStmt($this->em, $ids, $sql);
-        $result = $stmt->execute();
+        return $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $this->deleteArmAttributesByIdsSql,
+            self::EXECUTE_MTHD,
+            $ids
+        );
+
         return $result;
     }
 
@@ -62,9 +72,20 @@ class ArmAttribute extends EntityRepository implements SqlManagerTraitInterface
      */
     public function fetchArmAttributeIdsByLoanIds(array $loanIds)
     {
-        $sql = "SELECT id FROM ArmAttribute Where loan_id in (?)";
-        $stmt = $this->returnInArraySqlStmt($this->em, $loanIds, $sql);
-        return $this->completeIdFetchQuery($stmt);
+        $results = $this->buildAndExecuteIntArrayStmt(
+            $this->em,
+            $this->fetchArmAttributeIdsByLoanIdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $loanIds
+        );
+
+        if (count($results) > 0) {
+            $results = $this->flattenResultArrayByKey($results, self::QUERY_JUST_ID);
+        } else {
+            $results = false;
+        }
+
+        return $results;
     }
 
     

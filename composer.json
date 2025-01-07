@@ -9,8 +9,8 @@
 	],
 	"require-dev": {
 		"doctrine/orm" : "^2.14.2",
-		"laravel-doctrine/orm": "^1.8.2",
-		"phpunit/phpunit": "^9",
+		"laravel-doctrine/orm": "^2.0",
+		"phpunit/phpunit": "^10.0",
 		"phpstan/phpstan": "1.11.x-dev"
 	},
 	"autoload": {
@@ -20,8 +20,8 @@
 		"php": ">=8.1",
 		"ext-json": "*",
 		"ext-dom": "*",
-		"laravel/framework": "^9.2",
-		"laravel-doctrine/migrations": "3.0.0",
+		"laravel/framework": "^10.0",
+		"laravel-doctrine/migrations": "^3.1.0",
 		"gedmo/doctrine-extensions": "^3.3.1",
 		"tymon/jwt-auth": "2.0.0",
 		"lambdish/phunctional": "^2.1",

@@ -250,25 +250,6 @@ class Chat extends ChatAbstract
         );
     }
 
-    /**
-     * @param string $uuid
-     * @return array|false|mixed|string
-     * @throws \Doctrine\DBAL\Driver\Exception
-     */
-    public function fetchUserTrackerIdByUuid (string $uuid)
-    {
-        $sql = "SELECT id FROM ChatTracker WHERE uuid = ?";
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-            $stmt->bindValue(1, $uuid);
-            return $stmt->fetchNumeric();
-        }catch (\Exception $exception){
-            $msg = "Error fetching id for uuid: " . $exception->getMessage();
-            Log::critical($msg);
-            return $msg;
-        }
-    }
-
     public function contactDataFromChatTrackerId (int $chatId, string $searchKey)
     {
         return $this->executeProcedure([$chatId, $searchKey],

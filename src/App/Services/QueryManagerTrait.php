@@ -43,14 +43,14 @@ trait QueryManagerTrait
      */
     public function fetchNextAvailableTableId(string $tableName) :bool|int
     {
-        $schemaManager = $this->em->getConnection()->getSchemaManager();
+        $schemaManager = $this->em->getConnection()->createSchemaManager();
         if(!$schemaManager->tablesExist(array($tableName))){
             return false;
         }
         $sql = "SELECT MAX(id) FROM $tableName";
         $stmt = $this->em->getConnection()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC)['MAX(id)'] + 1;
+        $stmt = $stmt->executeQuery();
+        $result = $stmt->fetchAssociative()['MAX(id)'] + 1;
         return $result;
     }
 
@@ -86,7 +86,7 @@ trait QueryManagerTrait
         }
         try {
             $meta = $this->em->getMetadataFactory()->getMetadataFor(self::$base . $tableName);
-            return $meta->getColumnNames();
+            return $meta->getFieldNames();
         }catch (\Exception $exception){
             return false;
         }
@@ -94,7 +94,7 @@ trait QueryManagerTrait
 
     public function doesEntityTableExist($tableName)
     {
-        $schemaManager = $this->em->getConnection()->getSchemaManager();
+        $schemaManager = $this->em->getConnection()->createSchemaManager();
         return $schemaManager->tablesExist($tableName);
     }
 

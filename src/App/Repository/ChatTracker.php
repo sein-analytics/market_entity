@@ -22,17 +22,6 @@ class ChatTracker extends ChatAbstract
     protected $selectIdFromTrackerSql = "SELECT id FROM ChatTracker WHERE uuid = ?";
 
     /**
-     * @param string $uuid
-     * @return \Exception|mixed
-     */
-    public function fetchChatTrackerIdByUuid(string $uuid)
-    {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(), $this->selectIdFromTrackerSql, self::FETCH_ONE_MTHD, [$uuid]
-        );
-    }
-
-    /**
      * @return \Exception|mixed
      */
     public function addNewChatTrackerForUuid()

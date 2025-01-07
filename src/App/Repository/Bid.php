@@ -38,6 +38,12 @@ class Bid extends EntityRepository
 
     private string $callFetchDealIssuersLoiActiveBids = 'call FetchDealIssuersLoiActiveBids(:dealId, :bidsStatusIds)';
 
+    private string $fetchMaxPriceFromDealBidsSql = "SELECT Max(price) as price FROM Bid WHERE deal_id=?";
+
+    private string $fetchUserBidsByDealSql = "SELECT * FROM Bid WHERE user_id=? AND deal_id=? ORDER BY id ASC";
+
+    private string $fetchLastBidPriceByDealSql = "SELECT price FROM Bid WHERE id IN (SELECT Max(id) FROM Bid WHERE deal_id=?)";
+
     /**
      * @param array $dealIds
      * @param bool $mapBidsToDeals
@@ -62,15 +68,20 @@ class Bid extends EntityRepository
      */
     public function fetchMaxBidByDealId(int $dealId)
     {
-        $sql = "SELECT Max(price) as price FROM Bid WHERE deal_id = ?";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue(1, $dealId);
-        $temp = $stmt->execute();
-        $result = $stmt->fetch();
-        if (count($result) == 1 && array_key_exists('price', $result)){
-            return (float)$result['price'];
+        $price = 0.00;
+
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchMaxPriceFromDealBidsSql,
+            self::FETCH_ASSO_MTHD,
+            [$dealId],
+        );
+
+        if (is_array($result)){
+            $price = (float)$result['price'];
         }
-        return 0.00;
+
+        return $price;
     }
 
     /**
@@ -80,13 +91,13 @@ class Bid extends EntityRepository
      */
     public function fetchBidsByDealIdAndUserId(int $dealId, int $userId)
     {
-        $sql = "SELECT * FROM Bid WHERE user_id = :user_id AND deal_id = :deal_id ORDER BY id ASC";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue('user_id', $userId);
-        $stmt->bindValue('deal_id', $dealId);
-        $temp = $stmt->execute();
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserBidsByDealSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId, $dealId]
+        );
+
         return $result;
     }
 
@@ -96,28 +107,31 @@ class Bid extends EntityRepository
      */
     public function fetchLastBidByDealId(int $dealId)
     {
-        $sql = "SELECT price FROM Bid WHERE id IN (SELECT Max(id) FROM Bid WHERE deal_id = :deal_id)";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue('deal_id', $dealId);
-        $temp = $stmt->execute();
-        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
-        if (is_array($result)
-            && count($result) === 1
-            && array_key_exists('price', $result)){
-            return (float)$result['price'];
-        }else{
-            return 0.00;
+        $price = 0.00;
+
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchLastBidPriceByDealSql,
+            self::FETCH_ASSO_MTHD,
+            [$dealId]
+        );
+
+        if (is_array($result) && array_key_exists('price', $result)){
+            $price = (float)$result['price'];
         }
+
+        return $price;
     }
 
     public function fetchDistinctDealIdsForDealsWithUserBids(int $userId)
     {
-        $sql = "SELECT DISTINCT deal_id FROM Bid where user_id = ?";
-        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-        $stmt->bindValue(1, $userId);
-        $result = $stmt->execute();
-        $result = $stmt->fetchAll();
-        $stmt->closeCursor();
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            "SELECT DISTINCT deal_id FROM Bid where user_id=?",
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+
         return $this->flattenResultArrayByKey($result, 'deal_id');
     }
 
@@ -131,7 +145,7 @@ class Bid extends EntityRepository
         $this->keepCountKey = $keepKey;
         $status = self::DD_STATUS;
         $key = self::DD_KEY;
-        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE deal_id = :deal_id AND status_id = $status";
+        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE status_id=$status AND deal_id=?";
         return $this->returnRequestedCount($dealId, $sql, $key);
     }
 
@@ -146,7 +160,7 @@ class Bid extends EntityRepository
         $st2 = self::LOI_STATUS_2;
         $key = self::LOI_KEY;
         $this->keepCountKey = $keepKey;
-        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id = :deal_id";
+        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id=?";
         return $this->returnRequestedCount($dealId, $sql, $key);
     }
 
@@ -161,7 +175,7 @@ class Bid extends EntityRepository
         $st2 = self::MLPA_STATUS_2;
         $key = self::MLPA_KEY;
         $this->keepCountKey = $keepKey;
-        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id = :deal_id";
+        $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id=?";
         return $this->returnRequestedCount($dealId, $sql, $key);
     }
 
@@ -173,21 +187,20 @@ class Bid extends EntityRepository
      */
     protected function returnRequestedCount(int $dealId, string $sql, string $key)
     {
-        try {
-            $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
-            $stmt->bindValue('deal_id', $dealId);
-            $temp = $stmt->execute();
-        } catch (\Exception $exception) {
-            return $exception;
+        $count = 0;
+
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ASSO_MTHD,
+            [$dealId]
+        );
+
+        if (is_array($result) && array_key_exists($key, $result)) {
+            $count = !$this->keepCountKey ? (int)$result[$key] : $result;
         }
-        $result = $stmt->fetch(Query::HYDRATE_ARRAY);
-        if (array_key_exists($key, $result)
-            && $this->keepCountKey === false)
-            return (int)$result[$key];
-        elseif (array_key_exists($key, $result)
-            && $this->keepCountKey === true)
-            return $result;
-        return 0;
+
+        return $count;
     }
 
     public function updateLoggerByStatusId(int $id, array $history):mixed
@@ -203,12 +216,12 @@ class Bid extends EntityRepository
     public function fetchIssuerActiveUserBids(array $userIds):mixed
     {
         try {
-            $stmt = $this->returnInArraySqlDriver(
+            return $this->buildAndExecuteIntArrayStmt(
                 $this->getEntityManager(),
-                $userIds,
-                $this->fetchIssuerActiveUserBids
+                $this->fetchIssuerActiveUserBids,
+                self::FETCH_ALL_ASSO_MTHD,
+                $userIds
             );
-            return $stmt->fetchAllAssociative();
         } catch (\Exception $e) {
             throw $e;
         }

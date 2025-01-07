@@ -54,7 +54,6 @@ class CommunityInvite
     protected $inviteDate;
 
     /**
-     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", unique=true)
      * @var string
      */

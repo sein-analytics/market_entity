@@ -78,27 +78,6 @@ class GroupChat extends ChatAbstract
     }
 
     /**
-     * @param int $groupId
-     * @param array $userIds
-     * @return bool|\Exception|mixed
-     */
-    public function removeUserFromChatGroup(int $groupId, array $userIds)
-    {
-        $result = true;
-        each(function ($userId) use($groupId, &$result) {
-            if(($result = $this->buildAndExecuteFromSql(
-                    $this->getEntityManager(),
-                    $this->deleteGroupUsersSqlBase,
-                    self::EXECUTE_MTHD,
-                    [$userId, $groupId]
-            )) instanceof \Exception){
-                return $result;
-            }
-        }, $userIds);
-        return $result;
-    }
-
-    /**
      * @param array $params
      * @return \Exception|string
      */
@@ -164,34 +143,6 @@ class GroupChat extends ChatAbstract
     }
 
     /**
-     * @param int $userId
-     * @return \Exception|mixed
-     */
-    public function fetchGroupIdByUserId(int $userId)
-    {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            self::FETCH_CHAT_GROUP_DATA_SQL[self::GROUP_ID_BY_USER_ID],
-            self::FETCH_ONE_MTHD,
-            [$userId]
-        );
-    }
-
-    /**
-     * @param int $userId
-     * @return \Exception|mixed
-     */
-    public function fetchGroupDataByUserId(int $userId)
-    {
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            self::FETCH_CHAT_GROUP_DATA_SQL[self::GROUP_ALL_BY_USER_ID],
-            self::FETCH_ASSO_MTHD,
-            [$userId]
-        );
-    }
-
-    /**
      * @param int $groupId
      * @return array|\Exception
      */
@@ -230,25 +181,5 @@ class GroupChat extends ChatAbstract
             [$value, $uuid]
         );
     }
-
-    /**
-     * @param int $id
-     * @param string $field
-     * @param $value
-     * @return \Exception|mixed
-     * @throws \App\Repository\RepositoryException
-     */
-    public function updateChatGroupById(int $id, string $field, $value)
-    {
-        if (!array_key_exists($field, self::GROUP_CHAT_UPDATES_SQL_BY_ID))
-            throw $this->getRepoException()::generalIssueError("Property $field cannot be updated or does not exist");
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            self::GROUP_CHAT_UPDATES_SQL_BY_ID[$field],
-            self::EXECUTE_MTHD,
-            [$value, $id]
-        );
-    }
-
 
 }

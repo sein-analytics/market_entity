@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 class Statistic extends EntityRepository
-    implements SqlManagerTraitInterface, StatisticInterface
+    implements SqlManagerTraitInterface, StatisticInterface, DbalStatementInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
@@ -43,6 +43,8 @@ class Statistic extends EntityRepository
         self::SUMRY_CREDIT_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
         self::STATS_FILTER_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
     ];
+
+    private string $deleteStatisticByIdSql = "DELETE FROM Statistic WHERE id=?";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -72,9 +74,14 @@ class Statistic extends EntityRepository
      */
     public function fetchStatisticIdByDealId(int $dealId)
     {
-        $stmt = $this->em->getConnection()->prepare(self::SELECT_ID_BY_DEAL_SQL);
-        $stmt->bindValue(1, $dealId);
-        return $this->completeIdFetchQuery($stmt);
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            self::SELECT_ID_BY_DEAL_SQL,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+
+        return $this->completeIdFetchQuery($results);
     }
 
     /**
@@ -83,10 +90,12 @@ class Statistic extends EntityRepository
      */
     public function deleteStatisticById(int $id)
     {
-        $sql = "DELETE FROM Statistic WHERE id = $id";
-        $stmt = $this->em->getConnection()->executeQuery($sql);
-        $result = $stmt->execute();
-        return $result;
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteStatisticByIdSql,
+            self::EXECUTE_MTHD,
+            [$id]
+        );
     }
 
     /**

@@ -70,6 +70,22 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId, :communityUserId, :assetTypeId)';
 
+    private string $fetchDealPoolIdsByDealIdSql = "SELECT id FROM Pool Where deal_id=?";
+
+    private string $fetchDealBidTypeIdByDealIdSql = "SELECT bid_type_id FROM Deal Where id=?";
+
+    private string $fetchDealIdByIssuerIdAndDealNameSql = "SELECT id FROM Deal Where issuer_id=? AND issue=?";
+
+    private string $findByUserIdsAndStatusIdsSql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?)";
+
+    private string $deleteDealByIdSql = "DELETE FROM Deal WHERE id=?";
+
+    private string $deleteDealMarketUsersByDealIdSql = "DELETE FROM deal_market_user WHERE deal_id=?";
+
+    private string $fetchAllIssueNamesSql = "SELECT issue from Deal";
+
+    private string $findByUsersAndStatusAndAssetsSql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?) AND asset_type_id IN (?)";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -78,29 +94,38 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     public function fetchDealPoolIdsByDealId(int $id)
     {
-        $sql = "SELECT id FROM Pool Where deal_id = :deal_id";
         try {
-            $stmt = $this->em->getConnection()->prepare($sql);
+            $results = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchDealPoolIdsByDealIdSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                [$id]
+            );
         } catch (\Exception $exception) {
             return false;
         }
-        $stmt->bindValue('deal_id', $id);
-        return $this->completeIdFetchQuery($stmt);
+
+        return $this->completeIdFetchQuery($results);
     }
 
     public function fetchDealBidTypeIdByDealId(int $id)
     {
-        $sql = "SELECT bid_type_id FROM Deal Where id = ?";
         try {
-            $stmt = $this->em->getConnection()->prepare($sql);
-            $stmt->bindValue(1, $id);
-            $stmt->execute();
-            $result = $stmt->fetchAllAssociative();
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchDealBidTypeIdByDealIdSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                [$id]
+            );
+
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
-        if (is_array($result))
+
+        if (count($result) > 0) {
             return (int)$result[0]['bid_type_id'];
+        }
+
         return 'No results to return';
     }
 
@@ -137,11 +162,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
      */
     public function fetchDealIdByIssuerIdAndDealName(int $issuerId, string $dealName)
     {
-        $sql = "SELECT id FROM Deal Where issuer_id = :issuer_id AND issue = :issue";
-        $stmt = $this->em->getConnection()->prepare($sql);
-        $stmt->bindValue('issuer_id', $issuerId);
-        $stmt->bindValue('issue', $dealName);
-        return $this->completeIdFetchQuery($stmt);
+        $sql = $this->fetchDealIdByIssuerIdAndDealNameSql;
+
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDealIdByIssuerIdAndDealNameSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$issuerId, $dealName]
+        );
+
+        return $this->completeIdFetchQuery($results);
     }
 
     /**
@@ -151,21 +181,17 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
      */
     public function findByUserIdsAndStatusIds(array $userIds, array $statusIds)
     {
-        $sql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?)";
         try {
-            $stmt = $this->em->getConnection()->executeQuery(
-                $sql,
-                array($userIds, $statusIds),
-                array(
-                    Connection::PARAM_INT_ARRAY,
-                    Connection::PARAM_INT_ARRAY
-                )
+            $results = $this->buildAndExecuteMultiIntStmt(
+                $this->getEntityManager(),
+                $this->findByUserIdsAndStatusIdsSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                $userIds, $statusIds
             );
-            $result = $stmt->fetchAllAssociative();
         } catch (Exception $exception) {
             return $exception->getMessage();
         }
-        return $this->flattenResultArrayByKey($result, 'id');
+        return $this->flattenResultArrayByKey($results, 'id');
     }
 
     /**
@@ -174,10 +200,13 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
      */
     public function deleteDealById(int $id)
     {
-        $sql = "DELETE FROM Deal WHERE id = $id";
         try {
-            $stmt = $this->em->getConnection()->executeQuery($sql);
-            $result = $stmt->execute();
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(), 
+                $this->deleteDealByIdSql, 
+                self::EXECUTE_MTHD, 
+                [$id]
+            );
         } catch (Exception $exception) {
             return $exception->getMessage();
         }
@@ -190,14 +219,17 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
      */
     public function deleteDealMarketUsersByDealId(int $dealId)
     {
-        $sql = "DELETE FROM deal_market_user WHERE deal_id = $dealId";
-
         try {
-            $stmt = $this->em->getConnection()->executeQuery($sql);
-            return $stmt->execute();
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(), 
+                $this->deleteDealMarketUsersByDealIdSql, 
+                self::EXECUTE_MTHD, 
+                [$dealId]
+            );
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
+        return $result;
     }
 
     /**
@@ -224,13 +256,17 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     public function fetchAllIssueNames()
     {
-        $sql = "SELECT issue from Deal";
+        $sql = $this->fetchAllIssueNamesSql;
         try {
-            $stmt = $this->em->getConnection()->executeQuery($sql);
-            return $this->flattenResultArrayByKey($stmt->fetchAllAssociative(), 'issue');
+           $results = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchAllIssueNamesSql,
+                self::FETCH_ALL_ASSO_MTHD,
+           );
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }
+        return $this->flattenResultArrayByKey($results, 'issue');
     }
 
     public function fetchUserDealAccess(int $userId, int $dealId): mixed
@@ -325,22 +361,17 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     public function findByUsersAndStatusAndAssets(array $userIds, array $statusIds, array $assetTypeIds)
     {
-        $sql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?) AND asset_type_id IN (?)";
         try {
-            $stmt = $this->em->getConnection()->executeQuery(
-                $sql,
-                array($userIds, $statusIds, $assetTypeIds),
-                array(
-                    Connection::PARAM_INT_ARRAY,
-                    Connection::PARAM_INT_ARRAY,
-                    Connection::PARAM_INT_ARRAY,
-                )
+            $results = $this->buildAndExecuteMultiIntStmt(
+                $this->getEntityManager(),
+                $this->findByUsersAndStatusAndAssetsSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                $userIds, $statusIds, $assetTypeIds
             );
-            $result = $stmt->fetchAllAssociative();
         } catch (Exception $exception) {
             return $exception->getMessage();
         }
-        return $this->flattenResultArrayByKey($result, 'id');
+        return $this->flattenResultArrayByKey($results, 'id');
     }
 
     public function fetchDealRequestedLpas(int $userId, int $dealId)

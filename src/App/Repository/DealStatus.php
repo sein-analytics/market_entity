@@ -13,20 +13,25 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
+use App\Repository\DbalStatementInterface;
 
 class DealStatus extends EntityRepository
+    implements DbalStatementInterface
 {
+    private string $fetchAllDealStatusesSql = "SELECT * FROM DealStatus";
+
     use FetchMapperTrait, FetchingTrait;
 
     public function fetchAllDealStatuses(){
-        $sql = "SELECT * FROM DealStatus";
-        $stmt = $this->getEntityManager()
-            ->getConnection()
-            ->prepare($sql);
-        $result = $stmt->execute();
-        $result = $stmt->fetchAll(Query::HYDRATE_ARRAY);
-        $stmt->closeCursor();
-        if(!$result) { throw new \Exception("Could not fetch DealStatus data", 400); }
-        return $this->idToStatusMapper($result);
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAllDealStatusesSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            []
+        );
+
+        if(!$results) { throw new \Exception("Could not fetch DealStatus data", 400); }
+        return $this->idToStatusMapper($results);
     }
+    
 }

@@ -8,17 +8,23 @@
 
 namespace App\Repository\Data;
 
-
+use App\Repository\DbalStatementInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
+use App\Service\FetchingTrait;
 
-class State extends EntityRepository
+class State extends EntityRepository implements DbalStatementInterface
 {
+    use FetchingTrait;
+
+    private string $fetchAllStatesSql = "SELECT * FROM State";
+
     public function fetchAllStates()
     {
-        $sql = "SELECT * FROM State";
-        $result = $this->getEntityManager()->getConnection()->fetchAll($sql);
-        return $result;
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAllStatesSql,
+            self::FETCH_ALL_ASSO_MTHD
+        );
     }
 
     /**

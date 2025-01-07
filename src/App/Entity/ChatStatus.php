@@ -20,7 +20,6 @@ class ChatStatus
     protected int $id;
 
     /**
-     * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", unique=true)
      * @var string
      */
