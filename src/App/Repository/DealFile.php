@@ -76,6 +76,8 @@ class DealFile extends EntityRepository
 
     private string $fetchDealFileIdsByDealIdSql = "SELECT id FROM DealFile Where deal_id=?";
 
+    private string $unattachedFilesByDealIdSql = "SELECT * FROM `DealFile` WHERE `deal_id` =? AND loan_id IS NULL;";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -98,6 +100,16 @@ class DealFile extends EntityRepository
         return $this->completeIdFetchQuery($results);
     }
 
+    public function fetchUnattachedDealFiles(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->unattachedFilesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+    }
+
     public function fetchDdSalesLoansFilesData (array $loanIds)
     {
         return $this->executeProcedure([implode(', ', $loanIds)], self::$callFilesDataByLoanIds);
@@ -105,9 +117,9 @@ class DealFile extends EntityRepository
 
     /**
      * @param array $ids
-     * @return bool
+     * @return mixed
      */
-    public function deleteDealFileByIds(array $ids)
+    public function deleteDealFileByIds(array $ids):mixed
     {
         return $this->buildAndExecuteIntArrayStmt(
             $this->em,
@@ -115,7 +127,6 @@ class DealFile extends EntityRepository
             self::EXECUTE_MTHD,
             $ids
         );
-        return $result;
     }
 
     /**
