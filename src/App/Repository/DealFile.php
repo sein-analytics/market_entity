@@ -76,7 +76,7 @@ class DealFile extends EntityRepository
 
     private string $fetchDealFileIdsByDealIdSql = "SELECT id FROM DealFile Where deal_id=?";
 
-    private string $unattachedFilesByDealIdSql = "SELECT * FROM `DealFile` WHERE `deal_id` =? AND loan_id IS NULL;";
+    private string $unattachedFilesByDealIdSql = "SELECT id as fileId, loan_id as attachedLoanId,  public_path as public_id FROM `DealFile` WHERE `deal_id` =? AND loan_id IS NULL";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
