@@ -112,8 +112,10 @@ class DealFile extends EntityRepository
         );
     }
 
-    public function fetchAllDealFiles():mixed
+    public function fetchAllDealFiles(int $userId):mixed
     {
+        if (!in_array($userId, self::MASTER_IDS))
+            return ["message" => "User is not allowed to access this data"];
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchAllDealFiles,
