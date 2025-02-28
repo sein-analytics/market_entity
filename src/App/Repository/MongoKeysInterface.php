@@ -103,4 +103,6 @@ interface MongoKeysInterface
 
     const MONGO_GTE_OPERATOR = '$gte';
 
+    const MONGO_REMOVE_FLAG = '$$REMOVE';
+
 }
