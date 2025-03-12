@@ -70,6 +70,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $fetchDueDiligenceByIdSql = "SELECT * FROM FROM DueDiligence WHERE id=?";
 
+    private string $fetchDueDiligenceByParentAndUserSql = "SELECT * FROM FROM DueDiligence WHERE parent_id=? AND user_id=?";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -443,11 +445,25 @@ class DueDiligence extends DueDiligenceAbstract
     public function fetchDueDiligenceById(int $dueDiligenceId):mixed
     {
         try {
-            return $this->buildAndExecuteMultiIntStmt(
+            return $this->buildAndExecuteFromSql(
                 $this->getEntityManager(),
                 $this->fetchDueDiligenceByIdSql,
                 self::FETCH_ASSO_MTHD,
-                $dueDiligenceId
+                [$dueDiligenceId]
+            );
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function fetchDueDiligenceByParentAndUser(int $ddParentId, int $userId)
+    {
+        try {
+            return $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchDueDiligenceByParentAndUserSql,
+                self::FETCH_ASSO_MTHD,
+                [$ddParentId, $userId]
             );
         } catch (\Exception $e) {
             throw $e;
