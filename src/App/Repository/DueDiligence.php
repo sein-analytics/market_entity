@@ -68,6 +68,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $fetchDdIdsByUserIdsDealIdsSql = "SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)";
 
+    private string $fetchDueDiligenceByIdSql = "SELECT * FROM FROM DueDiligence WHERE id=?";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -432,6 +434,20 @@ class DueDiligence extends DueDiligenceAbstract
                 $this->selectDealFileDueDiligenceByDdsAndFileId,
                 self::FETCH_ALL_ASSO_MTHD,
                 $ddIds, [$fileId]
+            );
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function fetchDueDiligenceById(int $dueDiligenceId):mixed
+    {
+        try {
+            return $this->buildAndExecuteMultiIntStmt(
+                $this->getEntityManager(),
+                $this->fetchDueDiligenceByIdSql,
+                self::FETCH_ASSO_MTHD,
+                $dueDiligenceId
             );
         } catch (\Exception $e) {
             throw $e;
