@@ -68,9 +68,9 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $fetchDdIdsByUserIdsDealIdsSql = "SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)";
 
-    private string $fetchDueDiligenceByIdSql = "SELECT * FROM FROM DueDiligence WHERE id=?";
+    private string $fetchDueDiligenceByIdSql = "SELECT * FROM DueDiligence WHERE id=?";
 
-    private string $fetchDueDiligenceByParentAndUserSql = "SELECT * FROM FROM DueDiligence WHERE parent_id=? AND user_id=?";
+    private string $fetchDueDiligenceByParentAndUserSql = "SELECT * FROM DueDiligence WHERE parent_id=? AND user_id=?";
 
     public function insertNewDueDiligence(array $params):mixed
     {
