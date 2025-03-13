@@ -445,12 +445,14 @@ class DueDiligence extends DueDiligenceAbstract
     public function fetchDueDiligenceById(int $dueDiligenceId):mixed
     {
         try {
-            return $this->buildAndExecuteFromSql(
+            $result = $this->buildAndExecuteFromSql(
                 $this->getEntityManager(),
                 $this->fetchDueDiligenceByIdSql,
                 self::FETCH_ASSO_MTHD,
                 [$dueDiligenceId]
             );
+
+            return !$result ? null : $result;
         } catch (\Exception $e) {
             throw $e;
         }
@@ -459,12 +461,13 @@ class DueDiligence extends DueDiligenceAbstract
     public function fetchDueDiligenceByParentAndUser(int $ddParentId, int $userId)
     {
         try {
-            return $this->buildAndExecuteFromSql(
+            $result = $this->buildAndExecuteFromSql(
                 $this->getEntityManager(),
                 $this->fetchDueDiligenceByParentAndUserSql,
                 self::FETCH_ASSO_MTHD,
                 [$ddParentId, $userId]
             );
+            return !$result ? null : $result;
         } catch (\Exception $e) {
             throw $e;
         }
