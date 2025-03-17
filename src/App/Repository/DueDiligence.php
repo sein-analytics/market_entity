@@ -72,6 +72,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $fetchDueDiligenceByParentAndUserSql = "SELECT * FROM DueDiligence WHERE parent_id=? AND user_id=?";
 
+    private string $fetchOneDfDdByDdAndLoanSql = "SELECT dfdd.* FROM deal_file_due_diligence AS dfdd JOIN DealFile AS df ON dfdd.deal_file_id=df.id WHERE dfdd.due_diligence_id=? AND df.loan_id=? LIMIT 1";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -473,4 +475,18 @@ class DueDiligence extends DueDiligenceAbstract
         }
     }
 
+    public function fetchOneDfDdByDdAndLoan(int $dueDiligenceId, int $loanId)
+    {
+        try {
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchOneDfDdByDdAndLoanSql,
+                self::FETCH_ASSO_MTHD,
+                [$dueDiligenceId, $loanId]
+            );
+            return !$result ? null : $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }
