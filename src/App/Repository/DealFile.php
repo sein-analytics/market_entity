@@ -299,6 +299,10 @@ class DealFile extends EntityRepository
         );
     }
 
+    /**
+     * @param int $dealId
+     * @return mixed
+     */
     public function fetchFilesDataByDealId(int $dealId):mixed
     {
         return $this->buildAndExecuteFromSql(
@@ -308,6 +312,11 @@ class DealFile extends EntityRepository
             [$dealId]
         );
     }
+
+    /**
+     * @param int $dealFileId
+     * @return \Exception|mixed
+     */
     public function fetchDealFileById(int $dealFileId)
     {
         return $this->buildAndExecuteFromSql(
