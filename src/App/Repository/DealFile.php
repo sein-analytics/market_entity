@@ -68,6 +68,8 @@ class DealFile extends EntityRepository
 
     private string $fetchDealFileByIdSql = "SELECT * FROM DealFile WHERE id=?";
 
+    private string $fetchFilesByDealIdSql = "SELECT * FROM DealFile WHERE deal_id =?";
+
     private string $fetchDocumentByAssetIdSql = "SELECT * FROM DealFile WHERE asset_id=?";
 
     private string $fetchAllDealFiles = "SELECT * FROM DealFile";
@@ -297,6 +299,15 @@ class DealFile extends EntityRepository
         );
     }
 
+    public function fetchFilesDataByDealId(int $dealId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchFilesByDealIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$dealId]
+        );
+    }
     public function fetchDealFileById(int $dealFileId)
     {
         return $this->buildAndExecuteFromSql(
