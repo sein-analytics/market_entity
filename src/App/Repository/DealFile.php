@@ -308,7 +308,7 @@ class DealFile extends EntityRepository
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchFilesByDealIdSql,
-            self::FETCH_ASSO_MTHD,
+            self::FETCH_ALL_ASSO_MTHD,
             [$dealId]
         );
     }
