@@ -52,6 +52,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $fetchDealByIdSql = "SELECT * FROM Deal WHERE id=?";
 
+    private string $fetchDealUserByDealIdSql = "SELECT user_id from Deal WHERE id=?";
+
     private string $callDealStatsStips = 'call DealStatsStips(:dealId)';
 
     private string $callDealAuthorizedDetails = 'call DealAuthorizedDetails(:dealId)';
@@ -106,6 +108,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         }
 
         return $this->completeIdFetchQuery($results);
+    }
+
+    public function fetchDealUserIdByDealId(int $dealId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDealUserByDealIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$dealId]
+        );
     }
 
     public function fetchDealBidTypeIdByDealId(int $id)

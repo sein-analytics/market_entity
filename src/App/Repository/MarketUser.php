@@ -27,6 +27,10 @@ class MarketUser extends abstractMktUser
 
     private string $updateUserStatusIdSql = "UPDATE MarketUser SET status_id=? WHERE id=?";
 
+    private string $usernameStringByUserIdSql = "SELECT CONCAT(first_name, ' ', last_name) FROM MarketUser WHERE id=?";
+
+    private string $userRoleIdByUserIdSql = "SELECT role_id FROM `MarketUser` WHERE id = ?";
+
     function fetchUsersUuidFromIds(array $userIds)
     {
         $result = $this->executeProcedure([implode(', ', $userIds)],
@@ -35,6 +39,30 @@ class MarketUser extends abstractMktUser
         if ($result instanceof \Exception)
             return $result;
         return $this->flattenResultArrayByKey($result, 'uuid', false);
+    }
+
+    /**
+     * @param int $userId
+     * @return mixed
+     */
+    public function fetchUserNameStringByUserId(int $userId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->usernameStringByUserIdSql,
+            self::FETCH_ASSO_MTHD
+            [$userId]
+        );
+    }
+
+    public function fetchUserRoleIdByUserId (int $userId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->userRoleIdByUserIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId]
+        );
     }
 
     /**
