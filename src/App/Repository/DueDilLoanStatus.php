@@ -256,15 +256,15 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         );
     }
 
-    public function fetchParentAndChildDdByFileAndLoan(int $ddParentId, int $fileId, int $loanId)
+    public function fetchParentAndChildDdLnSByFileAndLoan(int $ddParentId, int $fileId, int $loanId)
     {
-        $sql = "SELECT * FROM DueDilLoanStatus AS ddlns".
+        $sql = "SELECT * FROM DueDilLoanStatus AS ddlns ".
             "LEFT JOIN ( ".
                 "SELECT id FROM DueDiligence WHERE id = $ddParentId UNION ALL ".
                 "SELECT id FROM DueDiligence WHERE parent_id = $ddParentId ".
-            "AS dds ON ddlns.dd_id = dds.id ".
+            ") AS dds ON ddlns.dd_id = dds.id ".
             "LEFT JOIN deal_file_due_diligence AS dfDd ".
-            "ON ON dfDd.due_diligence_id = dds.id AND dfDd.deal_file_id = $fileId ".
+            "ON dfDd.due_diligence_id = dds.id AND dfDd.deal_file_id = $fileId ".
             "WHERE ddlns.ln_id = $loanId AND dfDd.due_diligence_id IS NOT NULL";
 
             return $this->buildAndExecuteFromSql(
