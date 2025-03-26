@@ -258,10 +258,10 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     public function fetchParentAndChildDdLnSByFileAndLoan(int $ddParentId, int $fileId, int $loanId)
     {
-        $sql = "SELECT * FROM DueDilLoanStatus AS ddlns ".
+        $sql = "SELECT ddlns.*, dds.parent_id FROM DueDilLoanStatus AS ddlns ".
             "LEFT JOIN ( ".
-                "SELECT id FROM DueDiligence WHERE id = $ddParentId UNION ALL ".
-                "SELECT id FROM DueDiligence WHERE parent_id = $ddParentId ".
+                "SELECT id, parent_id FROM DueDiligence WHERE id = $ddParentId UNION ALL ".
+                "SELECT id, parent_id FROM DueDiligence WHERE parent_id = $ddParentId ".
             ") AS dds ON ddlns.dd_id = dds.id ".
             "LEFT JOIN deal_file_due_diligence AS dfDd ".
             "ON dfDd.due_diligence_id = dds.id AND dfDd.deal_file_id = $fileId ".
@@ -272,6 +272,30 @@ class DueDilLoanStatus extends DueDiligenceAbstract
                 $sql,
                 self::FETCH_ALL_ASSO_MTHD
             );
+    }
+
+    public function setStatusFileAction(int $id, string $date, array $logger, ?int $issuesCount = null)
+    {
+        $logger = json_encode($logger);
+        $sql = "UPDATE DueDilLoanStatus SET last_modified=?, logger=?";
+        $params = [$date, $logger];
+
+        if (!is_null($issuesCount)) {
+            $sql = $sql . ", issues_count=?";
+
+            $params[] = $issuesCount;
+        }
+
+        $params[] = $id;
+
+        $sql = $sql." WHERE id=?";
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            $params
+        );
     }
 
 }
