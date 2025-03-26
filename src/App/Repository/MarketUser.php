@@ -47,17 +47,17 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserNameStringByUserId(int $userId):string|bool
     {
-        $result = $this->buildAndExecuteFromSql(
+        return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->usernameStringByUserIdSql,
             self::FETCH_ASSO_MTHD
             [$userId]
         );
-        if (is_array($result) &&
+        /*if (is_array($result) &&
             array_key_exists(self::USER_NAME_API_STRING, $result)){
             return $result[self::USER_NAME_API_STRING];
         }
-        return false;
+        return false;*/
     }
 
     public function fetchUserRoleIdByUserId (int $userId):mixed
