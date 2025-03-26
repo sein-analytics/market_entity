@@ -42,6 +42,8 @@ interface DbalStatementInterface
 
     const USER_ID_COND = 'user_id';
 
+    const USER_NAME_API_STRING = 'userName';
+
     const TBL_PROP_ENTITY_KEY = 'entity_name';
 
     const TBL_PROP_NULLABLE_KEY = 'is_nullable';
