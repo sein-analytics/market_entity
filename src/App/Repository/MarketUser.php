@@ -27,7 +27,7 @@ class MarketUser extends abstractMktUser
 
     private string $updateUserStatusIdSql = "UPDATE MarketUser SET status_id=? WHERE id=?";
 
-    private string $usernameStringByUserIdSql = "SELECT CONCAT(first_name, ' ', last_name) FROM MarketUser WHERE id=?";
+    private string $usernameStringByUserIdSql = "SELECT CONCAT(first_name, ' ', last_name) AS userName FROM MarketUser WHERE id=?";
 
     private string $userRoleIdByUserIdSql = "SELECT role_id FROM `MarketUser` WHERE id = ?";
 
@@ -45,14 +45,19 @@ class MarketUser extends abstractMktUser
      * @param int $userId
      * @return mixed
      */
-    public function fetchUserNameStringByUserId(int $userId):mixed
+    public function fetchUserNameStringByUserId(int $userId):string|bool
     {
-        return $this->buildAndExecuteFromSql(
+        $result = $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->usernameStringByUserIdSql,
-            self::FETCH_ASSO_MTHD
+            self::FETCH_ALL_ASSO_MTHD
             [$userId]
         );
+        if (is_array($result) &&
+            array_key_exists(self::USER_NAME_API_STRING, $result)){
+            return $result[self::USER_NAME_API_STRING];
+        }
+        return false;
     }
 
     public function fetchUserRoleIdByUserId (int $userId):mixed
