@@ -27,7 +27,7 @@ class MarketUser extends abstractMktUser
 
     private string $updateUserStatusIdSql = "UPDATE MarketUser SET status_id=? WHERE id=?";
 
-    private string $usernameStringByUserIdSql = "SELECT CONCAT(first_name, ' ', last_name) AS userName FROM MarketUser WHERE id=?";
+    private string $usernameStringByUserIdSql = "SELECT first_name, last_name FROM MarketUser WHERE id=?";
 
     private string $userRoleIdByUserIdSql = "SELECT role_id FROM `MarketUser` WHERE id = ?";
 
