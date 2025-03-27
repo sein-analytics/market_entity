@@ -48,12 +48,12 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserNameStringByUserId(int $userId):mixed
     {
-        $sql = 'SELECT first_name, last_name FROM MarketUser WHERE id=?';
+        $sql = 'SELECT * FROM MarketUser WHERE id=?';
         try {
             $stmt = $this->getEntityManager()->getConnection()
                 ->prepare($sql);
             $stmt->bindValue(1, $userId);
-            return  $stmt->executeQuery();
+            return  $stmt->executeQuery()->fetchAllAssociative();
         }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
             return ['message' => $exception->getMessage()];
         }
