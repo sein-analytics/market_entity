@@ -50,7 +50,7 @@ class MarketUser extends abstractMktUser
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->usernameStringByUserIdSql,
-            self::FETCH_ASSO_MTHD
+            self::FETCH_ALL_ASSO_MTHD
             [$userId]
         );
         /*if (is_array($result) &&
