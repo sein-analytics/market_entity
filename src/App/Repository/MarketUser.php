@@ -13,6 +13,7 @@ use App\Repository\MarketUser\abstractMktUser;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
@@ -47,12 +48,23 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserNameStringByUserId(int $userId):mixed
     {
-        return $this->buildAndExecuteFromSql(
+        $sql = 'SELECT first_name, last_name FROM MarketUser WHERE id=?';
+        try {
+            $stmt = $this->getEntityManager()->getConnection()
+                ->prepare($sql);
+            $stmt->bindValue(1, $userId);
+            return  $stmt->executeQuery();
+        }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
+            return ['message' => $exception->getMessage()];
+        }
+
+        /*return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->usernameStringByUserIdSql,
             self::FETCH_ALL_ASSO_MTHD
             [$userId]
-        );
+        );*/
+
         /*if (is_array($result) &&
             array_key_exists(self::USER_NAME_API_STRING, $result)){
             return $result[self::USER_NAME_API_STRING];
