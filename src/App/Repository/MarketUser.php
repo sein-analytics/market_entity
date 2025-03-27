@@ -45,7 +45,7 @@ class MarketUser extends abstractMktUser
      * @param int $userId
      * @return mixed
      */
-    public function fetchUserNameStringByUserId(int $userId):string|bool
+    public function fetchUserNameStringByUserId(int $userId):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
