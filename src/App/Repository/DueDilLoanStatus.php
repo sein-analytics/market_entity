@@ -298,4 +298,20 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         );
     }
 
+    public function updateParentAndChildStatusByDdAndLoan(int $ddParentId, int $loanId, int $statusId)
+    {
+        $sql = "UPDATE DueDilLoanStatus AS ddlns ".
+            "JOIN DueDiligence AS dds ON ddlns.dd_id = dds.id ".
+            "SET ddlns.status_id=? ".
+            "WHERE ddlns.ln_id=? ".
+            "AND (dds.id=? OR dds.parent_id=?)";
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::EXECUTE_MTHD,
+            [$statusId, $loanId, $ddParentId, $ddParentId]
+        );
+    }
+
 }
