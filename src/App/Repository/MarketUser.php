@@ -48,7 +48,7 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserNameStringByUserId(int $userId):mixed
     {
-        $sql = 'SELECT first_name, last_name FROM MarketUser WHERE id=?';
+        $sql = "SELECT CONCAT(first_name, ' ', last_name) as userName FROM MarketUser WHERE id=?";
         try {
             $stmt = $this->getEntityManager()->getConnection()
                 ->prepare($sql);
