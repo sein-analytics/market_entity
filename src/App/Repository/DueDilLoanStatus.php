@@ -104,38 +104,6 @@ class DueDilLoanStatus extends DueDiligenceAbstract
         );
     }
 
-    public function multipleSetStatusCodeByLoanAndDdId(int $loanId, array $dueDiligenceIds, int $codeId, int $issuesCount, string $date, array $logger):mixed
-    {
-        $logger = json_encode($logger);
-        $dueDiligenceIds = count($dueDiligenceIds) > 1
-            ? implode(', ', $dueDiligenceIds)
-            : implode('', $dueDiligenceIds);
-        $sql = "UPDATE DueDilLoanStatus SET status_id=?, issues_count=?, last_modified=?, logger=? WHERE ln_id=? AND dd_id IN ($dueDiligenceIds)";
-        if (!in_array($codeId, self::DD_LN_STATUS_ARRAY))
-            return false;
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $sql,
-            self::EXECUTE_MTHD,
-            [$codeId, $issuesCount, $date, $logger, $loanId]
-        );
-    }
-
-    public function multipleSetLastModifiedByLoanAndDdId(int $loanId, array $dueDiligenceIds, string $date, array $logger):mixed
-    {
-        $logger = json_encode($logger);
-        $dueDiligenceIds = count($dueDiligenceIds) > 1
-            ? implode(', ', $dueDiligenceIds)
-            : implode('', $dueDiligenceIds);
-        $sql = "UPDATE DueDilLoanStatus SET last_modified=?, logger=? WHERE ln_id=? AND dd_id IN ($dueDiligenceIds)";
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
-            $sql,
-            self::EXECUTE_MTHD,
-            [$date, $logger, $loanId]
-        );
-    }
-
     public function fetchLoanIdsByDdId(int $ddId)
     {
         $sql = 'SELECT ln_id AS id, loan_id, ddStat.status_id, dd_id, user_id, dd_role_id, first_name, last_name, status FROM DueDilLoanStatus ddStat ' .
