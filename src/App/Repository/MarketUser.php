@@ -28,7 +28,7 @@ class MarketUser extends abstractMktUser
 
     private string $updateUserStatusIdSql = "UPDATE MarketUser SET status_id=? WHERE id=?";
 
-    private string $usernameStringByUserIdSql = "SELECT first_name, last_name FROM MarketUser WHERE id=?";
+    private string $usernameStringByUserIdSql = "SELECT CONCAT(first_name, ' ', last_name) as userName FROM MarketUser WHERE id=?";
 
     private string $userRoleIdByUserIdSql = "SELECT role_id FROM `MarketUser` WHERE id = ?";
 
@@ -48,7 +48,7 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserNameStringByUserId(int $userId):mixed
     {
-        $sql = "SELECT CONCAT(first_name, ' ', last_name) as userName FROM MarketUser WHERE id=?";
+        /*$sql = "SELECT CONCAT(first_name, ' ', last_name) as userName FROM MarketUser WHERE id=?";
         try {
             $stmt = $this->getEntityManager()->getConnection()
                 ->prepare($sql);
@@ -56,14 +56,14 @@ class MarketUser extends abstractMktUser
             return  $stmt->executeQuery()->fetchAllAssociative();
         }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
             return ['message' => $exception->getMessage()];
-        }
+        }*/
 
-        /*return $this->buildAndExecuteFromSql(
+        return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->usernameStringByUserIdSql,
             self::FETCH_ALL_ASSO_MTHD
             [$userId]
-        );*/
+        );
 
         /*if (is_array($result) &&
             array_key_exists(self::USER_NAME_API_STRING, $result)){
