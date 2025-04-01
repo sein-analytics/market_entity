@@ -163,17 +163,18 @@ trait FetchingTrait
             Log::warning($msg);
             return new \Exception($msg);
         }
-
+        $result = [];
         try {
-            $stmt = $stmt->executeQuery();
+            //$stmt = $stmt->executeQuery();
             if ($fetchMethod === self::EXECUTE_MTHD)
-                return $stmt;
+                $result =  $stmt->executeQuery([]);
             else
-                return $stmt->{$fetchMethod}();
+                $result = $stmt->executeQuery()->{$fetchMethod}();
         } catch (\Doctrine\DBAL\Driver\Exception  $exception){
             Log::critical("Error executing statement with error: {$exception->getMessage()}");
             return $exception;
         }
+        return $result;
     }
 
     /**
