@@ -68,7 +68,7 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $fetchDdIdsByUserIdsDealIdsSql = "SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)";
 
-    private string $fetchDueDiligenceByIdSql = "SELECT * FROM DueDiligence WHERE id=?";
+    private string $fetchDueDiligenceByIdSql = "SELECT dd.*, user.* FROM DueDiligence AS dd LEFT JOIN MarketUser AS user ON user.id = dd.user_id WHERE dd.id=?;";
 
     private string $fetchDueDiligenceByParentAndUserSql = "SELECT * FROM DueDiligence WHERE parent_id=? AND user_id=?";
 
