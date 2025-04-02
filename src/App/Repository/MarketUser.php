@@ -16,6 +16,8 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -42,20 +44,33 @@ class MarketUser extends abstractMktUser
         return $this->flattenResultArrayByKey($result, 'uuid', false);
     }
 
+    private function testBuildAndExecuteSql(EntityManager|EntityManagerInterface $em, string $sql,
+                                            string $fetchMethod, array $params = [], bool $useIntArr = false):mixed
+    {
+        if (!$useIntArr){
+            if (($stmt = $this->buildStmtFromSql($em, $sql, $params) ) instanceof \Exception)
+                return $stmt;
+            return $stmt;
+        }
+        return $sql;
+    }
+
     /**
      * @param int $userId
      * @return mixed
      */
     public function fetchUserNameStringByUserId(int $userId):mixed
     {
-        try {
+        return $this->testBuildAndExecuteSql(
+            $this->getEntityManager(), $this->usernameStringByUserIdSql, self::FETCH_ALL_ASSO_MTHD, [$userId]);
+        /*try {
             $stmt = $this->getEntityManager()->getConnection()
                 ->prepare($this->usernameStringByUserIdSql);
             $stmt->bindValue(1, $userId);
             return  $stmt->executeQuery()->fetchAllAssociative();
         }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
             return ['message' => $exception->getMessage()];
-        }
+        }*/
 
         /*return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
