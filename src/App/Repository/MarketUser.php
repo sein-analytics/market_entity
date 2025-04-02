@@ -61,16 +61,17 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserNameStringByUserId(int $userId):mixed
     {
-        return $this->testBuildAndExecuteSql(
-            $this->getEntityManager(), $this->usernameStringByUserIdSql, self::FETCH_ALL_ASSO_MTHD, [$userId]);
-        /*try {
+        /*return $this->testBuildAndExecuteSql(
+            $this->getEntityManager(), $this->usernameStringByUserIdSql, self::FETCH_ALL_ASSO_MTHD, [$userId]);*/
+        try {
             $stmt = $this->getEntityManager()->getConnection()
                 ->prepare($this->usernameStringByUserIdSql);
-            $stmt->bindValue(1, $userId);
-            return  $stmt->executeQuery()->fetchAllAssociative();
+            //$stmt->bindValue(1, $userId);
+            //return  $stmt->executeQuery()->fetchAllAssociative();
+            return $stmt;
         }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
             return ['message' => $exception->getMessage()];
-        }*/
+        }
 
         /*return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
