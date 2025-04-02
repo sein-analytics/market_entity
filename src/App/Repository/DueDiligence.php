@@ -110,7 +110,7 @@ class DueDiligence extends DueDiligenceAbstract
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->manyToManyFileIdSql,
-            self::EXECUTE_MTHD,
+            self::FETCH_ASSO_MTHD,
             [$dueDilId, $fileId]
         );
     }
