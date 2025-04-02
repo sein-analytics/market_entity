@@ -46,7 +46,7 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $teamMemberDdIdSql = "SELECT id FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=?;";
 
-    private string $teamMemberDdsSql = "SELECT id, user_id, bid_id, parent_id FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=? OR id=?;";
+    private string $teamMemberDdsSql = "SELECT * FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=? OR id=?;";
 
     private string $manyToManyFileIdSql = "SELECT deal_file_id FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
 
