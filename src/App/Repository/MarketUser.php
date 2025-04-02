@@ -44,17 +44,6 @@ class MarketUser extends abstractMktUser
         return $this->flattenResultArrayByKey($result, 'uuid', false);
     }
 
-    private function testBuildAndExecuteSql(EntityManager|EntityManagerInterface $em, string $sql,
-                                            string $fetchMethod, array $params = [], bool $useIntArr = false):mixed
-    {
-        if (!$useIntArr){
-            if (($stmt = $this->buildStmtFromSql($em, $sql, $params) ) instanceof \Exception)
-                return $stmt;
-            return $stmt;
-        }
-        return $sql;
-    }
-
     /**
      * @param int $userId
      * @return mixed
@@ -64,11 +53,14 @@ class MarketUser extends abstractMktUser
         /*return $this->testBuildAndExecuteSql(
             $this->getEntityManager(), $this->usernameStringByUserIdSql, self::FETCH_ALL_ASSO_MTHD, [$userId]);*/
         try {
-            $stmt = $this->getEntityManager()->getConnection()
-                ->prepare($this->usernameStringByUserIdSql);
+            $stmt = $this->buildStmtFromSql($this->getEntityManager(), $this->usernameStringByUserIdSql, [$userId]);
+            if ($stmt instanceof \Exception)
+                return ['message' => $stmt->getMessage()];
+            /*$stmt = $this->getEntityManager()->getConnection()
+                ->prepare($this->usernameStringByUserIdSql);*/
             //$stmt->bindValue(1, $userId);
-            //return  $stmt->executeQuery()->fetchAllAssociative();
-            return $stmt;
+            return  $stmt->executeQuery()->fetchAllAssociative();
+            //return $stmt;
         }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
             return ['message' => $exception->getMessage()];
         }

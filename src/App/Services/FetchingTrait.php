@@ -140,7 +140,7 @@ trait FetchingTrait
      * @param array $orderedParams
      * @return Statement|\Exception
      */
-    public function buildStmtFromSql(EntityManager $em, string $sql, array $orderedParams = [])
+    public function buildStmtFromSql(EntityManager|EntityManagerInterface $em, string $sql, array $orderedParams = [])
     {
         try {
             return $this->bindStatementParamValues(
@@ -182,7 +182,7 @@ trait FetchingTrait
      * @param array $orderedParams
      * @return Statement
      */
-    private function bindStatementParamValues(Statement $stmt, array $orderedParams = []):Statement
+    public function bindStatementParamValues(Statement $stmt, array $orderedParams = []):Statement
     {
         if (count($orderedParams) === 0)
             return $stmt;
