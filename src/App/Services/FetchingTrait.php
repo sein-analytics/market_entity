@@ -163,9 +163,7 @@ trait FetchingTrait
             Log::warning($msg);
             return new \Exception($msg);
         }
-        $result = [];
         try {
-            //$stmt = $stmt->executeQuery();
             if ($fetchMethod === self::EXECUTE_MTHD)
                 $result =  $stmt->executeQuery([]);
             else

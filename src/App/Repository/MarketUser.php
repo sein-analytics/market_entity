@@ -50,43 +50,13 @@ class MarketUser extends abstractMktUser
      */
     public function fetchUserNameStringByUserId(int $userId):mixed
     {
-        /*return $this->testBuildAndExecuteSql(
-            $this->getEntityManager(), $this->usernameStringByUserIdSql, self::FETCH_ALL_ASSO_MTHD, [$userId]);*/
-        $temp = self::FETCH_ALL_ASSO_MTHD;//fetchAllAssociative
-        $returns = [];
-        try {
-            $stmt = $this->buildStmtFromSql($this->getEntityManager(), $this->usernameStringByUserIdSql, [$userId]);
-            if ($stmt instanceof \Exception)
-                return ['message' => $stmt->getMessage()];
-            /*$stmt = $this->getEntityManager()->getConnection()
-                ->prepare($this->usernameStringByUserIdSql);*/
-            //$stmt->bindValue(1, $userId);
-            $returns['hardReturn'] = $stmt->executeQuery()->fetchAllAssociative();
-            $returns['traitExeReturn'] = $this->executeStatementFetchMethod($stmt, self::FETCH_ALL_ASSO_MTHD);
-            $returns['fullTraitReturn'] = $this->buildAndExecuteFromSql(
-                $this->getEntityManager(),
-                $this->usernameStringByUserIdSql,
-                self::FETCH_ALL_ASSO_MTHD,
-                [$userId]
-            );
-            return $returns;
-            //return $stmt;
-        }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
-            return ['message' => $exception->getMessage()];
-        }
-
-        /*return $this->buildAndExecuteFromSql(
+        return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->usernameStringByUserIdSql,
-            self::FETCH_ALL_ASSO_MTHD
+            self::FETCH_ALL_ASSO_MTHD,
             [$userId]
-        );*/
+        );
 
-        /*if (is_array($result) &&
-            array_key_exists(self::USER_NAME_API_STRING, $result)){
-            return $result[self::USER_NAME_API_STRING];
-        }
-        return false;*/
     }
 
     public function fetchUserRoleIdByUserId (int $userId):mixed
