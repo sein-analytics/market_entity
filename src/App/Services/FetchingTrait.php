@@ -140,7 +140,7 @@ trait FetchingTrait
      * @param array $orderedParams
      * @return Statement|\Exception
      */
-    public function buildStmtFromSql(EntityManager|EntityManagerInterface $em, string $sql, array $orderedParams = [])
+    public function buildStmtFromSql(EntityManager|EntityManagerInterface $em, string $sql, array $orderedParams = []): Statement|\Exception
     {
         try {
             return $this->bindStatementParamValues(
@@ -156,7 +156,7 @@ trait FetchingTrait
      * @param string $fetchMethod
      * @return mixed|\Exception
      */
-    public function executeStatementFetchMethod(Statement $stmt, string $fetchMethod)
+    public function executeStatementFetchMethod(Statement $stmt, string $fetchMethod):mixed
     {
         if (!method_exists(\Doctrine\DBAL\Result::class, $fetchMethod) && $fetchMethod != self::EXECUTE_MTHD) {
             $msg = "Method $fetchMethod does not exist in Doctrine\DBAL\Statement";
@@ -170,7 +170,7 @@ trait FetchingTrait
                 $result =  $stmt->executeQuery([]);
             else
                 $result = $stmt->executeQuery()->{$fetchMethod}();
-        } catch (\Doctrine\DBAL\Driver\Exception  $exception){
+        } catch (\Doctrine\DBAL\Driver\Exception|\Exception  $exception){
             Log::critical("Error executing statement with error: {$exception->getMessage()}");
             return $exception;
         }

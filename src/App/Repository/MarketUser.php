@@ -52,6 +52,8 @@ class MarketUser extends abstractMktUser
     {
         /*return $this->testBuildAndExecuteSql(
             $this->getEntityManager(), $this->usernameStringByUserIdSql, self::FETCH_ALL_ASSO_MTHD, [$userId]);*/
+        $temp = self::FETCH_ALL_ASSO_MTHD;//fetchAllAssociative
+        $returns = [];
         try {
             $stmt = $this->buildStmtFromSql($this->getEntityManager(), $this->usernameStringByUserIdSql, [$userId]);
             if ($stmt instanceof \Exception)
@@ -59,7 +61,9 @@ class MarketUser extends abstractMktUser
             /*$stmt = $this->getEntityManager()->getConnection()
                 ->prepare($this->usernameStringByUserIdSql);*/
             //$stmt->bindValue(1, $userId);
-            return  $stmt->executeQuery()->fetchAllAssociative();
+            $returns['hardReturn'] = $stmt->executeQuery()->fetchAllAssociative();
+            $returns['traitReturn'] = $this->executeStatementFetchMethod($stmt, self::FETCH_ALL_ASSO_MTHD);
+            return $returns;
             //return $stmt;
         }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
             return ['message' => $exception->getMessage()];
