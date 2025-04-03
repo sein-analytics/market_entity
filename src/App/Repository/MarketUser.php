@@ -66,7 +66,7 @@ class MarketUser extends abstractMktUser
             $returns['fullTraitReturn'] = $this->buildAndExecuteFromSql(
                 $this->getEntityManager(),
                 $this->usernameStringByUserIdSql,
-                self::FETCH_ALL_ASSO_MTHD
+                self::FETCH_ALL_ASSO_MTHD,
                 [$userId]
             );
             return $returns;
