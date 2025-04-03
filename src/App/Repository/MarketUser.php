@@ -62,7 +62,13 @@ class MarketUser extends abstractMktUser
                 ->prepare($this->usernameStringByUserIdSql);*/
             //$stmt->bindValue(1, $userId);
             $returns['hardReturn'] = $stmt->executeQuery()->fetchAllAssociative();
-            $returns['traitReturn'] = $this->executeStatementFetchMethod($stmt, self::FETCH_ALL_ASSO_MTHD);
+            $returns['traitExeReturn'] = $this->executeStatementFetchMethod($stmt, self::FETCH_ALL_ASSO_MTHD);
+            $returns['fullTraitReturn'] = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->usernameStringByUserIdSql,
+                self::FETCH_ALL_ASSO_MTHD
+                [$userId]
+            );
             return $returns;
             //return $stmt;
         }catch (Exception|\Doctrine\DBAL\Driver\Exception $exception){
