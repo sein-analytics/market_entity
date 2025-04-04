@@ -83,4 +83,8 @@ interface DbalStatementInterface
     const DEAL_EXIST_QRY = "SELECT COUNT(id) FROM DeaL WHERE id = ?";
 
     const LAST_INSERT_ID_QRY = "SELECT LAST_INSERT_ID()";
+
+    const PLATFORM_ADMINS_DATA = [1, 2, 26];
+
+    const PERMISSION_DENIED_MSB = "Your user does not have permission for the requested action. Please contact Sein Analytics is you believe this is an error.";
 }
