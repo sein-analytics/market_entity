@@ -134,6 +134,8 @@ interface DueDiligenceInterface
 
     const API_DD_PARENT_KEY = "ddParent";
 
+    const API_DD_PARENT_ID_KEY = "ddParentId";
+
     const API_DD_ISSUE_ID_KEY = "issueId";
 
     const API_DD_TREEVIEW_ID_KEY = "treeViewId";
