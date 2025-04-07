@@ -207,7 +207,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
     public function baseDdLogger()
     {
         $baseLogger = self::BASE_LOGGER_ARRAY;
-        return addslashes(json_encode([$baseLogger]));
+        return json_encode([$baseLogger]);
     }
 
     public function fetchDueDilLoanStatusByDdAndLn(int $ddId, int $lnId)
