@@ -47,6 +47,8 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`, `last_modified`) VALUES";
 
+    private string $fetchStatusesByDdsAndLoanSql = "SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)";
+
     public function insertNewDueDilLoanStatus (array $params):mixed
     {
         if (array_key_exists(self::DDLS_QRY_ID_KEY , $params))
@@ -283,6 +285,20 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             self::EXECUTE_MTHD,
             [$statusId, $loanId, $ddParentId, $ddParentId]
         );
+    }
+
+    public function fetchStatusesByDdsAndLoan(array $dueDiligenceIds, int $loanId):mixed
+    {
+        try {
+            return $this->buildAndExecuteMultiIntStmt(
+                $this->getEntityManager(),
+                $this->fetchStatusesByDdsAndLoanSql,
+                self::FETCH_ALL_ASSO_MTHD,
+                $dueDiligenceIds, [$loanId]
+            );
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
 }
