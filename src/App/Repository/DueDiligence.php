@@ -536,4 +536,19 @@ class DueDiligence extends DueDiligenceAbstract
             throw $e;
         }
     }
+
+    public function fetchDealFileDdsByDdsAndLoan(array $dueDiligencesIds, int $loanId)
+    {
+        $sql = "SELECT dfdd.* FROM deal_file_due_diligence AS dfdd ".
+        "JOIN DealFile AS df ON dfdd.deal_file_id=df.id ".
+        "WHERE dfdd.due_diligence_id IN (?) AND df.loan_id IN (?)";
+
+        return $this->buildAndExecuteMultiIntStmt(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $dueDiligencesIds, [$loanId]
+        );
+    }
+
 }
