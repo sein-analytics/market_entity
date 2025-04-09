@@ -289,10 +289,14 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     public function fetchStatusesByDdsAndLoan(array $dueDiligenceIds, int $loanId):mixed
     {
+        $sql = "SELECT ddlns.*, dds.parent_id FROM DueDilLoanStatus AS ddlns ".
+            "LEFT JOIN DueDiligence AS dds ON dds.id = ddlns.dd_id ".
+            "WHERE dd_id IN (?) AND ln_id IN (?)";
+
         try {
             return $this->buildAndExecuteMultiIntStmt(
                 $this->getEntityManager(),
-                $this->fetchStatusesByDdsAndLoanSql,
+                $sql,
                 self::FETCH_ALL_ASSO_MTHD,
                 $dueDiligenceIds, [$loanId]
             );
