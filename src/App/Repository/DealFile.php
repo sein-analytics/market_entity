@@ -50,6 +50,8 @@ class DealFile extends EntityRepository
 
     private string $updateFilePathByIdSql = "UPDATE DealFile SET public_path=? WHERE id=?";
 
+    private string $updateFileNameByIdSql = "UPDATE DealFile SET file_name=? WHERE id=?";
+
     private string $fileIdFromPath = "SELECT id FROM DealFile WHERE public_path=?";
 
     private string $attachFileToLoanSql = "UPDATE DealFile SET loan_id=? WHERE id=?";
@@ -157,6 +159,10 @@ class DealFile extends EntityRepository
         return array_keys(self::$table);
     }
 
+    /**
+     * @param string $path
+     * @return mixed
+     */
     public function fetchFileIdFromPath(string $path):mixed
     {
         return $this->buildAndExecuteFromSql(
@@ -167,6 +173,11 @@ class DealFile extends EntityRepository
         );
     }
 
+    /**
+     * @param int $fileId
+     * @param string $filePath
+     * @return mixed
+     */
     public function updateFilePathById (int $fileId, string $filePath):mixed
     {
         return $this->buildAndExecuteFromSql(
@@ -177,7 +188,27 @@ class DealFile extends EntityRepository
         );
     }
 
-    public function updateAssetIdById (int $fileId, string $assetId)
+    /**
+     * @param int $fileId
+     * @param string $fileName
+     * @return mixed
+     */
+    public function updateFileNameById(int $fileId, string $fileName):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->updateFileNameByIdSql,
+            self::EXECUTE_MTHD,
+            [$fileName, $fileId]
+        );
+    }
+
+    /**
+     * @param int $fileId
+     * @param string $assetId
+     * @return mixed
+     */
+    public function updateAssetIdById (int $fileId, string $assetId):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
