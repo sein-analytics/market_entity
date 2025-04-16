@@ -12,6 +12,8 @@ interface DealFileInterface
 
     const DEFAULT_ACC_CODE = 2;
 
+    const MASTER_IDS = [2, 26, 1];
+
     /**
      * ToDo any changes in DealFile entity
      * props must be reflected in the interface

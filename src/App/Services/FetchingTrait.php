@@ -140,7 +140,7 @@ trait FetchingTrait
      * @param array $orderedParams
      * @return Statement|\Exception
      */
-    public function buildStmtFromSql(EntityManager $em, string $sql, array $orderedParams = [])
+    public function buildStmtFromSql(EntityManager|EntityManagerInterface $em, string $sql, array $orderedParams = []): Statement|\Exception
     {
         try {
             return $this->bindStatementParamValues(
@@ -156,24 +156,23 @@ trait FetchingTrait
      * @param string $fetchMethod
      * @return mixed|\Exception
      */
-    public function executeStatementFetchMethod(Statement $stmt, string $fetchMethod)
+    public function executeStatementFetchMethod(Statement $stmt, string $fetchMethod):mixed
     {
         if (!method_exists(\Doctrine\DBAL\Result::class, $fetchMethod) && $fetchMethod != self::EXECUTE_MTHD) {
             $msg = "Method $fetchMethod does not exist in Doctrine\DBAL\Statement";
             Log::warning($msg);
             return new \Exception($msg);
         }
-
         try {
-            $stmt = $stmt->executeQuery();
             if ($fetchMethod === self::EXECUTE_MTHD)
-                return $stmt;
+                $result =  $stmt->executeQuery([]);
             else
-                return $stmt->{$fetchMethod}();
-        } catch (\Doctrine\DBAL\Driver\Exception  $exception){
+                $result = $stmt->executeQuery()->{$fetchMethod}();
+        } catch (\Doctrine\DBAL\Driver\Exception|\Exception  $exception){
             Log::critical("Error executing statement with error: {$exception->getMessage()}");
             return $exception;
         }
+        return $result;
     }
 
     /**
@@ -181,7 +180,7 @@ trait FetchingTrait
      * @param array $orderedParams
      * @return Statement
      */
-    private function bindStatementParamValues(Statement $stmt, array $orderedParams = []):Statement
+    public function bindStatementParamValues(Statement $stmt, array $orderedParams = []):Statement
     {
         if (count($orderedParams) === 0)
             return $stmt;

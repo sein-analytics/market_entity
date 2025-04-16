@@ -42,6 +42,10 @@ interface DbalStatementInterface
 
     const USER_ID_COND = 'user_id';
 
+    const USER_ROLE_ID_COND = 'role_id';
+
+    const USER_NAME_API_STRING = 'userName';
+
     const TBL_PROP_ENTITY_KEY = 'entity_name';
 
     const TBL_PROP_NULLABLE_KEY = 'is_nullable';
@@ -79,4 +83,8 @@ interface DbalStatementInterface
     const DEAL_EXIST_QRY = "SELECT COUNT(id) FROM DeaL WHERE id = ?";
 
     const LAST_INSERT_ID_QRY = "SELECT LAST_INSERT_ID()";
+
+    const PLATFORM_ADMINS_DATA = [1, 2, 26];
+
+    const PERMISSION_DENIED_MSB = "Your user does not have permission for the requested action. Please contact Sein Analytics is you believe this is an error.";
 }

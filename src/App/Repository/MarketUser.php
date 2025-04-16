@@ -13,8 +13,11 @@ use App\Repository\MarketUser\abstractMktUser;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
@@ -27,6 +30,10 @@ class MarketUser extends abstractMktUser
 
     private string $updateUserStatusIdSql = "UPDATE MarketUser SET status_id=? WHERE id=?";
 
+    private string $usernameStringByUserIdSql = "SELECT CONCAT(first_name, ' ', last_name) as userName FROM MarketUser WHERE id=?";
+
+    private string $userRoleIdByUserIdSql = "SELECT role_id FROM `MarketUser` WHERE id = ?";
+
     function fetchUsersUuidFromIds(array $userIds)
     {
         $result = $this->executeProcedure([implode(', ', $userIds)],
@@ -35,6 +42,31 @@ class MarketUser extends abstractMktUser
         if ($result instanceof \Exception)
             return $result;
         return $this->flattenResultArrayByKey($result, 'uuid', false);
+    }
+
+    /**
+     * @param int $userId
+     * @return mixed
+     */
+    public function fetchUserNameStringByUserId(int $userId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->usernameStringByUserIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId]
+        );
+
+    }
+
+    public function fetchUserRoleIdByUserId (int $userId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->userRoleIdByUserIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId]
+        );
     }
 
     /**
