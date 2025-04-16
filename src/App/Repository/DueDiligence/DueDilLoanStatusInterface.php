@@ -59,4 +59,5 @@ interface DueDilLoanStatusInterface
 
     const DDLS_DD_ID_ALIAS_KEY = 'diligence';
 
+    const DDLS_BASE_ISSUES_COUNT = 0;
 }

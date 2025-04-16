@@ -87,6 +87,10 @@ interface KycDocumentInterface
 
     const KD_ADDITIONAL_INFO_KEY = 'additionalInfo';
 
+    const KD_DOCUMENT_ID_KEY = 'kycDocumentId';
+
+    const KD_DEAL_FILE_ID_KEY = 'dealFileId';
+
     const KYC_TYPE_FINANCIAL_ID = 1;
     
     const KYC_TYPE_SERVICING_ID = 2;

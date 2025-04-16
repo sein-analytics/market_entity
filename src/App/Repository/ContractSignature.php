@@ -71,9 +71,16 @@ class ContractSignature extends EntityRepository
 
     public function fetchContractSignatureById(int $contractSignatureId)
     {
+        $sql =
+            'SELECT contractSign.*, sender.issuer_id AS senderIssuerId, receiver.issuer_id AS receiverIssuerId '.
+                'FROM ContractSignature AS contractSign '.
+                'LEFT JOIN MarketUser AS sender ON sender.id = sender_id '.
+                'LEFT JOIN MarketUser AS receiver ON receiver.id = receiver_id '.
+                'WHERE contractSign.id=?';
+
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            $this->fetchContractSignatureByIdSql,
+            $sql,
             self::FETCH_ASSO_MTHD,
             [$contractSignatureId]
         );

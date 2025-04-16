@@ -134,6 +134,8 @@ interface DueDiligenceInterface
 
     const API_DD_PARENT_KEY = "ddParent";
 
+    const API_DD_PARENT_ID_KEY = "ddParentId";
+
     const API_DD_ISSUE_ID_KEY = "issueId";
 
     const API_DD_TREEVIEW_ID_KEY = "treeViewId";
@@ -229,6 +231,8 @@ interface DueDiligenceInterface
     const DD_FILE_ACTION_RESPONSE_ACCEPTED_KEY = "accepted";
 
     const DD_COMMENTS_ISSUES_COUNT_KEY = "issuesCount";
+    
+    const DD_COMMENTS_CHILD_ISSUES_COUNT_KEY = "childIssuesCount";
 
     const DD_ACTIONS_ACCEPT_COUNT_KEY = "acceptActionsCount";
 

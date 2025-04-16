@@ -46,7 +46,7 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $teamMemberDdIdSql = "SELECT id FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=?;";
 
-    private string $teamMemberDdsSql = "SELECT id, user_id, bid_id, parent_id FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=? OR id=?;";
+    private string $teamMemberDdsSql = "SELECT * FROM DueDiligence WHERE deal_id=? AND user_id=? AND parent_id=? OR id=?;";
 
     private string $manyToManyFileIdSql = "SELECT deal_file_id FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
 
@@ -67,6 +67,16 @@ class DueDiligence extends DueDiligenceAbstract
     private string $selectDealFileDueDiligenceByDdsAndFileId  = "SELECT due_diligence_id FROM deal_file_due_diligence WHERE due_diligence_id IN (?) AND deal_file_id=?";
 
     private string $fetchDdIdsByUserIdsDealIdsSql = "SELECT id FROM DueDiligence WHERE `user_id` IN (?) AND deal_id IN (?) AND id NOT IN (?)";
+
+    private string $fetchDueDiligenceByIdSql = "SELECT dd.*, user.* FROM DueDiligence AS dd LEFT JOIN MarketUser AS user ON user.id = dd.user_id WHERE dd.id=?;";
+
+    private string $fetchDueDiligenceByParentAndUserSql = "SELECT * FROM DueDiligence WHERE parent_id=? AND user_id=?";
+
+    private string $fetchOneDfDdByDdAndLoanSql = "SELECT dfdd.* FROM deal_file_due_diligence AS dfdd JOIN DealFile AS df ON dfdd.deal_file_id=df.id WHERE dfdd.due_diligence_id=? AND df.loan_id=? LIMIT 1";
+
+    private string $fetchDueDiligencesByUserAndDealSql = "SELECT * FROM DueDiligence WHERE user_id=? AND deal_id=?";
+
+    private string $fetchDdByParentAndFileAccessSql = "SELECT dd.* FROM DueDiligence AS dd INNER JOIN deal_file_due_diligence AS dfDd ON dfDd.due_diligence_id = dd.id WHERE dd.parent_id=? AND dfDd.deal_file_id=?";
 
     public function insertNewDueDiligence(array $params):mixed
     {
@@ -102,7 +112,7 @@ class DueDiligence extends DueDiligenceAbstract
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->manyToManyFileIdSql,
-            self::EXECUTE_MTHD,
+            self::FETCH_ASSO_MTHD,
             [$dueDilId, $fileId]
         );
     }
@@ -436,6 +446,109 @@ class DueDiligence extends DueDiligenceAbstract
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    public function fetchDueDiligenceById(int $dueDiligenceId):mixed
+    {
+        try {
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchDueDiligenceByIdSql,
+                self::FETCH_ASSO_MTHD,
+                [$dueDiligenceId]
+            );
+
+            return !$result ? null : $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function fetchDueDiligenceByParentAndUser(int $ddParentId, int $userId)
+    {
+        try {
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchDueDiligenceByParentAndUserSql,
+                self::FETCH_ASSO_MTHD,
+                [$ddParentId, $userId]
+            );
+            return !$result ? null : $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function fetchOneDfDdByDdAndLoan(int $dueDiligenceId, int $loanId)
+    {
+        try {
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchOneDfDdByDdAndLoanSql,
+                self::FETCH_ASSO_MTHD,
+                [$dueDiligenceId, $loanId]
+            );
+            return !$result ? null : $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function fetchDfDdsFileIdsByDdAndLoan(int $dueDiligenceId, int $loanId)
+    {
+        $sql = "SELECT dfdd.deal_file_id FROM deal_file_due_diligence AS dfdd ".
+            "JOIN DealFile AS df ON dfdd.deal_file_id=df.id ".
+            "WHERE dfdd.due_diligence_id=? AND df.loan_id=?";
+
+        $result = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dueDiligenceId, $loanId]
+        );
+
+        $result = $this->flattenResultArrayByKey($result, self::MANY_TO_MANY_FILE_ID_KEY);
+
+        return $result;
+    }
+
+    public function fetchDueDiligencesByUserAndDeal(int $userId, int $dealId):mixed
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDueDiligencesByUserAndDealSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
+    public function fetchDdByParentAndFileAccessSql(int $ddParentId, int $fileId)
+    {
+        try {
+            $result = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $this->fetchDdByParentAndFileAccessSql,
+                self::FETCH_ASSO_MTHD,
+                [$ddParentId, $fileId]
+            );
+            return !$result ? null : $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function fetchDealFileDdsByDdsAndLoan(array $dueDiligencesIds, int $loanId)
+    {
+        $sql = "SELECT dfdd.* FROM deal_file_due_diligence AS dfdd ".
+        "JOIN DealFile AS df ON dfdd.deal_file_id=df.id ".
+        "WHERE dfdd.due_diligence_id IN (?) AND df.loan_id IN (?)";
+
+        return $this->buildAndExecuteMultiIntStmt(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $dueDiligencesIds, [$loanId]
+        );
     }
 
 }

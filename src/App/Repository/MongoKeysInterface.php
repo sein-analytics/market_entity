@@ -43,6 +43,8 @@ interface MongoKeysInterface
 
     const MONGO_LITERAL_KEY = '$literal';
 
+    const MONGO_IF_NULL_KEY = '$ifNull';
+
     const MONGO_MAP_INPUT_KEY = "input";
 
     const MONGO_MAP_IN_KEY = "in";
@@ -102,5 +104,7 @@ interface MongoKeysInterface
     const MONGO_LT_OPERATOR = '$lt';
 
     const MONGO_GTE_OPERATOR = '$gte';
+
+    const MONGO_REMOVE_FLAG = '$$REMOVE';
 
 }
