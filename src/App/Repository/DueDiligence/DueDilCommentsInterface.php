@@ -199,7 +199,6 @@ interface DueDilCommentsInterface extends MongoKeysInterface, DueDiligenceInterf
         self::API_LOAN_ID_KEY,
         self::API_DD_FILE_ID_KEY,
         self::API_LOGGER_ACTION_KEY,
-        self::DD_COMMENT_DD_ID_KEY,
         self::DD_COMMENT_DD_PARENT_ID_KEY
     ];
 
