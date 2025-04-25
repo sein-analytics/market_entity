@@ -166,6 +166,8 @@ interface DueDiligenceInterface
 
     const API_RESIZE_ANNOT_ACTION = "resizeAnnot";
 
+    const API_DDLN_STATUS_ID_KEY = "statusId";
+
     const LOGGER_ACTIONS_BASE = [
         self::API_LOGGER_DATE_KEY => '',
         self::API_LOGGER_USER_ID_KEY => '',
