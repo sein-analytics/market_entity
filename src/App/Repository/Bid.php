@@ -173,7 +173,7 @@ class Bid extends EntityRepository
     {
         $st1 = self::MLPA_STATUS_1;
         $st2 = self::MLPA_STATUS_2;
-        $key = self::MLPA_KEY;
+        $key = self::BID_MLPA_KEY;
         $this->keepCountKey = $keepKey;
         $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id=?";
         return $this->returnRequestedCount($dealId, $sql, $key);
