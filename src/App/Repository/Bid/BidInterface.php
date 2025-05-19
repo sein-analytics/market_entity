@@ -54,8 +54,10 @@ interface BidInterface
     const BID_STATUS_UPDATE_ID_MAP = [
         self::OVERRIDDEN_STATUS => self::LOI_STATUS_2,
         self::PLACED_STATUS => self::LOI_STATUS_2,
+        self::LOI_STATUS_1 => self::LOI_STATUS_2,
         self::LOI_STATUS_2 => self::DD_STATUS,
         self::DD_STATUS => self::MLPA_STATUS_2,
+        self::MLPA_STATUS_1 => self::MLPA_STATUS_2,
         self::MLPA_STATUS_2 => self::CLOSED_STATUS,
     ];
 
