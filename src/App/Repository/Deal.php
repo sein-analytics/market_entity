@@ -84,6 +84,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $deleteDealMarketUsersByDealIdSql = "DELETE FROM deal_market_user WHERE deal_id=?";
 
+    private string $deleteDealMarketUserSql = "DELETE FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
+
     private string $fetchAllIssueNamesSql = "SELECT issue from Deal";
 
     private string $findByUsersAndStatusAndAssetsSql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?) AND asset_type_id IN (?)";
@@ -244,6 +246,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             return $exception->getMessage();
         }
         return $result;
+    }
+
+    public function deleteDealMarketUser(int $userId, int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteDealMarketUserSql,
+            self::EXECUTE_MTHD,
+            [$userId, $dealId]
+        );
     }
 
     /**
