@@ -88,6 +88,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $findByUsersAndStatusAndAssetsSql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?) AND asset_type_id IN (?)";
 
+    private string $fetchActiveDealUsersAccessSql = 'call FetchActiveDealUsersAccess(:userId, :dealId)';
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -309,6 +311,13 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         );
         return count($result) > 0
             ? $result[0] : [];
+    }
+
+    public function fetchActiveDealUsersAccess(int $userId, int $dealId)
+    {
+        return $this->executeProcedure(
+            [$userId, $dealId], $this->fetchActiveDealUsersAccessSql
+        );
     }
 
     public function fetchDealAuthorizedDetails(int $dealId)
