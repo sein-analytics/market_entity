@@ -13,6 +13,8 @@ interface DealInterface
 
     const DEAL_QRY_STATUS_KEY = 'status_id';
 
+    const DEAL_QRY_REQUIRES_NDA_KEY = 'requires_nda';
+
     const DEAL_ALIVE_STATUS = 1;
 
     const DEAL_WAITING_CONFIRM_STATUS = 2;
