@@ -12,6 +12,7 @@ use App\Entity\Loan\AmortAttribute;
 use App\Entity\Loan\ArmAttribute;
 use App\Entity\Loan\CommAttribute;
 use App\Entity\Loan\DescAttribute;
+use App\Entity\Loan\ModificationAttribute;
 use App\Entity\Loan\SaleAttribute;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -112,6 +113,14 @@ class Loan extends DomainObject
      * @var SaleAttribute|null
      */
     protected $saleAttributes;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\ModificationAttribute", mappedBy="loan")
+     * @var ModificationAttribute|null
+     */
+    protected $modificationAttribute;
+
+    protected $foreclosureAttributes;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
