@@ -16,13 +16,22 @@ class ModificationAttribute extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
+    static array $table = [
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'modification_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        'capitalized_amount' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        'modification_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'post_mod_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+    ];
+
     public function fetchNextAvailableId()
     {
-        return $this->fetchNextAvailableTableId('AddTableName');
+        return $this->fetchNextAvailableTableId('ModificationAttribute');
     }
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        // TODO: Implement fetchEntityPropertiesForSql() method.
+        return array_keys(self::$table);
     }
 }
