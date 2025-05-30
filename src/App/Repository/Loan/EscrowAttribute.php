@@ -16,7 +16,7 @@ class EscrowAttribute extends EntityRepository
     static array $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'delinquent_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'total_debt_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'accrued_late_fees' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'escrow_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],

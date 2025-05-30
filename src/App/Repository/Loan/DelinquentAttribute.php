@@ -16,11 +16,6 @@ class DelinquentAttribute extends EntityRepository
     static array $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'modification_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'foreclosure_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'bankruptcy_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'loss_mitigation_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'escrow_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
         'servicer' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'sub_servicer' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'servicer_notes' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
