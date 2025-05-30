@@ -32,6 +32,12 @@ class ModificationAttribute extends DomainObject
     protected $loan;
 
     /**
+     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="modificationAttribute")
+     * @var DelinquentAttribute
+     */
+    protected $delinquentAttribute;
+
+    /**
      * @ORM\Column (type = "datetime", nullable = true)
      * @var ?\DateTime
      */
@@ -45,15 +51,15 @@ class ModificationAttribute extends DomainObject
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @var string
+     * @var ?string
      */
-    protected $modificationStatus;
+    protected ?string $modificationStatus;
 
     /**
      * @ORM\Column (type="decimal", precision=16, scale=3, nullable=true)
      * @var ?float
      */
-    protected $postModBalance;
+    protected ?float $postPrincipalBalance;
 
     /**
      * @return int
@@ -78,6 +84,23 @@ class ModificationAttribute extends DomainObject
     public function setLoan(Loan $loan): void
     {
         $this->loan = $loan;
+    }
+
+    /**
+     * @return DelinquentAttribute
+     */
+    public function getDelinquentAttribute(): DelinquentAttribute
+    {
+        return $this->delinquentAttribute;
+    }
+
+    /**
+     * @param DelinquentAttribute $delinquentAttribute
+     * @return void
+     */
+    public function setDelinquentAttribute(DelinquentAttribute $delinquentAttribute): void
+    {
+        $this->delinquentAttribute = $delinquentAttribute;
     }
 
     /**
@@ -115,9 +138,9 @@ class ModificationAttribute extends DomainObject
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getModificationStatus(): string
+    public function getModificationStatus(): ?string
     {
         return $this->modificationStatus;
     }
@@ -134,18 +157,18 @@ class ModificationAttribute extends DomainObject
     /**
      * @return float|null
      */
-    public function getPostModBalance(): ?float
+    public function getPostPrincipalBalance(): ?float
     {
-        return $this->postModBalance;
+        return $this->postPrincipalBalance;
     }
 
     /**
-     * @param float|null $postModBalance
+     * @param float|null $postPrincipalBalance
      * @return void
      */
-    public function setPostModBalance(?float $postModBalance): void
+    public function setPostPrincipalBalance(?float $postPrincipalBalance): void
     {
-        $this->postModBalance = $postModBalance;
+        $this->postPrincipalBalance = $postPrincipalBalance;
     }
 
 }
