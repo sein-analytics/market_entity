@@ -17,7 +17,7 @@ class BankruptcyAttribute extends EntityRepository
     static array $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'delinquent_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'file_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
         'case_number' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'dismissed_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],

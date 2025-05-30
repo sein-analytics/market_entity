@@ -19,11 +19,11 @@ class ModificationAttribute extends EntityRepository
     static array $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'delinquent_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'modification_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
         'capitalized_amount' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         'modification_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'post_principal_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
     ];
 
     public function fetchNextAvailableId()

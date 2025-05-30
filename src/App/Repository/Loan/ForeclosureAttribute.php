@@ -17,7 +17,7 @@ class ForeclosureAttribute extends EntityRepository
     static array $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'delinquent_attribute' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'foreclosure_start_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
         'foreclosure_bid_amount' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'actual_sale_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
