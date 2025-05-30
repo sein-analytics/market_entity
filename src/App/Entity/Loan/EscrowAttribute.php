@@ -38,7 +38,7 @@ class EscrowAttribute extends DomainObject
     protected $delinquentAttribute;
 
     /**
-     * @ORM\Column (type="float, precision=16, scale=3, nullable=true)
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $totalDebtBalance;
