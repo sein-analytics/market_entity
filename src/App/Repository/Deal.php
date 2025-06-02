@@ -92,6 +92,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $fetchActiveDealUsersAccessSql = 'call FetchActiveDealUsersAccess(:userId, :dealId)';
 
+    private string $fetchCommonUserActiveDealAssetSql = "SELECT asset_type_id FROM Deal WHERE user_id=? AND status_id = 1 GROUP BY asset_type_id ORDER BY COUNT(*) DESC LIMIT 1";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -329,6 +331,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
     {
         return $this->executeProcedure(
             [$userId, $dealId], $this->fetchActiveDealUsersAccessSql
+        );
+    }
+
+    public function fetchCommonUserActiveDealAsset(int $userId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchCommonUserActiveDealAssetSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId]
         );
     }
 
