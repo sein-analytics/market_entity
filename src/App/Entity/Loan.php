@@ -10,8 +10,14 @@ use App\Entity\Data\Cbsa;
 use App\Entity\Data\State;
 use App\Entity\Loan\AmortAttribute;
 use App\Entity\Loan\ArmAttribute;
+use App\Entity\Loan\BankruptcyAttribute;
 use App\Entity\Loan\CommAttribute;
+use App\Entity\Loan\DelinquentAttribute;
 use App\Entity\Loan\DescAttribute;
+use App\Entity\Loan\EscrowAttribute;
+use App\Entity\Loan\ForeclosureAttribute;
+use App\Entity\Loan\LossMitigationAttribute;
+use App\Entity\Loan\ModificationAttribute;
 use App\Entity\Loan\SaleAttribute;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -112,6 +118,42 @@ class Loan extends DomainObject
      * @var SaleAttribute|null
      */
     protected $saleAttributes;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\ModificationAttribute", mappedBy="loan")
+     * @var ModificationAttribute|null
+     */
+    protected $modificationAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\ForeclosureAttribute", mappedBy="loan")
+     * @var ForeclosureAttribute|null
+     */
+    protected $foreclosureAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\BankruptcyAttribute", mappedBy="loan")
+     * @var BankruptcyAttribute|null
+     */
+    protected $bankruptcyAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\LossMitigationAttribute", mappedBy="loan")
+     * @var LossMitigationAttribute|null
+     */
+    protected $lossMitigationAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\EscrowAttribute", mappedBy="loan")
+     * @var EscrowAttribute|null
+     */
+    protected $escrowAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\EscrowAttribute", mappedBy="loan")
+     * @var DelinquentAttribute|null
+     */
+    protected $delinquentAttribute;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
@@ -589,6 +631,108 @@ class Loan extends DomainObject
     public function setPool(Pool $pool):void
     {
         $this->implementChange($this,'pool', $this->pool, $pool);
+    }
+
+    /**
+     * @return ModificationAttribute|null
+     */
+    public function getModificationAttribute(): ?ModificationAttribute
+    {
+        return $this->modificationAttribute;
+    }
+
+    /**
+     * @param ModificationAttribute|null $modificationAttribute
+     * @return void
+     */
+    public function setModificationAttribute(?ModificationAttribute $modificationAttribute): void
+    {
+        $this->modificationAttribute = $modificationAttribute;
+    }
+
+    /**
+     * @return ForeclosureAttribute|null
+     */
+    public function getForeclosureAttribute(): ?ForeclosureAttribute
+    {
+        return $this->foreclosureAttribute;
+    }
+
+    /**
+     * @param ForeclosureAttribute|null $foreclosureAttribute
+     * @return void
+     */
+    public function setForeclosureAttribute(?ForeclosureAttribute $foreclosureAttribute): void
+    {
+        $this->foreclosureAttribute = $foreclosureAttribute;
+    }
+
+    /**
+     * @return BankruptcyAttribute|null
+     */
+    public function getBankruptcyAttribute(): ?BankruptcyAttribute
+    {
+        return $this->bankruptcyAttribute;
+    }
+
+    /**
+     * @param BankruptcyAttribute|null $bankruptcyAttribute
+     * @return void
+     */
+    public function setBankruptcyAttribute(?BankruptcyAttribute $bankruptcyAttribute): void
+    {
+        $this->bankruptcyAttribute = $bankruptcyAttribute;
+    }
+
+    /**
+     * @return LossMitigationAttribute|null
+     */
+    public function getLossMitigationAttribute(): ?LossMitigationAttribute
+    {
+        return $this->lossMitigationAttribute;
+    }
+
+    /**
+     * @param LossMitigationAttribute|null $lossMitigationAttribute
+     * @return void
+     */
+    public function setLossMitigationAttribute(?LossMitigationAttribute $lossMitigationAttribute): void
+    {
+        $this->lossMitigationAttribute = $lossMitigationAttribute;
+    }
+
+    /**
+     * @return EscrowAttribute|null
+     */
+    public function getEscrowAttribute(): ?EscrowAttribute
+    {
+        return $this->escrowAttribute;
+    }
+
+    /**
+     * @param EscrowAttribute|null $escrowAttribute
+     * @return void
+     */
+    public function setEscrowAttribute(?EscrowAttribute $escrowAttribute): void
+    {
+        $this->escrowAttribute = $escrowAttribute;
+    }
+
+    /**
+     * @return DelinquentAttribute|null
+     */
+    public function getDelinquentAttribute(): ?DelinquentAttribute
+    {
+        return $this->delinquentAttribute;
+    }
+
+    /**
+     * @param DelinquentAttribute|null $delinquentAttribute
+     * @return void
+     */
+    public function setDelinquentAttribute(?DelinquentAttribute $delinquentAttribute): void
+    {
+        $this->delinquentAttribute = $delinquentAttribute;
     }
 
     /**

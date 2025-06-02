@@ -22,7 +22,7 @@ class ArmAttribute extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
-    static $table = [
+    static array $table = [
       'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
       'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
       'gross_margin' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NOT NULL'],
@@ -99,6 +99,6 @@ class ArmAttribute extends EntityRepository
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        array_keys(self::$table);
+        return array_keys(self::$table);
     }
 }

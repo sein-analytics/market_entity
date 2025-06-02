@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 
@@ -38,20 +39,21 @@ trait QueryManagerTrait
     /**
      * @param string $tableName
      * @return bool|int
-     * @throws \Doctrine\DBAL\Driver\Exception
-     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNextAvailableTableId(string $tableName) :bool|int
-    {
-        $schemaManager = $this->em->getConnection()->createSchemaManager();
-        if(!$schemaManager->tablesExist(array($tableName))){
+    {//@throws \Doctrine\DBAL\Driver\Exception @throws \Doctrine\DBAL\Exception
+        try {
+            $schemaManager = $this->em->getConnection()->createSchemaManager();
+            if(!$schemaManager->tablesExist(array($tableName))){
+                return false;
+            }
+            $sql = "SELECT MAX(id) FROM $tableName";
+            $stmt = $this->em->getConnection()->prepare($sql);
+            $stmt = $stmt->executeQuery();
+            return $stmt->fetchAssociative()['MAX(id)'] + 1;
+        }catch (Exception $exception){
             return false;
         }
-        $sql = "SELECT MAX(id) FROM $tableName";
-        $stmt = $this->em->getConnection()->prepare($sql);
-        $stmt = $stmt->executeQuery();
-        $result = $stmt->fetchAssociative()['MAX(id)'] + 1;
-        return $result;
     }
 
     /**
