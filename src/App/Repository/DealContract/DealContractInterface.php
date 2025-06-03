@@ -57,8 +57,6 @@ interface DealContractInterface
 
     const DC_BID_ID_KEY = 'bidId';
 
-    const DC_DOC_TYPE_ID_KEY = 'docTypeId';
-
     const DC_CONTRACT_SIGNATURE_ID_KEY = 'contractSignatureId';
 
     const DC_DATE_KEY = 'date';
