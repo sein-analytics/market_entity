@@ -23,6 +23,18 @@ interface DealContractInterface
     
     const DC_QRY_SECURE_URL_KEY = 'secure_url';
 
+    const DC_QRY_USER_ID_KEY = 'user_id';
+
+    const DC_QRY_COMMUNITY_USER_ID_KEY = 'community_user_id';
+
+    const DC_QRY_BID_ID_KEY = 'bid_id';
+
+    const DC_QRY_DOC_TYPE_ID_KEY = 'doc_type_id';
+
+    const DC_QRY_CONTRACT_SIGNATURE_ID = 'contract_signature_id';
+
+    const DC_QRY_DATE_KEY = 'date';
+
     const DC_CONTRACT_NAME_KEY = 'contractName';
 
     const DC_STATUS_KEY = 'status';
@@ -39,4 +51,15 @@ interface DealContractInterface
 
     const DC_FILE_NAME_KEY = 'fileName';
 
+    const DC_USER_ID_KEY = 'userId';
+
+    const DC_COMMUNITY_USER_KEY = 'communityUserId';
+
+    const DC_BID_ID_KEY = 'bidId';
+
+    const DC_DOC_TYPE_ID_KEY = 'docTypeId';
+
+    const DC_CONTRACT_SIGNATURE_ID_KEY = 'contractSignatureId';
+
+    const DC_DATE_KEY = 'date';
 }
