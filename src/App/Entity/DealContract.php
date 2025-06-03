@@ -26,16 +26,40 @@ class DealContract
     protected Deal $deal;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
+     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?Bid $bid;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
      * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=false)
      */
     protected MarketUser $buyer;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?MarketUser $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
+     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?MarketUser $communityUser;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\ContractType")
      * @ORM\JoinColumn(name="contract_type_id", referencedColumnName="id", nullable=false)
      */
     protected ContractType $contractType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
+     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?DocType $docType;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
@@ -67,6 +91,18 @@ class DealContract
      */
      protected ?string $fileName;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected $date = null;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
+     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
+     */
+    protected ?ContractSignature $contractSignature;
+
     function __construct()
     {
         $this->deal = new Deal();
@@ -91,6 +127,16 @@ class DealContract
     public function setDeal(Deal $deal):void { $this->deal = $deal; }
 
     /**
+     * @return Bid|null
+     */
+    public function getBid(): Bid|null{ return $this->bid; }
+
+    /**
+     * @param Bid $Bid
+     */
+    public function setBid(Bid $bid): void { $this->bid = $bid; }
+
+    /**
      * @return MarketUser
      */
     public function getBuyer():MarketUser { return $this->buyer; }
@@ -101,6 +147,26 @@ class DealContract
     public function setBuyer(MarketUser $buyer):void { $this->buyer = $buyer; }
    
     /**
+     * @return MarketUser
+     */
+    public function getUser():MarketUser { return $this->user; }
+
+    /**
+     * @param MarketUser $user
+     */
+    public function setUser(MarketUser $user) { $this->user = $user; }
+
+    /**
+     * @return MarketUser|null
+     */
+    public function getCommunityUser():MarketUser|null { return $this->communityUser; }
+
+    /**
+     * @param MarketUser $communityUser
+     */
+    public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
+
+    /**
      * @return ContractType
      */
     public function getContractType():ContractType { return $this->contractType; }
@@ -110,6 +176,16 @@ class DealContract
      */
     public function setContractType(ContractType $contractType):void { $this->contractType = $contractType; }
     
+    /**
+     * @return DocType
+     */
+    public function getDocType():DocType { return $this->docType; }
+
+    /**
+     * @param DocType $docType
+     */
+    public function setDocType(DocType $docType) { $this->docType = $docType; }
+
     /**
      * @return ContractStatus
      */
@@ -159,5 +235,25 @@ class DealContract
      * @param string
      */
     public function setFileName(string $fileName):void { $this->fileName = $fileName; }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate() : ?\DateTime { return $this->date; }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date) { $this->date = $date; }
+
+    /**
+     * @return ContractSignature|null
+     */
+    public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
+
+    /**
+     * @param ContractSignature $contractSignature
+     */
+    public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
 
 }
