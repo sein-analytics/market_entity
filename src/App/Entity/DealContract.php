@@ -33,45 +33,28 @@ class DealContract
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
-     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=true)
      */
-    protected MarketUser $buyer;
+    protected ?MarketUser $buyer;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    protected ?MarketUser $user;
+    protected MarketUser $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=true)
-     */
-    protected ?MarketUser $communityUser;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractType")
-     * @ORM\JoinColumn(name="contract_type_id", referencedColumnName="id", nullable=false)
-     */
-    protected ContractType $contractType;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
-     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
      */
-    protected ?DocType $docType;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
-     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=false)
-     */
-    protected ContractStatus $contractStatus;
+    protected DocType $docType;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
-     * @ORM\JoinColumn(name="deal_asset_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="deal_asset_id", referencedColumnName="id", nullable=false)
      */
-    protected ?DealAsset $dealAsset;
+    protected DealAsset $dealAsset;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -86,16 +69,16 @@ class DealContract
     protected string $secureUrl = '';
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
      */
-     protected ?string $fileName;
+     protected string $fileName = '';
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      **/
-    protected $date = null;
+    protected $date;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
@@ -107,8 +90,6 @@ class DealContract
     {
         $this->deal = new Deal();
         $this->buyer = new MarketUser();
-        $this->contractType = new ContractType();
-        $this->contractStatus = new ContractStatus();
     }
 
     /**
@@ -139,7 +120,7 @@ class DealContract
     /**
      * @return MarketUser
      */
-    public function getBuyer():MarketUser { return $this->buyer; }
+    public function getBuyer():?MarketUser { return $this->buyer; }
 
     /**
      * @param MarketUser $buyer
@@ -155,26 +136,6 @@ class DealContract
      * @param MarketUser $user
      */
     public function setUser(MarketUser $user) { $this->user = $user; }
-
-    /**
-     * @return MarketUser|null
-     */
-    public function getCommunityUser():MarketUser|null { return $this->communityUser; }
-
-    /**
-     * @param MarketUser $communityUser
-     */
-    public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
-
-    /**
-     * @return ContractType
-     */
-    public function getContractType():ContractType { return $this->contractType; }
-
-    /**
-     * @param ContractType $contractType
-     */
-    public function setContractType(ContractType $contractType):void { $this->contractType = $contractType; }
     
     /**
      * @return DocType
@@ -185,21 +146,11 @@ class DealContract
      * @param DocType $docType
      */
     public function setDocType(DocType $docType) { $this->docType = $docType; }
-
-    /**
-     * @return ContractStatus
-     */
-    public function getContractStatus():ContractStatus { return $this->contractStatus; }
-
-    /**
-     * @param ContractStatus $contractStatus
-     */
-    public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
     
     /**
-     * @return DealAsset|null
+     * @return DealAsset
      */
-    public function getDealAsset():DealAsset|null { return $this->dealAsset; }
+    public function getDealAsset():DealAsset { return $this->dealAsset; }
 
     /**
      * @param DealAsset $dealAsset
@@ -229,7 +180,7 @@ class DealContract
     /**
      * @return null|string
      */
-    public function getFileName():?string { return $this->fileName; }
+    public function getFileName():string { return $this->fileName; }
 
     /**
      * @param string
@@ -239,7 +190,7 @@ class DealContract
     /**
      * @return \DateTime
      */
-    public function getDate() : ?\DateTime { return $this->date; }
+    public function getDate() : \DateTime { return $this->date; }
 
     /**
      * @param \DateTime $date
