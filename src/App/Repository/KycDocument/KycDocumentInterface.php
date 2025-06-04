@@ -23,6 +23,8 @@ interface KycDocumentInterface
 
     const KD_QRY_CONTRACT_STATUS_ID_KEY = 'contract_status_id';
 
+    const KD_QRY_CONTRACT_TYPE_ID_KEY = 'contract_type_id';
+
     const KD_QRY_DATE_KEY = 'date';
 
     const KD_QRY_FILE_NAME = 'file_name';
