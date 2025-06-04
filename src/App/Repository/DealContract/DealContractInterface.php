@@ -11,10 +11,6 @@ interface DealContractInterface
 
     const DC_QRY_CONTRACT_STATUS_KEY = 'status';
 
-    const DC_QRY_CONTRACT_TYPE_ID_KEY = 'contract_type_id';
-
-    const DC_QRY_CONTRACT_STATUS_ID_KEY = 'contract_status_id';
-
     const DC_QRY_DEAL_ASSET_ID_KEY = 'deal_asset_id';
 
     const DC_QRY_ASSET_ID_KEY = 'asset_id';
@@ -23,9 +19,11 @@ interface DealContractInterface
     
     const DC_QRY_SECURE_URL_KEY = 'secure_url';
 
+    const DC_QRY_BUYER_ID_KEY = 'buyer_id';
+
     const DC_QRY_USER_ID_KEY = 'user_id';
 
-    const DC_QRY_COMMUNITY_USER_ID_KEY = 'community_user_id';
+    const DC_QRY_DEAL_ID_KEY = 'deal_id';
 
     const DC_QRY_BID_ID_KEY = 'bid_id';
 
@@ -39,10 +37,6 @@ interface DealContractInterface
 
     const DC_STATUS_KEY = 'status';
 
-    const DC_CONTRACT_TYPE_ID_KEY = 'contractTypeId';
-
-    const DC_CONTRACT_STATUS_ID_KEY = 'contractStatusId';
-
     const DC_DEAL_ASSET_ID_KEY = 'dealAssetId';
 
     const DC_ASSET_ID_KEY = 'assetId';
@@ -53,8 +47,10 @@ interface DealContractInterface
 
     const DC_USER_ID_KEY = 'userId';
 
-    const DC_COMMUNITY_USER_KEY = 'communityUserId';
+    const DC_BUYER_ID_KEY = 'buyerId';
 
+    const DC_DEAL_ID_KEY = 'dealId';
+    
     const DC_BID_ID_KEY = 'bidId';
 
     const DC_CONTRACT_SIGNATURE_ID_KEY = 'contractSignatureId';
