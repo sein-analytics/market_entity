@@ -57,12 +57,6 @@ class DealFile extends EntityRepository
 
     private string $updateContractSignatureIdSql = "UPDATE DealFile SET contract_signature_id=? WHERE id=?";
 
-    private static string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :issuerId, :assetTypeId)";
-
-    private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)";
-
-    private static string $callFetchDealFileDetails = "call FetchDealFileDetails(:dealFileId, :userId)";
-
     private string $fetchDealFileByIdSql = "SELECT * FROM DealFile WHERE id=?";
 
     private string $fetchFilesByDealIdSql = "SELECT * FROM DealFile WHERE deal_id =?";
@@ -253,16 +247,6 @@ class DealFile extends EntityRepository
         ); 
     }
 
-    public function fetchUserDealFilesContracts(int $userId, int $issuerId, int $assetTypeId)
-    {
-        return $this->executeProcedure([$userId, $issuerId, $assetTypeId], self::$callFetchUserDealFilesContracts);
-    }
-
-    public function fetchDealFilesContractsByUser(int $userId, int $issuerId, int $communityUserId, int $communityIssuerId, int $assetTypeId)
-    {
-        return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
-    }
-
     public function fetchDealFileByProps(
         int $dealId, 
         int $docTypeId, 
@@ -351,11 +335,6 @@ class DealFile extends EntityRepository
             self::FETCH_ASSO_MTHD,
             [$dealFileId]
         );
-    }
-
-    public function fetchDealFileDetails(int $dealFileId, int $userId)
-    {
-        return $this->executeProcedure([$dealFileId, $userId], self::$callFetchDealFileDetails);
     }
 
     public function deleteFileById(int $dealFileId)

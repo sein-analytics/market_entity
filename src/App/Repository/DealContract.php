@@ -21,6 +21,12 @@ class DealContract extends DealContractAbstract
 
     private string $deleteFileByIdSql = "DELETE FROM DealContract WHERE id=?";
 
+    private static string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :issuerId, :assetTypeId)";
+
+    private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)";
+
+    private static string $callFetchDealFileDetails = "call FetchDealFileDetails(:dealFileId, :userId)";
+
     public function insertNewDealContract(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -124,6 +130,21 @@ class DealContract extends DealContractAbstract
             self::EXECUTE_MTHD,
             [$dealContractId]
         );
+    }
+
+    public function fetchUserDealFilesContracts(int $userId, int $issuerId, int $assetTypeId)
+    {
+        return $this->executeProcedure([$userId, $issuerId, $assetTypeId], self::$callFetchUserDealFilesContracts);
+    }
+
+    public function fetchDealFilesContractsByUser(int $userId, int $issuerId, int $communityUserId, int $communityIssuerId, int $assetTypeId)
+    {
+        return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
+    }
+
+    public function fetchDealFileDetails(int $dealFileId, int $userId)
+    {
+        return $this->executeProcedure([$dealFileId, $userId], self::$callFetchDealFileDetails);
     }
 
 }
