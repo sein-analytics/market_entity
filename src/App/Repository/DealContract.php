@@ -11,7 +11,7 @@ class DealContract extends DealContractAbstract
 
     use FetchMapperTrait, FetchingTrait;
 
-    private string $insertDealContractSql = "INSERT INTO DealContract VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertDealContractSql = "INSERT INTO DealContract VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $updateDealContractStatusSql = "UPDATE DealContract SET contract_status_id=? WHERE id=?";
 
@@ -83,13 +83,13 @@ class DealContract extends DealContractAbstract
         int $dealId, 
         int $docTypeId, 
         int $userId, 
-        int $communityUserId,
+        int $buyerId,
         ?int $bidId
     ) {
         $query = 
             "SELECT * FROM DealContract WHERE deal_id=? AND doc_type_id=? " .
-                "AND user_id=? AND community_user_id=?";
-        $params = [$dealId, $docTypeId, $userId, $communityUserId];
+                "AND user_id=? AND buyer_id=?";
+        $params = [$dealId, $docTypeId, $userId, $buyerId];
 
         if (!is_null($bidId)) {
             $query = $query . " AND bid_id=?";
