@@ -27,6 +27,7 @@ class PayHistoryAttribute extends DomainObject
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="payHistoryAttribute")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
     protected $loan;
