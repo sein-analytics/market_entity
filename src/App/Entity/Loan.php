@@ -18,6 +18,7 @@ use App\Entity\Loan\EscrowAttribute;
 use App\Entity\Loan\ForeclosureAttribute;
 use App\Entity\Loan\LossMitigationAttribute;
 use App\Entity\Loan\ModificationAttribute;
+use App\Entity\Loan\PayHistoryAttribute;
 use App\Entity\Loan\SaleAttribute;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -154,6 +155,12 @@ class Loan extends DomainObject
      * @var DelinquentAttribute|null
      */
     protected $delinquentAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\PayHistoryAttribute", mappedBy="loan")
+     * @var PayHistoryAttribute|null
+     */
+    protected $payHistoryAttribute;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
@@ -727,12 +734,29 @@ class Loan extends DomainObject
     }
 
     /**
+     * @return PayHistoryAttribute|null
+     */
+    public function getPayHistoryAttribute(): ?PayHistoryAttribute
+    {
+        return $this->payHistoryAttribute;
+    }
+
+    /**
      * @param DelinquentAttribute|null $delinquentAttribute
      * @return void
      */
     public function setDelinquentAttribute(?DelinquentAttribute $delinquentAttribute): void
     {
         $this->delinquentAttribute = $delinquentAttribute;
+    }
+
+    /**
+     * @param PayHistoryAttribute|null $payHistoryAttribute
+     * @return void
+     */
+    public function setPayHistoryAttribute(?PayHistoryAttribute $payHistoryAttribute): void
+    {
+        $this->payHistoryAttribute = $payHistoryAttribute;
     }
 
     /**
