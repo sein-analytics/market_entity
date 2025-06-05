@@ -25,6 +25,7 @@ class DelinquentAttribute extends DomainObject
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="delinquentAttribute")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
     protected $loan;

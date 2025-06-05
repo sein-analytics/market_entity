@@ -33,6 +33,7 @@ class ModificationAttribute extends DomainObject
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="modificationAttribute")
+     * @ORM\JoinColumn(name="delinquent_attribute_id", referencedColumnName="id", nullable=false)
      * @var DelinquentAttribute
      */
     protected $delinquentAttribute;
