@@ -14,7 +14,22 @@ class PayHistoryAttribute extends EntityRepository
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
-    static array $table = [];
+    static array $table = [
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'history1' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history2' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history3' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history4' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history5' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history6' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history7' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history8' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history9' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history10' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history11' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history12' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+    ];
 
     public function fetchNextAvailableId()
     {
