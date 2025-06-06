@@ -154,6 +154,18 @@ class DelinquentAttribute extends DomainObject
      * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    protected ?string $subStatus;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $subStatusNotes;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
     protected ?string $generalNotes;
 
     /**
@@ -527,6 +539,40 @@ class DelinquentAttribute extends DomainObject
     public function getGeneralNotes(): ?string
     {
         return $this->generalNotes;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubStatus(): ?string
+    {
+        return $this->subStatus;
+    }
+
+    /**
+     * @param string|null $subStatus
+     * @return void
+     */
+    public function setSubStatus(?string $subStatus): void
+    {
+        $this->subStatus = $subStatus;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubStatusNotes(): ?string
+    {
+        return $this->subStatusNotes;
+    }
+
+    /**
+     * @param string|null $subStatusNotes
+     * @return void
+     */
+    public function setSubStatusNotes(?string $subStatusNotes): void
+    {
+        $this->subStatusNotes = $subStatusNotes;
     }
 
     /**

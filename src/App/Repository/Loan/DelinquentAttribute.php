@@ -36,7 +36,7 @@ class DelinquentAttribute extends EntityRepository
 
     public function fetchNextAvailableId()
     {
-        return $this->fetchNextAvailableTableId('ForeclosureAttribute');
+        return $this->fetchNextAvailableTableId('DelinquentAttribute');
     }
 
     public function fetchEntityPropertiesForSql(string $subType = null)
