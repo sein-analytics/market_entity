@@ -163,6 +163,12 @@ class Loan extends DomainObject
     protected $payHistoryAttribute;
 
     /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\PropertyAttribute", mappedBy="loan")
+     * @var PayHistoryAttribute|null
+     */
+    protected $propertyAttribute;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
      * @ORM\JoinColumn(name="pool_id", referencedColumnName="id", nullable=false)
      * @var Pool

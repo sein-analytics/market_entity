@@ -30,7 +30,7 @@ class EscrowAttribute extends EntityRepository
 
     public function fetchNextAvailableId()
     {
-        return $this->fetchNextAvailableTableId('ForeclosureAttribute');
+        return $this->fetchNextAvailableTableId('EscrowAttribute');
     }
 
     public function fetchEntityPropertiesForSql(string $subType = null)
