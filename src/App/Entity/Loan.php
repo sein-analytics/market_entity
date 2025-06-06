@@ -221,19 +221,25 @@ class Loan extends DomainObject
      * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $originationDate;
+    protected \DateTime $originationDate;
 
     /**
      * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $currentDueforDate;
+    protected \DateTime $currentDueforDate;
+
+    /**
+     * @ORM\Column(type = "datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected ?\DateTime $asOfDate;
 
     /**
      * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $firstPaymentDate;
+    protected \DateTime $firstPaymentDate;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -245,7 +251,7 @@ class Loan extends DomainObject
      * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $finalDueforDate;
+    protected \DateTime $finalDueforDate;
 
     /**
      * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
@@ -867,6 +873,23 @@ class Loan extends DomainObject
     public function setCurrentDueforDate(\DateTime $currentDueforDate):void
     {
         $this->implementChange($this,'currentDueforDate', $this->currentDueforDate, $currentDueforDate);
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getAsOfDate(): ?\DateTime
+    {
+        return $this->asOfDate;
+    }
+
+    /**
+     * @param \DateTime|null $asOfDate
+     * @return void
+     */
+    public function setAsOfDate(?\DateTime $asOfDate): void
+    {
+        $this->asOfDate = $asOfDate;
     }
 
     /**
