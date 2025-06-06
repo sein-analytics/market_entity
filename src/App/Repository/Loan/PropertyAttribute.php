@@ -16,6 +16,11 @@ class PropertyAttribute extends EntityRepository
     static array $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'address' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'report_links' => [self::DATA_TYPE => 'array', self::DATA_DEFAULT => 'NULL'],
+        'price_comps' => [self::DATA_TYPE => 'array', self::DATA_DEFAULT => 'NULL'],
+        'property_pictures' => [self::DATA_TYPE => 'array', self::DATA_DEFAULT => 'NULL'],
+        'property_links' => [self::DATA_TYPE => 'array', self::DATA_DEFAULT => 'NULL'],
     ];
 
     public function fetchNextAvailableId()
