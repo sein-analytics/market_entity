@@ -45,7 +45,7 @@ class ModificationAttribute extends DomainObject
     protected ?\DateTime $modificationDate;
 
     /**
-     * @ORM\Column (type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $capitalizedAmount;
@@ -57,7 +57,7 @@ class ModificationAttribute extends DomainObject
     protected ?string $modificationStatus;
 
     /**
-     * @ORM\Column (type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $postPrincipalBalance;

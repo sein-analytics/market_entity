@@ -76,7 +76,7 @@ abstract class Fee extends AbstractTyped
     protected int $isDealFee = 1;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null
      */
     protected float|null $periodTotalFees;

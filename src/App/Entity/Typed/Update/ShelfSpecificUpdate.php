@@ -41,67 +41,67 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
 
     /**
      * @var float $amountDue
-     * @ORM\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
     public float $amountDue = 0;
 
     /**
      * @var float $amountPaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
     public float $amountPaid = 0;
 
     /**
      * @var float $currentAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
     public float $currentAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
     public float $cumulativeAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
     public float $beginningBalance = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
     public float $endingBalance = 0;
 
     /**
      * @var float|null $interestRate
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $interestRate;
 
     /**
      * @var float|null $interestRate
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $deferredAmount;
 
     /**
      * @var float|null $calculatedInterest
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $calculatedInterest;
 
     /**
      * @var float|null $interestPaid
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $interestPaid;
 
     /**
      * @var float|null $unpaidInterest
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $unpaidInterest;
 

@@ -73,13 +73,13 @@ class Pool extends DomainObject
     protected int $bondsCount = 0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      */
     protected float $bondsTotalBalance = 0.0;
 
     /**
-     * @ORM\Column(type = "decimal", precision=14, scale=2)
+     * @ORM\Column(type = "float", precision=14, scale=2)
      * @var float
      */
     protected float $loanTotalBalance = 0.0;
@@ -91,7 +91,7 @@ class Pool extends DomainObject
     protected int $loansCount = 0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      */
     protected float $originalBalance=0.0;

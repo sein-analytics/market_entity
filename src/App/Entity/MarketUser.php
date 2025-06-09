@@ -251,13 +251,13 @@ class MarketUser
     protected int $authyId = 0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $closedVolume = 0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $dealVolume = 0;

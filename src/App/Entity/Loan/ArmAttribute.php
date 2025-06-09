@@ -39,17 +39,17 @@ class ArmAttribute extends DomainObject
     protected $loan;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true)
+     * @ORM\Column(type="float", precision=18, scale=15, nullable=true)
      */
     protected float|null $grossMargin = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true) *
+     * @ORM\Column(type="float", precision=18, scale=15, nullable=true) *
      */
     protected float $minimumRate = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true)
+     * @ORM\Column(type="float", precision=18, scale=15, nullable=true)
      */
     protected float $maximumRate = 0.0;
 
@@ -84,12 +84,12 @@ class ArmAttribute extends DomainObject
     protected int|null $rateAdjFrequency;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      */
     protected float|null $periodicCap;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      */
     protected float|null $initialCap;
 
@@ -99,7 +99,7 @@ class ArmAttribute extends DomainObject
     protected int|null $pmntAdjFrequency;
 
     /**
-     * @ORM\Column(type ="decimal", precision=14, scale=5, nullable=true)
+     * @ORM\Column(type ="float", precision=14, scale=5, nullable=true)
      */
     protected float|null $pmntIncreaseCap;
 

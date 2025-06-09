@@ -42,7 +42,7 @@ class Component
     protected string $componentName;
 
     /**
-     * @ORM\Column(type="decimal", precision=6, scale=5, nullable=true) *
+     * @ORM\Column(type="float", precision=6, scale=5, nullable=true) *
      */
     protected float $fixedRate;
 

@@ -78,7 +78,7 @@ abstract class ShelfSpecific extends AbstractTyped
 
     /**
      * @var float|null $fixedRAte
-     * @ORM\Column(type = "decimal", precision=7, scale=6, nullable=true)
+     * @ORM\Column(type = "float", precision=7, scale=6, nullable=true)
      **/
     protected float|null $fixedRate;
 
@@ -114,7 +114,7 @@ abstract class ShelfSpecific extends AbstractTyped
 
     /**
      * @var float|null $originalBalance
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     protected float|null $originalBalance;
 

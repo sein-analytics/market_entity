@@ -92,13 +92,13 @@ class Deal extends DealAbstract
     protected int $paymentDay = 1;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) *
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false) *
      * @var float
      */
     protected float $currentBalance=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false) *
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false) *
      * @var float
      */
     protected float $originalBalance=0.0;
@@ -128,7 +128,7 @@ class Deal extends DealAbstract
     protected $stats;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $priorOC;

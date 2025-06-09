@@ -48,7 +48,7 @@ use App\Entity\Period;
 
     /**
      * @var float|null $fixedAmount
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true) **/
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true) **/
     protected float|null $fixed;
 
     /**
