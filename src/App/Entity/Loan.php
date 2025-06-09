@@ -218,7 +218,7 @@ class Loan extends DomainObject
     protected float $currentRate=0.0;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=false)
+     * @ORM\Column(type = "datetime", nullable=true)
      * @var \DateTime
      **/
     protected \DateTime $originationDate;
@@ -543,6 +543,12 @@ class Loan extends DomainObject
      * @var array|null
      **/
     protected $prepayStepDown;
+
+    /**
+     * @ORM\Column(type = "datetime", nullable=true)
+     * @var \DateTime
+     **/
+    protected \DateTime $maturityDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")
@@ -1595,6 +1601,16 @@ class Loan extends DomainObject
     {
         $string = json_encode($prepayStepDown);
         $this->implementChange($this,'prepayStepDown', $this->prepayStepDown, $string);
+    }
+
+    public function getMaturityDate(): \DateTime
+    {
+        return $this->maturityDate;
+    }
+
+    public function setMaturityDate(\DateTime $maturityDate): void
+    {
+        $this->maturityDate = $maturityDate;
     }
 
     /**

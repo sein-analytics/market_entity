@@ -104,6 +104,7 @@ class Loan extends EntityRepository
         self::PP_PNLTY_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         self::PP_PNLTY_STEP_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
         'as_of_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
+        'maturity_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
     ];
 
     private string $fetchLoanIdsByPoolIdsSql = "SELECT id FROM loans WHERE pool_id IN (?)";
