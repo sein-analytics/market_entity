@@ -4,6 +4,8 @@ namespace App\Repository\ContractSignature;
 
 interface ContractSignatureInterface
 {
+    const CS_QRY_ID_KEY = 'id';
+
     const CS_QRY_SENDER_ID_KEY = 'sender_id';
 
     const CS_QRY_RECEIVER_ID_KEY = 'receiver_id';
@@ -49,6 +51,17 @@ interface ContractSignatureInterface
     const CONTRACT_STATUS_RECEIVER_SIGNED_ID = 3;
 
     const CONTRACT_STATUS_EXECUTED_ID = 4; 
+
+    const CS_BASE_INSERT_PARAMS = [
+        self::CS_QRY_ID_KEY => null,
+        self::CS_QRY_SENDER_ID_KEY => null,
+        self::CS_QRY_RECEIVER_ID_KEY => null,
+        self::CS_QRY_CONTRACT_STATUS_ID_KEY => self::CONTRACT_STATUS_SIGN_PENDING_ID,
+        self::CS_QRY_SENDER_SIGNATURE_KEY => null,
+        self::CS_QRY_RECEIVER_SIGNATURE_KEY => null,
+        self::CS_QRY_SIGNATURE_ID_KEY => null,
+        self::CS_QRY_PUBLIC_ID_KEY => null,
+    ];
 
     const CONTRACT_STATUS_IDS_MAP = [
         self::CONTRACT_STATUS_SIGN_PENDING =>
