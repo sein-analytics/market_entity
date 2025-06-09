@@ -26,6 +26,8 @@ class ContractSignature extends EntityRepository
 
     private string $fetchContractSignatureByIdSql = "SELECT * FROM ContractSignature WHERE id=?";
 
+    private string $fetchContractSignatureByPublicIdSql = "SELECT * FROM ContractSignature WHERE public_id=?";
+
     public function insertNewContractSignature(array $params):mixed
     {
         if (array_key_exists(self::QUERY_JUST_ID, $params))
@@ -66,6 +68,16 @@ class ContractSignature extends EntityRepository
             $this->fetchContractSignatureBySignIdSql,
             self::FETCH_ASSO_MTHD,
             [$signatureId]
+        );
+    }
+
+    public function fetchContractSignatureByPublicId(string $publicId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchContractSignatureByPublicIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$publicId]
         );
     }
 
