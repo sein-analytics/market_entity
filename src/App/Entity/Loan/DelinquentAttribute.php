@@ -169,6 +169,18 @@ class DelinquentAttribute extends DomainObject
     protected ?string $generalNotes;
 
     /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $suspenseBalance;
+
+    /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $deferredBalance;
+
+    /**
      * @return int
      */
     public function getId(): int
