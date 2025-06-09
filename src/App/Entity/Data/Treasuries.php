@@ -23,7 +23,7 @@ class Treasuries
      **/
     protected string $name;
 
-    /** @ORM\Column(type="decimal", precision=9, scale=6, nullable = true) **/
+    /** @ORM\Column(type="float", precision=9, scale=6, nullable = true) **/
     protected float $value;
 
     /**

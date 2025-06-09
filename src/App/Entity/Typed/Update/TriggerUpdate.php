@@ -44,13 +44,13 @@ class TriggerUpdate extends AbstractTypeUpdate
 
     /**
      * @var float $threshold
-     * @ORM\Column(type="decimal", precision=14, scale=3)
+     * @ORM\Column(type="float", precision=14, scale=3)
      */
     public float $threshold = 0;
 
     /**
      * @var float $actual
-     * @ORM\Column(type="decimal", precision=14, scale=3)
+     * @ORM\Column(type="float", precision=14, scale=3)
      */
     public float $actual = 0;
 

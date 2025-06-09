@@ -21,6 +21,7 @@ class PropertyAttribute extends EntityRepository
         'price_comps' => [self::DATA_TYPE => 'array', self::DATA_DEFAULT => 'NULL'],
         'property_pictures' => [self::DATA_TYPE => 'array', self::DATA_DEFAULT => 'NULL'],
         'property_links' => [self::DATA_TYPE => 'array', self::DATA_DEFAULT => 'NULL'],
+        'seller_as_is_value' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
     ];
 
     public function fetchNextAvailableId()

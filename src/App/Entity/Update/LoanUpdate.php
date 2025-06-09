@@ -51,13 +51,13 @@ class LoanUpdate extends DomainObject
     protected $period;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4)
+     * @ORM\Column(type="float", precision=14, scale=4)
      * @var float
      **/
     protected float $beginningBalance = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4)
+     * @ORM\Column(type="float", precision=14, scale=4)
      * @var float
      **/
     protected float $endingBalance = 0.0;
@@ -69,49 +69,49 @@ class LoanUpdate extends DomainObject
     protected ?\DateTime $dueforDate;
 
     /**
-     * @ORM\Column(type="decimal", precision=7, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=7, scale=4, nullable=true)
      * @var float
      **/
     protected float $currentRate = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      */
     protected ?float $monthlyPayment = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var float|null
      **/
     protected ?float $principalPayment = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $interestPayment = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $tiPayment = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $lossAmount = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $prepaymentAmount = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $defaultingAmount = 0.0;
@@ -147,43 +147,43 @@ class LoanUpdate extends DomainObject
     protected ?int $nextPaymentAdjustmentPeriod;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $netRate= 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $unsupportedIntShortfall;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $servicingDues = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $latePaymentDues = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $recoveries = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $interestShortfall = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $compensatingInterest = 0.0;
@@ -195,7 +195,7 @@ class LoanUpdate extends DomainObject
     protected ?int $loanDelinquencyStatus;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $escrowBalance = 0.0;

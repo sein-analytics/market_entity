@@ -77,7 +77,7 @@ class Loan extends EntityRepository
         self::PUR_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
         self::OCCU_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
         self::DWELL_TYPE_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
-        self::ADDR_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        //self::ADDR_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         self::CITY_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
         self::ZIP_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NOT NULL'],
         self::ASST_ATTR_KEY => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
@@ -102,7 +102,8 @@ class Loan extends EntityRepository
         self::DEALR_RSVS_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
         self::PP_PNLTY_TERM_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
         self::PP_PNLTY_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        self::PP_PNLTY_STEP_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL']
+        self::PP_PNLTY_STEP_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL'],
+        'as_of_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL'],
     ];
 
     private string $fetchLoanIdsByPoolIdsSql = "SELECT id FROM loans WHERE pool_id IN (?)";
@@ -147,12 +148,32 @@ class Loan extends EntityRepository
             "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
             " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap, lnState.abbreviation AS state, ".
             " SaleAttribute.availability, CommAttribute.dscr, CommAttribute.noi, CommAttribute.net_worth_to_loan, CommAttribute.profit_ratio, CommAttribute.loan_to_cost_ratio, ".
-            "CommAttribute.debt_yield_ratio, CommAttribute.vacancy_rate, CommAttribute.lockout_period, CommAttribute.defeasance_date, CommAttribute.cap_rate ".
+            " CommAttribute.debt_yield_ratio, CommAttribute.vacancy_rate, CommAttribute.lockout_period, CommAttribute.defeasance_date, CommAttribute.cap_rate, ".
+            " DelinquencyAttribute.servicer, DelinquencyAttribute.sub_servicer, DelinquencyAttribute.servicer_notes, DelinquencyAttribute.sub_servicer_notes, DelinquencyAttribute.servicer_status, DelinquencyAttribute.sub_servicer_status, ".
+            " DelinquencyAttribute.master_servicer, DelinquencyAttribute.master_servicer_status, DelinquencyAttribute.asset_manager, DelinquencyAttribute.asset_manager_status, DelinquencyAttribute.asset_manager_sub_status, DelinquencyAttribute.days_delinquent, ".
+            " DelinquencyAttribute.delinquent_principal, DelinquencyAttribute.delinquent_interest, DelinquencyAttribute.total_delinquent_balance, DelinquencyAttribute.general_notes, DelinquencyAttribute.sub_status, DelinquencyAttribute.sub_status_notes, ".
+            " EscrowAttribute.total_debt_balance, EscrowAttribute.accrued_late_fees, EscrowAttribute.escrow_balance, EscrowAttribute.restricted_escrow, EscrowAttribute.escrow_advance_balance, EscrowAttribute.corp_advance_balance, ".
+            " EscrowAttribute.third_party_balance, EscrowAttribute.accrued_balance, EscrowAttribute.tax_and_insurance_payment, ".
+            " ForeclosureAttribute.foreclosure_start_date, ForeclosureAttribute.foreclosure_bid_amount, ForeclosureAttribute.actual_sale_date, ForeclosureAttribute.judgement_date, ForeclosureAttribute.referred_to_atty_date, ForeclosureAttribute.service_complete_date, ".
+            " ForeclosureAttribute.foreclosure_status, ForeclosureAttribute.schedule_sale_date, ForeclosureAttribute.completed_date, ForeclosureAttribute.removal_date, ForeclosureAttribute.suspended_date, ForeclosureAttribute.foreclosure_type, ".
+            " ForeclosureAttribute.foreclosure_type, ForeclosureAttribute.next_step_date, ForeclosureAttribute.referral_date, ".
+            " LossMitigationAttribute.setup_date, LossMitigationAttribute.loss_mitigation_status, LossMitigationAttribute.removal_date, ".
+            " ModificationAttribute.modification_date, ModificationAttribute.capitalized_amount, ModificationAttribute.modification_status, ModificationAttribute.post_principal_balance, ".
+            " PayHistoryAttribute.history1, PayHistoryAttribute.history2, PayHistoryAttribute.history3, PayHistoryAttribute.history4, PayHistoryAttribute.history5, PayHistoryAttribute.history6, ".
+            " PayHistoryAttribute.history7, PayHistoryAttribute.history8, PayHistoryAttribute.history9, PayHistoryAttribute.history10, PayHistoryAttribute.history11, PayHistoryAttribute.history12, ".
+            " PropertyAttribute.address, PropertyAttribute.report_links, PropertyAttribute.price_comps, PropertyAttribute.property_pictures, PropertyAttribute.property_links, PropertyAttribute.seller_as_is_value ".
             "FROM loans ".
             "LEFT JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id " .
             "LEFT JOIN SaleAttribute ON SaleAttribute.loan_id = loans.id " .
             "LEFT JOIN CommAttribute ON CommAttribute.loan_id = loans.id " .
-            "LEFT JOIN  State lnState ON  lnState.id = loans.state_id " .
+            "LEFT JOIN State lnState ON  lnState.id = loans.state_id " .
+            "LEFT JOIN DelinquentAttribute ON DelinquentAttribute.loan_id = loans.id " .
+            "LEFT JOIN EscrowAttribute ON EscrowAttribute.loan_id = loans.id " .
+            "LEFT JOIN ForeclosureAttribute ON ForeclosureAttribute.loan_id = loans.id " .
+            "LEFT JOIN LossMitigationAttribute ON LossMitigationAttribute.loan_id = loans.id " .
+            "LEFT JOIN ModificationAttribute ON ModificationAttribute.loan_id = loans.id " .
+            "LEFT JOIN PayHistoryAttribute ON PayHistoryAttribute.loan_id = loans.id " .
+            "LEFT JOIN PropertyAttribute ON PropertyAttribute.loan_id = loans.id " .
             "WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
         $armLoans = $this->fetchByIntArray($this->em, $ids, $sql);
         $loansId = [];

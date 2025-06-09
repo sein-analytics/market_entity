@@ -41,7 +41,7 @@ class SaleAttribute extends DomainObject
 
     /**
      * @var float
-     * @ORM\Column(type="decimal", precision=6, scale=5, nullable = true)
+     * @ORM\Column(type="float", precision=6, scale=5, nullable = true)
      */
     protected float $availability = 1.0;
 

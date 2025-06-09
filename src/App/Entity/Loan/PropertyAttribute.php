@@ -32,7 +32,7 @@ class PropertyAttribute extends DomainObject
     protected $loan;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected string $address;
@@ -60,6 +60,12 @@ class PropertyAttribute extends DomainObject
      * @var array | null
      **/
     protected ?array $propertyLinks;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * @var float | null
+     **/
+    protected ?float $sellerAsIsValue;
 
     /**
      * @return int
@@ -169,6 +175,16 @@ class PropertyAttribute extends DomainObject
     public function setPropertyLinks(?array $propertyLinks): void
     {
         $this->propertyLinks = $propertyLinks;
+    }
+
+    public function getSellerAsIsValue(): ?float
+    {
+        return $this->sellerAsIsValue;
+    }
+
+    public function setSellerAsIsValue(?float $sellerAsIsValue): void
+    {
+        $this->sellerAsIsValue = $sellerAsIsValue;
     }
 
 }

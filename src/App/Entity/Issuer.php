@@ -58,16 +58,16 @@ class Issuer extends AnnotationMappings
      * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $approvedDate;
+    protected \DateTime $approvedDate;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $equity=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $outstanding=0.0;
