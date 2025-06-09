@@ -152,6 +152,7 @@ class Loan extends EntityRepository
             " DelinquencyAttribute.servicer, DelinquencyAttribute.sub_servicer, DelinquencyAttribute.servicer_notes, DelinquencyAttribute.sub_servicer_notes, DelinquencyAttribute.servicer_status, DelinquencyAttribute.sub_servicer_status, ".
             " DelinquencyAttribute.master_servicer, DelinquencyAttribute.master_servicer_status, DelinquencyAttribute.asset_manager, DelinquencyAttribute.asset_manager_status, DelinquencyAttribute.asset_manager_sub_status, DelinquencyAttribute.days_delinquent, ".
             " DelinquencyAttribute.delinquent_principal, DelinquencyAttribute.delinquent_interest, DelinquencyAttribute.total_delinquent_balance, DelinquencyAttribute.general_notes, DelinquencyAttribute.sub_status, DelinquencyAttribute.sub_status_notes, ".
+            " DelinquencyAttribute.suspense_balance, DelinquencyAttribute.deferred_balance, ".
             " EscrowAttribute.total_debt_balance, EscrowAttribute.accrued_late_fees, EscrowAttribute.escrow_balance, EscrowAttribute.restricted_escrow, EscrowAttribute.escrow_advance_balance, EscrowAttribute.corp_advance_balance, ".
             " EscrowAttribute.third_party_balance, EscrowAttribute.accrued_balance, EscrowAttribute.tax_and_insurance_payment, ".
             " ForeclosureAttribute.foreclosure_start_date, ForeclosureAttribute.foreclosure_bid_amount, ForeclosureAttribute.actual_sale_date, ForeclosureAttribute.judgement_date, ForeclosureAttribute.referred_to_atty_date, ForeclosureAttribute.service_complete_date, ".
