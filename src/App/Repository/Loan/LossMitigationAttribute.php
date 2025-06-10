@@ -20,7 +20,7 @@ class LossMitigationAttribute extends EntityRepository
         'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
         'setup_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
         'loss_mitigation_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'removal_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        'loss_mit_removal_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
     ];
 
     public function fetchNextAvailableId()

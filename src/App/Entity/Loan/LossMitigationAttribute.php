@@ -55,7 +55,7 @@ class LossMitigationAttribute extends DomainObject
      * @ORM\Column (type = "datetime", nullable = true)
      * @var ?\DateTime
      */
-    protected ?\DateTime $removalDate;
+    protected ?\DateTime $lossMitRemovalDate;
 
     /**
      * @return int
@@ -138,16 +138,16 @@ class LossMitigationAttribute extends DomainObject
      */
     public function getRemovalDate(): ?\DateTime
     {
-        return $this->removalDate;
+        return $this->lossMitRemovalDate;
     }
 
     /**
-     * @param \DateTime|null $removalDate
+     * @param \DateTime|null $lossMitRemovalDate
      * @return void
      */
-    public function setRemovalDate(?\DateTime $removalDate): void
+    public function setRemovalDate(?\DateTime $lossMitRemovalDate): void
     {
-        $this->removalDate = $removalDate;
+        $this->lossMitRemovalDate = $lossMitRemovalDate;
     }
 
 }
