@@ -104,6 +104,11 @@ class ArmAttribute extends DomainObject
     protected float|null $pmntIncreaseCap;
 
     /**
+     * @ORM\Column(type = "datetime", nullable=true)
+     */
+    protected \DateTime|null $armExpirationDate;
+
+    /**
      * @return mixed
      */
     public function getId():int
@@ -333,5 +338,22 @@ class ArmAttribute extends DomainObject
     public function setPmntIncreaseCap(float $pmntIncreaseCap):void
     {
         $this->implementChange($this,'pmntIncreaseCap', $this->pmntIncreaseCap, $pmntIncreaseCap);
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getArmExpirationDate(): ?\DateTime
+    {
+        return $this->armExpirationDate;
+    }
+
+    /**
+     * @param \DateTime|null $armExpirationDate
+     * @return void
+     */
+    public function setArmExpirationDate(?\DateTime $armExpirationDate): void
+    {
+        $this->armExpirationDate = $armExpirationDate;
     }
 }
