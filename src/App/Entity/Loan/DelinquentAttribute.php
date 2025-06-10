@@ -181,6 +181,12 @@ class DelinquentAttribute extends DomainObject
     protected ?float $deferredBalance;
 
     /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $accruedInterest;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -596,5 +602,55 @@ class DelinquentAttribute extends DomainObject
         $this->generalNotes = $generalNotes;
     }
 
+    /**
+     * @return float|null
+     */
+    public function getSuspenseBalance(): ?float
+    {
+        return $this->suspenseBalance;
+    }
+
+    /**
+     * @param float|null $suspenseBalance
+     * @return void
+     */
+    public function setSuspenseBalance(?float $suspenseBalance): void
+    {
+        $this->suspenseBalance = $suspenseBalance;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getDeferredBalance(): ?float
+    {
+        return $this->deferredBalance;
+    }
+
+    /**
+     * @param float|null $deferredBalance
+     * @return void
+     */
+    public function setDeferredBalance(?float $deferredBalance): void
+    {
+        $this->deferredBalance = $deferredBalance;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getAccruedInterest(): ?float
+    {
+        return $this->accruedInterest;
+    }
+
+    /**
+     * @param float|null $accruedInterest
+     * @return void
+     */
+    public function setAccruedInterest(?float $accruedInterest): void
+    {
+        $this->accruedInterest = $accruedInterest;
+    }
 
 }

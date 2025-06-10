@@ -36,6 +36,7 @@ class DelinquentAttribute extends EntityRepository
         'sub_status_notes' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'suspense_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'deferred_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
+        'accrued_interest' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
     ];
 
     public function fetchNextAvailableId()
