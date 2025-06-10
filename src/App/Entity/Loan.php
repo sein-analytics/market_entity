@@ -548,7 +548,7 @@ class Loan extends DomainObject
      * @ORM\Column(type = "datetime", nullable=true)
      * @var \DateTime
      **/
-    protected \DateTime $maturityDate;
+    protected \DateTime $purchaseDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")
@@ -1603,14 +1603,14 @@ class Loan extends DomainObject
         $this->implementChange($this,'prepayStepDown', $this->prepayStepDown, $string);
     }
 
-    public function getMaturityDate(): \DateTime
+    public function getPurchaseDate(): \DateTime
     {
-        return $this->maturityDate;
+        return $this->purchaseDate;
     }
 
-    public function setMaturityDate(\DateTime $maturityDate): void
+    public function setPurchaseDate(\DateTime $purchaseDate): void
     {
-        $this->maturityDate = $maturityDate;
+        $this->purchaseDate = $purchaseDate;
     }
 
     /**
