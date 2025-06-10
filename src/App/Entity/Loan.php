@@ -16,6 +16,7 @@ use App\Entity\Loan\DelinquentAttribute;
 use App\Entity\Loan\DescAttribute;
 use App\Entity\Loan\EscrowAttribute;
 use App\Entity\Loan\ForeclosureAttribute;
+use App\Entity\Loan\InterestOnlyAttribute;
 use App\Entity\Loan\LossMitigationAttribute;
 use App\Entity\Loan\ModificationAttribute;
 use App\Entity\Loan\PayHistoryAttribute;
@@ -151,10 +152,16 @@ class Loan extends DomainObject
     protected $escrowAttribute;
 
     /**
-     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\EscrowAttribute", mappedBy="loan")
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\DelinquentAttribute", mappedBy="loan")
      * @var DelinquentAttribute|null
      */
     protected $delinquentAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\InterestOnlyAttribute", mappedBy="loan")
+     * @var InterestOnlyAttribute|null
+     */
+    protected $interestOnlyAttribute;
 
     /**
      * @ORM\OneToOne (targetEntity="\App\Entity\Loan\PayHistoryAttribute", mappedBy="loan")
@@ -743,6 +750,22 @@ class Loan extends DomainObject
     public function getDelinquentAttribute(): ?DelinquentAttribute
     {
         return $this->delinquentAttribute;
+    }
+
+    /**
+     * @return PayHistoryAttribute|null
+     */
+    public function getPropertyAttribute(): ?PayHistoryAttribute
+    {
+        return $this->propertyAttribute;
+    }
+
+    /**
+     * @return InterestOnlyAttribute|null
+     */
+    public function getInterestOnlyAttribute(): ?InterestOnlyAttribute
+    {
+        return $this->interestOnlyAttribute;
     }
 
     /**
