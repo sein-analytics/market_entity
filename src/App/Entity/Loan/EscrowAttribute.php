@@ -94,6 +94,12 @@ class EscrowAttribute extends DomainObject
     protected ?float $taxAndInsurancePayment;
 
     /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $totalPiti;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -288,5 +294,14 @@ class EscrowAttribute extends DomainObject
         $this->taxAndInsurancePayment = $taxAndInsurancePayment;
     }
 
+    public function getTotalPiti(): ?float
+    {
+        return $this->totalPiti;
+    }
+
+    public function setTotalPiti(?float $totalPiti): void
+    {
+        $this->totalPiti = $totalPiti;
+    }
 
 }
