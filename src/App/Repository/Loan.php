@@ -163,7 +163,8 @@ class Loan extends EntityRepository
             " ModificationAttribute.modification_date, ModificationAttribute.capitalized_amount, ModificationAttribute.modification_status, ModificationAttribute.post_principal_balance, ".
             " PayHistoryAttribute.history1, PayHistoryAttribute.history2, PayHistoryAttribute.history3, PayHistoryAttribute.history4, PayHistoryAttribute.history5, PayHistoryAttribute.history6, ".
             " PayHistoryAttribute.history7, PayHistoryAttribute.history8, PayHistoryAttribute.history9, PayHistoryAttribute.history10, PayHistoryAttribute.history11, PayHistoryAttribute.history12, ".
-            " PropertyAttribute.address, PropertyAttribute.report_links, PropertyAttribute.price_comps, PropertyAttribute.property_pictures, PropertyAttribute.property_links, PropertyAttribute.seller_as_is_value ".
+            " PropertyAttribute.address, PropertyAttribute.report_links, PropertyAttribute.price_comps, PropertyAttribute.property_pictures, PropertyAttribute.property_links, PropertyAttribute.seller_as_is_value, ".
+            " InterestOnlyAttribute.interest_only_term, InterestOnlyAttribute.interest_only_indicator, InterestOnlyAttribute.interest_only_payment, InterestOnlyAttribute.interest_only_start_date, InterestOnlyAttribute.interest_only_expiration_date ".
             "FROM loans ".
             "LEFT JOIN ArmAttribute ON ArmAttribute.loan_id = loans.id " .
             "LEFT JOIN SaleAttribute ON SaleAttribute.loan_id = loans.id " .
@@ -176,6 +177,7 @@ class Loan extends EntityRepository
             "LEFT JOIN ModificationAttribute ON ModificationAttribute.loan_id = loans.id " .
             "LEFT JOIN PayHistoryAttribute ON PayHistoryAttribute.loan_id = loans.id " .
             "LEFT JOIN PropertyAttribute ON PropertyAttribute.loan_id = loans.id " .
+            "LEFT JOIN InterestOnlyAttribute ON InterestOnlyAttribute.loan_id = loans.id " .
             "WHERE loans.pool_id IN (?) ORDER BY pool_id ASC ";
         $armLoans = $this->fetchByIntArray($this->em, $ids, $sql);
         $loansId = [];
