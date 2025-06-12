@@ -26,28 +26,35 @@ class DealContract
     protected Deal $deal;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
+     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?Bid $bid;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
-     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=true)
      */
-    protected MarketUser $buyer;
+    protected ?MarketUser $buyer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractType")
-     * @ORM\JoinColumn(name="contract_type_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    protected ContractType $contractType;
+    protected MarketUser $user;
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
-     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
+     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
      */
-    protected ContractStatus $contractStatus;
+    protected DocType $docType;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
-     * @ORM\JoinColumn(name="deal_asset_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="deal_asset_id", referencedColumnName="id", nullable=false)
      */
-    protected ?DealAsset $dealAsset;
+    protected DealAsset $dealAsset;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -62,17 +69,27 @@ class DealContract
     protected string $secureUrl = '';
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
+     * @ORM\Column(type="string", nullable=false)
+     * @var string
      */
-     protected ?string $fileName;
+     protected string $fileName = '';
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     **/
+    protected $date;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
+     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
+     */
+    protected ?ContractSignature $contractSignature;
 
     function __construct()
     {
         $this->deal = new Deal();
         $this->buyer = new MarketUser();
-        $this->contractType = new ContractType();
-        $this->contractStatus = new ContractStatus();
     }
 
     /**
@@ -91,9 +108,19 @@ class DealContract
     public function setDeal(Deal $deal):void { $this->deal = $deal; }
 
     /**
+     * @return Bid|null
+     */
+    public function getBid(): Bid|null{ return $this->bid; }
+
+    /**
+     * @param Bid $Bid
+     */
+    public function setBid(Bid $bid): void { $this->bid = $bid; }
+
+    /**
      * @return MarketUser
      */
-    public function getBuyer():MarketUser { return $this->buyer; }
+    public function getBuyer():?MarketUser { return $this->buyer; }
 
     /**
      * @param MarketUser $buyer
@@ -101,29 +128,29 @@ class DealContract
     public function setBuyer(MarketUser $buyer):void { $this->buyer = $buyer; }
    
     /**
-     * @return ContractType
+     * @return MarketUser
      */
-    public function getContractType():ContractType { return $this->contractType; }
+    public function getUser():MarketUser { return $this->user; }
 
     /**
-     * @param ContractType $contractType
+     * @param MarketUser $user
      */
-    public function setContractType(ContractType $contractType):void { $this->contractType = $contractType; }
+    public function setUser(MarketUser $user) { $this->user = $user; }
     
     /**
-     * @return ContractStatus
+     * @return DocType
      */
-    public function getContractStatus():ContractStatus { return $this->contractStatus; }
+    public function getDocType():DocType { return $this->docType; }
 
     /**
-     * @param ContractStatus $contractStatus
+     * @param DocType $docType
      */
-    public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
+    public function setDocType(DocType $docType) { $this->docType = $docType; }
     
     /**
-     * @return DealAsset|null
+     * @return DealAsset
      */
-    public function getDealAsset():DealAsset|null { return $this->dealAsset; }
+    public function getDealAsset():DealAsset { return $this->dealAsset; }
 
     /**
      * @param DealAsset $dealAsset
@@ -153,11 +180,31 @@ class DealContract
     /**
      * @return null|string
      */
-    public function getFileName():?string { return $this->fileName; }
+    public function getFileName():string { return $this->fileName; }
 
     /**
      * @param string
      */
     public function setFileName(string $fileName):void { $this->fileName = $fileName; }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate() : \DateTime { return $this->date; }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate(\DateTime $date) { $this->date = $date; }
+
+    /**
+     * @return ContractSignature|null
+     */
+    public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
+
+    /**
+     * @param ContractSignature $contractSignature
+     */
+    public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
 
 }

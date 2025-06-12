@@ -84,9 +84,15 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $deleteDealMarketUsersByDealIdSql = "DELETE FROM deal_market_user WHERE deal_id=?";
 
+    private string $deleteDealMarketUserSql = "DELETE FROM deal_market_user WHERE market_user_id=? AND deal_id=?";
+
     private string $fetchAllIssueNamesSql = "SELECT issue from Deal";
 
     private string $findByUsersAndStatusAndAssetsSql = "SELECT id FROM Deal Where user_id IN (?) AND status_id IN (?) AND asset_type_id IN (?)";
+
+    private string $fetchActiveDealUsersAccessSql = 'call FetchActiveDealUsersAccess(:userId, :dealId)';
+
+    private string $fetchCommonUserActiveDealAssetSql = "SELECT asset_type_id FROM Deal WHERE user_id=? AND status_id = 1 GROUP BY asset_type_id ORDER BY COUNT(*) DESC LIMIT 1";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
@@ -244,6 +250,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $result;
     }
 
+    public function deleteDealMarketUser(int $userId, int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteDealMarketUserSql,
+            self::EXECUTE_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
     /**
      * @return bool|\ReflectionClass
      */
@@ -309,6 +325,23 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         );
         return count($result) > 0
             ? $result[0] : [];
+    }
+
+    public function fetchActiveDealUsersAccess(int $userId, int $dealId)
+    {
+        return $this->executeProcedure(
+            [$userId, $dealId], $this->fetchActiveDealUsersAccessSql
+        );
+    }
+
+    public function fetchCommonUserActiveDealAsset(int $userId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchCommonUserActiveDealAssetSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId]
+        );
     }
 
     public function fetchDealAuthorizedDetails(int $dealId)

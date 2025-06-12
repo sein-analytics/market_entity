@@ -144,7 +144,7 @@ class Bid extends EntityRepository
     {
         $this->keepCountKey = $keepKey;
         $status = self::DD_STATUS;
-        $key = self::DD_KEY;
+        $key = self::BID_DD_KEY;
         $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE status_id=$status AND deal_id=?";
         return $this->returnRequestedCount($dealId, $sql, $key);
     }
@@ -158,7 +158,7 @@ class Bid extends EntityRepository
     {
         $st1 = self::LOI_STATUS_1;
         $st2 = self::LOI_STATUS_2;
-        $key = self::LOI_KEY;
+        $key = self::BID_LOI_KEY;
         $this->keepCountKey = $keepKey;
         $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id=?";
         return $this->returnRequestedCount($dealId, $sql, $key);
@@ -173,7 +173,7 @@ class Bid extends EntityRepository
     {
         $st1 = self::MLPA_STATUS_1;
         $st2 = self::MLPA_STATUS_2;
-        $key = self::MLPA_KEY;
+        $key = self::BID_MLPA_KEY;
         $this->keepCountKey = $keepKey;
         $sql = "SELECT COUNT(*) AS $key FROM Bid WHERE (status_id=$st1 or status_id=$st2) AND deal_id=?";
         return $this->returnRequestedCount($dealId, $sql, $key);
@@ -234,6 +234,16 @@ class Bid extends EntityRepository
             $this->updateBidStatusSql,
             self::EXECUTE_MTHD,
             [$statusId, $bidId]
+        );
+    }
+
+    public function updateMultiBidStatuses(int $statusId, array $bidIds): mixed
+    {
+        return $this->buildAndExecuteIntArrayStmt(
+            $this->getEntityManager(),
+            "UPDATE Bid SET status_id=$statusId IN (?)",
+            self::EXECUTE_MTHD,
+            $bidIds
         );
     }
 

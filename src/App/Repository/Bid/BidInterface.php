@@ -19,9 +19,9 @@ interface BidInterface
     const CLOSED_STATUS = 13;
     // Any modifications to the keys below should be reflected in methods
     // that call the activity count methods below
-    const DD_KEY = 'dueDiligence';
-    const LOI_KEY = 'loi';
-    const MLPA_KEY = 'mlpa';
+    const BID_DD_KEY = 'dueDiligence';
+    const BID_LOI_KEY = 'loi';
+    const BID_MLPA_KEY = 'mlpa';
 
     const POOL_ENTITY = Pool::class;
 
@@ -54,8 +54,10 @@ interface BidInterface
     const BID_STATUS_UPDATE_ID_MAP = [
         self::OVERRIDDEN_STATUS => self::LOI_STATUS_2,
         self::PLACED_STATUS => self::LOI_STATUS_2,
+        self::LOI_STATUS_1 => self::LOI_STATUS_2,
         self::LOI_STATUS_2 => self::DD_STATUS,
         self::DD_STATUS => self::MLPA_STATUS_2,
+        self::MLPA_STATUS_1 => self::MLPA_STATUS_2,
         self::MLPA_STATUS_2 => self::CLOSED_STATUS,
     ];
 
