@@ -57,82 +57,82 @@ class PoolUpdate extends DomainObject
     protected \DateTime|null $reportDate;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $endingBalance
      */
     protected float|null $endingBalance;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $startingBalance
      */
     protected float|null $startingBalance;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $cumulativeLosses
      */
     protected float|null $cumulativeLosses;
 
     /**
      * Period starting gross weighted average coupon
-     * @ORM\Column(type="decimal", precision=9, scale=5, nullable=true)
+     * @ORM\Column(type="float", precision=9, scale=5, nullable=true)
      * @var float|null $groupGrossWac
      **/
     protected float|null $groupGrossWac;
 
     /**
      * Current Period's scheduled principal payments received
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $scheduledPrincipal
      **/
     protected float|null $scheduledPrincipal;
 
     /**
      * Current Period's interest payments received
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $interestCollections
      **/
     protected float|null $interestCollections;
 
     /**
      * Current Period's liquidated balance
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $liquidations
      **/
     protected float|null $liquidations;
 
     /**
      * Current Period's recoveries from liquidated loans
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $recoveries
      **/
     protected float|null $recoveries;
 
     /**
      * Current Period's pre-payed balance
-     * @ORM\Column(type="decimal", precision=12, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $prepayedBalance
      **/
     protected float|null $prepayedBalance;
 
     /**
      * Current Period's number of loans prepaying
-     * @ORM\Column(type="decimal", precision=12, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=3, nullable=true)
      * @var float|null $prepayedLoans
      **/
     protected float|null $prepayedLoans;
 
     /**
      * regular principal calculation--expected principal to be paid to the notes
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $bondRegularPrincipalCalc
      **/
     protected float|null $bondRegularPrincipalCalc;
 
     /**
      * supplemental principal calculation--in addition to the regular principal
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $unscheduledPrincipalCalc
      **/
     protected float|null $unscheduledPrincipalCalc;
@@ -146,14 +146,14 @@ class PoolUpdate extends DomainObject
 
     /**
      * Actual amount of regular principal paid to the notes
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $regularPrincipalPaid
      **/
     protected float|null $regularPrincipalPaid;
 
     /**
      * Actual amount of regular principal paid to the notes
-     * @ORM\Column(type="decimal", precision=15, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $unscheduledPrincipalPaid
      **/
     protected float|null $unscheduledPrincipalPaid;
@@ -165,7 +165,7 @@ class PoolUpdate extends DomainObject
     protected int $updateStatus = 1;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=7, nullable=true)
+     * @ORM\Column(type="float", precision=10, scale=7, nullable=true)
      * @var float|null $groupNetWac
      */
     protected float|null $groupNetWac;
@@ -177,13 +177,13 @@ class PoolUpdate extends DomainObject
     protected int|null $receivablesCount;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $groupSeniorPct
      */
     protected float|null $groupSeniorPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $groupSubPct
      */
     protected float|null $groupSubPct;

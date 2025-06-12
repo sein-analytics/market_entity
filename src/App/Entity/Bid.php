@@ -44,17 +44,17 @@ class Bid extends DomainObject
     protected $loans;
 
     /**
-     * @ORM\Column(type="decimal", precision=9, scale=3, nullable=false)
+     * @ORM\Column(type="float", precision=9, scale=3, nullable=false)
      */
     protected float $price = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      */
     protected $effectiveBalance = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      */
     protected float $proportionalBalance = 0.0;
 

@@ -39,31 +39,31 @@ class FeeUpdate extends AbstractTypeUpdate
 
     /**
      * @var float|null $amountOwed
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
     public float|null $amountDue;
 
     /**
      * @var float|null $amountPaid
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
     public float|null $amountPaid;
 
     /**
      * @var float|null $currentAmountPaid
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
     public float|null $currentAmountUnpaid;
 
     /**
      * @var float|null $cumulativeUnpaidAmount
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
     public float|null $cumulativeAmountUnpaid;
 
     /**
      * @var float|null $unpaidReimbursed
-     * @ORM\Column(type="decimal", precision=14, scale=3, nullable = true)
+     * @ORM\Column(type="float", precision=14, scale=3, nullable = true)
      **/
     public float|null $unpaidAmountReimbursed;
     

@@ -41,37 +41,37 @@ class AccountUpdate extends AbstractTypeUpdate
 
     /**
      * @var float|null $beginningBalance
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $beginningBalance;
 
     /**
      * @var float|null $accountWithdrawals
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $accountWithdrawals;
 
     /**
      * @var float|null $accountDeposits
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $accountDeposits;
 
     /**
      * @var float|null $endingBalance
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $endingBalance;
 
     /**
      * @var float|null $shortfall
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $shortfall;
 
     /**
      * @var float|null $requiredAmount
-     * @ORM\Column(type = "decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
     public float|null $requiredAmount;
 

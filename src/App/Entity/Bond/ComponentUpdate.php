@@ -32,12 +32,12 @@ class ComponentUpdate extends DomainObject
     protected $component;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) *
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true) *
      */
     protected float $startingBalance;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true) *
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true) *
      */
     protected float $endingBalance;
 
@@ -48,37 +48,37 @@ class ComponentUpdate extends DomainObject
     protected $bondUpdate;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="float", precision=14, scale=2) *
      */
     protected float $principalPaid;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="float", precision=14, scale=2) *
      */
     protected float $cumulativeLosses;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="float", precision=14, scale=2) *
      */
     protected float $interestDue;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="float", precision=14, scale=2) *
      */
     protected float $interestPaid;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="float", precision=14, scale=2) *
      */
     protected float $interestUnpaid;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="float", precision=14, scale=2) *
      */
     protected float $interestOnUnpaidInterest;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2) *
+     * @ORM\Column(type="float", precision=14, scale=2) *
      */
     protected float $basisCarry;
 

@@ -26,11 +26,12 @@ class EscrowAttribute extends EntityRepository
         'third_party_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'accrued_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'tax_and_insurance_payment' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
+        'total_piti' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
     ];
 
     public function fetchNextAvailableId()
     {
-        return $this->fetchNextAvailableTableId('ForeclosureAttribute');
+        return $this->fetchNextAvailableTableId('EscrowAttribute');
     }
 
     public function fetchEntityPropertiesForSql(string $subType = null)

@@ -41,13 +41,13 @@ class BondUpdate extends DomainObject
     protected $bond;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="float", precision=14, scale=2)
      * @var  float
      **/
     protected float $startingBalance = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      **/
     protected float $endingBalance = 0.0;
@@ -59,91 +59,91 @@ class BondUpdate extends DomainObject
     protected  $reportDate;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $calculatedInterest;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      **/
     protected float $interestPaid = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $scheduledPrincipalPayment;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $principalPaid;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $unscheduledPrincipalPayment;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2)
+     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      **/
     protected float $principalLoss = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $interestLoss;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $unpaidInterest;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $deferredInterest;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $interestCarry;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $cumulativeRealizedLosses;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      * @var ?float
      */
     protected ?float $bondFactor;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      * @var ?float
      **/
     protected ?float $currentOC;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      *@var ?float
      **/
     protected ?float $interestShortfall;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=7, nullable=true)
+     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      *@var ?float
      **/
     protected ?float $unsupportedIntShortfall;
@@ -161,25 +161,25 @@ class BondUpdate extends DomainObject
     protected $period;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $startReserveBalance;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $reserveDraw;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $reserveDeposit;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $endReserveBalance;
@@ -191,13 +191,13 @@ class BondUpdate extends DomainObject
     protected ?int $isHistory = 0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $netHedge;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
     protected ?float $accretionAmount;

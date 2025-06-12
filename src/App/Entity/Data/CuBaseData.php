@@ -32,73 +32,73 @@ class CuBaseData
     protected $date;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, nullable=false)
+     * @ORM\Column(type="float", precision=14, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $members;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $totalAssets;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $totalLoans;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $totalDeposits;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $returnOnAvgAsset;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $netWorthRatio;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $loanToShare;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $depositGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $loansGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $assetGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $membersGrowthPct;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=12, nullable=false)
+     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
     protected float|int|string $netWorthGrowthPct;

@@ -16,8 +16,10 @@ use App\Entity\Loan\DelinquentAttribute;
 use App\Entity\Loan\DescAttribute;
 use App\Entity\Loan\EscrowAttribute;
 use App\Entity\Loan\ForeclosureAttribute;
+use App\Entity\Loan\InterestOnlyAttribute;
 use App\Entity\Loan\LossMitigationAttribute;
 use App\Entity\Loan\ModificationAttribute;
+use App\Entity\Loan\PayHistoryAttribute;
 use App\Entity\Loan\SaleAttribute;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -150,10 +152,28 @@ class Loan extends DomainObject
     protected $escrowAttribute;
 
     /**
-     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\EscrowAttribute", mappedBy="loan")
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\DelinquentAttribute", mappedBy="loan")
      * @var DelinquentAttribute|null
      */
     protected $delinquentAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\InterestOnlyAttribute", mappedBy="loan")
+     * @var InterestOnlyAttribute|null
+     */
+    protected $interestOnlyAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\PayHistoryAttribute", mappedBy="loan")
+     * @var PayHistoryAttribute|null
+     */
+    protected $payHistoryAttribute;
+
+    /**
+     * @ORM\OneToOne (targetEntity="\App\Entity\Loan\PropertyAttribute", mappedBy="loan")
+     * @var PayHistoryAttribute|null
+     */
+    protected $propertyAttribute;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy = "loans")
@@ -163,31 +183,31 @@ class Loan extends DomainObject
     protected $pool;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=false)
+     * @ORM\Column(type="float", precision=16, scale=3, nullable=false)
      * @var float
      */
     protected float $originalBalance = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=false)
+     * @ORM\Column(type="float", precision=16, scale=3, nullable=false)
      * @var float
      */
     protected float $currentBalance = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $monthlyPayment = null;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column(type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $issuanceBalance;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=6, nullable=true)
+     * @ORM\Column(type="float", precision=10, scale=6, nullable=true)
      * @var ?float
      */
     protected ?float $initialRate;
@@ -199,28 +219,34 @@ class Loan extends DomainObject
     protected ?int $seasoning;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=6, nullable=false)
+     * @ORM\Column(type="float", precision=10, scale=6, nullable=false)
      * @var float
      */
     protected float $currentRate=0.0;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=false)
+     * @ORM\Column(type = "datetime", nullable=true)
      * @var \DateTime
      **/
-    protected $originationDate;
+    protected \DateTime $originationDate;
 
     /**
      * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $currentDueforDate;
+    protected \DateTime $currentDueforDate;
+
+    /**
+     * @ORM\Column(type = "datetime", nullable=true)
+     * @var \DateTime|null
+     **/
+    protected ?\DateTime $asOfDate;
 
     /**
      * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $firstPaymentDate;
+    protected \DateTime $firstPaymentDate;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -232,28 +258,28 @@ class Loan extends DomainObject
      * @ORM\Column(type = "datetime", nullable=false)
      * @var \DateTime
      **/
-    protected $finalDueforDate;
+    protected \DateTime $finalDueforDate;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $originalTerm=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $remainingTerm;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=false)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
     protected float $amortizationTerm=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
     protected ?float $ioTerm;
@@ -265,37 +291,37 @@ class Loan extends DomainObject
     protected ?int $balloonPeriod;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=false)
+     * @ORM\Column(type="float", precision=8, scale=4, nullable=false)
      * @var float
      **/
     protected float $originalLtv=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=8, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $originalCltv;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=4, nullable=false)
+     * @ORM\Column(type="float", precision=16, scale=4, nullable=false)
      * @var float
      **/
     protected float $appraisedValue=0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=10, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $creditScore;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=10, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $frontDti;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=10, scale=4, nullable=true)
      * @var ?float
      **/
     protected ?float $backDti;
@@ -355,12 +381,6 @@ class Loan extends DomainObject
     protected ?string $dwelling;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
-    protected ?string $address;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Data\State", inversedBy="loans") *
      */
     protected $state;
@@ -396,19 +416,19 @@ class Loan extends DomainObject
     protected ?string $paymentString;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=6, nullable = true)
+     * @ORM\Column(type="float", precision=14, scale=6, nullable = true)
      * @var ?float
      */
     protected ?float $servicingfee;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=6, nullable = true)
+     * @ORM\Column(type="float", precision=14, scale=6, nullable = true)
      * @var ?float
      */
     protected ?float $lpmiFee;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=4, nullable = true)
+     * @ORM\Column(type="float", precision=10, scale=4, nullable = true)
      * @var ?float
      */
     protected ?float $miCoverage;
@@ -502,13 +522,13 @@ class Loan extends DomainObject
     protected ?string $newVsUsed;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @ORM\Column(type="float", precision=8, scale=2, nullable = true)
      * @var ?float
      */
     protected ?float $reserves;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @ORM\Column(type="float", precision=8, scale=2, nullable = true)
      * @var ?float
      */
     protected ?float $dealerReserve;
@@ -520,7 +540,7 @@ class Loan extends DomainObject
     protected ?int $prepayPenaltyTerm;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2, nullable = true)
+     * @ORM\Column(type="float", precision=8, scale=2, nullable = true)
      * @var ?float
      */
     protected ?float $prepayPenalty;
@@ -530,6 +550,12 @@ class Loan extends DomainObject
      * @var array|null
      **/
     protected $prepayStepDown;
+
+    /**
+     * @ORM\Column(type = "datetime", nullable=true)
+     * @var \DateTime
+     **/
+    protected \DateTime $purchaseDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Bid", mappedBy="loans")
@@ -727,12 +753,45 @@ class Loan extends DomainObject
     }
 
     /**
+     * @return PayHistoryAttribute|null
+     */
+    public function getPropertyAttribute(): ?PayHistoryAttribute
+    {
+        return $this->propertyAttribute;
+    }
+
+    /**
+     * @return InterestOnlyAttribute|null
+     */
+    public function getInterestOnlyAttribute(): ?InterestOnlyAttribute
+    {
+        return $this->interestOnlyAttribute;
+    }
+
+    /**
+     * @return PayHistoryAttribute|null
+     */
+    public function getPayHistoryAttribute(): ?PayHistoryAttribute
+    {
+        return $this->payHistoryAttribute;
+    }
+
+    /**
      * @param DelinquentAttribute|null $delinquentAttribute
      * @return void
      */
     public function setDelinquentAttribute(?DelinquentAttribute $delinquentAttribute): void
     {
         $this->delinquentAttribute = $delinquentAttribute;
+    }
+
+    /**
+     * @param PayHistoryAttribute|null $payHistoryAttribute
+     * @return void
+     */
+    public function setPayHistoryAttribute(?PayHistoryAttribute $payHistoryAttribute): void
+    {
+        $this->payHistoryAttribute = $payHistoryAttribute;
     }
 
     /**
@@ -837,6 +896,23 @@ class Loan extends DomainObject
     public function setCurrentDueforDate(\DateTime $currentDueforDate):void
     {
         $this->implementChange($this,'currentDueforDate', $this->currentDueforDate, $currentDueforDate);
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getAsOfDate(): ?\DateTime
+    {
+        return $this->asOfDate;
+    }
+
+    /**
+     * @param \DateTime|null $asOfDate
+     * @return void
+     */
+    public function setAsOfDate(?\DateTime $asOfDate): void
+    {
+        $this->asOfDate = $asOfDate;
     }
 
     /**
@@ -1136,19 +1212,6 @@ class Loan extends DomainObject
     public function setDwelling(string $dwelling):void
     {
         $this->implementChange($this,'dwelling', $this->dwelling, $dwelling);
-    }
-
-    /**
-     * @return ?string
-     */
-    public function getAddress():?string { return $this->address; }
-
-    /**
-     * @param string $address
-     */
-    public function setAddress(string $address):void
-    {
-        $this->implementChange($this,'address', $this->address, $address);
     }
 
     /**
@@ -1561,6 +1624,16 @@ class Loan extends DomainObject
     {
         $string = json_encode($prepayStepDown);
         $this->implementChange($this,'prepayStepDown', $this->prepayStepDown, $string);
+    }
+
+    public function getPurchaseDate(): \DateTime
+    {
+        return $this->purchaseDate;
+    }
+
+    public function setPurchaseDate(\DateTime $purchaseDate): void
+    {
+        $this->purchaseDate = $purchaseDate;
     }
 
     /**

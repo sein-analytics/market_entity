@@ -32,11 +32,16 @@ class DelinquentAttribute extends EntityRepository
         'delinquent_interest' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'total_delinquent_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
         'general_notes' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'sub_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'sub_status_notes' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'suspense_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
+        'deferred_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
+        'accrued_interest' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
     ];
 
     public function fetchNextAvailableId()
     {
-        return $this->fetchNextAvailableTableId('ForeclosureAttribute');
+        return $this->fetchNextAvailableTableId('DelinquentAttribute');
     }
 
     public function fetchEntityPropertiesForSql(string $subType = null)

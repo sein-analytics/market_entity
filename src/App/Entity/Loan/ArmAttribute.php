@@ -39,17 +39,17 @@ class ArmAttribute extends DomainObject
     protected $loan;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true)
+     * @ORM\Column(type="float", precision=18, scale=15, nullable=true)
      */
     protected float|null $grossMargin = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true) *
+     * @ORM\Column(type="float", precision=18, scale=15, nullable=true) *
      */
     protected float $minimumRate = 0.0;
 
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=15, nullable=true)
+     * @ORM\Column(type="float", precision=18, scale=15, nullable=true)
      */
     protected float $maximumRate = 0.0;
 
@@ -84,12 +84,12 @@ class ArmAttribute extends DomainObject
     protected int|null $rateAdjFrequency;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      */
     protected float|null $periodicCap;
 
     /**
-     * @ORM\Column(type="decimal", precision=14, scale=2, nullable=true)
+     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      */
     protected float|null $initialCap;
 
@@ -99,9 +99,14 @@ class ArmAttribute extends DomainObject
     protected int|null $pmntAdjFrequency;
 
     /**
-     * @ORM\Column(type ="decimal", precision=14, scale=5, nullable=true)
+     * @ORM\Column(type ="float", precision=14, scale=5, nullable=true)
      */
     protected float|null $pmntIncreaseCap;
+
+    /**
+     * @ORM\Column(type = "datetime", nullable=true)
+     */
+    protected \DateTime|null $armExpirationDate;
 
     /**
      * @return mixed
@@ -333,5 +338,22 @@ class ArmAttribute extends DomainObject
     public function setPmntIncreaseCap(float $pmntIncreaseCap):void
     {
         $this->implementChange($this,'pmntIncreaseCap', $this->pmntIncreaseCap, $pmntIncreaseCap);
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getArmExpirationDate(): ?\DateTime
+    {
+        return $this->armExpirationDate;
+    }
+
+    /**
+     * @param \DateTime|null $armExpirationDate
+     * @return void
+     */
+    public function setArmExpirationDate(?\DateTime $armExpirationDate): void
+    {
+        $this->armExpirationDate = $armExpirationDate;
     }
 }

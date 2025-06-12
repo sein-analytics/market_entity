@@ -47,10 +47,10 @@ class Bond extends DomainObject
     /** @ORM\Column(type="string") **/
     protected string $className;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
+    /** @ORM\Column(type="float", precision=14, scale=2) **/
     protected float $originalBalance;
 
-    /** @ORM\Column(type="decimal", precision=14, scale=2) **/
+    /** @ORM\Column(type="float", precision=14, scale=2) **/
     protected float $currentBalance = 0;
 
     /** @ORM\Column(type="string", nullable=true) **/
@@ -59,14 +59,14 @@ class Bond extends DomainObject
     /** @ORM\Column(type="date", nullable=true) **/
     protected $scheduledMaturityDate;
 
-    /** @ORM\Column(type="decimal", precision=6, scale=5, nullable=true) **/
+    /** @ORM\Column(type="float", precision=6, scale=5, nullable=true) **/
     protected float $fixedRate;
 
-    /** @ORM\Column(type="decimal", precision=8, scale=6, nullable=true) **/
+    /** @ORM\Column(type="float", precision=8, scale=6, nullable=true) **/
     protected float $origCreditSupport;
 
     /**
-     * @ORM\Column(type="decimal", precision=6, scale=5) *
+     * @ORM\Column(type="float", precision=6, scale=5) *
      */
     protected float$currCreditSupport = 0;
 

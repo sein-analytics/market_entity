@@ -27,12 +27,14 @@ class EscrowAttribute extends DomainObject
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="escrowAttribute")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
     protected $loan;
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="escrowAttribute")
+     * @ORM\JoinColumn(name="delinquent_attribute_id", referencedColumnName="id", nullable=false)
      * @var DelinquentAttribute
      */
     protected $delinquentAttribute;
@@ -90,6 +92,12 @@ class EscrowAttribute extends DomainObject
      * @var ?float
      */
     protected ?float $taxAndInsurancePayment;
+
+    /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $totalPiti;
 
     /**
      * @return int
@@ -286,5 +294,14 @@ class EscrowAttribute extends DomainObject
         $this->taxAndInsurancePayment = $taxAndInsurancePayment;
     }
 
+    public function getTotalPiti(): ?float
+    {
+        return $this->totalPiti;
+    }
+
+    public function setTotalPiti(?float $totalPiti): void
+    {
+        $this->totalPiti = $totalPiti;
+    }
 
 }

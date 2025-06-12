@@ -29,7 +29,7 @@ class Swaps
      **/
     protected string $name;
 
-    /** @ORM\Column(type="decimal", precision=9, scale=6, nullable = false) **/
+    /** @ORM\Column(type="float", precision=9, scale=6, nullable = false) **/
     protected float $value;
 
     /**

@@ -33,6 +33,7 @@ class ModificationAttribute extends DomainObject
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="modificationAttribute")
+     * @ORM\JoinColumn(name="delinquent_attribute_id", referencedColumnName="id", nullable=false)
      * @var DelinquentAttribute
      */
     protected $delinquentAttribute;
@@ -44,7 +45,7 @@ class ModificationAttribute extends DomainObject
     protected ?\DateTime $modificationDate;
 
     /**
-     * @ORM\Column (type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $capitalizedAmount;
@@ -56,7 +57,7 @@ class ModificationAttribute extends DomainObject
     protected ?string $modificationStatus;
 
     /**
-     * @ORM\Column (type="decimal", precision=16, scale=3, nullable=true)
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
     protected ?float $postPrincipalBalance;

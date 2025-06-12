@@ -42,37 +42,37 @@ class CommAttribute extends DomainObject
     protected $loan;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
      */
     protected float|null $dscr;
 
     /**
-     * @ORM\Column(type="decimal", precision=16, scale=4, nullable=true)
+     * @ORM\Column(type="float", precision=16, scale=4, nullable=true)
      */
     protected float|null $noi;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
      */
     protected float|null $netWorthToLoan;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
      */
     protected float|null $profitRatio;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
      */
     protected float|null $loanToCostRatio;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
      */
     protected float|null $debtYieldRatio;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
      */
     protected float|null $vacancyRate;
 
@@ -88,7 +88,7 @@ class CommAttribute extends DomainObject
     protected \DateTime|null $defeasanceDate;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=8, nullable=true)
+     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
      */
     protected float|null $capRate;
 

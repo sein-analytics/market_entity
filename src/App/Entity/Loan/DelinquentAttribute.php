@@ -25,6 +25,7 @@ class DelinquentAttribute extends DomainObject
 
     /**
      * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="delinquentAttribute")
+     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
     protected $loan;
@@ -153,7 +154,37 @@ class DelinquentAttribute extends DomainObject
      * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    protected ?string $subStatus;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $subStatusNotes;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
     protected ?string $generalNotes;
+
+    /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $suspenseBalance;
+
+    /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $deferredBalance;
+
+    /**
+     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
+     * @var ?float
+     */
+    protected ?float $accruedInterest;
 
     /**
      * @return int
@@ -529,6 +560,40 @@ class DelinquentAttribute extends DomainObject
     }
 
     /**
+     * @return string|null
+     */
+    public function getSubStatus(): ?string
+    {
+        return $this->subStatus;
+    }
+
+    /**
+     * @param string|null $subStatus
+     * @return void
+     */
+    public function setSubStatus(?string $subStatus): void
+    {
+        $this->subStatus = $subStatus;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubStatusNotes(): ?string
+    {
+        return $this->subStatusNotes;
+    }
+
+    /**
+     * @param string|null $subStatusNotes
+     * @return void
+     */
+    public function setSubStatusNotes(?string $subStatusNotes): void
+    {
+        $this->subStatusNotes = $subStatusNotes;
+    }
+
+    /**
      * @param string|null $generalNotes
      * @return void
      */
@@ -537,5 +602,55 @@ class DelinquentAttribute extends DomainObject
         $this->generalNotes = $generalNotes;
     }
 
+    /**
+     * @return float|null
+     */
+    public function getSuspenseBalance(): ?float
+    {
+        return $this->suspenseBalance;
+    }
+
+    /**
+     * @param float|null $suspenseBalance
+     * @return void
+     */
+    public function setSuspenseBalance(?float $suspenseBalance): void
+    {
+        $this->suspenseBalance = $suspenseBalance;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getDeferredBalance(): ?float
+    {
+        return $this->deferredBalance;
+    }
+
+    /**
+     * @param float|null $deferredBalance
+     * @return void
+     */
+    public function setDeferredBalance(?float $deferredBalance): void
+    {
+        $this->deferredBalance = $deferredBalance;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getAccruedInterest(): ?float
+    {
+        return $this->accruedInterest;
+    }
+
+    /**
+     * @param float|null $accruedInterest
+     * @return void
+     */
+    public function setAccruedInterest(?float $accruedInterest): void
+    {
+        $this->accruedInterest = $accruedInterest;
+    }
 
 }
