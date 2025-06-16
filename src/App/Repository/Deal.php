@@ -68,9 +68,9 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callFetchDealRequestedLpas = 'call FetchDealRequestedLpas(:userId, :dealId)';
 
-    private string $callFetchUserAllowedNdaDealsBySeller = 'call FetchUserAllowedNdaDealsBySeller(:sellerId, :issuerId, :assetTypeId)';
+    private string $callFetchUserAllowedNdaDealsBySeller = 'call FetchUserAllowedNdaDealsBySeller(:sellerId, :communityUserId, :assetTypeId)';
 
-    private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId, :communityUserId, :assetTypeId)';
+    private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityUserId, :assetTypeId)';
 
     private string $fetchDealPoolIdsByDealIdSql = "SELECT id FROM Pool Where deal_id=?";
 
@@ -437,9 +437,9 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $results;
     }
 
-    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityIssuerId, int $communityUserId, int $assetTypeId): mixed
+    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityUserId, int $assetTypeId): mixed
     {
-        $result = $this->executeProcedure([$userId, $communityIssuerId, $communityUserId, $assetTypeId],
+        $result = $this->executeProcedure([$userId, $communityUserId, $assetTypeId],
             $this->callFetchAllowedDealsNonDisclosure
         );
         return $result;
