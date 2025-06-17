@@ -27,6 +27,8 @@ class DealContract extends DealContractAbstract
 
     private static string $callFetchDealFileDetails = "call FetchDealFileDetails(:dealFileId, :userId)";
 
+    private string $fetchUserDealNdaTemplateSql = "SELECT * FROM DealContract WHERE user_id=? AND deal_id=? AND doc_type_id = 10 AND buyer_id IS NULL;";
+
     public function insertNewDealContract(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -82,6 +84,16 @@ class DealContract extends DealContractAbstract
             $this->fetchDealContractByIdSql,
             self::FETCH_ASSO_MTHD,
             [$dealContractId]
+        );
+    }
+
+    public function fetchUserDealNdaTemplate(int $userId, int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserDealNdaTemplateSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId, $dealId]
         );
     }
 
