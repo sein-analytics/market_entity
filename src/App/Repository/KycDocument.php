@@ -37,6 +37,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $deleteDocumentByIdSql = "DELETE FROM KycDocument WHERE id=?";
 
+    private string $fetchUserNdaTemplateSql = "SELECT * FROM KycDocument WHERE user_id=? AND kyc_type_id = 8 AND community_user_id IS NULL";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -332,6 +334,16 @@ class KycDocument extends KycDocumentAbstract
             $this->deleteDocumentByIdSql,
             self::EXECUTE_MTHD,
             [$kycDocumentId]
+        );
+    }
+
+    public function fetchUserNdaTemplate(int $userId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserNdaTemplateSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId]
         );
     }
 
