@@ -445,4 +445,20 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $result;
     }
 
+
+    public function fetchUserActiveNdaDeals(int $userId)
+    {
+        $sql = "SELECT deals.id AS dealId, deals.issue AS dealName, deals.user_id AS dealOwnerId, ".
+            "deals.issuer_id AS dealOwnerIssuerId, dealsUsers.user_name AS dealOwnerMail ".
+            "FROM Deal AS deals LEFT JOIN MarketUser AS dealsUsers ON dealsUsers.id = deals.user_id ".
+            "WHERE deals.user_id=? AND deals.status_id = 1 AND deals.requires_nda IS NOT NULL";
+            
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+    }
+
 }
