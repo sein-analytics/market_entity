@@ -145,18 +145,6 @@ class DealFile extends DomainObject
     protected $hasViruses = 0;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string;
-     */
-    protected ?string $signatureId;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string;
-     */
-    protected ?string $signaturePath;
-
-    /**
      * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
      * @var ArrayCollection
      */
@@ -169,28 +157,10 @@ class DealFile extends DomainObject
     protected $diligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=true)
-     */
-    protected ?MarketUser $communityUser;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
-     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
-     */
-    protected ?ContractSignature $contractSignature;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime|null
      **/
     protected $date = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
-     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
-     */
-    protected ?Bid $bid;
 
     public function __construct()
     {
@@ -366,32 +336,6 @@ class DealFile extends DomainObject
     }
 
     /**
-     * @return null|string
-     */
-    public function getSignatureId():?string { return $this->signatureId; }
-
-    /**
-     * @param string $signatureId
-     */
-    public function setSignatureId(string $signatureId):void
-    {
-        $this->signatureId = $signatureId;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSignaturePath():?string { return $this->signaturePath; }
-
-    /**
-     * @param string $signaturePath
-     */
-    public function setSignaturePath(string $signaturePath):void
-    {
-        $this->signaturePath = $signaturePath;
-    }
-
-    /**
      * @return ArrayCollection
      */
     public function getIssues():ArrayCollection { return $this->issues; }
@@ -422,26 +366,6 @@ class DealFile extends DomainObject
     public function setMime(MimeType $mime):void { $this->mime = $mime;  }
 
     /**
-     * @return MarketUser|null
-     */
-    public function getCommunityUser():MarketUser|null { return $this->communityUser; }
-
-    /**
-     * @param MarketUser $communityUser
-     */
-    public function setCommunityUser(MarketUser $communityUser):void { $this->communityUser = $communityUser; }
-
-    /**
-     * @return ContractSignature|null
-     */
-    public function getContractSignature():ContractSignature|null { return $this->contractSignature; }
-
-    /**
-     * @param ContractSignature $contractSignature
-     */
-    public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
-
-    /**
      * @return \DateTime
      */
     public function getDate() : ?\DateTime { return $this->date; }
@@ -450,21 +374,5 @@ class DealFile extends DomainObject
      * @param \DateTime $date
      */
     public function setDate(\DateTime $date) { $this->date = $date; }
-
-    /**
-     * @return Bid|null
-     */
-    public function getBid(): Bid|null
-    {
-        return $this->bid;
-    }
-
-    /**
-     * @param Bid $Bid
-     */
-    public function setBid(Bid $bid): void
-    {
-        $this->bid = $bid;
-    }
 
 }

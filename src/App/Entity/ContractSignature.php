@@ -27,27 +27,27 @@ class ContractSignature
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="receiver_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="receiver_id", referencedColumnName="id", nullable=true)
      */
-    protected MarketUser $receiver; 
+    protected ?MarketUser $receiver; 
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
-    protected string $senderSignature = '';
+    protected ?string $senderSignature;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
-    protected string $receiverSignature = '';
+    protected ?string $receiverSignature;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
-    protected string $signatureId = '';
+    protected ?string $signatureId;
 
     /**
      * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
@@ -56,10 +56,10 @@ class ContractSignature
     protected ContractStatus $contractStatus;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
-    protected string $publicId = '';
+    protected ?string $publicId;
 
     function __construct()
     {
@@ -83,9 +83,9 @@ class ContractSignature
     public function setUser(MarketUser $sender):void { $this->sender = $sender; }
 
     /**
-     * @return MarketUser
+     * @return MarketUser|null
      */
-    public function getReceiver():MarketUser { return $this->receiver; }
+    public function getReceiver():MarketUser|null { return $this->receiver; }
 
     /**
      * @param MarketUser $sender
@@ -93,9 +93,9 @@ class ContractSignature
     public function setReceiver(MarketUser $receiver):void { $this->receiver = $receiver; }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSenderSignature():string { return $this->senderSignature; }
+    public function getSenderSignature():string|null { return $this->senderSignature; }
 
     /**
      * @param string
@@ -103,9 +103,9 @@ class ContractSignature
     public function setSenderSignature(string $senderSignature):void { $this->senderSignature = $senderSignature; }
     
     /**
-     * @return string
+     * @return string|null
      */
-    public function getReceiverSignature():string { return $this->receiverSignature; }
+    public function getReceiverSignature():string|null { return $this->receiverSignature; }
 
     /**
      * @param string
@@ -113,9 +113,9 @@ class ContractSignature
     public function setReceiverSignature(string $receiverSignature):void { $this->receiverSignature = $receiverSignature; }
     
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSignatureId():string { return $this->signatureId; }
+    public function getSignatureId():string|null { return $this->signatureId; }
 
     /**
      * @param string
@@ -133,9 +133,9 @@ class ContractSignature
     public function setContractStatus(ContractStatus $contractStatus):void { $this->contractStatus = $contractStatus; }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPublicId():string { return $this->publicId; }
+    public function getPublicId():string|null { return $this->publicId; }
 
     /**
      * @param string
