@@ -29,6 +29,12 @@ class PayHistoryAttribute extends EntityRepository
         'history10' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'history11' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
         'history12' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history13' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history14' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history15' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history16' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history17' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
+        'history18' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
     ];
 
     public function fetchNextAvailableId()
