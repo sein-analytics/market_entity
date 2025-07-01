@@ -102,7 +102,7 @@ class DealContract extends DealContractAbstract
         int $docTypeId, 
         int $userId, 
         int $buyerId,
-        ?int $bidId
+        ?int $bidId = null
     ) {
         $query = 
             "SELECT * FROM DealContract WHERE deal_id=? AND doc_type_id=? " .
