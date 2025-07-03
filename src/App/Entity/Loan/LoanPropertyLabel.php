@@ -183,7 +183,6 @@ class LoanPropertyLabel extends EntityRepository
                 continue;
             }
             $row['id'] = $count;
-            $row = $this->assignDataType($properties, $row);
             if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
                 && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
                 $label = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
@@ -269,25 +268,6 @@ class LoanPropertyLabel extends EntityRepository
         $string = preg_replace("/[\s_]/", "-", $string);
         return $string;
 
-    }
-
-    /**
-     * @param array $fieldMapping
-     * @param array $row
-     * @return array
-     */
-    public function assignDataType(array $fieldMapping, array $row):array
-    {
-        if(in_array($fieldMapping[self::ENTITY_COLUMN], $this->creditData)){
-            $row[self::CATEGORY] = self::CREDIT_DATA ;
-        } elseif (in_array($fieldMapping[self::ENTITY_COLUMN], $this->mortgageData)){
-            $row[self::CATEGORY] = self::MTGE_DATA;
-        } elseif ($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
-            $row[self::CATEGORY] = self::ARM_DATA;
-        } else {
-            $row[self::CATEGORY] = self::LOAN_DATA;
-        }
-        return $row;
     }
 
     public function assignSignificance(array $fieldMapping, $row):array {

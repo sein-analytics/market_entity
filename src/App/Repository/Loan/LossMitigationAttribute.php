@@ -15,12 +15,12 @@ class LossMitigationAttribute extends EntityRepository
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static array $table = [
-        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'setup_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'loss_mitigation_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'loss_mit_removal_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::LOSS_MIT_CATEGORY],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::LOSS_MIT_CATEGORY],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::LOSS_MIT_CATEGORY],
+        'setup_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::LOSS_MIT_CATEGORY],
+        'loss_mitigation_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::LOSS_MIT_CATEGORY],
+        'loss_mit_removal_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::LOSS_MIT_CATEGORY],
     ];
 
     public function fetchNextAvailableId()

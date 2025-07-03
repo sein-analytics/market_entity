@@ -16,9 +16,9 @@ class SaleAttribute extends EntityRepository
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static $table = [
-        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'availability' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 1.0],
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::SALE_CATEGORY],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::SALE_CATEGORY],
+        'availability' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 1.0, self::PROP_CATEGORY_KEY =>self::SALE_CATEGORY],
     ];
 
     private string $fetchSaleAttributeIdsByLoanIdsSql = "SELECT id FROM SaleAttribute Where loan_id in (?)";
