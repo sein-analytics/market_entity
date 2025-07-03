@@ -22,18 +22,18 @@ class CommAttribute extends EntityRepository
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static $table = [
-        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'dscr' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'noi' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'net_worth_to_loan' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'profit_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'loan_to_cost_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'debt_yield_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'vacancy_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'lockout_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-        'defeasance_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'cap_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL']
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'dscr' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'noi' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'net_worth_to_loan' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'profit_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'loan_to_cost_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'debt_yield_ratio' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'vacancy_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'lockout_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'defeasance_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
+        'cap_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY]
     ];
 
     private string $fetchCommAttributeIdsByLoanIdsSql = "SELECT id FROM CommAttribute Where loan_id in (?)";

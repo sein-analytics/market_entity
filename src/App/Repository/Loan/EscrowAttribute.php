@@ -14,19 +14,19 @@ class EscrowAttribute extends EntityRepository
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static array $table = [
-        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'total_debt_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'accrued_late_fees' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'escrow_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'restricted_escrow' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'escrow_advance_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'corp_advance_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'third_party_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'accrued_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'tax_and_insurance_payment' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
-        'total_piti' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL'],
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'total_debt_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'accrued_late_fees' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'escrow_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'restricted_escrow' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'escrow_advance_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'corp_advance_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'third_party_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'accrued_balance' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'tax_and_insurance_payment' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
+        'total_piti' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ESCROW_ATTR_CATEGORY],
     ];
 
     public function fetchNextAvailableId()

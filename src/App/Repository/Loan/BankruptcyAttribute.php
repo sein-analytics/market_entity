@@ -15,17 +15,17 @@ class BankruptcyAttribute extends EntityRepository
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static array $table = [
-        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'file_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'case_number' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'dismissed_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'plan_start_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'plan_end_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'post_petition_due_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'case_closed_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'motion_relief_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'file_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'case_number' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'dismissed_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'plan_start_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'plan_end_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'post_petition_due_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'case_closed_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
+        'motion_relief_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
     ];
 
     public function fetchNextAvailableId()
