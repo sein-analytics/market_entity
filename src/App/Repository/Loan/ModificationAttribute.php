@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 
 class ModificationAttribute extends EntityRepository
-    implements SqlManagerTraitInterface
+    implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 

@@ -9,7 +9,7 @@ use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 
 class BankruptcyAttribute extends EntityRepository
-    implements SqlManagerTraitInterface
+    implements SqlManagerTraitInterface, LoanInterface
 {
 
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;

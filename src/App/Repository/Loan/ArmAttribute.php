@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 
 class ArmAttribute extends EntityRepository 
-    implements SqlManagerTraitInterface, DbalStatementInterface
+    implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 

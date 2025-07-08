@@ -17,11 +17,11 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 class CommAttribute extends EntityRepository 
-    implements SqlManagerTraitInterface, DbalStatementInterface
+    implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
-    static $table = [
+    static array $table = [
         'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
         'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],
         'dscr' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::COMM_ATTR_CATEGORY],

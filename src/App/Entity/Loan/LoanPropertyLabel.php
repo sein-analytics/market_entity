@@ -20,60 +20,10 @@ implements LoanInterface
 {
     use CreatePropertiesArrayTrait;
 
-    const LOAN_DATA = 'loanData';
-
-    const CREDIT_DATA = 'creditData';
-
-    const MTGE_DATA = 'mortgageData';
-
-    const ARM_DATA = 'armData';
-
-    const FEES_DATA = 'feesData';
-
-    const CATEGORY = 'category';
-
-    const SIGNIFICANCE = 'significance';
-
-    const DB_NAME = 'dbName';
-
-    const REQUIRED = 'required';
-
-    const OPTIONAL = 'optional';
-
-    const CONDITIONAL = 'conditional';
-
-    const DB_DATA = 'dbData';
-
-    const LABEL = 'label';
-
-    const ENTITY_TYPE = 'type';
-
-    const ENTITY_FIELD = 'fieldName';
-
-    const ENTITY_NULL = 'nullable';
-
-    const ENTITY_COLUMN = 'columnName';
-
-    const STATE_AB_KEY = 'abbreviation';
-
-    const STATE_NAME_KEY = 'name';
-
-    const SLUG_KEY = 'slug';
-
-    const MAPPED_ID_KEY = 'mapped-id';
-
-    const HAY_KEY = 'haystack';
-
-    const SEARCH_KEY = 'search';
-
-    const BASE_STATE_ID = 51;
-
-
-
     private array $propertyLabels = [
         "id" => null,
         "pool_id" => null,
-        "zero_balance_date" => 'zero_balance_date',//
+        "zero_balance_date" => 'zero_balance_date',
         "current_duefor_date" => "paid-through_date",
         "final_duefor_date" => "stated_maturity_date",
         "dwelling" => 'property_type',
