@@ -183,4 +183,32 @@ interface LoanInterface
     const SEARCH_KEY = 'search';
 
     const BASE_STATE_ID = 51;
+
+    const LOANS_TABLE_CATEGORY = 'loanData';
+
+    const ARM_ATTR_CATEGORY = 'ArmAttribute';
+
+    const BK_ATTR_CATEGORY = 'BankruptcyAttribute';
+
+    const COMM_ATTR_CATEGORY = 'CommAttribute';
+
+    const DQ_ATTR_CATEGORY = 'DelinquentAttribute';
+
+    const ESCROW_ATTR_CATEGORY = 'EscrowAttribute';
+
+    const FORCS_ATTR_CATEGORY = 'ForeclosureAttribute';
+
+    const IO_ATTR_CATEGORY = 'InterestOnlyAttribute';
+
+    const LOSS_MIT_CATEGORY = 'LossMitigationAttribute';
+
+    const MOD_CATEGORY = 'ModificationAttribute';
+
+    const PAY_HIST_CATEGORY = 'PayHistoryAttribute';
+
+    const PROPERTY_CATEGORY = 'PropertyAttribute';
+
+    const SALE_CATEGORY = 'SaleAttribute';
+
+    const LOAN_CATEGORY_MAPPER = [];
 }
