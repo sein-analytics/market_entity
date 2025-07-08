@@ -258,4 +258,9 @@ interface LoanInterface
         self::PROPERTY_ATTRIBUTE_CLASS => self::PROPERTY_CATEGORY,
         self::SALE_ATTRIBUTE_CLASS => self::SALE_CATEGORY,
     ];
+
+    const FIELD_MAPPINGS_TO_ROW = [
+        self::ENTITY_COLUMN =>self::DB_NAME,
+        self::ENTITY_TYPE =>self::ENTITY_TYPE
+    ];
 }
