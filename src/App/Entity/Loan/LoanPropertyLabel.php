@@ -15,6 +15,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 use Doctrine\ORM\Mapping as ORM;
+use const Lambdish\Phunctional\each;
+
 class LoanPropertyLabel extends EntityRepository
 implements LoanInterface
 {
@@ -135,16 +137,10 @@ implements LoanInterface
                 continue;
             }
             $row['id'] = $count;
-            if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
-                && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
-                $label = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
-                $row[self::LABEL] = ucwords(str_replace('_',' ', $label));
-            } else {
-                $row[self::LABEL] = ucwords(str_replace('_',' ', $properties[self::ENTITY_COLUMN]));
-            }
-            $row[self::DB_NAME] = $properties[self::ENTITY_COLUMN];
-            $row[self::ENTITY_TYPE] = $properties[self::ENTITY_TYPE];
+            $row = $this->assignRowLabel($row, $properties);
+            $row = $this->assignFieldMappingsToRow($row, $properties);
             $row = $this->assignSignificance($properties, $row);
+            $row = $this->assignCategory($row);
             array_push($data, $row);
             $count++;
         }
@@ -222,6 +218,23 @@ implements LoanInterface
 
     }
 
+    public function assignRowLabel(array $row, array $properties):array
+    {
+        if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
+            && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
+            $label = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
+            $row[self::LABEL] = ucwords(str_replace('_',' ', $label));
+        } else {
+            $row[self::LABEL] = ucwords(str_replace('_',' ', $properties[self::ENTITY_COLUMN]));
+        }
+        return $row;
+    }
+
+    /**
+     * @param array $fieldMapping
+     * @param $row
+     * @return array
+     */
     public function assignSignificance(array $fieldMapping, $row):array {
         if($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
             $row[self::SIGNIFICANCE] = self::CONDITIONAL;
@@ -229,6 +242,33 @@ implements LoanInterface
             $row[self::SIGNIFICANCE] = self::OPTIONAL;
         }else{
             $row[self::SIGNIFICANCE] = self::REQUIRED;
+        }
+        return $row;
+    }
+
+    /**
+     * @param array $row
+     * @return array
+     */
+    public function assignCategory(array $row):array
+    {
+        if (array_key_exists($this->getClassMetadata()->getName(), self::LOAN_CATEGORY_MAPPER)){
+            $row[self::CATEGORY] = self::LOAN_CATEGORY_MAPPER[$this->getClassMetadata()->getName()];
+        } else {
+            $row[self::CATEGORY] = self::LOANS_TABLE_CATEGORY;
+        }
+        return $row;
+    }
+
+    /**
+     * @param array $row
+     * @param array $properties
+     * @return array
+     */
+    public function assignFieldMappingsToRow(array $row, array $properties):array
+    {
+        foreach (self::FIELD_MAPPINGS_TO_ROW as $key => $rowProp){
+            $row[$rowProp] = $properties[$key];
         }
         return $row;
     }
