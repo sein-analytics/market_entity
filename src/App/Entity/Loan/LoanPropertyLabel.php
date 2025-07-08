@@ -9,12 +9,14 @@
 namespace App\Entity\Loan;
 
 
+use App\Repository\Loan\LoanInterface;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 use Doctrine\ORM\Mapping as ORM;
 class LoanPropertyLabel extends EntityRepository
+implements LoanInterface
 {
     use CreatePropertiesArrayTrait;
 
