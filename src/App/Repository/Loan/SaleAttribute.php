@@ -11,7 +11,7 @@ use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 
 class SaleAttribute extends EntityRepository 
-    implements SqlManagerTraitInterface, DbalStatementInterface
+    implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
