@@ -48,7 +48,7 @@ class SaleAttribute extends EntityRepository
 
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
-        array_keys(self::$table);
+        return array_keys(self::$table);
     }
 
 }
