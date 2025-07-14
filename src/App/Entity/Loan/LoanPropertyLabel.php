@@ -9,69 +9,23 @@
 namespace App\Entity\Loan;
 
 
+use App\Repository\Loan\LoanInterface;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 use Doctrine\ORM\Mapping as ORM;
+use const Lambdish\Phunctional\each;
+
 class LoanPropertyLabel extends EntityRepository
+implements LoanInterface
 {
     use CreatePropertiesArrayTrait;
-
-    const LOAN_DATA = 'loanData';
-
-    const CREDIT_DATA = 'creditData';
-
-    const MTGE_DATA = 'mortgageData';
-
-    const ARM_DATA = 'armData';
-
-    const FEES_DATA = 'feesData';
-
-    const CATEGORY = 'category';
-
-    const SIGNIFICANCE = 'significance';
-
-    const DB_NAME = 'dbName';
-
-    const REQUIRED = 'required';
-
-    const OPTIONAL = 'optional';
-
-    const CONDITIONAL = 'conditional';
-
-    const DB_DATA = 'dbData';
-
-    const LABEL = 'label';
-
-    const ENTITY_TYPE = 'type';
-
-    const ENTITY_FIELD = 'fieldName';
-
-    const ENTITY_NULL = 'nullable';
-
-    const ENTITY_COLUMN = 'columnName';
-
-    const STATE_AB_KEY = 'abbreviation';
-
-    const STATE_NAME_KEY = 'name';
-
-    const SLUG_KEY = 'slug';
-
-    const MAPPED_ID_KEY = 'mapped-id';
-
-    const HAY_KEY = 'haystack';
-
-    const SEARCH_KEY = 'search';
-
-    const BASE_STATE_ID = 51;
-
-
 
     private array $propertyLabels = [
         "id" => null,
         "pool_id" => null,
-        "zero_balance_date" => 'zero_balance_date',//
+        "zero_balance_date" => 'zero_balance_date',
         "current_duefor_date" => "paid-through_date",
         "final_duefor_date" => "stated_maturity_date",
         "dwelling" => 'property_type',
@@ -183,17 +137,10 @@ class LoanPropertyLabel extends EntityRepository
                 continue;
             }
             $row['id'] = $count;
-            $row = $this->assignDataType($properties, $row);
-            if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
-                && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
-                $label = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
-                $row[self::LABEL] = ucwords(str_replace('_',' ', $label));
-            } else {
-                $row[self::LABEL] = ucwords(str_replace('_',' ', $properties[self::ENTITY_COLUMN]));
-            }
-            $row[self::DB_NAME] = $properties[self::ENTITY_COLUMN];
-            $row[self::ENTITY_TYPE] = $properties[self::ENTITY_TYPE];
+            $row = $this->assignRowLabel($row, $properties);
+            $row = $this->assignFieldMappingsToRow($row, $properties);
             $row = $this->assignSignificance($properties, $row);
+            $row = $this->assignCategory($row);
             array_push($data, $row);
             $count++;
         }
@@ -271,25 +218,23 @@ class LoanPropertyLabel extends EntityRepository
 
     }
 
-    /**
-     * @param array $fieldMapping
-     * @param array $row
-     * @return array
-     */
-    public function assignDataType(array $fieldMapping, array $row):array
+    public function assignRowLabel(array $row, array $properties):array
     {
-        if(in_array($fieldMapping[self::ENTITY_COLUMN], $this->creditData)){
-            $row[self::CATEGORY] = self::CREDIT_DATA ;
-        } elseif (in_array($fieldMapping[self::ENTITY_COLUMN], $this->mortgageData)){
-            $row[self::CATEGORY] = self::MTGE_DATA;
-        } elseif ($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
-            $row[self::CATEGORY] = self::ARM_DATA;
+        if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
+            && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
+            $label = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
+            $row[self::LABEL] = ucwords(str_replace('_',' ', $label));
         } else {
-            $row[self::CATEGORY] = self::LOAN_DATA;
+            $row[self::LABEL] = ucwords(str_replace('_',' ', $properties[self::ENTITY_COLUMN]));
         }
         return $row;
     }
 
+    /**
+     * @param array $fieldMapping
+     * @param $row
+     * @return array
+     */
     public function assignSignificance(array $fieldMapping, $row):array {
         if($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
             $row[self::SIGNIFICANCE] = self::CONDITIONAL;
@@ -297,6 +242,33 @@ class LoanPropertyLabel extends EntityRepository
             $row[self::SIGNIFICANCE] = self::OPTIONAL;
         }else{
             $row[self::SIGNIFICANCE] = self::REQUIRED;
+        }
+        return $row;
+    }
+
+    /**
+     * @param array $row
+     * @return array
+     */
+    public function assignCategory(array $row):array
+    {
+        if (array_key_exists($this->getClassMetadata()->getName(), self::LOAN_CATEGORY_MAPPER)){
+            $row[self::CATEGORY] = self::LOAN_CATEGORY_MAPPER[$this->getClassMetadata()->getName()];
+        } else {
+            $row[self::CATEGORY] = self::LOANS_TABLE_CATEGORY;
+        }
+        return $row;
+    }
+
+    /**
+     * @param array $row
+     * @param array $properties
+     * @return array
+     */
+    public function assignFieldMappingsToRow(array $row, array $properties):array
+    {
+        foreach (self::FIELD_MAPPINGS_TO_ROW as $key => $rowProp){
+            $row[$rowProp] = $properties[$key];
         }
         return $row;
     }

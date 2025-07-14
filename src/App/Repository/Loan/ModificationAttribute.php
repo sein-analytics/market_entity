@@ -12,18 +12,18 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 
 class ModificationAttribute extends EntityRepository
-    implements SqlManagerTraitInterface
+    implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static array $table = [
-        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-        'modification_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-        'capitalized_amount' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'modification_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-        'post_principal_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
+        'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::MOD_CATEGORY],
+        'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::MOD_CATEGORY],
+        'modification_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::MOD_CATEGORY],
+        'capitalized_amount' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::MOD_CATEGORY],
+        'modification_status' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::MOD_CATEGORY],
+        'post_principal_balance' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::MOD_CATEGORY],
+        'delinquent_attribute_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::MOD_CATEGORY],
     ];
 
     public function fetchNextAvailableId()

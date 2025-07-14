@@ -105,6 +105,42 @@ class PayHistoryAttribute extends DomainObject
     protected ?string $history12;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $history13;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $history14;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $history15;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $history16;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $history17;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var ?string
+     */
+    protected ?string $history18;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -331,6 +367,108 @@ class PayHistoryAttribute extends DomainObject
     public function setHistory12(?string $history12): void
     {
         $this->history12 = $history12;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHistory13(): ?string
+    {
+        return $this->history13;
+    }
+
+    /**
+     * @param string|null $history
+     * @return void
+     */
+    public function setHistory13(?string $history): void
+    {
+        $this->history13 = $history;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHistory14(): ?string
+    {
+        return $this->history14;
+    }
+
+    /**
+     * @param string|null $history
+     * @return void
+     */
+    public function setHistory14(?string $history): void
+    {
+        $this->history14 = $history;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHistory15(): ?string
+    {
+        return $this->history15;
+    }
+
+    /**
+     * @param string|null $history
+     * @return void
+     */
+    public function setHistory15(?string $history): void
+    {
+        $this->history15 = $history;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHistory16(): ?string
+    {
+        return $this->history16;
+    }
+
+    /**
+     * @param string|null $history
+     * @return void
+     */
+    public function setHistory16(?string $history): void
+    {
+        $this->history16 = $history;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHistory17(): ?string
+    {
+        return $this->history17;
+    }
+
+    /**
+     * @param string|null $history
+     * @return void
+     */
+    public function setHistory17(?string $history): void
+    {
+        $this->history17 = $history;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHistory18(): ?string
+    {
+        return $this->history18;
+    }
+
+    /**
+     * @param string|null $history
+     * @return void
+     */
+    public function setHistory18(?string $history): void
+    {
+        $this->history18 = $history;
     }
 
 }

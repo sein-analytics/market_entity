@@ -15,6 +15,8 @@ interface SqlManagerTraitInterface
 
     const DATA_DEFAULT = 'default';
 
+    const PROP_CATEGORY_KEY = 'category';
+
     const INSERT__SQL_START = "INSERT INTO ";
 
     const TYPE_MAPPER = [

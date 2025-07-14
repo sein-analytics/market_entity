@@ -18,27 +18,27 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\EntityManager;
 
 class ArmAttribute extends EntityRepository 
-    implements SqlManagerTraitInterface, DbalStatementInterface
+    implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
 {
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
 
     static array $table = [
-      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL'],
-      'gross_margin' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-      'minimum_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-      'maximum_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-      'rate_index' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL'],
-      'fst_rate_adj_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-      'fst_rate_adj_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-      'fst_pmnt_adj_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-      'fst_pmnt_adj_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL'],
-      'rate_adj_frequency' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-      'periodic_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-      'initial_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-      'pmnt_adj_frequency' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL'],
-      'pmnt_increase_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
-      'arm_expiration_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL'],
+      'id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'loan_id' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'gross_margin' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'minimum_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'maximum_rate' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'rate_index' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'fst_rate_adj_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'fst_rate_adj_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'fst_pmnt_adj_period' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'fst_pmnt_adj_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'rate_adj_frequency' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'periodic_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'initial_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'pmnt_adj_frequency' => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'pmnt_increase_cap' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
+      'arm_expiration_date' => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::ARM_ATTR_CATEGORY],
     ];
 
     private $deleteArmAttributesByIdsSql = "DELETE FROM ArmAttribute WHERE id IN (?)";

@@ -135,4 +135,132 @@ interface LoanInterface
     const PP_PNLTY_STEP_KEY = 'prepay_step_down';
 
     const APPEND_UNDER_SCORE = '_';
+
+    const LOAN_DATA = 'loanData';
+
+    const CREDIT_DATA = 'creditData';
+
+    const MTGE_DATA = 'mortgageData';
+
+    const ARM_DATA = 'armData';
+
+    const FEES_DATA = 'feesData';
+
+    const CATEGORY = 'category';
+
+    const SIGNIFICANCE = 'significance';
+
+    const DB_NAME = 'dbName';
+
+    const REQUIRED = 'required';
+
+    const OPTIONAL = 'optional';
+
+    const CONDITIONAL = 'conditional';
+
+    const DB_DATA = 'dbData';
+
+    const LABEL = 'label';
+
+    const ENTITY_TYPE = 'type';
+
+    const ENTITY_FIELD = 'fieldName';
+
+    const ENTITY_NULL = 'nullable';
+
+    const ENTITY_COLUMN = 'columnName';
+
+    const STATE_AB_KEY = 'abbreviation';
+
+    const STATE_NAME_KEY = 'name';
+
+    const SLUG_KEY = 'slug';
+
+    const MAPPED_ID_KEY = 'mapped-id';
+
+    const HAY_KEY = 'haystack';
+
+    const SEARCH_KEY = 'search';
+
+    const BASE_STATE_ID = 51;
+
+    const LOANS_TABLE_CATEGORY = 'loanData';
+
+    const ARM_ATTR_CATEGORY = 'ArmAttribute';
+
+    const AMORT_ATTR_CATEGORY = 'AmortAttribute';
+
+    const BK_ATTR_CATEGORY = 'BankruptcyAttribute';
+
+    const COMM_ATTR_CATEGORY = 'CommAttribute';
+
+    const DQ_ATTR_CATEGORY = 'DelinquentAttribute';
+
+    const DES_ATTR_CATEGORY = 'DescAttribute';
+
+    const ESCROW_ATTR_CATEGORY = 'EscrowAttribute';
+
+    const FORCS_ATTR_CATEGORY = 'ForeclosureAttribute';
+
+    const IO_ATTR_CATEGORY = 'InterestOnlyAttribute';
+
+    const LOSS_MIT_CATEGORY = 'LossMitigationAttribute';
+
+    const MOD_CATEGORY = 'ModificationAttribute';
+
+    const PAY_HIST_CATEGORY = 'PayHistoryAttribute';
+
+    const PROPERTY_CATEGORY = 'PropertyAttribute';
+
+    const SALE_CATEGORY = 'SaleAttribute';
+
+    const ARM_ATTRIBUTE_CLASS = 'App\Entity\Loan\ArmAttribute';
+
+    const AMORT_ATTRIBUTE_CLASS = 'App\Entity\Loan\AmortAttribute';
+
+    const BK_ATTRIBUTE_CLASS = 'App\Entity\Loan\BankruptcyAttribute';
+
+    const COMM_ATTRIBUTE_CLASS = 'App\Entity\Loan\CommAttribute';
+
+    const DQ_ATTRIBUTE_CLASS = 'App\Entity\Loan\DelinquentAttribute';
+
+    const DES_ATTRIBUTE_CLASS = 'App\Entity\Loan\DescAttribute';
+
+    const ESCROW_ATTRIBUTE_CLASS = 'App\Entity\Loan\EscrowAttribute';
+
+    const FORC_ATTRIBUTE_CLASS = 'App\Entity\Loan\ForeclosureAttribute';
+
+    const INT_ONLY_ATTRIBUTE_CLASS = 'App\Entity\Loan\InterestOnlyAttribute';
+
+    const LOSS_MIY_ATTRIBUTE_CLASS = 'App\Entity\Loan\LossMitigationAttribute';
+
+    const MOD_ATTRIBUTE_CLASS = 'App\Entity\Loan\ModificationAttribute';
+
+    const PAY_HIST_ATTRIBUTE_CLASS = 'App\Entity\Loan\PayHistoryAttribute';
+
+    const PROPERTY_ATTRIBUTE_CLASS = 'App\Entity\Loan\PropertyAttribute';
+
+    const SALE_ATTRIBUTE_CLASS = 'App\Entity\Loan\SaleAttribute';
+
+    const LOAN_CATEGORY_MAPPER = [
+        self::ARM_ATTRIBUTE_CLASS => self::ARM_ATTR_CATEGORY,
+        self::AMORT_ATTRIBUTE_CLASS => self::AMORT_ATTR_CATEGORY,
+        self::BK_ATTRIBUTE_CLASS => self::BK_ATTR_CATEGORY,
+        self::COMM_ATTRIBUTE_CLASS => self::COMM_ATTR_CATEGORY,
+        self::DQ_ATTRIBUTE_CLASS => self::DQ_ATTR_CATEGORY,
+        self::DES_ATTRIBUTE_CLASS => self::DES_ATTR_CATEGORY,
+        self::ESCROW_ATTRIBUTE_CLASS => self::ESCROW_ATTR_CATEGORY,
+        self::FORC_ATTRIBUTE_CLASS => self::FORCS_ATTR_CATEGORY,
+        self::INT_ONLY_ATTRIBUTE_CLASS => self::IO_ATTR_CATEGORY,
+        self::LOSS_MIY_ATTRIBUTE_CLASS => self::LOSS_MIT_CATEGORY,
+        self::MOD_ATTRIBUTE_CLASS => self::MOD_CATEGORY,
+        self::PAY_HIST_ATTRIBUTE_CLASS => self::PAY_HIST_CATEGORY,
+        self::PROPERTY_ATTRIBUTE_CLASS => self::PROPERTY_CATEGORY,
+        self::SALE_ATTRIBUTE_CLASS => self::SALE_CATEGORY,
+    ];
+
+    const FIELD_MAPPINGS_TO_ROW = [
+        self::ENTITY_COLUMN =>self::DB_NAME,
+        self::ENTITY_TYPE =>self::ENTITY_TYPE
+    ];
 }
