@@ -37,12 +37,10 @@ class MappedType extends EntityRepository implements DbalStatementInterface
     {
         $result = [];
         foreach ($this->mappedRepos as $db => $propName) {
-            $name =ucfirst($db);
-
             $result[$propName] = $this->buildAndExecuteFromSql(
                 $this->getEntityManager(),
-                "SELECT * FROM $name",
-                self::FETCH_ALL_ASSO_MTHD
+                "SELECT * FROM " . ucfirst($db),
+                self::EXECUTE_MTHD
             );
         }
         return $result;
