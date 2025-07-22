@@ -24,6 +24,8 @@ class DealContract extends DealContractAbstract
     private static string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :issuerId, :assetTypeId)";
 
     private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)";
+    
+    private static string $callFetchProvidedDealContractsByType = "call FetchProvidedDealContractsByType(:docTypeId, :dealId, :userId, :buyerId)";
 
     private static string $callFetchDealFileDetails = "call FetchDealFileDetails(:dealFileId, :userId)";
 
@@ -152,6 +154,10 @@ class DealContract extends DealContractAbstract
     public function fetchDealFilesContractsByUser(int $userId, int $issuerId, int $communityUserId, int $communityIssuerId, int $assetTypeId)
     {
         return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
+    }
+    public function fetchProvidedDealContractsByType(int $docTypeId, int $dealId, int $userId, int $buyerId)
+    {
+        return $this->executeProcedure([$docTypeId, $dealId, $userId, $buyerId], self::$callFetchProvidedDealContractsByType);
     }
 
     public function fetchDealFileDetails(int $dealFileId, int $userId)
