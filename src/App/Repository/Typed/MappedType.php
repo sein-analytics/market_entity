@@ -50,6 +50,8 @@ class MappedType extends EntityRepository
                 self::EXECUTE_MTHD
             );
         }*/
+        $arr = $this->typePropsToTypeTables();
+        return $arr;
         foreach ($this->typePropsToTypeTables() as $prop => $propTable){
             $sql = "SELECT * FROM $propTable";
             $result[$prop]['sql'] = $sql;
