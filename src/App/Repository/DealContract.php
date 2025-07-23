@@ -104,7 +104,8 @@ class DealContract extends DealContractAbstract
         int $docTypeId, 
         int $userId, 
         int $buyerId,
-        ?int $bidId = null
+        ?int $bidId = null,
+        bool $fetchAll = false
     ) {
         $query = 
             "SELECT * FROM DealContract WHERE deal_id=? AND doc_type_id=? " .
@@ -121,7 +122,7 @@ class DealContract extends DealContractAbstract
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $query,
-            self::FETCH_ASSO_MTHD,
+            $fetchAll ? self::FETCH_ALL_ASSO_MTHD : self::FETCH_ASSO_MTHD,
             $params
         );
     }

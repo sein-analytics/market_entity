@@ -250,12 +250,12 @@ class KycDocument extends KycDocumentAbstract
         ); 
     }
 
-    public function fetchDocumentByTypeAndUsers(int $typeId, int $userId, $communityUserId):mixed
+    public function fetchDocumentByTypeAndUsers(int $typeId, int $userId, $communityUserId, bool $fetchAll = false):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchDocumentByTypeAndUsers,
-            self::FETCH_ASSO_MTHD,
+            $fetchAll ? self::FETCH_ALL_ASSO_MTHD : self::FETCH_ASSO_MTHD,
             [$typeId, $userId, $communityUserId]
         );
     }
