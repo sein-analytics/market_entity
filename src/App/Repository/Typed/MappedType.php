@@ -12,11 +12,18 @@ use App\Repository\DbalStatementInterface;
 use App\Service\FetchingTrait;
 use Doctrine\ORM\EntityRepository;
 
-class MappedType extends EntityRepository implements DbalStatementInterface
+class MappedType extends EntityRepository
+    implements DbalStatementInterface, MappedTypeInterface
 {
     use FetchingTrait;
 
-    protected $mappedRepos = [
+    private string $fetchArmIndexTypeSql = 'SELECT * FROM ArmIndexType';
+
+    private string $fetchPurposeTypeSql = 'SELECT * FROM PurposeType';
+
+    private string $fetchOccupancyTypeSql = 'SELECT * FROM OccupancyType';
+
+    protected array $mappedRepos = [
         'armIndexType' => 'rateIndex',
         'purposeType' => 'purpose',
         'occupancyType' => 'occupancy',
@@ -33,16 +40,35 @@ class MappedType extends EntityRepository implements DbalStatementInterface
     /**
      * @return array
      */
-    public function fetchAllMappedTypeData()
+    public function fetchAllMappedTypeData():array
     {
         $result = [];
-        foreach ($this->mappedRepos as $db => $propName) {
+        /*foreach ($this->mappedRepos as $db => $propName) {
             $result[$propName] = $this->buildAndExecuteFromSql(
                 $this->getEntityManager(),
                 "SELECT * FROM " . ucfirst($db),
                 self::EXECUTE_MTHD
             );
+        }*/
+        foreach ($this->typePropsToTypeTables() as $prop => $propTable){
+            $sql = "SELECT * FROM $propTable";
+            $result[$prop]['sql'] = $sql;
+            $result[$prop][] = $this->buildAndExecuteFromSql(
+                $this->getEntityManager(),
+                $sql,
+                self::FETCH_ALL_ASSO_MTHD
+            );
         }
         return $result;
+    }
+
+    private function typePropsToTypeTables():array
+    {
+        return [
+            self::ARM_INDEX_TYPE_PROP => self::ARM_INDEX_TYPE_DB,
+            self::PURPOSE_TYPE_PROP => self::PURPOSE_TYPE_DB,
+            self::OCCUPANCY_TYPE_PROP => self::OCCUPANCY_TYPE_DB,
+            self::STATUS_TYPE_PROP => self::STATUS_TYPE_DB,
+        ];
     }
 }
