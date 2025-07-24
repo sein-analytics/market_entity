@@ -23,7 +23,7 @@ class MappedType extends EntityRepository
 
     private string $fetchOccupancyTypeSql = 'SELECT * FROM OccupancyType';
 
-    protected array $mappedRepos = [
+    /*protected array $mappedRepos = [
         'armIndexType' => 'rateIndex',
         'purposeType' => 'purpose',
         'occupancyType' => 'occupancy',
@@ -35,7 +35,7 @@ class MappedType extends EntityRepository
         'lienType' => 'lien',
         'newUsed'   => 'newUsed',
         'yearBuilt' => 'yearBuilt'
-    ];
+    ];*/
 
     /**
      * @return array
@@ -52,7 +52,7 @@ class MappedType extends EntityRepository
         }*/
         /* $arr = $this->typePropsToTypeTables();
         return $arr; */
-        foreach ($this->typePropsToTypeTables() as $prop => $propTable){
+        foreach (self::PROP_TO_TABLE_MAP as $prop => $propTable){
             $sql = "SELECT * FROM $propTable";
             $result[$prop]['sql'] = $sql;
             $result[$prop][] = $this->buildAndExecuteFromSql(
@@ -64,7 +64,7 @@ class MappedType extends EntityRepository
         return $result;
     }
 
-    private function typePropsToTypeTables():array
+    /*private function typePropsToTypeTables():array
     {
         return [
             self::ARM_INDEX_TYPE_PROP => self::ARM_INDEX_TYPE_DB,
@@ -72,5 +72,5 @@ class MappedType extends EntityRepository
             self::OCCUPANCY_TYPE_PROP => self::OCCUPANCY_TYPE_DB,
             self::STATUS_TYPE_PROP => self::STATUS_TYPE_DB,
         ];
-    }
+    }*/
 }
