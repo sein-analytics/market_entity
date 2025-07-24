@@ -26,8 +26,7 @@ class MappedType extends EntityRepository
         $result = [];
         foreach (self::PROP_TO_TABLE_MAP as $prop => $propTable){
             $sql = "SELECT * FROM $propTable";
-            $result[$prop]['sql'] = $sql;
-            $result[$prop][] = $this->buildAndExecuteFromSql(
+            $result[$prop] = $this->buildAndExecuteFromSql(
                 $this->getEntityManager(),
                 $sql,
                 self::FETCH_ALL_ASSO_MTHD
