@@ -11,7 +11,7 @@ class DealContract extends DealContractAbstract
 
     use FetchMapperTrait, FetchingTrait;
 
-    private string $insertDealContractSql = "INSERT INTO DealContract VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertDealContractSql = "INSERT INTO DealContract VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $updateDealContractStatusSql = "UPDATE DealContract SET contract_status_id=? WHERE id=?";
 
