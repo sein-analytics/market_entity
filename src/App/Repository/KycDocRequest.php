@@ -286,7 +286,7 @@ class KycDocRequest extends KycDocumentAbstract
 
         $query = $query . " ORDER BY id DESC";
 
-        $this->buildAndExecuteFromSql(
+        return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $query,
             self::FETCH_ASSO_MTHD,
