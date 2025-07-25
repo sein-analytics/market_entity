@@ -86,6 +86,12 @@ class DealContract
      */
     protected ?ContractSignature $contractSignature;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\KycDocRequest")
+     * @ORM\JoinColumn(name="kyc_doc_request_id", referencedColumnName="id", unique=true, nullable=true)
+    */
+    protected ?KycDocRequest $kycDocRequest;
+
     function __construct()
     {
         $this->deal = new Deal();
@@ -206,5 +212,15 @@ class DealContract
      * @param ContractSignature $contractSignature
      */
     public function setContractSignature(ContractSignature $contractSignature):void { $this->contractSignature = $contractSignature; }
+
+    /**
+     * @return KycDocRequest|null
+     */
+    public function getKycDocRequest():KycDocRequest|null { return $this->kycDocRequest; }
+
+    /**
+     * @param KycDocRequest $kycDocRequest
+     */
+    public function setKycDocRequest(KycDocRequest $kycDocRequest):void { $this->kycDocRequest = $kycDocRequest; }
 
 }
