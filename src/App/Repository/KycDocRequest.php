@@ -278,7 +278,7 @@ class KycDocRequest extends KycDocumentAbstract
         $values = [$communityUserId, $userId];
 
         foreach($columnsValues as $key => $value) {
-            $query = $query . "AND " . "$key=? ";
+            $query = $query . "AND $key" . (!is_null($value) ? "=? " : " IS NULL ");
             $values[] = $value;
         }
 
