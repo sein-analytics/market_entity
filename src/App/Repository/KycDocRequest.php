@@ -272,4 +272,24 @@ class KycDocRequest extends KycDocumentAbstract
         return $results[self::COUNT_DB_KEY];
     }
 
+    public function fetchLastInsertedActiveRequestId(int $communityUserId, int $userId, array $columnsValues = [])
+    {
+        $query = "SELECT id FROM KycDocRequest WHERE kyc_doc_request_status_id = 1 AND community_user_id=? AND user_id=? ";
+        $values = [$communityUserId, $userId];
+
+        foreach($columnsValues as $key => $value) {
+            $query = $query . "AND " . "$key=? ";
+            $values[] = $value;
+        }
+
+        $query = $query . " ORDER BY id DESC";
+
+        $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::FETCH_ASSO_MTHD,
+            $values
+        );
+    }
+
 }
