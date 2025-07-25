@@ -279,7 +279,9 @@ class KycDocRequest extends KycDocumentAbstract
 
         foreach($columnsValues as $key => $value) {
             $query = $query . "AND $key" . (!is_null($value) ? "=? " : " IS NULL ");
-            $values[] = $value;
+
+            if (!is_null($value))
+                $values[] = $value;
         }
 
         $query = $query . " ORDER BY id DESC";
