@@ -283,11 +283,11 @@ class KycDocRequest extends KycDocumentAbstract
                 "LEFT JOIN DealContract AS dealFile ON dealFile.kyc_doc_request_id = requests.id ";
         }
 
-        $query = $query . "WHERE kyc_doc_request_status_id = 1 AND community_user_id=? AND user_id=? " .
+        $query = $query . "WHERE requests.kyc_doc_request_status_id = 1 AND requests.community_user_id=? AND requests.user_id=? " .
             ($noFileAssociation ? "AND kycDoc.id IS NULL AND dealFile.id IS NULL " : " ");
 
         foreach($columnsValues as $key => $value) {
-            $query = $query . "AND $key" . (!is_null($value) ? "=? " : " IS NULL ");
+            $query = $query . "AND requests.$key" . (!is_null($value) ? "=? " : " IS NULL ");
 
             if (!is_null($value))
                 $values[] = $value;
