@@ -272,10 +272,19 @@ class KycDocRequest extends KycDocumentAbstract
         return $results[self::COUNT_DB_KEY];
     }
 
-    public function fetchLastInsertedActiveRequestId(int $communityUserId, int $userId, array $columnsValues = [])
+    public function fetchLastInsertedActiveRequestId(int $communityUserId, int $userId, array $columnsValues = [], bool $noFileAssociation = false)
     {
-        $query = "SELECT id FROM KycDocRequest WHERE kyc_doc_request_status_id = 1 AND community_user_id=? AND user_id=? ";
+        $query = "SELECT requests.id FROM KycDocRequest requests ";
         $values = [$communityUserId, $userId];
+
+        if ($noFileAssociation) {
+            $query = 
+                $query . "LEFT JOIN KycDocument AS kycDoc ON kycDoc.kyc_doc_request_id = requests.id " .
+                "LEFT JOIN DealContract AS dealFile ON dealFile.kyc_doc_request_id = requests.id ";
+        }
+
+        $query = $query . "WHERE kyc_doc_request_status_id = 1 AND community_user_id=? AND user_id=? " .
+            ($noFileAssociation ? "AND kycDoc.id IS NULL AND dealFile.id IS NULL " : " ");
 
         foreach($columnsValues as $key => $value) {
             $query = $query . "AND $key" . (!is_null($value) ? "=? " : " IS NULL ");
@@ -284,11 +293,9 @@ class KycDocRequest extends KycDocumentAbstract
                 $values[] = $value;
         }
 
-        $query = $query . " ORDER BY id DESC";
-
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            $query,
+            $query . " ORDER BY id DESC",
             self::FETCH_ASSO_MTHD,
             $values
         );
