@@ -31,6 +31,8 @@ class DealContract extends DealContractAbstract
 
     private string $fetchUserDealNdaTemplateSql = "SELECT * FROM DealContract WHERE user_id=? AND deal_id=? AND doc_type_id = 10 AND buyer_id IS NULL;";
 
+    private string $fetchDocumentByRequestIdSql = "SELECT * FROM DealContract WHERE kyc_doc_request_id=?";
+
     public function insertNewDealContract(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -164,6 +166,16 @@ class DealContract extends DealContractAbstract
     public function fetchDealFileDetails(int $dealFileId, int $userId)
     {
         return $this->executeProcedure([$dealFileId, $userId], self::$callFetchDealFileDetails);
+    }
+
+        public function fetchDocumentByRequestId(int $requestId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByRequestIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$requestId]
+        );
     }
 
 }

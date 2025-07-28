@@ -39,6 +39,8 @@ class KycDocument extends KycDocumentAbstract
 
     private string $fetchUserNdaTemplateSql = "SELECT * FROM KycDocument WHERE user_id=? AND kyc_type_id = 8 AND community_user_id IS NULL";
 
+    private string $fetchDocumentByRequestIdSql = "SELECT * FROM KycDocument WHERE kyc_doc_request_id=?";
+
     public function insertNewKycDocument(array $params):mixed
     {
         if (array_key_exists(self::DC_QRY_ID_KEY, $params))
@@ -354,6 +356,16 @@ class KycDocument extends KycDocumentAbstract
             $this->fetchUserNdaTemplateSql,
             self::FETCH_ASSO_MTHD,
             [$userId]
+        );
+    }
+
+    public function fetchDocumentByRequestId(int $requestId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByRequestIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$requestId]
         );
     }
 
