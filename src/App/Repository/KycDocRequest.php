@@ -32,6 +32,8 @@ class KycDocRequest extends KycDocumentAbstract
 
     private string $updateDocRequestStatusSql = "UPDATE KycDocRequest SET kyc_doc_request_status_id=? WHERE id=?";
 
+    private string $fetchRequestByIdSql = "SELECT * FROM KycDocRequest WHERE id=?"; 
+
     public function insertMultiKycDocRequests(
         int $communityIssuerId,
         int $communityUserId,
@@ -299,6 +301,16 @@ class KycDocRequest extends KycDocumentAbstract
             self::FETCH_ASSO_MTHD,
             $values
         );
+    }
+
+    public function fetchRequestById(int $id)
+    {
+       return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchRequestByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$id]
+        ); 
     }
 
 }
