@@ -186,4 +186,8 @@ interface KycDocumentInterface
         5 => [],
     ];
 
+    const DEAL_KYC_TYPES_IDS = [ self::KYC_TYPE_NDA_ID, self::KYC_TYPE_LOI_ID, self::KYC_TYPE_LPA_ID ];
+
+    const BID_KYC_TYPES_IDS = [ self::KYC_TYPE_LOI_ID, self::KYC_TYPE_LPA_ID ];
+
 }
