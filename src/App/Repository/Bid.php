@@ -44,6 +44,8 @@ class Bid extends EntityRepository
 
     private string $fetchLastBidPriceByDealSql = "SELECT price FROM Bid WHERE id IN (SELECT Max(id) FROM Bid WHERE deal_id=?)";
 
+    private string $callDealLoiBidsAuthenticity = "call DealLoiBidsAuthenticity(:dealId, :bidsIds)";
+
     /**
      * @param array $dealIds
      * @param bool $mapBidsToDeals
@@ -261,6 +263,13 @@ class Bid extends EntityRepository
     {
         return $this->executeProcedure([$dealId, implode(', ', $bidsStatusIds)],
             $this->callFetchDealIssuersLoiActiveBids);
+    }
+
+    public function dealLoiBidsAuthenticity(int $dealId, array $bidsIds):mixed
+    {
+        return $this->executeProcedure(
+            [$dealId, implode(', ', $bidsIds)], $this->callDealLoiBidsAuthenticity
+        );
     }
 
 }
