@@ -274,8 +274,10 @@ class KycDocRequest extends KycDocumentAbstract
         return $results[self::COUNT_DB_KEY];
     }
 
-    public function fetchLastInsertedActiveRequestId(int $communityUserId, int $userId, array $columnsValues = [], bool $noFileAssociation = false)
-    {
+    public function fetchLastInsertedActiveRequestId(
+        int $communityUserId, int $userId, array $columnsValues = [], 
+        bool $noFileAssociation = false, $statuses = [ self::KR_STATUS_OPEN_ID ]
+    ) {
         $query = "SELECT requests.id FROM KycDocRequest requests ";
         $values = [$communityUserId, $userId];
 
@@ -285,7 +287,9 @@ class KycDocRequest extends KycDocumentAbstract
                 "LEFT JOIN DealContract AS dealFile ON dealFile.kyc_doc_request_id = requests.id ";
         }
 
-        $query = $query . "WHERE requests.kyc_doc_request_status_id = 1 AND requests.community_user_id=? AND requests.user_id=? " .
+        $statuses = implode(',', $statuses);
+
+        $query = $query . "WHERE requests.kyc_doc_request_status_id IN ($statuses) AND requests.community_user_id=? AND requests.user_id=? " .
             ($noFileAssociation ? "AND kycDoc.id IS NULL AND dealFile.id IS NULL " : " ");
 
         foreach($columnsValues as $key => $value) {
