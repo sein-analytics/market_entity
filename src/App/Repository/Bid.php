@@ -241,11 +241,11 @@ class Bid extends EntityRepository
 
     public function updateMultiBidStatuses(int $statusId, array $bidIds): mixed
     {
-        return $this->buildAndExecuteIntArrayStmt(
+         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            "UPDATE Bid SET status_id=$statusId IN (?)",
+            "UPDATE Bid SET status_id=? WHERE id IN (?)",
             self::EXECUTE_MTHD,
-            $bidIds
+            [$statusId, implode(", ", $bidIds)]
         );
     }
 
