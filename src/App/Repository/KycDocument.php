@@ -150,7 +150,7 @@ class KycDocument extends KycDocumentAbstract
 
     public function fetchKycDocsIdsByIssuerAndAssetAndType(int $issuerId, ?int $assetTypeId, int $kycTypeId)
     {
-        $baseQry = "SELECT id FROM KycDocument WHERE issuer_id=? AND community_issuer_id IS NULL";
+        $baseQry = "SELECT id FROM KycDocument WHERE issuer_id=? AND community_issuer_id IS NULL AND contract_signature_id IS NULL";
         $baseQryParams = [$issuerId];
 
         if (is_null($assetTypeId) || $kycTypeId == self::KYC_TYPE_GENERAL_ID) {
