@@ -184,8 +184,8 @@ class DealContract extends DealContractAbstract
         $query = 'SELECT COUNT(dc.id) AS count FROM DealContract AS dc '.
             'JOIN ContractSignature AS cs ON cs.id = dc.contract_signature_id '.
             'WHERE cs.contract_status_id = 4 '.
-            'AND EXISTS (SELECT 1 FROM MarketUser mu WHERE mu.id = dc.user_id AND mu.issuer_id=? '.
-            'AND EXISTS (SELECT 1 FROM MarketUser mu WHERE mu.id = dc.buyer_id AND mu.issuer_id=?'
+            'AND EXISTS (SELECT 1 FROM MarketUser mu WHERE mu.id = dc.user_id AND mu.issuer_id=?) '.
+            'AND EXISTS (SELECT 1 FROM MarketUser mu WHERE mu.id = dc.buyer_id AND mu.issuer_id=?)'
         ;
 
         $stmt = $this->buildAndExecuteFromSql(
