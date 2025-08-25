@@ -30,17 +30,30 @@ class ParserTempTables
     /**
      * @param EntityManager|EntityManagerInterface $em
      * @param string $dealName
-     * @param array $nulls
-     * @return void
+     * @param string $resultName
+     * @param array $result
+     * @return mixed
      */
-    public function createOmittedNullTable(EntityManager|EntityManagerInterface $em, string $dealName, string $parserName, array $nulls):void
+    public function createOmittedNullTable(EntityManager|EntityManagerInterface $em, string $dealName, string $resultName, array $result):mixed
     {
         $connection = $em->getConnection();
-        $name = $dealName . "_" . $this->randomDateAppend() . '_' . $parserName;
+        $name = $this->makeTempTableName($dealName, $resultName);
+        $colNames = implode(",", $this->columnsByResultsPropsArray($result));
         $sql =  "CREATE TEMPORARY TABLE $name (
             id INT PRIMARY KEY,
-            col_name JSON
+            $colNames
         )";
+        return $sql;
+    }
+
+    /**
+     * @param string $dealName
+     * @param string $resultType
+     * @return string
+     */
+    public function makeTempTableName(string $dealName, string $resultType):string
+    {
+        return $dealName . '_' . $this->randomDateAppend()  . '_' . $resultType;
     }
 
     /**
@@ -60,7 +73,7 @@ class ParserTempTables
             if (array_key_exists(self::RESULTS_DB_PROP_KEY, $data)
                 && is_array($data[self::RESULTS_DB_PROP_KEY])
                 && array_key_exists(self::RESULTS_DB_NAME_KEY, $data[self::RESULTS_DB_PROP_KEY])){
-                $colNames[] = $data[self::RESULTS_DB_PROP_KEY][self::RESULTS_DB_NAME_KEY];
+                $colNames[] = $data[self::RESULTS_DB_PROP_KEY][self::RESULTS_DB_NAME_KEY] . ' JSON';
             }
         }
         return $colNames;
