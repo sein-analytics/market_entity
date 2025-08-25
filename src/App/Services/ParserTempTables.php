@@ -69,7 +69,7 @@ class ParserTempTables
     {
         $randDate = new \DateTime();
         $randDate->setTime(mt_rand(0, 23), mt_rand(0, 59));
-        return $randDate->format('Y-m-d H:i');
+        return $randDate->format('YY MM DD');
     }
 
     public function columnsByResultsPropsArray(array $results):array
