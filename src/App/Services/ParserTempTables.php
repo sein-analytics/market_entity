@@ -43,7 +43,13 @@ class ParserTempTables
             id INT PRIMARY KEY,
             $colNames
         )";
-        return $sql;
+        try {
+            $connection->executeStatement($sql);
+            return 'Created';
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+        //return $sql;
     }
 
     /**
