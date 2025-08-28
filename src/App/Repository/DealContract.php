@@ -180,16 +180,17 @@ class DealContract extends DealContractAbstract
 
     public function executedIssuersContractsCount(int $issuerId, int $communityIssuerId)
     {
-
-        $query = 'SELECT COUNT(dc.id) AS count FROM DealContract AS dc '.
-            'JOIN ContractSignature AS cs ON cs.id = dc.contract_signature_id '.
+        $query = 'SELECT COUNT(cs.id) AS count FROM ContractSignature AS cs '.
+            'JOIN DealContract AS dc ON dc.contract_signature_id = cs.id '.
+            'JOIN MarketUser AS sender ON sender.id = cs.sender_id '.
+            'JOIN MarketUser AS receiver ON receiver.id = cs.receiver_id '.
             'WHERE cs.contract_status_id = 4 '.
-            'AND EXISTS (SELECT 1 FROM MarketUser mu WHERE mu.id = dc.user_id AND mu.issuer_id=?) '.
-            'AND EXISTS (SELECT 1 FROM MarketUser mu WHERE mu.id = dc.buyer_id AND mu.issuer_id=?)'
+            'AND sender.issuer_id IN ('.$issuerId.','.$communityIssuerId.') ' .
+            'AND receiver.issuer_id IN ('.$issuerId.','.$communityIssuerId.')'
         ;
 
         $stmt = $this->buildAndExecuteFromSql(
-            $this->getEntityManager(), $query, self::FETCH_ASSO_MTHD, [$issuerId, $communityIssuerId]
+            $this->getEntityManager(), $query, self::FETCH_ASSO_MTHD
         );
 
         return $stmt[self::COUNT_DB_KEY];
