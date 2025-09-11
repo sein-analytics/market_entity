@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Log;
 use Doctrine\DBAL\ForwardCompatibility\DriverResultStatement;
 use Doctrine\DBAL\ForwardCompatibility\DriverStatement;
 use Doctrine\DBAL\ForwardCompatibility\Result;
+use function Lambdish\phunctional\{each, assoc};
 
 class ParserTempTables
 {
@@ -39,17 +40,17 @@ class ParserTempTables
         $connection = $em->getConnection();
         $name = $this->makeTempTableName($dealName, $resultName);
         $colNames = implode(",", $this->columnsByResultsPropsArray($result));
-        $sql =  "CREATE TEMPORARY TABLE $name (
+        $sql =  "CREATE TABLE $name (
             id INT PRIMARY KEY,
             $colNames
         )";
+        //return $sql;
         try {
             $connection->executeStatement($sql);
             return 'Created';
         }catch (\Exception $exception){
             return $exception->getMessage();
         }
-        //return $sql;
     }
 
     /**
@@ -69,7 +70,7 @@ class ParserTempTables
     {
         $randDate = new \DateTime();
         $randDate->setTime(mt_rand(0, 23), mt_rand(0, 59));
-        return $randDate->format('YY MM DD');
+        return $randDate->format('YmdHi');
     }
 
     public function columnsByResultsPropsArray(array $results):array
