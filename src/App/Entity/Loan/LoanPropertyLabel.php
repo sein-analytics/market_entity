@@ -102,8 +102,10 @@ implements LoanInterface
                 return (int)$val;
             },
             "decimal" => function($value){
-                $val = preg_replace("/[^0-9.]/", "", $value);
-                return round((float)$val, 2);
+                return $this->decimalAndFloats($value);
+            },
+            "float" => function($value){
+                return $this->decimalAndFloats($value);
             },
             "datetime" => function($value){
                 $val = preg_replace('/[^0-9-\/]/', '', $value);
@@ -120,6 +122,12 @@ implements LoanInterface
             }
         ];
         parent::__construct($em, $class);
+    }
+
+    protected function decimalAndFloats(mixed $value): float
+    {
+        //$val = preg_replace("/[^0-9.]/", "", $value);
+        return round((float)preg_replace("/[^0-9.]/", "", $value), 2);
     }
 
     /**
