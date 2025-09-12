@@ -22,6 +22,10 @@ implements LoanInterface
 {
     use CreatePropertiesArrayTrait;
 
+    const XL_FORMAT_SUBTRAHEND = 25569;
+
+    const XL_FORMAT_MULTIPLIER = 86400;
+
     private array $propertyLabels = [
         "id" => null,
         "pool_id" => null,
@@ -112,8 +116,8 @@ implements LoanInterface
                 try{
                     $date = new \DateTime($val);
                 } catch (\Exception $e){
-                    //return $e->getMessage();
-                    return "1970-10-10";
+                    if (!($date = $this->excelDateConversion($value, $val)) instanceof \DateTime)
+                        return "1970-10-10";
                 }
                 return $date->format("Y-m-d");
             },
@@ -128,6 +132,22 @@ implements LoanInterface
     {
         //$val = preg_replace("/[^0-9.]/", "", $value);
         return round((float)preg_replace("/[^0-9.]/", "", $value), 2);
+    }
+
+    /**
+     * @param string $xlDate
+     * @param string $cleanDate
+     * @return string|\DateTime
+     */
+    protected function excelDateConversion(string $xlDate, string $cleanDate):string|\DateTime
+    {
+        if ($xlDate !== $cleanDate)
+            return "Not XL format";
+        try {
+            return new \DateTime("@" . ($cleanDate - self::XL_FORMAT_SUBTRAHEND)*self::XL_FORMAT_MULTIPLIER);
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
     }
 
     /**
