@@ -142,6 +142,8 @@ interface LoanInterface
 
     const LOAN_DATA = 'loanData';
 
+    const DB_DATA_KEY = 'dbData';
+
     const CREDIT_DATA = 'creditData';
 
     const MTGE_DATA = 'mortgageData';
