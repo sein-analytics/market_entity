@@ -122,7 +122,7 @@ implements LoanInterface
                 return $date->format("Y-m-d");
             },
             "string" => function($value){
-                return $value;
+                return $this->removeStringSpecialCharacters($value);
             }
         ];
         parent::__construct($em, $class);
@@ -132,6 +132,13 @@ implements LoanInterface
     {
         //$val = preg_replace("/[^0-9.]/", "", $value);
         return round((float)preg_replace("/[^0-9.]/", "", $value), 2);
+    }
+
+    protected function removeStringSpecialCharacters(string $stringValue):string
+    {
+        $allowedSymbols = "-_.,\/";
+        $pattern = '/[^a-zA-Z0-9\x20' . preg_quote($allowedSymbols, '/') . ']/u';
+        return preg_replace($pattern, '', $stringValue);
     }
 
     /**
