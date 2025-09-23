@@ -138,7 +138,7 @@ implements LoanInterface
     {
         $allowedSymbols = "-_.,\/";
         $pattern = '/[^a-zA-Z0-9\x20' . preg_quote($allowedSymbols, '/') . ']/u';
-        return preg_replace($pattern, '', $stringValue);
+        return str_replace("'", "", preg_replace($pattern, '', $stringValue));
     }
 
     /**
