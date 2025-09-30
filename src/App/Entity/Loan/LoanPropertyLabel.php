@@ -35,11 +35,11 @@ implements LoanInterface
         [self::CHAR_KEY => "'", self::ESCAPE_CHAR_KEY => "\'" ],
         [self::CHAR_KEY => '"', self::ESCAPE_CHAR_KEY => '\"' ],
         [self::CHAR_KEY => '0', self::ESCAPE_CHAR_KEY => '\0' ],
-        [self::CHAR_KEY => 'b', self::ESCAPE_CHAR_KEY => '\b' ],
+        /*[self::CHAR_KEY => 'b', self::ESCAPE_CHAR_KEY => '\b' ],
         [self::CHAR_KEY => 'n', self::ESCAPE_CHAR_KEY => '\n' ],
         [self::CHAR_KEY => 'r', self::ESCAPE_CHAR_KEY => '\r' ],
         [self::CHAR_KEY => 't', self::ESCAPE_CHAR_KEY => '\t' ],
-        [self::CHAR_KEY => 'Z', self::ESCAPE_CHAR_KEY => '\Z' ],
+        [self::CHAR_KEY => 'Z', self::ESCAPE_CHAR_KEY => '\Z' ],*/
         [self::CHAR_KEY => '%', self::ESCAPE_CHAR_KEY => '\%' ],
         [self::CHAR_KEY => '_', self::ESCAPE_CHAR_KEY => '\_' ],
     ];
