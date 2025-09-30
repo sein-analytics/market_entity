@@ -156,8 +156,7 @@ implements LoanInterface
     {
         $allowedSymbols = "-_.,\/%\"'";
         $pattern = '/[^a-zA-Z0-9\x20' . preg_quote($allowedSymbols, '/') . ']/u';
-        $string = preg_replace($pattern, '', $stringValue);
-        //return str_replace("'", "", preg_replace($pattern, '', $stringValue));
+        $string = str_replace("'", "", preg_replace($pattern, '', $stringValue));
         each(function ($item) use(&$string){
             $string = str_replace($item[self::CHAR_KEY], $item[self::ESCAPE_CHAR_KEY], $string);
         }, self::SPECIAL_CHARS_CLEANER);
