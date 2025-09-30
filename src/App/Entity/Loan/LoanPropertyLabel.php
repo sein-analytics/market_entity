@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 use Doctrine\ORM\Mapping as ORM;
-use const Lambdish\Phunctional\each;
+use function Lambdish\Phunctional\{each};
 
 class LoanPropertyLabel extends EntityRepository
 implements LoanInterface
@@ -25,6 +25,24 @@ implements LoanInterface
     const XL_FORMAT_SUBTRAHEND = 25569;
 
     const XL_FORMAT_MULTIPLIER = 86400;
+
+    const CHAR_KEY = 'char';
+
+    const ESCAPE_CHAR_KEY = 'escapeChar';
+
+    const SPECIAL_CHARS_CLEANER = [
+        [self::CHAR_KEY => "\\", self::ESCAPE_CHAR_KEY => "\\/"],
+        [self::CHAR_KEY => "'", self::ESCAPE_CHAR_KEY => "\'" ],
+        [self::CHAR_KEY => '"', self::ESCAPE_CHAR_KEY => '\"' ],
+        [self::CHAR_KEY => '0', self::ESCAPE_CHAR_KEY => '\0' ],
+        [self::CHAR_KEY => 'b', self::ESCAPE_CHAR_KEY => '\b' ],
+        [self::CHAR_KEY => 'n', self::ESCAPE_CHAR_KEY => '\n' ],
+        [self::CHAR_KEY => 'r', self::ESCAPE_CHAR_KEY => '\r' ],
+        [self::CHAR_KEY => 't', self::ESCAPE_CHAR_KEY => '\t' ],
+        [self::CHAR_KEY => 'Z', self::ESCAPE_CHAR_KEY => '\Z' ],
+        [self::CHAR_KEY => '%', self::ESCAPE_CHAR_KEY => '\%' ],
+        [self::CHAR_KEY => '_', self::ESCAPE_CHAR_KEY => '\_' ],
+    ];
 
     private array $propertyLabels = [
         "id" => null,
@@ -122,7 +140,7 @@ implements LoanInterface
                 return $date->format("Y-m-d");
             },
             "string" => function($value){
-                return $this->removeStringSpecialCharacters($value);
+                return $this->escapeStringSpecialCharacters($value);
             }
         ];
         parent::__construct($em, $class);
@@ -134,11 +152,16 @@ implements LoanInterface
         return round((float)preg_replace("/[^0-9.]/", "", $value), 2);
     }
 
-    protected function removeStringSpecialCharacters(string $stringValue):string
+    protected function escapeStringSpecialCharacters(string $stringValue):string
     {
-        $allowedSymbols = "-_.,\/";
+        $allowedSymbols = "-_.,\/%\"'";
         $pattern = '/[^a-zA-Z0-9\x20' . preg_quote($allowedSymbols, '/') . ']/u';
-        return str_replace("'", "", preg_replace($pattern, '', $stringValue));
+        $string = preg_replace($pattern, '', $stringValue);
+        //return str_replace("'", "", preg_replace($pattern, '', $stringValue));
+        each(function ($item) use(&$string){
+            $string = str_replace($item[self::CHAR_KEY], $item[self::ESCAPE_CHAR_KEY], $string);
+        }, self::SPECIAL_CHARS_CLEANER);
+        return $string;
     }
 
     /**
