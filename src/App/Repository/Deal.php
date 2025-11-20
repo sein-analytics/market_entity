@@ -72,6 +72,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityUserId, :assetTypeId)';
 
+    private string $callFetchLoanDetails = 'call FetchLoanDetails(:loanId)';
+
     private string $fetchDealPoolIdsByDealIdSql = "SELECT id FROM Pool Where deal_id=?";
 
     private string $fetchDealBidTypeIdByDealIdSql = "SELECT bid_type_id FROM Deal Where id=?";
@@ -458,6 +460,13 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             $sql,
             self::FETCH_ALL_ASSO_MTHD,
             [$userId, $assetTypeId]
+        );
+    }
+    
+    public function fetchLoanDetails(int $loanId)
+    {
+        return $this->executeProcedure(
+            [$loanId], $this->callFetchLoanDetails
         );
     }
 
