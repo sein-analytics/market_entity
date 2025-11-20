@@ -103,8 +103,8 @@ class Loan extends EntityRepository
         self::PP_PNLTY_TERM_KEY => [self::DATA_TYPE => 'int', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::LOANS_TABLE_CATEGORY],
         self::PP_PNLTY_KEY => [self::DATA_TYPE => 'decimal', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::LOANS_TABLE_CATEGORY],
         self::PP_PNLTY_STEP_KEY => [self::DATA_TYPE => 'json', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::LOANS_TABLE_CATEGORY],
-        'as_of_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::LOANS_TABLE_CATEGORY],
-        'purchase_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::LOANS_TABLE_CATEGORY],
+        self::AS_OF_DATE_KEY => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::LOANS_TABLE_CATEGORY],
+        self::PURCHASE_DATE_KEY => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NOT NULL', self::PROP_CATEGORY_KEY =>self::LOANS_TABLE_CATEGORY],
     ];
 
     private string $fetchLoanIdsByPoolIdsSql = "SELECT id FROM loans WHERE pool_id IN (?)";

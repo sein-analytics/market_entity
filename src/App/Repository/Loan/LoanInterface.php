@@ -134,9 +134,15 @@ interface LoanInterface
 
     const PP_PNLTY_STEP_KEY = 'prepay_step_down';
 
+    const AS_OF_DATE_KEY = 'as_of_date';
+
+    const PURCHASE_DATE_KEY = 'purchase_date';
+
     const APPEND_UNDER_SCORE = '_';
 
     const LOAN_DATA = 'loanData';
+
+    const DB_DATA_KEY = 'dbData';
 
     const CREDIT_DATA = 'creditData';
 
