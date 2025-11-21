@@ -113,6 +113,8 @@ class Loan extends EntityRepository
 
     private string $fetchLoanIdFromIdSql = "SELECT loan_id FROM loans WHERE id = ?";
 
+    private string $fetchPayHistoryByIdSql = "SELECT * FROM PayHistoryAttribute WHERE id=?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -304,6 +306,16 @@ class Loan extends EntityRepository
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
         return array_keys(self::$table);
+    }
+
+    public function fetchPayHistoryById(int $id)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchPayHistoryByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$id]
+        );
     }
 
 }
