@@ -107,4 +107,8 @@ interface MongoKeysInterface
 
     const MONGO_REMOVE_FLAG = '$$REMOVE';
 
+    const MONGO_CREATED_AT_KEY = 'createdAt';
+
+    const MONGO_UPDATED_AT_KEY = 'updatedAt';
+
 }
