@@ -11,6 +11,8 @@ interface MongoKeysInterface
 
     const MONGO_SET_KEY = '$set';
 
+    const MONGO_SET_ON_INSERT_KEY = '$setOnInsert';
+
     const MONGO_MATCH_KEY = '$match';
 
     const MONGO_ADD_FIELDS_KEY = '$addFields';
