@@ -155,7 +155,7 @@ class MarketUser extends abstractMktUser
     {
         $result = $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
-            "SELECT CONCAT(first_name, ' ', last_name) AS first_last, id, user_name, issuer_id FROM MarketUser WHERE id=?",
+            "SELECT CONCAT(first_name, ' ', last_name) AS first_last, id, user_name, issuer_id, user_name FROM MarketUser WHERE id=?",
             self::FETCH_ASSO_MTHD,
             [$id]
         );

@@ -11,7 +11,7 @@ class KycDocument extends KycDocumentAbstract
 
     use FetchMapperTrait, FetchingTrait;
 
-    private string $insertKycDocumentSql = "INSERT INTO KycDocument VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertKycDocumentSql = "INSERT INTO KycDocument VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $updateKycDocumentStatusSql = "UPDATE KycDocument SET contract_status_id=? WHERE id=?";
 
@@ -36,6 +36,10 @@ class KycDocument extends KycDocumentAbstract
     private string $fetchKycDocumentByIdSql = "SELECT * FROM KycDocument WHERE id=?";
 
     private string $deleteDocumentByIdSql = "DELETE FROM KycDocument WHERE id=?";
+
+    private string $fetchUserNdaTemplateSql = "SELECT * FROM KycDocument WHERE user_id=? AND kyc_type_id = 8 AND community_user_id IS NULL";
+
+    private string $fetchDocumentByRequestIdSql = "SELECT * FROM KycDocument WHERE kyc_doc_request_id=?";
 
     public function insertNewKycDocument(array $params):mixed
     {
@@ -146,7 +150,7 @@ class KycDocument extends KycDocumentAbstract
 
     public function fetchKycDocsIdsByIssuerAndAssetAndType(int $issuerId, ?int $assetTypeId, int $kycTypeId)
     {
-        $baseQry = "SELECT id FROM KycDocument WHERE issuer_id=? AND community_issuer_id IS NULL";
+        $baseQry = "SELECT id FROM KycDocument WHERE issuer_id=? AND community_issuer_id IS NULL AND contract_signature_id IS NULL";
         $baseQryParams = [$issuerId];
 
         if (is_null($assetTypeId) || $kycTypeId == self::KYC_TYPE_GENERAL_ID) {
@@ -218,6 +222,16 @@ class KycDocument extends KycDocumentAbstract
         return $results;
     }
 
+    public function fetchProvidedKycDocumentsByType(int $kycTypeId, int $userId, int $communityUserId):mixed
+    {
+        $results = $this->executeProcedure(
+            [$kycTypeId, $userId, $communityUserId],
+            self::$callFetchProvidedKycDocumentsByType
+        );
+
+        return $results;
+    }
+
     public function fetchUserKycDocuments(int $userId, int $issuerId, int $assetTypeId):mixed
     {
         $results = $this->executeProcedure(
@@ -238,12 +252,12 @@ class KycDocument extends KycDocumentAbstract
         ); 
     }
 
-    public function fetchDocumentByTypeAndUsers(int $typeId, int $userId, $communityUserId):mixed
+    public function fetchDocumentByTypeAndUsers(int $typeId, int $userId, $communityUserId, bool $fetchAll = false):mixed
     {
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $this->fetchDocumentByTypeAndUsers,
-            self::FETCH_ASSO_MTHD,
+            $fetchAll ? self::FETCH_ALL_ASSO_MTHD : self::FETCH_ASSO_MTHD,
             [$typeId, $userId, $communityUserId]
         );
     }
@@ -332,6 +346,26 @@ class KycDocument extends KycDocumentAbstract
             $this->deleteDocumentByIdSql,
             self::EXECUTE_MTHD,
             [$kycDocumentId]
+        );
+    }
+
+    public function fetchUserNdaTemplate(int $userId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserNdaTemplateSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId]
+        );
+    }
+
+    public function fetchDocumentByRequestId(int $requestId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByRequestIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$requestId]
         );
     }
 

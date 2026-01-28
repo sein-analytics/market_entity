@@ -32,6 +32,8 @@ class KycDocRequest extends KycDocumentAbstract
 
     private string $updateDocRequestStatusSql = "UPDATE KycDocRequest SET kyc_doc_request_status_id=? WHERE id=?";
 
+    private string $fetchRequestByIdSql = "SELECT * FROM KycDocRequest WHERE id=?"; 
+
     public function insertMultiKycDocRequests(
         int $communityIssuerId,
         int $communityUserId,
@@ -270,6 +272,49 @@ class KycDocRequest extends KycDocumentAbstract
         );
 
         return $results[self::COUNT_DB_KEY];
+    }
+
+    public function fetchLastInsertedActiveRequestId(
+        int $communityUserId, int $userId, array $columnsValues = [], 
+        bool $noFileAssociation = false, $statuses = [ self::KR_STATUS_OPEN_ID ]
+    ) {
+        $query = "SELECT requests.id FROM KycDocRequest requests ";
+        $values = [$communityUserId, $userId];
+
+        if ($noFileAssociation) {
+            $query = 
+                $query . "LEFT JOIN KycDocument AS kycDoc ON kycDoc.kyc_doc_request_id = requests.id " .
+                "LEFT JOIN DealContract AS dealFile ON dealFile.kyc_doc_request_id = requests.id ";
+        }
+
+        $statuses = implode(',', $statuses);
+
+        $query = $query . "WHERE requests.kyc_doc_request_status_id IN ($statuses) AND requests.community_user_id=? AND requests.user_id=? " .
+            ($noFileAssociation ? "AND kycDoc.id IS NULL AND dealFile.id IS NULL " : " ");
+
+        foreach($columnsValues as $key => $value) {
+            $query = $query . "AND requests.$key" . (!is_null($value) ? "=? " : " IS NULL ");
+
+            if (!is_null($value))
+                $values[] = $value;
+        }
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query . " ORDER BY id DESC",
+            self::FETCH_ASSO_MTHD,
+            $values
+        );
+    }
+
+    public function fetchRequestById(int $id)
+    {
+       return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchRequestByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$id]
+        ); 
     }
 
 }

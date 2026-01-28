@@ -68,9 +68,11 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callFetchDealRequestedLpas = 'call FetchDealRequestedLpas(:userId, :dealId)';
 
-    private string $callFetchUserAllowedNdaDealsBySeller = 'call FetchUserAllowedNdaDealsBySeller(:sellerId, :issuerId, :assetTypeId)';
+    private string $callFetchUserAllowedNdaDealsBySeller = 'call FetchUserAllowedNdaDealsBySeller(:sellerId, :communityUserId, :assetTypeId)';
 
-    private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityIssuerId, :communityUserId, :assetTypeId)';
+    private string $callFetchAllowedDealsNonDisclosure = 'call FetchAllowedDealsNonDisclosure(:userId, :communityUserId, :assetTypeId)';
+
+    private string $callFetchLoanDetails = 'call FetchLoanDetails(:loanId)';
 
     private string $fetchDealPoolIdsByDealIdSql = "SELECT id FROM Pool Where deal_id=?";
 
@@ -437,12 +439,35 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $results;
     }
 
-    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityIssuerId, int $communityUserId, int $assetTypeId): mixed
+    public function fetchAllowedDealsNonDisclosure(int $userId, int $communityUserId, int $assetTypeId): mixed
     {
-        $result = $this->executeProcedure([$userId, $communityIssuerId, $communityUserId, $assetTypeId],
+        $result = $this->executeProcedure([$userId, $communityUserId, $assetTypeId],
             $this->callFetchAllowedDealsNonDisclosure
         );
         return $result;
+    }
+
+
+    public function fetchUserActiveNdaDeals(int $userId, int $assetTypeId)
+    {
+        $sql = "SELECT deals.id AS dealId, deals.issue AS dealName, deals.user_id AS dealOwnerId, ".
+            "deals.issuer_id AS dealOwnerIssuerId, dealsUsers.user_name AS dealOwnerMail ".
+            "FROM Deal AS deals LEFT JOIN MarketUser AS dealsUsers ON dealsUsers.id = deals.user_id ".
+            "WHERE deals.user_id=? AND deals.asset_type_id=? AND deals.status_id = 1 AND deals.requires_nda IS NOT NULL";
+            
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId, $assetTypeId]
+        );
+    }
+    
+    public function fetchLoanDetails(int $loanId)
+    {
+        return $this->executeProcedure(
+            [$loanId], $this->callFetchLoanDetails
+        );
     }
 
 }

@@ -108,4 +108,28 @@ class ContractSignature extends EntityRepository
         );
     }
 
+    public function updateContractSignatureById(int $contractSignatureId, array $params)
+    {
+        $query = "UPDATE ContractSignature SET ";
+        $values = [];
+        $count = 0;
+
+        foreach($params as $key => $value) {
+            $count++;
+            $columnToSet = "$key=?" . ($count == count($params) ? " " : ", ");
+            $query = $query . $columnToSet;
+            $values[] = $value;
+        }
+
+        $query = $query . "WHERE id=?";
+        $values[] = $contractSignatureId;
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $query,
+            self::EXECUTE_MTHD,
+            $values
+        );
+    }
+
 }

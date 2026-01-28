@@ -38,6 +38,8 @@ class PayHistoryAttribute extends EntityRepository
         'history18' => [self::DATA_TYPE => 'varchar', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::PAY_HIST_CATEGORY],
     ];
 
+    private string $fetchPayHistoryByIdSql = "SELECT * FROM PayHistoryAttribute WHERE id=?";
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('PayHistoryAttribute');
@@ -47,4 +49,15 @@ class PayHistoryAttribute extends EntityRepository
     {
         return array_keys(self::$table);
     }
+
+    public function fetchPayHistoryById(int $id)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchPayHistoryByIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$id]
+        );
+    }
+
 }

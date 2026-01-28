@@ -33,6 +33,8 @@ interface DealContractInterface
 
     const DC_QRY_DATE_KEY = 'date';
 
+    const DC_QRY_KYC_DOC_REQUEST_ID_KEY = 'kyc_doc_request_id';
+
     const DC_CONTRACT_NAME_KEY = 'contractName';
 
     const DC_STATUS_KEY = 'status';
@@ -56,4 +58,6 @@ interface DealContractInterface
     const DC_CONTRACT_SIGNATURE_ID_KEY = 'contractSignatureId';
 
     const DC_DATE_KEY = 'date';
+
+    const DC_DOC_REQUEST_ID_KEY = 'kycDocRequestId';
 }

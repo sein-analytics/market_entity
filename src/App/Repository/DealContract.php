@@ -11,7 +11,7 @@ class DealContract extends DealContractAbstract
 
     use FetchMapperTrait, FetchingTrait;
 
-    private string $insertDealContractSql = "INSERT INTO DealContract VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private string $insertDealContractSql = "INSERT INTO DealContract VALUE (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private string $updateDealContractStatusSql = "UPDATE DealContract SET contract_status_id=? WHERE id=?";
 
@@ -24,8 +24,14 @@ class DealContract extends DealContractAbstract
     private static string $callFetchUserDealFilesContracts = "call FetchUserDealFilesContracts(:userId, :issuerId, :assetTypeId)";
 
     private static string $callFetchDealFilesContractsByUser = "call FetchDealFilesContractsByUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)";
+    
+    private static string $callFetchProvidedDealContractsByType = "call FetchProvidedDealContractsByType(:docTypeId, :dealId, :userId, :buyerId)";
 
     private static string $callFetchDealFileDetails = "call FetchDealFileDetails(:dealFileId, :userId)";
+
+    private string $fetchUserDealNdaTemplateSql = "SELECT * FROM DealContract WHERE user_id=? AND deal_id=? AND doc_type_id = 10 AND buyer_id IS NULL;";
+
+    private string $fetchDocumentByRequestIdSql = "SELECT * FROM DealContract WHERE kyc_doc_request_id=?";
 
     public function insertNewDealContract(array $params):mixed
     {
@@ -85,12 +91,23 @@ class DealContract extends DealContractAbstract
         );
     }
 
+    public function fetchUserDealNdaTemplate(int $userId, int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserDealNdaTemplateSql,
+            self::FETCH_ASSO_MTHD,
+            [$userId, $dealId]
+        );
+    }
+
     public function fetchDealContractByProps(
         int $dealId, 
         int $docTypeId, 
         int $userId, 
         int $buyerId,
-        ?int $bidId
+        ?int $bidId = null,
+        bool $fetchAll = false
     ) {
         $query = 
             "SELECT * FROM DealContract WHERE deal_id=? AND doc_type_id=? " .
@@ -107,7 +124,7 @@ class DealContract extends DealContractAbstract
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
             $query,
-            self::FETCH_ASSO_MTHD,
+            $fetchAll ? self::FETCH_ALL_ASSO_MTHD : self::FETCH_ASSO_MTHD,
             $params
         );
     }
@@ -141,10 +158,42 @@ class DealContract extends DealContractAbstract
     {
         return $this->executeProcedure([$userId, $issuerId, $communityUserId, $communityIssuerId, $assetTypeId], self::$callFetchDealFilesContractsByUser);
     }
+    public function fetchProvidedDealContractsByType(int $docTypeId, int $dealId, int $userId, int $buyerId)
+    {
+        return $this->executeProcedure([$docTypeId, $dealId, $userId, $buyerId], self::$callFetchProvidedDealContractsByType);
+    }
 
     public function fetchDealFileDetails(int $dealFileId, int $userId)
     {
         return $this->executeProcedure([$dealFileId, $userId], self::$callFetchDealFileDetails);
+    }
+
+        public function fetchDocumentByRequestId(int $requestId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDocumentByRequestIdSql,
+            self::FETCH_ASSO_MTHD,
+            [$requestId]
+        );
+    }
+
+    public function executedIssuersContractsCount(int $issuerId, int $communityIssuerId)
+    {
+        $query = 'SELECT COUNT(cs.id) AS count FROM ContractSignature AS cs '.
+            'JOIN DealContract AS dc ON dc.contract_signature_id = cs.id '.
+            'JOIN MarketUser AS sender ON sender.id = cs.sender_id '.
+            'JOIN MarketUser AS receiver ON receiver.id = cs.receiver_id '.
+            'WHERE cs.contract_status_id = 4 '.
+            'AND sender.issuer_id IN ('.$issuerId.','.$communityIssuerId.') ' .
+            'AND receiver.issuer_id IN ('.$issuerId.','.$communityIssuerId.')'
+        ;
+
+        $stmt = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(), $query, self::FETCH_ASSO_MTHD
+        );
+
+        return $stmt[self::COUNT_DB_KEY];
     }
 
 }

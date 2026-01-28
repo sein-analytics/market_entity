@@ -35,6 +35,8 @@ interface KycDocumentInterface
 
     const KD_QRY_SECURE_URL_KEY = 'secure_url';
 
+    const KD_QRY_KYC_DOC_REQUEST_ID_KEY = 'kyc_doc_request_id';
+
     const KD_ISSUER_ID_KEY = 'issuerId';
 
     const KD_USER_ID_KEY = 'userId';
@@ -92,6 +94,8 @@ interface KycDocumentInterface
     const KD_DOCUMENT_ID_KEY = 'kycDocumentId';
 
     const KD_DEAL_FILE_ID_KEY = 'dealFileId';
+
+    const KD_DOC_REQUEST_ID_KEY = 'kycDocRequestId';
 
     const KYC_TYPE_FINANCIAL_ID = 1;
     
@@ -181,5 +185,9 @@ interface KycDocumentInterface
         4 => [],
         5 => [],
     ];
+
+    const DEAL_KYC_TYPES_IDS = [ self::KYC_TYPE_NDA_ID, self::KYC_TYPE_LOI_ID, self::KYC_TYPE_LPA_ID ];
+
+    const BID_KYC_TYPES_IDS = [ self::KYC_TYPE_LOI_ID, self::KYC_TYPE_LPA_ID ];
 
 }

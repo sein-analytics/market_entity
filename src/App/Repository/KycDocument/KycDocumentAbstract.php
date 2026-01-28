@@ -24,6 +24,8 @@ abstract class KycDocumentAbstract extends EntityRepository
 
     protected static string $callFetchKycDocumentByIssuerAndUser = 'call FetchKycDocumentByIssuerAndUser(:userId, :issuerId, :communityUserId, :communityIssuerId, :assetTypeId)';
 
+    protected static string $callFetchProvidedKycDocumentsByType = 'call FetchProvidedKycDocumentsByType(:kycTypeId, :userId, :communityUserId)';
+
     protected static string $callFetchUserKycDocuments = 'call FetchUserKycDocuments(:userId, :issuerId, :assetTypeId)';
 
     protected static string $callFetchAllowedGrantAccessIssuersIds = 'call FetchAllowedGrantAccessIssuersIds(:issuerId, :assetTypeId, :kycTypeId)';
