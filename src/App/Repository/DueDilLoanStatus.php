@@ -192,9 +192,9 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             $base = $base . PHP_EOL .
             '(' .
                 $ddId . ',' . $loanId . ',' .
-                self::DD_LN_OPEN . ',"' . 
+                self::DD_LN_OPEN . ',\'' . 
                 $this->baseDdLogger() .
-            '",' . 0 . ", $nullValue" . ')' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
+            '\',' . 0 . ", $nullValue" . ')' . ($ddInsertCount == count($dueDiligencesIds) ? ';' : ','); 
         }
         return $this->buildAndExecuteFromSql(
             $this->getEntityManager(),
