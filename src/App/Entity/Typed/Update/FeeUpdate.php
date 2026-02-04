@@ -24,13 +24,13 @@ class FeeUpdate extends AbstractTypeUpdate
     /**
      * @var Fee
      * */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\Fee::class, inversedBy: 'updates')]
+    #[ORM\ManyToOne(targetEntity:  Fee::class, inversedBy: 'updates')]
     protected $fee;
 
     /**
      * @var Period $period
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'fees')]
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'fees')]
     protected $period;
 
     /**

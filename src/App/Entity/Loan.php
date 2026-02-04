@@ -6,6 +6,7 @@
 
 namespace App\Entity;
 
+use dateTime;
 use \App\Entity\Loan\PropertyAttribute;
 use DateTime;
 use \App\Entity\Update\LoanUpdate;
@@ -106,67 +107,67 @@ class Loan extends DomainObject
     /**
      * @var ArmAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\ArmAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  ArmAttribute::class, mappedBy: 'loan')]
     protected $armAttributes;
 
     /**
      * @var CommAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\CommAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  CommAttribute::class, mappedBy: 'loan')]
     protected $commAttributes;
 
     /**
      * @var SaleAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\SaleAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  SaleAttribute::class, mappedBy: 'loan')]
     protected $saleAttributes;
 
     /**
      * @var ModificationAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\ModificationAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  ModificationAttribute::class, mappedBy: 'loan')]
     protected $modificationAttribute;
 
     /**
      * @var ForeclosureAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\ForeclosureAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  ForeclosureAttribute::class, mappedBy: 'loan')]
     protected $foreclosureAttribute;
 
     /**
      * @var BankruptcyAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\BankruptcyAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  BankruptcyAttribute::class, mappedBy: 'loan')]
     protected $bankruptcyAttribute;
 
     /**
      * @var LossMitigationAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\LossMitigationAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  LossMitigationAttribute::class, mappedBy: 'loan')]
     protected $lossMitigationAttribute;
 
     /**
      * @var EscrowAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\EscrowAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  EscrowAttribute::class, mappedBy: 'loan')]
     protected $escrowAttribute;
 
     /**
      * @var DelinquentAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\DelinquentAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  DelinquentAttribute::class, mappedBy: 'loan')]
     protected $delinquentAttribute;
 
     /**
      * @var InterestOnlyAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\InterestOnlyAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  InterestOnlyAttribute::class, mappedBy: 'loan')]
     protected $interestOnlyAttribute;
 
     /**
      * @var PayHistoryAttribute|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\PayHistoryAttribute::class, mappedBy: 'loan')]
+    #[ORM\OneToOne(targetEntity:  PayHistoryAttribute::class, mappedBy: 'loan')]
     protected $payHistoryAttribute;
 
     /**
@@ -179,7 +180,7 @@ class Loan extends DomainObject
      * @var Pool
      **/
     #[ORM\JoinColumn(name: 'pool_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Pool::class, inversedBy: 'loans')]
+    #[ORM\ManyToOne(targetEntity:  Pool::class, inversedBy: 'loans')]
     protected $pool;
 
     /**
@@ -431,34 +432,34 @@ class Loan extends DomainObject
 
     /**
      * @var  AmortAttribute */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan\AmortAttribute::class, inversedBy: 'loans')]
+    #[ORM\ManyToOne(targetEntity:  AmortAttribute::class, inversedBy: 'loans')]
     protected $amortization;
 
     /**
      * @var  DescAttribute */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan\DescAttribute::class, inversedBy: 'loans')]
+    #[ORM\ManyToOne(targetEntity:  DescAttribute::class, inversedBy: 'loans')]
     protected $description;
 
     /**
-     * @var ?\dateTime
+     * @var ?dateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $foreclosureDate;
 
     /**
-     * @var ?\dateTime
+     * @var ?dateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $bankruptcyDate;
 
     /**
-     * @var ?\dateTime
+     * @var ?dateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $reoDate;
 
     /**
-     * @var ?\dateTime
+     * @var ?dateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $zeroBalanceDate;
@@ -585,7 +586,7 @@ class Loan extends DomainObject
 
     /**
      * @var ArrayCollection  */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligenceIssue::class, mappedBy: 'loan', cascade: ['persist'])]
+    #[ORM\OneToMany(targetEntity:  DueDiligenceIssue::class, mappedBy: 'loan', cascade: ['persist'])]
     protected $issues;
 
     function __construct (){
@@ -1332,12 +1333,12 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return ?\dateTime
+     * @return ?dateTime
      */
-    public function getForeclosureDate():?\dateTime { return $this->foreclosureDate; }
+    public function getForeclosureDate():?dateTime { return $this->foreclosureDate; }
 
     /**
-     * @param \dateTime $foreclosureDate
+     * @param dateTime $foreclosureDate
      */
     public function setForeclosureDate(DateTime $foreclosureDate)
     {
@@ -1345,9 +1346,9 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return \dateTime|null
+     * @return dateTime|null
      */
-    public function getBankruptcyDate():?\dateTime { return $this->bankruptcyDate; }
+    public function getBankruptcyDate():?dateTime { return $this->bankruptcyDate; }
 
     /**
      * @param DateTime $bankruptcyDate
@@ -1360,7 +1361,7 @@ class Loan extends DomainObject
     /**
      * @return DateTime|null
      */
-    public function getReoDate():?\dateTime { return $this->reoDate; }
+    public function getReoDate():?dateTime { return $this->reoDate; }
 
     /**
      * @param mixed $reoDate
@@ -1371,12 +1372,12 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return \dateTime
+     * @return dateTime
      */
-    public function getZeroBalanceDate():?\dateTime { return $this->zeroBalanceDate; }
+    public function getZeroBalanceDate():?dateTime { return $this->zeroBalanceDate; }
 
     /**
-     * @param \dateTime $zeroBalanceDate
+     * @param dateTime $zeroBalanceDate
      */
     public function setZeroBalanceDate(DateTime $zeroBalanceDate):void
     {

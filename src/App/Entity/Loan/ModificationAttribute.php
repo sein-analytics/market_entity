@@ -27,14 +27,14 @@ class ModificationAttribute extends DomainObject
     /**
      * @var Loan
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'modificationAttribute')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'modificationAttribute')]
     protected $loan;
 
     /**
      * @var DelinquentAttribute
      */
     #[ORM\JoinColumn(name: 'delinquent_attribute_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\DelinquentAttribute::class, inversedBy: 'modificationAttribute')]
+    #[ORM\OneToOne(targetEntity:  DelinquentAttribute::class, inversedBy: 'modificationAttribute')]
     protected $delinquentAttribute;
 
     /**

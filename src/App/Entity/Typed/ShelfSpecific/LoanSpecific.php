@@ -20,7 +20,7 @@ class LoanSpecific extends ShelfSpecific
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Loan::class, inversedBy: 'specifics')]
+    #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'specifics')]
     protected $loans;
 
     public function __construct()

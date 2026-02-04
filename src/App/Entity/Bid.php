@@ -26,14 +26,14 @@ class Bid extends DomainObject
      * @var MarketUser
      */
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'bids')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'bids')]
     protected $user;
 
     /**
      * @var Deal
      */
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'bids')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'bids')]
     protected $deal;
 
     /**
@@ -61,7 +61,7 @@ class Bid extends DomainObject
      * @var BidStatus
      */
     #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\BidStatus::class, inversedBy: 'bids')]
+    #[ORM\ManyToOne(targetEntity:  BidStatus::class, inversedBy: 'bids')]
     protected $status;
 
     /**
@@ -74,7 +74,7 @@ class Bid extends DomainObject
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
      * @var DueDiligence|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'bid')]
+    #[ORM\OneToOne(targetEntity:  DueDiligence::class, mappedBy: 'bid')]
     protected $dueDiligence;
 
     /**

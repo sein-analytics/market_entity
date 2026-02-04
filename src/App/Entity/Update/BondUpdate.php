@@ -39,7 +39,7 @@ class BondUpdate extends DomainObject
     /**
      * @var Bond
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Bond::class, inversedBy: 'updates')]
+    #[ORM\ManyToOne(targetEntity:  Bond::class, inversedBy: 'updates')]
     protected $bond;
 
     /**
@@ -159,7 +159,7 @@ class BondUpdate extends DomainObject
     /**
      * @var Period
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'bondUpdates')]
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'bondUpdates')]
     protected $period;
 
     /**
@@ -539,7 +539,7 @@ class BondUpdate extends DomainObject
     /**
      * @param Bond\ComponentUpdate $component
      */
-    public function setComponents(Bond\ComponentUpdate $component)
+    public function setComponents(ComponentUpdate $component)
     {
         $this->getComponents()->add($component);
     }

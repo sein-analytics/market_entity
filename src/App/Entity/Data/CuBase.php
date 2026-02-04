@@ -57,7 +57,7 @@ class CuBase
      * @var State
      **/
     #[ORM\JoinColumn(name: 'state_id', referencedColumnName: 'id')]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Data\State::class)]
+    #[ORM\ManyToOne(targetEntity:  State::class)]
     protected $state;
 
     /**
@@ -73,14 +73,14 @@ class CuBase
      * @var CunaType
      **/
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Data\CunaType::class)]
+    #[ORM\ManyToOne(targetEntity:  CunaType::class)]
     protected $type;
 
     /**
      * @var CunaRegion
      **/
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Data\CunaRegion::class)]
+    #[ORM\ManyToOne(targetEntity:  CunaRegion::class)]
     protected $region;
 
     /**

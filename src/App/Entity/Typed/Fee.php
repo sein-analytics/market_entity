@@ -37,7 +37,7 @@ abstract class Fee extends AbstractTyped
     /**
      * @var Deal $deal
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'fees')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'fees')]
     protected $deal;
 
     /**
@@ -49,13 +49,13 @@ abstract class Fee extends AbstractTyped
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\Update\FeeUpdate::class, mappedBy: 'fee')]
+    #[ORM\OneToMany(targetEntity:  FeeUpdate::class, mappedBy: 'fee')]
     protected $updates;
 
     /**
      * @var FeeUpdate
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Typed\Update\FeeUpdate::class, fetch: 'EAGER')]
+    #[ORM\OneToOne(targetEntity:  FeeUpdate::class, fetch: 'EAGER')]
     protected $latestUpdate = null;
 
     /**

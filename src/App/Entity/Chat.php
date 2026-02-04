@@ -23,28 +23,28 @@ class Chat
     /**
      * @var MarketUser
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'chats')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'chats')]
     protected $user;
 
     /**
      * @var MarketUser|null
      */
     #[ORM\JoinColumn(name: 'recipient_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'chatRecipient')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'chatRecipient')]
     protected $recipient;
 
     /**
      * @var MarketUser
      */
     #[ORM\JoinColumn(name: 'contact_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected $contact;
 
     /**
      * @var GroupChat|null
      */
     #[ORM\JoinColumn(name: 'group_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\GroupChat::class, inversedBy: 'chats')]
+    #[ORM\ManyToOne(targetEntity:  GroupChat::class, inversedBy: 'chats')]
     protected $group;
 
     /**
@@ -71,19 +71,19 @@ class Chat
     #[ORM\JoinTable(name: 'chat_replies')]
     #[ORM\JoinColumn(name: 'chat_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'response_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Chat::class)]
+    #[ORM\ManyToMany(targetEntity:  Chat::class)]
     protected $chatReplies;
 
     /**
      * @var ChatTracker
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\ChatTracker::class, inversedBy: 'chats')]
+    #[ORM\ManyToOne(targetEntity:  ChatTracker::class, inversedBy: 'chats')]
     protected $tracker;
 
     /**
      * @var ChatStatus
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\ChatStatus::class, inversedBy: 'chats')]
+    #[ORM\ManyToOne(targetEntity:  ChatStatus::class, inversedBy: 'chats')]
     protected $status;
 
     /**

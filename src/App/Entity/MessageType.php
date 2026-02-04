@@ -30,7 +30,7 @@ class MessageType
     /**
      * @var PersistentCollection|ArrayCollection|null
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Message::class, mappedBy: 'type')]
+    #[ORM\OneToMany(targetEntity:  Message::class, mappedBy: 'type')]
     protected $messages;
 
     function __construct()

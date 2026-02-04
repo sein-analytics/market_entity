@@ -29,7 +29,7 @@ class ChatTracker
     /**
      * @var GroupChat|null
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\GroupChat::class, mappedBy: 'tracker')]
+    #[ORM\OneToOne(targetEntity:  GroupChat::class, mappedBy: 'tracker')]
     protected $group;
 
     /**

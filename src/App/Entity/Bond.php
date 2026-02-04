@@ -34,13 +34,13 @@ class Bond extends DomainObject
     /**
      * @var Pool
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Pool::class, inversedBy: 'bonds')]
+    #[ORM\ManyToOne(targetEntity:  Pool::class, inversedBy: 'bonds')]
     protected $pool;
 
     /**
      * @var Deal
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'bonds', cascade: ['persist'])]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'bonds', cascade: ['persist'])]
     protected $deal;
 
     #[ORM\Column(type: 'string', unique: false)]
@@ -97,13 +97,13 @@ class Bond extends DomainObject
     /**
      * @var ArrayCollection
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Bond\Component::class, mappedBy: 'bond')]
+    #[ORM\OneToMany(targetEntity:  Component::class, mappedBy: 'bond')]
     protected $components;
 
     /**
      * @var ArrayCollection
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Update\BondUpdate::class, mappedBy: 'bond')]
+    #[ORM\OneToMany(targetEntity:  BondUpdate::class, mappedBy: 'bond')]
     #[ORM\OrderBy(['reportDate' => 'ASC'])]
     protected $updates;
 
@@ -113,7 +113,7 @@ class Bond extends DomainObject
     /**
      * @var BondUpdate
      **/
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Update\BondUpdate::class)]
+    #[ORM\OneToOne(targetEntity:  BondUpdate::class)]
     protected $latestUpdate;
 
     #[ORM\Column(type: 'string', nullable: true)]

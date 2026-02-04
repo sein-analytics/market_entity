@@ -21,7 +21,7 @@ class PoolAccount extends Account
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Pool::class, inversedBy: 'accounts')]
+    #[ORM\ManyToMany(targetEntity:  Pool::class, inversedBy: 'accounts')]
     protected $pools;
 
     public function __construct()

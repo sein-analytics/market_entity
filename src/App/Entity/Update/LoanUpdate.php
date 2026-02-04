@@ -32,19 +32,19 @@ class LoanUpdate extends DomainObject
      * @var Loan
      **/
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'updates')]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'updates')]
     protected $loan;
 
     /**
      * @var PoolUpdate
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Update\PoolUpdate::class, inversedBy: 'loans')]
+    #[ORM\ManyToOne(targetEntity:  PoolUpdate::class, inversedBy: 'loans')]
     protected $pool;
 
     /**
      * @var Period
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'loanUpdates')]
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'loanUpdates')]
     protected $period;
 
     /**

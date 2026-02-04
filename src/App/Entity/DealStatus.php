@@ -43,7 +43,7 @@ class DealStatus
     /**
      * @var ArrayCollection
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Deal::class, mappedBy: 'status')]
+    #[ORM\OneToMany(targetEntity:  Deal::class, mappedBy: 'status')]
     protected $deals;
 
     /**

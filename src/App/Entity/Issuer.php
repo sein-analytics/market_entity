@@ -79,7 +79,7 @@ class Issuer extends AnnotationMappings
      * @var MarketUser
      */
     #[ORM\JoinColumn(name: 'contact_id', referencedColumnName: 'id')]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\OneToOne(targetEntity:  MarketUser::class)]
     protected $contactId;
 
     /**
@@ -92,10 +92,10 @@ class Issuer extends AnnotationMappings
      * @var CuBase
      */
     #[ORM\JoinColumn(name: 'cu_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Data\CuBase::class, inversedBy: 'issuers')]
+    #[ORM\ManyToOne(targetEntity:  CuBase::class, inversedBy: 'issuers')]
     private $cuMain;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\KycDocument::class, inversedBy: 'accessIssuer')]
+    #[ORM\ManyToMany(targetEntity:  KycDocument::class, inversedBy: 'accessIssuer')]
     protected $kycDocuments;
 
     function __construct()

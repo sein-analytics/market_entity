@@ -20,31 +20,31 @@ class KycDocument
     protected int $id;
 
     #[ORM\JoinColumn(name: 'issuer_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Issuer::class)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $issuer;
 
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $user;
 
     #[ORM\JoinColumn(name: 'community_user_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected ?MarketUser $communityUser;
 
     #[ORM\JoinColumn(name: 'community_issuer_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Issuer::class)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected ?Issuer $communityIssuer;
     
         #[ORM\JoinColumn(name: 'contract_type_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\ContractType::class)]
+    #[ORM\ManyToOne(targetEntity:  ContractType::class)]
     protected ContractType $contractType;
 
     #[ORM\JoinColumn(name: 'kyc_asset_type_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealAsset::class)]
+    #[ORM\ManyToOne(targetEntity:  DealAsset::class)]
     protected ?DealAsset $assetType;
 
     #[ORM\JoinColumn(name: 'kyc_type_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\KycType::class)]
+    #[ORM\ManyToOne(targetEntity:  KycType::class)]
     protected KycType $kycType;
 
 
@@ -75,7 +75,7 @@ class KycDocument
     /**
      * @var ArrayCollection
      */
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Issuer::class, mappedBy: 'kycDocuments')]
+    #[ORM\ManyToMany(targetEntity:  Issuer::class, mappedBy: 'kycDocuments')]
     protected $accessIssuer;
 
     #[ORM\JoinColumn(name: 'contract_signature_id', referencedColumnName: 'id', unique: true, nullable: true)]

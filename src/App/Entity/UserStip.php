@@ -26,14 +26,14 @@ class UserStip extends DomainObject
      * @var MarketUser
      **/
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'stips')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'stips')]
     protected $user;
 
     /**
      * @var Deal
      **/
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'stips')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'stips')]
     protected $deal;
 
     /**

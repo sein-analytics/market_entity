@@ -37,25 +37,25 @@ abstract class Triggers extends AbstractTyped
     /**
      * @var Deal $deal
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'triggers')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'triggers')]
     protected $deal;
 
     /**
      * @var TriggerType $triggerType
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\TriggerType::class, inversedBy: 'triggers')]
+    #[ORM\ManyToOne(targetEntity:  TriggerType::class, inversedBy: 'triggers')]
     protected $type;
 
     /**
      * @var ArrayCollection $triggersUpdate
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\Update\TriggerUpdate::class, mappedBy: 'trigger')]
+    #[ORM\OneToMany(targetEntity:  TriggerUpdate::class, mappedBy: 'trigger')]
     protected $updates;
 
     /**
      * @var TriggerUpdate $latestTriggerUpdate
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Typed\Update\TriggerUpdate::class, fetch: 'EAGER')]
+    #[ORM\OneToOne(targetEntity:  TriggerUpdate::class, fetch: 'EAGER')]
     protected $latestUpdate = null;
 
     public function __construct()

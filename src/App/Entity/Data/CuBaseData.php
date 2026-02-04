@@ -21,7 +21,7 @@ class CuBaseData
     /**
      * @var CuBase
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Data\CuBase::class, inversedBy: 'cuData')]
+    #[ORM\ManyToOne(targetEntity:  CuBase::class, inversedBy: 'cuData')]
     protected $cuBase;
 
     /**

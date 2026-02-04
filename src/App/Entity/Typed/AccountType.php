@@ -29,7 +29,7 @@ class AccountType
     /**
      * @var Account
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\Account::class, mappedBy: 'type')]
+    #[ORM\OneToMany(targetEntity:  Account::class, mappedBy: 'type')]
     protected $accounts;
 
     /**

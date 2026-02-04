@@ -26,7 +26,7 @@ class Statistic extends DomainObject
      * @var Deal
      **/
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'stats')]
+    #[ORM\OneToOne(targetEntity:  Deal::class, inversedBy: 'stats')]
     protected $deal;
 
     /**

@@ -20,7 +20,7 @@ class BondFee extends Fee
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Bond::class, inversedBy: 'fees')]
+    #[ORM\ManyToMany(targetEntity:  Bond::class, inversedBy: 'fees')]
     protected $bonds;
 
     public function __construct()

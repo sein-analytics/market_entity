@@ -17,15 +17,15 @@ class KycNotification
     protected int $id;
 
     #[ORM\JoinColumn(name: 'sender_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $sender;
 
     #[ORM\JoinColumn(name: 'issuer_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Issuer::class)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $issuer;
 
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $user;
 
     function __construct()

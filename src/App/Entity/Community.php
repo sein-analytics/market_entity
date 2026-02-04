@@ -28,14 +28,14 @@ class Community
     #[ORM\JoinTable(name: 'user_communities')]
     #[ORM\JoinColumn(name: 'comm_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'user_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'communities')]
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, inversedBy: 'communities')]
     protected $users;
 
     /**
      * @var MarketUser
      */
     #[ORM\JoinColumn(name: 'owner', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'myCommunities')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'myCommunities')]
     protected $owner;
 
     /**

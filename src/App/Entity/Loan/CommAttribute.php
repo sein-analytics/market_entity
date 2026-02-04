@@ -35,7 +35,7 @@ class CommAttribute extends DomainObject
      * @var Loan
      **/
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'commAttributes')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'commAttributes')]
     protected $loan;
 
     #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]

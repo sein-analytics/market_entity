@@ -27,7 +27,7 @@ class Delinquency extends DomainObject
     /**
      * @var PoolUpdate
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Update\PoolUpdate::class, mappedBy: 'delinquency')]
+    #[ORM\OneToOne(targetEntity:  PoolUpdate::class, mappedBy: 'delinquency')]
     protected $poolUpdate;
 
     /**

@@ -40,27 +40,27 @@ class DealFile extends DomainObject
      * @var Deal
      */
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'dealDocs')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'dealDocs')]
     protected $deal;
 
     /**
      * @var MarketUser
      */
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'files')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'files')]
     protected $user;
 
     /**
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'files')]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'files')]
     protected $loan;
 
     /**
      * @var DocAccess
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DocAccess::class, mappedBy: 'document')]
+    #[ORM\OneToMany(targetEntity:  DocAccess::class, mappedBy: 'document')]
     protected $docAccess;
 
     /**
@@ -79,7 +79,7 @@ class DealFile extends DomainObject
      * @var MimeType
      */
     #[ORM\JoinColumn(name: 'mime_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MimeType::class, inversedBy: 'files')]
+    #[ORM\ManyToOne(targetEntity:  MimeType::class, inversedBy: 'files')]
     protected $mime;
 
     /**
@@ -94,7 +94,7 @@ class DealFile extends DomainObject
     #[ORM\JoinTable(name: 'file_replacements')]
     #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'replacement_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\DealFile::class)]
+    #[ORM\ManyToMany(targetEntity:  DealFile::class)]
     protected $replacements;
 
     /**
@@ -103,21 +103,21 @@ class DealFile extends DomainObject
     #[ORM\JoinTable(name: 'file_appends')]
     #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'append_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\DealFile::class)]
+    #[ORM\ManyToMany(targetEntity:  DealFile::class)]
     protected $appends;
 
     /**
      * @var DocType
      */
     #[ORM\JoinColumn(name: 'doc_type_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DocType::class, inversedBy: 'dealFiles')]
+    #[ORM\ManyToOne(targetEntity:  DocType::class, inversedBy: 'dealFiles')]
     protected $docType;
 
     /**
      * @var FileAccessCode
      */
     #[ORM\JoinColumn(name: 'access_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\FileAccessCode::class)]
+    #[ORM\ManyToOne(targetEntity:  FileAccessCode::class)]
     protected $accessId;
 
     /**
@@ -141,13 +141,13 @@ class DealFile extends DomainObject
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligenceIssue::class, mappedBy: 'file')]
+    #[ORM\OneToMany(targetEntity:  DueDiligenceIssue::class, mappedBy: 'file')]
     protected $issues;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'files')]
+    #[ORM\ManyToMany(targetEntity:  DueDiligence::class, mappedBy: 'files')]
     protected $diligence;
 
     /**

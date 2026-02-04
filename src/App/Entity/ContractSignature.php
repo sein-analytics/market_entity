@@ -18,11 +18,11 @@ class ContractSignature
     protected int $id;
 
     #[ORM\JoinColumn(name: 'sender_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $sender;
 
     #[ORM\JoinColumn(name: 'receiver_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected ?MarketUser $receiver; 
 
     /**
@@ -44,7 +44,7 @@ class ContractSignature
     protected ?string $signatureId;
 
     #[ORM\JoinColumn(name: 'contract_status_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\ContractStatus::class)]
+    #[ORM\ManyToOne(targetEntity:  ContractStatus::class)]
     protected ContractStatus $contractStatus;
 
     /**

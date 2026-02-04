@@ -26,13 +26,13 @@ class SaleAttribute extends DomainObject
      * @var Loan
      **/
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'saleAttributes')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'saleAttributes')]
     protected $loan;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'boughtLoans')]
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, inversedBy: 'boughtLoans')]
     protected $buyers;
 
     /**

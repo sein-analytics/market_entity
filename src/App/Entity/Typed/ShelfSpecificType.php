@@ -27,7 +27,7 @@ class ShelfSpecificType
     #[ORM\Column(type: 'string')]
     protected string $slug;
 
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\ShelfSpecific::class, mappedBy: 'type')]
+    #[ORM\OneToMany(targetEntity:  ShelfSpecific::class, mappedBy: 'type')]
     protected $shelfSpecifics;
 
     /**

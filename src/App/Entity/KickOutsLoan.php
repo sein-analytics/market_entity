@@ -19,21 +19,21 @@ class KickOutsLoan
      * @var Bid
      */
     #[ORM\JoinColumn(name: 'bidId', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Bid::class, inversedBy: 'carveOuts')]
+    #[ORM\ManyToOne(targetEntity:  Bid::class, inversedBy: 'carveOuts')]
     protected $bid;
 
     /**
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loanId', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan::class)]
+    #[ORM\ManyToOne(targetEntity:  Loan::class)]
     protected $loan;
 
     /**
      * @var Pool
      */
     #[ORM\JoinColumn(name: 'poolId', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Pool::class)]
+    #[ORM\ManyToOne(targetEntity:  Pool::class)]
     protected $pool;
 
     /**

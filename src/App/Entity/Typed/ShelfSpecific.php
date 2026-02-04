@@ -38,25 +38,25 @@ abstract class ShelfSpecific extends AbstractTyped
     /**
      * @var Deal
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'shelfSpecifics')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'shelfSpecifics')]
     protected $deal;
 
     /**
      * @var ShelfSpecificType
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\ShelfSpecificType::class, inversedBy: 'shelfSpecifics')]
+    #[ORM\ManyToOne(targetEntity:  ShelfSpecificType::class, inversedBy: 'shelfSpecifics')]
     protected $type;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\Update\ShelfSpecificUpdate::class, mappedBy: 'shelfSpecific')]
+    #[ORM\OneToMany(targetEntity:  ShelfSpecificUpdate::class, mappedBy: 'shelfSpecific')]
     protected $updates;
 
     /**
      * @var ShelfSpecificUpdate
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Typed\Update\ShelfSpecificUpdate::class, fetch: 'EAGER')]
+    #[ORM\OneToOne(targetEntity:  ShelfSpecificUpdate::class, fetch: 'EAGER')]
     protected $latestUpdate;
 
     /**

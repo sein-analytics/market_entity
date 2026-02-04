@@ -21,21 +21,21 @@ class CommunityInvite
      * @var Community
      */
     #[ORM\JoinColumn(name: 'community_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Community::class, inversedBy: 'invites')]
+    #[ORM\ManyToOne(targetEntity:  Community::class, inversedBy: 'invites')]
     protected $community;
 
     /**
      * @var CommInviteStatus
      */
     #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\CommInviteStatus::class, inversedBy: 'invites')]
+    #[ORM\ManyToOne(targetEntity:  CommInviteStatus::class, inversedBy: 'invites')]
     protected $status;
 
     /**
      * @var null|MarketUser
      */
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'communityInvites')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'communityInvites')]
     protected $user;
 
     /**

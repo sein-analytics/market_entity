@@ -32,7 +32,7 @@ class ArmAttribute extends DomainObject
      * @var Loan
      **/
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'armAttributes')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'armAttributes')]
     protected $loan;
 
     #[ORM\Column(type: 'float', precision: 18, scale: 15, nullable: true)]

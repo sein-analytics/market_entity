@@ -25,7 +25,7 @@ class ComponentUpdate extends DomainObject
     /**
      * @var Component
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Bond\Component::class, inversedBy: 'updates')]
+    #[ORM\ManyToOne(targetEntity:  Component::class, inversedBy: 'updates')]
     protected $component;
 
     #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
@@ -37,7 +37,7 @@ class ComponentUpdate extends DomainObject
     /**
      * @var BondUpdate
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Update\BondUpdate::class, inversedBy: 'components')]
+    #[ORM\ManyToOne(targetEntity:  BondUpdate::class, inversedBy: 'components')]
     protected $bondUpdate;
 
     #[ORM\Column(type: 'float', precision: 14, scale: 2)]

@@ -29,7 +29,7 @@ class DueDiligenceStatus
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'status')]
+    #[ORM\OneToMany(targetEntity:  DueDiligence::class, mappedBy: 'status')]
     protected $dueDiligence;
 
     public function __construct()

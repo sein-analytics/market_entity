@@ -33,7 +33,7 @@ class MessageOriginator
     /**
      * @var PersistentCollection|ArrayCollection|null
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Message::class, mappedBy: 'originator')]
+    #[ORM\OneToMany(targetEntity:  Message::class, mappedBy: 'originator')]
     protected $messages;
 
     function __construct()

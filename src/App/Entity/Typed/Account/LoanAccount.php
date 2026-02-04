@@ -22,7 +22,7 @@ class LoanAccount extends Account
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Loan::class, inversedBy: 'accounts')]
+    #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'accounts')]
     protected $loans;
 
     public function __construct()

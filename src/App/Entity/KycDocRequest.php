@@ -19,27 +19,27 @@ class KycDocRequest
     protected int $id;
 
     #[ORM\JoinColumn(name: 'community_user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $communityUser;
 
     #[ORM\JoinColumn(name: 'community_issuer_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Issuer::class)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $communityIssuer;
 
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected ?MarketUser $user;
 
     #[ORM\JoinColumn(name: 'issuer_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Issuer::class)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $issuer;
 
     #[ORM\JoinColumn(name: 'kyc_type_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\KycType::class)]
+    #[ORM\ManyToOne(targetEntity:  KycType::class)]
     protected ?KycType $kycType;
 
     #[ORM\JoinColumn(name: 'kyc_asset_type_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealAsset::class)]
+    #[ORM\ManyToOne(targetEntity:  DealAsset::class)]
     protected ?DealAsset $assetType;
 
     /**
@@ -49,11 +49,11 @@ class KycDocRequest
     protected ?string $description = null;
 
     #[ORM\JoinColumn(name: 'bid_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Bid::class)]
+    #[ORM\ManyToOne(targetEntity:  Bid::class)]
     protected ?Bid $bid;
 
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class)]
+    #[ORM\ManyToOne(targetEntity:  Deal::class)]
     protected ?Deal $deal;
 
     /**
@@ -63,7 +63,7 @@ class KycDocRequest
     protected $date = null;
 
     #[ORM\JoinColumn(name: 'kyc_doc_request_status_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\KycDocRequestStatus::class)]
+    #[ORM\ManyToOne(targetEntity:  KycDocRequestStatus::class)]
     protected ?KycDocRequestStatus $status;
 
     function __construct()

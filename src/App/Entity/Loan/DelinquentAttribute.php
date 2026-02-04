@@ -25,37 +25,37 @@ class DelinquentAttribute extends DomainObject
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'delinquentAttribute')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'delinquentAttribute')]
     protected $loan;
 
     /**
      * @var ModificationAttribute
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\ModificationAttribute::class, mappedBy: 'delinquentAttribute')]
+    #[ORM\OneToOne(targetEntity:  ModificationAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $modificationAttribute;
 
     /**
      * @var ForeclosureAttribute
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\ForeclosureAttribute::class, mappedBy: 'delinquentAttribute')]
+    #[ORM\OneToOne(targetEntity:  ForeclosureAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $foreclosureAttribute;
 
     /**
      * @var BankruptcyAttribute
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\BankruptcyAttribute::class, mappedBy: 'delinquentAttribute')]
+    #[ORM\OneToOne(targetEntity:  BankruptcyAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $bankruptcyAttribute;
 
     /**
      * @var LossMitigationAttribute
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\LossMitigationAttribute::class, mappedBy: 'delinquentAttribute')]
+    #[ORM\OneToOne(targetEntity:  LossMitigationAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $lossMitigationAttribute;
 
     /**
      * @var EscrowAttribute
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\EscrowAttribute::class, mappedBy: 'delinquentAttribute')]
+    #[ORM\OneToOne(targetEntity:  EscrowAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $escrowAttribute;
 
     /**

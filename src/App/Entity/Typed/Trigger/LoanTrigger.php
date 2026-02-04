@@ -21,7 +21,7 @@ class LoanTrigger extends Triggers
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Loan::class, inversedBy: 'triggers')]
+    #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'triggers')]
     protected $loans;
 
     public function __construct()

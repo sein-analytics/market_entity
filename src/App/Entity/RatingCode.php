@@ -26,7 +26,7 @@ class RatingCode
     /**
      * @var PersistentCollection|ArrayCollection|null
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Rating::class, mappedBy: 'ratingCode')]
+    #[ORM\OneToMany(targetEntity:  Rating::class, mappedBy: 'ratingCode')]
     protected $ratings;
 
     /**

@@ -86,7 +86,7 @@ class Deal extends DealAbstract
      * @var DealStatus
      **/
     #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealStatus::class, inversedBy: 'deals')]
+    #[ORM\ManyToOne(targetEntity:  DealStatus::class, inversedBy: 'deals')]
     protected $status;
 
     /**
@@ -118,7 +118,7 @@ class Deal extends DealAbstract
     protected $auctionType;
 
     #[ORM\JoinColumn(name: 'asset_type_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealAsset::class, inversedBy: 'deals')]
+    #[ORM\ManyToOne(targetEntity:  DealAsset::class, inversedBy: 'deals')]
     protected $assetType;
 
     #[ORM\JoinColumn(name: 'bid_type_id', referencedColumnName: 'id', nullable: false)]
@@ -164,7 +164,7 @@ class Deal extends DealAbstract
     /**
      * @var ArrayCollection
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Period::class, mappedBy: 'deal')]
+    #[ORM\OneToMany(targetEntity:  Period::class, mappedBy: 'deal')]
     protected $periods;
 
     /**
@@ -182,7 +182,7 @@ class Deal extends DealAbstract
     /**
      * @var Period
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Period::class)]
+    #[ORM\OneToOne(targetEntity:  Period::class)]
     protected $latestPeriod;
 
     /**
@@ -206,44 +206,44 @@ class Deal extends DealAbstract
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Message::class, mappedBy: 'deal')]
+    #[ORM\OneToMany(targetEntity:  Message::class, mappedBy: 'deal')]
     protected $messages;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'deal')]
+    #[ORM\OneToMany(targetEntity:  DueDiligence::class, mappedBy: 'deal')]
     protected $diligence;
 
     /**
      * @var \App\Entity\MarketUser
      */
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'deals')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'deals')]
     protected $user;
 
     /**
      * @var PersistentCollection
      */
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, mappedBy: 'marketDeals')]
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, mappedBy: 'marketDeals')]
     protected $marketUsers;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, mappedBy: 'marketFavorites')]
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, mappedBy: 'marketFavorites')]
     protected $userFavorites;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Rating::class, mappedBy: 'deal')]
+    #[ORM\OneToMany(targetEntity:  Rating::class, mappedBy: 'deal')]
     protected $ratings;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\UserStip::class, mappedBy: 'deal')]
+    #[ORM\OneToMany(targetEntity:  UserStip::class, mappedBy: 'deal')]
     protected $stips;
 
     /**

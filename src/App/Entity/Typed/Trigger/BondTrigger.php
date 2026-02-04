@@ -21,7 +21,7 @@ class BondTrigger extends Triggers
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Bond::class, inversedBy: 'triggers')]
+    #[ORM\ManyToMany(targetEntity:  Bond::class, inversedBy: 'triggers')]
     protected $bonds;
 
     public function __construct()

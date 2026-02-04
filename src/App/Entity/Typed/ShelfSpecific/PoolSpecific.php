@@ -20,7 +20,7 @@ class PoolSpecific extends ShelfSpecific
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Pool::class, inversedBy: 'specifics')]
+    #[ORM\ManyToMany(targetEntity:  Pool::class, inversedBy: 'specifics')]
     protected $pools;
 
     public function __construct()

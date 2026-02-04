@@ -53,19 +53,19 @@ class Pool extends DomainObject
     /**
      * @var ?Deal
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'pools')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'pools')]
     protected $deal;
 
     /**
      * @var PersistentCollection|ArrayCollection|null
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Loan::class, mappedBy: 'pool')]
+    #[ORM\OneToMany(targetEntity:  Loan::class, mappedBy: 'pool')]
     protected $loans;
 
     /**
      * @var PersistentCollection|ArrayCollection|null
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Bond::class, mappedBy: 'pool', fetch: 'LAZY')]
+    #[ORM\OneToMany(targetEntity:  Bond::class, mappedBy: 'pool', fetch: 'LAZY')]
     protected $bonds;
 
     /**

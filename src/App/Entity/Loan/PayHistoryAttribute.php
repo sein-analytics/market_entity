@@ -27,7 +27,7 @@ class PayHistoryAttribute extends DomainObject
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'payHistoryAttribute')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'payHistoryAttribute')]
     protected $loan;
 
     /**

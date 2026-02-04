@@ -19,28 +19,28 @@ class DealContract
     protected int $id;
 
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'contracts')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'contracts')]
     protected Deal $deal;
 
     #[ORM\JoinColumn(name: 'bid_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Bid::class)]
+    #[ORM\ManyToOne(targetEntity:  Bid::class)]
     protected ?Bid $bid;
 
     #[ORM\JoinColumn(name: 'buyer_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'contracts')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'contracts')]
     protected ?MarketUser $buyer;
 
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'contracts')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'contracts')]
     protected MarketUser $user;
 
 
     #[ORM\JoinColumn(name: 'doc_type_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DocType::class, inversedBy: 'dealFiles')]
+    #[ORM\ManyToOne(targetEntity:  DocType::class, inversedBy: 'dealFiles')]
     protected DocType $docType;
 
     #[ORM\JoinColumn(name: 'deal_asset_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealAsset::class)]
+    #[ORM\ManyToOne(targetEntity:  DealAsset::class)]
     protected DealAsset $dealAsset;
 
     /**

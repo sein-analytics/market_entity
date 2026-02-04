@@ -42,7 +42,7 @@ class DueDilReviewStatus
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDilLoanStatus::class, mappedBy: 'reviewStatus')]
+    #[ORM\OneToMany(targetEntity:  DueDilLoanStatus::class, mappedBy: 'reviewStatus')]
     protected $reviewStatuses;
 
     public function __construct()

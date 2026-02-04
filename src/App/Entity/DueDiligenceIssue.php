@@ -31,14 +31,14 @@ class DueDiligenceIssue
      * @var DueDiligence
      */
     #[ORM\JoinColumn(name: 'due_diligence_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligence::class, inversedBy: 'issues')]
+    #[ORM\ManyToOne(targetEntity:  DueDiligence::class, inversedBy: 'issues')]
     protected DueDiligence $dueDiligence;
 
     /**
      * @var DueDilIssueStatus
      */
     #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDilIssueStatus::class, inversedBy: 'issues')]
+    #[ORM\ManyToOne(targetEntity:  DueDilIssueStatus::class, inversedBy: 'issues')]
     protected DueDilIssueStatus $status;
 
     /**
@@ -57,21 +57,21 @@ class DueDiligenceIssue
      * @var DealFile
      */
     #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealFile::class, inversedBy: 'issues')]
+    #[ORM\ManyToOne(targetEntity:  DealFile::class, inversedBy: 'issues')]
     protected DealFile $file;
 
     /**
      * @var MessagePriority
      */
     #[ORM\JoinColumn(name: 'priority_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MessagePriority::class, inversedBy: 'issues')]
+    #[ORM\ManyToOne(targetEntity:  MessagePriority::class, inversedBy: 'issues')]
     protected MessagePriority $priority;
 
     /**
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'issues')]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'issues')]
     protected Loan $loan;
 
     /**

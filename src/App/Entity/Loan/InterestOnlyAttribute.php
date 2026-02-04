@@ -26,7 +26,7 @@ class InterestOnlyAttribute extends DomainObject
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'interestOnlyAttribute')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'interestOnlyAttribute')]
     protected $loan;
 
     #[ORM\Column(type: 'integer', nullable: true)]

@@ -31,7 +31,7 @@ class DueDilIssueStatus
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligenceIssue::class, mappedBy: 'status')]
+    #[ORM\OneToMany(targetEntity:  DueDiligenceIssue::class, mappedBy: 'status')]
     protected $issues;
 
     public function __construct()

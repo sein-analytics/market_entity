@@ -21,7 +21,7 @@ class BondAccount extends Account
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Bond::class, inversedBy: 'accounts')]
+    #[ORM\ManyToMany(targetEntity:  Bond::class, inversedBy: 'accounts')]
     protected $bonds;
 
     public function __construct()

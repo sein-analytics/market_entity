@@ -24,7 +24,7 @@ class AccountUpdate extends AbstractTypeUpdate
     /**
      * @var Account $account
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\Account::class, inversedBy: 'updates', fetch: 'EAGER')]
+    #[ORM\ManyToOne(targetEntity:  Account::class, inversedBy: 'updates', fetch: 'EAGER')]
     protected $account;
 
     /**

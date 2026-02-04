@@ -26,14 +26,14 @@ class DocAccess
      * @var MarketUser
      **/
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'documents')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'documents')]
     protected $user;
 
     /**
      * @var Deal
      **/
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'documents')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'documents')]
     protected $deal;
 
     /**

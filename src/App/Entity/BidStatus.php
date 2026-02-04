@@ -24,7 +24,7 @@ class BidStatus
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Bid::class, mappedBy: 'status')]
+    #[ORM\OneToMany(targetEntity:  Bid::class, mappedBy: 'status')]
     protected $bids;
 
     function __construct()

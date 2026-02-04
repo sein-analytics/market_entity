@@ -28,7 +28,7 @@ class DueDiligenceRole
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'diligenceRole')]
+    #[ORM\OneToMany(targetEntity:  DueDiligence::class, mappedBy: 'diligenceRole')]
     protected $dueDiligence;
 
     function __construct()

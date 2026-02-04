@@ -21,7 +21,7 @@ class PoolTrigger extends Triggers
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Pool::class, inversedBy: 'triggers')]
+    #[ORM\ManyToMany(targetEntity:  Pool::class, inversedBy: 'triggers')]
     protected $pools;
 
     public function __construct()

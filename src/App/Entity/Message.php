@@ -29,15 +29,15 @@ class Message extends DomainObject
     protected int $id;
 
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'messages')]
     protected MarketUser $user;
 
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'messages')]
     protected ?Deal $deal;
 
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'issues')]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'issues')]
     protected ?Loan $loan;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
@@ -52,36 +52,36 @@ class Message extends DomainObject
     #[ORM\JoinTable(name: 'responses')]
     #[ORM\JoinColumn(name: 'message_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'response_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Message::class)]
+    #[ORM\ManyToMany(targetEntity:  Message::class)]
     protected ArrayCollection|PersistentCollection|null $responses;
 
     #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MessageType::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  MessageType::class, inversedBy: 'messages')]
     protected MessageType $type;
 
     /**
      * @var PersistentCollection|ArrayCollection|null
      */
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'receivedMessages')]
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, inversedBy: 'receivedMessages')]
     protected $recipients;
 
     #[ORM\Column(type: 'text', nullable: false)]
     protected string $message='';
 
     #[ORM\JoinColumn(name: 'originator_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MessageOriginator::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  MessageOriginator::class, inversedBy: 'messages')]
     protected MessageOriginator $originator;
 
     #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MessageStatus::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  MessageStatus::class, inversedBy: 'messages')]
     protected ?MessageStatus $status;
 
     #[ORM\JoinColumn(name: 'priority_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MessagePriority::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  MessagePriority::class, inversedBy: 'messages')]
     protected ?MessagePriority $priority;
 
     #[ORM\JoinColumn(name: 'action_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MessageAction::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  MessageAction::class, inversedBy: 'messages')]
     protected ?MessageAction $action;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -91,7 +91,7 @@ class Message extends DomainObject
     protected array|string $msgRecipientIds;
 
     #[ORM\JoinColumn(name: 'issue_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligenceIssue::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity:  DueDiligenceIssue::class, inversedBy: 'messages')]
     protected $issue;
 
     public function __construct()

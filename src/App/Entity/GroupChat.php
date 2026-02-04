@@ -37,7 +37,7 @@ class GroupChat
     /**
      * @var MarketUser
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'groupChats')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'groupChats')]
     protected $user;
 
     /**
@@ -49,28 +49,28 @@ class GroupChat
     /**
      * @var PersistentCollection|ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Chat::class, mappedBy: 'group')]
+    #[ORM\OneToMany(targetEntity:  Chat::class, mappedBy: 'group')]
     protected $chats;
 
     /**
      * @var Community|null
      */
     #[ORM\JoinColumn(name: 'community_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Community::class, inversedBy: 'groupChats')]
+    #[ORM\ManyToOne(targetEntity:  Community::class, inversedBy: 'groupChats')]
     protected $community=null;
 
     /**
      * @var ChatTracker|null
      */
     #[ORM\JoinColumn(name: 'tracker_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\ChatTracker::class, inversedBy: 'group')]
+    #[ORM\OneToOne(targetEntity:  ChatTracker::class, inversedBy: 'group')]
     protected $tracker=null;
 
     /**
      * @var PersistentCollection|ArrayCollection
      */
     #[ORM\JoinTable(name: 'chat_group_market_users')]
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'chatGroupMemberships')]
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, inversedBy: 'chatGroupMemberships')]
     protected $members;
 
     public function __construct()

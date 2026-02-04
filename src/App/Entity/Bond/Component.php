@@ -26,7 +26,7 @@ class Component
     /**
      * @var Bond
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Bond::class, inversedBy: 'components')]
+    #[ORM\ManyToOne(targetEntity:  Bond::class, inversedBy: 'components')]
     protected $bond;
 
     #[ORM\Column(type: 'integer')]
@@ -41,13 +41,13 @@ class Component
     #[ORM\Column(type: 'string', nullable: true)]
     protected string $rateFormula;
 
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Bond\ComponentUpdate::class)]
+    #[ORM\OneToOne(targetEntity:  ComponentUpdate::class)]
     protected $latestUpdate;
 
     /**
      * @var ArrayCollection;
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Bond\ComponentUpdate::class, mappedBy: 'component')]
+    #[ORM\OneToMany(targetEntity:  ComponentUpdate::class, mappedBy: 'component')]
     protected $updates;
 
     #[ORM\Column(type: 'string', nullable: true)]

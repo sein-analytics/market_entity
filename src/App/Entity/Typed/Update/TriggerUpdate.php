@@ -29,13 +29,13 @@ class TriggerUpdate extends AbstractTypeUpdate
     /**
      * @var Triggers $trigger
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\Triggers::class, inversedBy: 'updates')]
+    #[ORM\ManyToOne(targetEntity:  Triggers::class, inversedBy: 'updates')]
     protected $trigger;
 
     /**
      * @var Period
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'triggers')]
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'triggers')]
     protected $period;
 
     /**

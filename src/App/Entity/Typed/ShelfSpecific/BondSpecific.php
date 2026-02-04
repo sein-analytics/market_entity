@@ -20,7 +20,7 @@ class BondSpecific extends ShelfSpecific
     #[ORM\GeneratedValue]
     protected int $id;
     
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Bond::class, inversedBy: 'specifics')]
+    #[ORM\ManyToMany(targetEntity:  Bond::class, inversedBy: 'specifics')]
     protected $bonds;
 
     public function __construct()

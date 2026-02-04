@@ -72,7 +72,7 @@ class Period extends DomainObject
     /**
      * @var ?Deal
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'periods')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'periods')]
     protected $deal;
 
     /**

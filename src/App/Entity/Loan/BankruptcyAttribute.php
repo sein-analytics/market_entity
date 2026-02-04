@@ -28,14 +28,14 @@ class BankruptcyAttribute extends DomainObject
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'bankruptcyAttribute')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'bankruptcyAttribute')]
     protected $loan;
 
     /**
      * @var DelinquentAttribute
      */
     #[ORM\JoinColumn(name: 'delinquent_attribute_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\DelinquentAttribute::class, inversedBy: 'bankruptcyAttribute')]
+    #[ORM\OneToOne(targetEntity:  DelinquentAttribute::class, inversedBy: 'bankruptcyAttribute')]
     protected $delinquentAttribute;
 
     /**

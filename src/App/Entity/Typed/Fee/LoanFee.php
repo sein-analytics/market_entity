@@ -20,7 +20,7 @@ class LoanFee extends Fee
     #[ORM\GeneratedValue]
     protected int $id;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\Loan::class, inversedBy: 'fees')]
+    #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'fees')]
     protected $loans;
 
     public function __construct()

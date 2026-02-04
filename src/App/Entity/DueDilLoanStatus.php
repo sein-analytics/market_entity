@@ -32,21 +32,21 @@ class DueDilLoanStatus
      * @var DueDiligence
      */
     #[ORM\JoinColumn(name: 'dd_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligence::class, inversedBy: 'reviewStatuses')]
+    #[ORM\ManyToOne(targetEntity:  DueDiligence::class, inversedBy: 'reviewStatuses')]
     protected $diligence;
 
     /**
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'ln_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'reviewStatuses')]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'reviewStatuses')]
     protected $loan;
 
     /**
      * @var DueDilReviewStatus
      */
     #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDilReviewStatus::class, inversedBy: 'reviewStatuses')]
+    #[ORM\ManyToOne(targetEntity:  DueDilReviewStatus::class, inversedBy: 'reviewStatuses')]
     protected $reviewStatus;
 
     #[ORM\Column(type: 'json', nullable: false)]

@@ -25,29 +25,29 @@ class DueDiligence
 
 
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'diligence')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'diligence')]
     protected MarketUser $user;
 
     #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'diligence')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'diligence')]
     protected Deal $deal;
 
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligenceIssue::class, mappedBy: 'dueDiligence')]
+    #[ORM\OneToMany(targetEntity:  DueDiligenceIssue::class, mappedBy: 'dueDiligence')]
     protected $issues;
 
     #[ORM\JoinColumn(name: 'dd_role_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligenceRole::class, inversedBy: 'dueDiligence')]
+    #[ORM\ManyToOne(targetEntity:  DueDiligenceRole::class, inversedBy: 'dueDiligence')]
     protected DueDiligenceRole $diligenceRole;
 
     #[ORM\JoinColumn(name: 'dd_status_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligenceStatus::class, inversedBy: 'dueDiligence')]
+    #[ORM\ManyToOne(targetEntity:  DueDiligenceStatus::class, inversedBy: 'dueDiligence')]
     protected DueDiligenceStatus $status;
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
      */
     #[ORM\JoinColumn(name: 'bid_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Bid::class, inversedBy: 'dueDiligence')]
+    #[ORM\OneToOne(targetEntity:  Bid::class, inversedBy: 'dueDiligence')]
     protected ?Bid $bid;
 
     /**
@@ -56,17 +56,17 @@ class DueDiligence
      *
      */
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligence::class, inversedBy: 'ddMembers')]
+    #[ORM\ManyToOne(targetEntity:  DueDiligence::class, inversedBy: 'ddMembers')]
     protected ?DueDiligence $parentId;
 
     /**
      * All other members of the Due Diligence team will have a reference due diligence ID
      * associated with the user that placed the bid
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'parentId')]
+    #[ORM\OneToMany(targetEntity:  DueDiligence::class, mappedBy: 'parentId')]
     protected $ddMembers;
 
-    #[ORM\ManyToMany(targetEntity:  \App\Entity\DealFile::class, inversedBy: 'diligence')]
+    #[ORM\ManyToMany(targetEntity:  DealFile::class, inversedBy: 'diligence')]
     protected $files;
 
     #[ORM\OneToMany(targetEntity: DueDilLoanStatus::class, mappedBy: 'diligence')]

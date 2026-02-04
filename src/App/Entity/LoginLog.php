@@ -31,7 +31,7 @@ class LoginLog extends DomainObject
      * @var MarketUser
      **/
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'logins')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'logins')]
     protected $user;
 
     /**

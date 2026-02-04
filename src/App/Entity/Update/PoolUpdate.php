@@ -31,19 +31,19 @@ class PoolUpdate extends DomainObject
     /**
      * @var Pool
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Pool::class, inversedBy: 'poolUpdates')]
+    #[ORM\ManyToOne(targetEntity:  Pool::class, inversedBy: 'poolUpdates')]
     protected $pool;
 
     /**
      * @var Period
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'poolUpdates')]
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'poolUpdates')]
     protected $period;
 
     /**
      * @var ArrayCollection
      **/
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Update\LoanUpdate::class, mappedBy: 'pool')]
+    #[ORM\OneToMany(targetEntity:  LoanUpdate::class, mappedBy: 'pool')]
     protected $loans;
 
     /**
@@ -194,7 +194,7 @@ class PoolUpdate extends DomainObject
     /**
      * @var Delinquency  
      */
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Update\Delinquency::class, inversedBy: 'poolUpdate')]
+    #[ORM\OneToOne(targetEntity:  Delinquency::class, inversedBy: 'poolUpdate')]
     protected $delinquency;
     
     public function __construct()

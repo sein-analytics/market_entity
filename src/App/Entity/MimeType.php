@@ -37,7 +37,7 @@ class MimeType
     /**
      * @var PersistentCollection|ArrayCollection|null
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\DealFile::class, mappedBy: 'mime')]
+    #[ORM\OneToMany(targetEntity:  DealFile::class, mappedBy: 'mime')]
     protected $files;
 
     public function __construct()

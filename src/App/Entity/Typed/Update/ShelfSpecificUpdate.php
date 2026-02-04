@@ -26,13 +26,13 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     /**
      * @var ShelfSpecific $shelfSpecific
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\ShelfSpecific::class, inversedBy: 'updates')]
+    #[ORM\ManyToOne(targetEntity:  ShelfSpecific::class, inversedBy: 'updates')]
     protected $shelfSpecific;
 
     /**
      * @var Period $period
      **/
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'shelfSpecifics')]
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'shelfSpecifics')]
     protected $period;
 
     /**

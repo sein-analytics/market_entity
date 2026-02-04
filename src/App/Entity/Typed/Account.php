@@ -35,19 +35,19 @@ abstract class Account extends AbstractTyped
     /**
      * @var Deal $deal
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'accounts')]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'accounts')]
     protected $deal;
 
     /**
      * @var AccountType
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\AccountType::class, inversedBy: 'accounts')]
+    #[ORM\ManyToOne(targetEntity:  AccountType::class, inversedBy: 'accounts')]
     protected $type;
 
     /**
      * @var ArrayCollection
      */
-    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\Update\AccountUpdate::class, mappedBy: 'account')]
+    #[ORM\OneToMany(targetEntity:  AccountUpdate::class, mappedBy: 'account')]
     protected $updates;
 
     /**

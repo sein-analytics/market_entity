@@ -26,7 +26,7 @@ class PropertyAttribute extends DomainObject
      * @var Loan
      */
     #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
-    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'propertyAttribute')]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'propertyAttribute')]
     protected $loan;
 
     /**

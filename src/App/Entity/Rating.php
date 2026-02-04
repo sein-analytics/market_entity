@@ -27,19 +27,19 @@ class Rating
     /**
      * @var ?RatingCode
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\RatingCode::class, inversedBy: 'ratings')]
+    #[ORM\ManyToOne(targetEntity:  RatingCode::class, inversedBy: 'ratings')]
     protected $ratingCode;
 
     /**
      * @var ?MarketUser
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'rated')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'rated')]
     protected $rater;
 
     /**
      * @var ?MarketUser
      */
-    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'ratings')]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'ratings')]
     protected $user;
 
     /**
