@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Entity;
+use \App\Entity\CommunityInvite;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="CommInviteStatus")
- */
+#[ORM\Table(name: 'CommInviteStatus')]
+#[ORM\Entity]
 class CommInviteStatus
 {
     const EMAIL_ERROR = 'emailError';
@@ -29,23 +28,23 @@ class CommInviteStatus
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $label = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\CommunityInvite", mappedBy="status")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: CommunityInvite::class, mappedBy: 'status')]
     protected $invites;
 
     public function __construct () {

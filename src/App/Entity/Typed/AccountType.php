@@ -10,33 +10,26 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Samuel Belu-John
- *
- * @ORM\Entity
- * @ORM\Table(name="AccountType")
  */
+#[ORM\Table(name: 'AccountType')]
+#[ORM\Entity]
 class AccountType
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $label;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="type")
      * @var Account
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\Account::class, mappedBy: 'type')]
     protected $accounts;
 
     /**

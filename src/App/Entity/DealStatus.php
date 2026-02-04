@@ -6,13 +6,12 @@
 
 namespace App\Entity;
 
+use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DealStatus")
- * @ORM\Table(name="DealStatus")
- */
+#[ORM\Table(name: 'DealStatus')]
+#[ORM\Entity(repositoryClass: \App\Repository\DealStatus::class)]
 class DealStatus
 {
     const UPLOAD = "UPLOAD";
@@ -36,23 +35,21 @@ class DealStatus
         self::CLOSED        => "\\App\\Entity\\DealStatus\\Closed",
     );
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="status")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Deal::class, mappedBy: 'status')]
     protected $deals;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $status ='';
 
     public function __construct()
@@ -91,12 +88,12 @@ class DealStatus
 
     /**
      * @param $status
-     * @throws \Exception
+     * @throws Exception
      */
     public function setStatus($status)
     {
         if(!array_key_exists(strtoupper($status), self::$statuses)){
-            throw new \Exception("Status class type: $status does not exist");
+            throw new Exception("Status class type: $status does not exist");
         }
         $this->status = $status;
     }

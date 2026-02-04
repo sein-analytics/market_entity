@@ -6,6 +6,20 @@
 
 namespace App\Entity;
 
+use \App\Entity\DealFile;
+use \App\Entity\DealAuction;
+use \App\Entity\DealBid;
+use \App\Entity\Statistic;
+use \App\Entity\Pool;
+use \App\Entity\Bond;
+use \App\Entity\Bid;
+use \App\Entity\DocAccess;
+use \App\Entity\Typed\Fee;
+use \App\Entity\Typed\Account;
+use \App\Entity\Typed\ShelfSpecific;
+use \App\Entity\Typed\Triggers;
+use \App\Entity\DealContract;
+use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,11 +27,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Deal")
- * @ORM\Table(name="Deal")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'Deal')]
+#[ORM\Entity(repositoryClass: \App\Repository\Deal::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class Deal extends DealAbstract
 {
     use CreatePropertiesArrayTrait;
@@ -40,232 +52,216 @@ class Deal extends DealAbstract
         'cashflowEngine' => null,
     ];
 
-    /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="deals")
-     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
      * @var Issuer
      **/
+    #[ORM\JoinColumn(name: 'issuer_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Issuer::class, inversedBy: 'deals')]
     protected $issuer;
 
     /**
-     * @ORM\Column(type="string")
      * @var string
      */
+    #[ORM\Column(type: 'string')]
     protected string $issue = '';
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $cutOffDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $closingDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealStatus", inversedBy="deals")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DealStatus
      **/
+    #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealStatus::class, inversedBy: 'deals')]
     protected $status;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="deal")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: DealFile::class, mappedBy: 'deal')]
     protected $dealDocs;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $paymentDay = 1;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false) *
      * @var float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected float $currentBalance=0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false) *
      * @var float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected float $originalBalance=0.0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAuction", inversedBy="deals")
-     * @ORM\JoinColumn(name="auction_type_id", referencedColumnName="id", nullable=false)
-     **/
+    #[ORM\JoinColumn(name: 'auction_type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: DealAuction::class, inversedBy: 'deals')]
     protected $auctionType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset", inversedBy="deals")
-     * @ORM\JoinColumn(name="asset_type_id", referencedColumnName="id", nullable=false)
-     **/
+    #[ORM\JoinColumn(name: 'asset_type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealAsset::class, inversedBy: 'deals')]
     protected $assetType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealBid", inversedBy="deals")
-     * @ORM\JoinColumn(name="bid_type_id", referencedColumnName="id", nullable=false)
-     **/
+    #[ORM\JoinColumn(name: 'bid_type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: DealBid::class, inversedBy: 'deals')]
     protected $bidType;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Statistic", mappedBy="deal")
      * @var Statistic
      **/
+    #[ORM\OneToOne(targetEntity: Statistic::class, mappedBy: 'deal')]
     protected $stats;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $priorOC;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $cashflowEngine;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $callFormular;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Pool", mappedBy="deal")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Pool::class, mappedBy: 'deal')]
     protected $pools;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="deal")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Bond::class, mappedBy: 'deal')]
     protected $bonds;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Period", mappedBy="deal")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Period::class, mappedBy: 'deal')]
     protected $periods;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="deal")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Bid::class, mappedBy: 'deal')]
     protected $bids;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="deal")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: DocAccess::class, mappedBy: 'deal')]
     protected $documents;
 
     /**
-    * @ORM\OneToOne(targetEntity="\App\Entity\Period")
-    * @var Period
-    */
+     * @var Period
+     */
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Period::class)]
     protected $latestPeriod;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $loanDataParser;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="deal")
-     */
+    #[ORM\OneToMany(targetEntity: Fee::class, mappedBy: 'deal')]
     protected $fees;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Account", mappedBy="deal")  *
-     */
+    #[ORM\OneToMany(targetEntity: Account::class, mappedBy: 'deal')]
     protected $accounts;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="deal")  *
-     */
+    #[ORM\OneToMany(targetEntity: ShelfSpecific::class, mappedBy: 'deal')]
     protected $shelfSpecifics;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="deal")  *
-     */
+    #[ORM\OneToMany(targetEntity: Triggers::class, mappedBy: 'deal')]
     protected $triggers;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="deal")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Message::class, mappedBy: 'deal')]
     protected $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="deal")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'deal')]
     protected $diligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="deals")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var \App\Entity\MarketUser
      */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'deals')]
     protected $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketDeals")
      * @var PersistentCollection
      */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, mappedBy: 'marketDeals')]
     protected $marketUsers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", mappedBy="marketFavorites")
      * @var ArrayCollection
      */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, mappedBy: 'marketFavorites')]
     protected $userFavorites;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="deal")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Rating::class, mappedBy: 'deal')]
     protected $ratings;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="deal")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\UserStip::class, mappedBy: 'deal')]
     protected $stips;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $views;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealContract", mappedBy="deal")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: DealContract::class, mappedBy: 'deal')]
     protected $contracts;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
      * @var null|bool
      */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected ?bool $requiresNda; 
 
     public function __construct()
@@ -359,27 +355,27 @@ class Deal extends DealAbstract
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getClosingDate() :\DateTime { return $this->closingDate; }
+    public function getClosingDate() :DateTime { return $this->closingDate; }
 
     /**
-     * @param \DateTime $closingDate
+     * @param DateTime $closingDate
      */
-    public function setClosingDate(\DateTime $closingDate):void
+    public function setClosingDate(DateTime $closingDate):void
     {
         $this->implementChange($this,'closingDate', $this->closingDate, $closingDate);
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCutOffDate() :\DateTime { return $this->cutOffDate; }
+    public function getCutOffDate() :DateTime { return $this->cutOffDate; }
 
     /**
-     * @param \DateTime $cutOffDate
+     * @param DateTime $cutOffDate
      */
-    public function setCutOffDate(\DateTime $cutOffDate):void
+    public function setCutOffDate(DateTime $cutOffDate):void
     {
         $this->implementChange($this,'cutOffDate', $this->cutOffDate, $cutOffDate);
     }

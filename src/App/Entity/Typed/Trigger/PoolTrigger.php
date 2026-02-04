@@ -13,21 +13,15 @@ use App\Entity\Pool;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class PoolTrigger extends Triggers
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "triggers")
-     */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\Pool::class, inversedBy: 'triggers')]
     protected $pools;
 
     public function __construct()

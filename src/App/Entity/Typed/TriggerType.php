@@ -8,33 +8,27 @@
 
 namespace App\Entity\Typed;
 
+use \App\Entity\Typed\Triggers;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Samuel Belu-John
- * @ORM\Entity
- * @ORM\Table(name="TriggerType")
  */
+#[ORM\Table(name: 'TriggerType')]
+#[ORM\Entity]
 class TriggerType
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $label;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $slug;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Triggers", mappedBy="type") */
+    #[ORM\OneToMany(targetEntity: Triggers::class, mappedBy: 'type')]
     protected $triggers;
 }

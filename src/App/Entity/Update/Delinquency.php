@@ -12,152 +12,148 @@ use App\Entity\DomainObject;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-/**
- * @ORM\Entity
- * @ORM\Table(name="Delinquency")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'Delinquency')]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class Delinquency extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer") *
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="delinquency")
      * @var PoolUpdate
      */
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Update\PoolUpdate::class, mappedBy: 'delinquency')]
     protected $poolUpdate;
 
     /**
      * Current Period's balance that is 30-60 days past-due
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $dq30Balance;
 
     /**
      * Current Period's number of loans that are 30-60 days past-due
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $dq30Loans;
 
     /**
      * Current Period's balance that is 61-90 days past-due
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $dq60Balance;
 
     /**
      * Current Period's number of loans 61-90 days past-due
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $dq60Loans;
 
     /**
      * Current Period's balance that is 91-120 or more days past-due (depends on trustee reporting)
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $dq90Balance;
 
     /**
      * Current Period's number of loans 91-120 days past-due
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $dq90Loans;
 
     /**
      * Current Period's loan balance that is 120 days past-due
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $dq120Balance;
 
     /**
      * Current Period's number of loans 120 days past-due
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $dq120Loans;
 
     /**
      * Current Period's loan balance that is 150 days past-due
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $dq150Balance;
 
     /**
      * Current Period's number of loans 150 days past-due
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $dq150Loans;
 
     /**
      * Current Period's loan balance that is 180 days past-due
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $dq180Balance;
 
     /**
      * Current Period's number of loans 180 days past-due
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $dq180Loans;
 
     /**
      * Current Period's loan balance that is in reo
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $reoLoans;
 
     /**
      * Current Period's number of loans in reo
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $reoBalance;
 
     /**
      * Current Period's loan balance that is in foreclosure
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $foreclosureBalance;
 
     /**
      * Current Period's number of loans in foreclosure
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $foreclosureLoans;
 
     /**
      * Current Period's loan balance that is 180 days past-due
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected ?float $bankruptcyBalance;
 
     /**
      * Current Period's number of loans 180 days past-due
-     * @ORM\Column(type="float", precision=8, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 2, nullable: true)]
     protected ?float $bankruptcyLoans;
 
     /**

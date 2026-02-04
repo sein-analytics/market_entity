@@ -8,136 +8,134 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\PayHistoryAttribute")
- * @ORM\Table(name="PayHistoryAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'PayHistoryAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\PayHistoryAttribute::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class PayHistoryAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="payHistoryAttribute")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'payHistoryAttribute')]
     protected $loan;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history1;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history2;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history3;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history4;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history5;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history6;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history7;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history8;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history9;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history10;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history11;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history12;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history13;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history14;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history15;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history16;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history17;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $history18;
 
     /**

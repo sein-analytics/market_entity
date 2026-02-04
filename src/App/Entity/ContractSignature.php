@@ -4,61 +4,53 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\ContractSignature")
- * @ORM\Table(name="ContractSignature")
- */
+#[ORM\Table(name: 'ContractSignature')]
+#[ORM\Entity(repositoryClass: \App\Repository\ContractSignature::class)]
 class ContractSignature
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="sender_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'sender_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
     protected MarketUser $sender;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="receiver_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'receiver_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class)]
     protected ?MarketUser $receiver; 
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $senderSignature;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $receiverSignature;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $signatureId;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractStatus")
-     * @ORM\JoinColumn(name="contract_status_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'contract_status_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\ContractStatus::class)]
     protected ContractStatus $contractStatus;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $publicId;
 
     function __construct()

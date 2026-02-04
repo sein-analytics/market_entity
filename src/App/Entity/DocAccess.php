@@ -6,44 +6,41 @@
 
 namespace App\Entity;
 
+use \App\Entity\DealFile;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DocAccess")
- * @ORM\Table(name="DocAccess")
- */
+#[ORM\Table(name: 'DocAccess')]
+#[ORM\Entity(repositoryClass: \App\Repository\DocAccess::class)]
 class DocAccess
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="documents")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'documents')]
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="documents")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      **/
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'documents')]
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="docAccess")
-     * @ORM\JoinColumn(name="document_id", referencedColumnName="id", nullable=false)
      * @var DealFile
      */
+    #[ORM\JoinColumn(name: 'document_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: DealFile::class, inversedBy: 'docAccess')]
     protected $document;
 
     /**

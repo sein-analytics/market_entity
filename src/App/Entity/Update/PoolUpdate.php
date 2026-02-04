@@ -8,133 +8,129 @@
 
 namespace App\Entity\Update;
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Service\CreatePropertiesArrayTrait;
 use App\Entity\Period;
 use App\Entity\Pool;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity
- * @ORM\Table(name="PoolUpdate",
- *     indexes={@ORM\Index(name="period_pool_idx",
- *     columns={"period_id", "pool_id"})})
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'PoolUpdate')]
+#[ORM\Index(name: 'period_pool_idx', columns: ['period_id', 'pool_id'])]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class PoolUpdate extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer") *
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="poolUpdates")
+    /**
      * @var Pool
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Pool::class, inversedBy: 'poolUpdates')]
     protected $pool;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="poolUpdates")
      * @var Period
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'poolUpdates')]
     protected $period;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="pool")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Update\LoanUpdate::class, mappedBy: 'pool')]
     protected $loans;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime|null
+     * @var DateTime|null
      **/
-    protected \DateTime|null $reportDate;
+    #[ORM\Column(type: 'datetime')]
+    protected DateTime|null $reportDate;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $endingBalance
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $endingBalance;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $startingBalance
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $startingBalance;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $cumulativeLosses
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $cumulativeLosses;
 
     /**
      * Period starting gross weighted average coupon
-     * @ORM\Column(type="float", precision=9, scale=5, nullable=true)
      * @var float|null $groupGrossWac
      **/
+    #[ORM\Column(type: 'float', precision: 9, scale: 5, nullable: true)]
     protected float|null $groupGrossWac;
 
     /**
      * Current Period's scheduled principal payments received
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $scheduledPrincipal
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected float|null $scheduledPrincipal;
 
     /**
      * Current Period's interest payments received
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $interestCollections
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected float|null $interestCollections;
 
     /**
      * Current Period's liquidated balance
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $liquidations
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected float|null $liquidations;
 
     /**
      * Current Period's recoveries from liquidated loans
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $recoveries
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected float|null $recoveries;
 
     /**
      * Current Period's pre-payed balance
-     * @ORM\Column(type="float", precision=12, scale=2, nullable=true)
      * @var float|null $prepayedBalance
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 2, nullable: true)]
     protected float|null $prepayedBalance;
 
     /**
      * Current Period's number of loans prepaying
-     * @ORM\Column(type="float", precision=12, scale=3, nullable=true)
      * @var float|null $prepayedLoans
      **/
+    #[ORM\Column(type: 'float', precision: 12, scale: 3, nullable: true)]
     protected float|null $prepayedLoans;
 
     /**
      * regular principal calculation--expected principal to be paid to the notes
-     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $bondRegularPrincipalCalc
      **/
+    #[ORM\Column(type: 'float', precision: 15, scale: 3, nullable: true)]
     protected float|null $bondRegularPrincipalCalc;
 
     /**
      * supplemental principal calculation--in addition to the regular principal
-     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $unscheduledPrincipalCalc
      **/
+    #[ORM\Column(type: 'float', precision: 15, scale: 3, nullable: true)]
     protected float|null $unscheduledPrincipalCalc;
 
     /**
@@ -146,59 +142,59 @@ class PoolUpdate extends DomainObject
 
     /**
      * Actual amount of regular principal paid to the notes
-     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $regularPrincipalPaid
      **/
+    #[ORM\Column(type: 'float', precision: 15, scale: 3, nullable: true)]
     protected float|null $regularPrincipalPaid;
 
     /**
      * Actual amount of regular principal paid to the notes
-     * @ORM\Column(type="float", precision=15, scale=3, nullable=true)
      * @var float|null $unscheduledPrincipalPaid
      **/
+    #[ORM\Column(type: 'float', precision: 15, scale: 3, nullable: true)]
     protected float|null $unscheduledPrincipalPaid;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
      * @var int $updateStatus
      **/
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $updateStatus = 1;
 
     /**
-     * @ORM\Column(type="float", precision=10, scale=7, nullable=true)
      * @var float|null $groupNetWac
      */
+    #[ORM\Column(type: 'float', precision: 10, scale: 7, nullable: true)]
     protected float|null $groupNetWac;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @var int|null $receivablesCount
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $receivablesCount;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $groupSeniorPct
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $groupSeniorPct;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null $groupSubPct
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $groupSubPct;
 
     /**
      * Indicate whether collateral is historic or forecast
-     * @ORM\Column(type="integer", nullable=true)
      * @var int|null $isHistory
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $isHistory = 0;
     
-    /** 
-     * @ORM\OneToOne(targetEntity="\App\Entity\Update\Delinquency", inversedBy="poolUpdate")
-     * @var Delinquency   
+    /**
+     * @var Delinquency  
      */
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Update\Delinquency::class, inversedBy: 'poolUpdate')]
     protected $delinquency;
     
     public function __construct()
@@ -270,17 +266,17 @@ class PoolUpdate extends DomainObject
     }
 
     /**
-     * @return \DateTime | null
+     * @return DateTime|null
      */
-    public function getReportDate():?\DateTime
+    public function getReportDate():?DateTime
     {
         return $this->reportDate;
     }
 
     /**
-     * @param \DateTime $reportDate
+     * @param DateTime $reportDate
      */
-    public function setReportDate(\DateTime $reportDate):void
+    public function setReportDate(DateTime $reportDate):void
     {
         $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }

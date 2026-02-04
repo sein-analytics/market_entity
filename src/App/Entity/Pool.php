@@ -6,6 +6,12 @@
 
 namespace App\Entity;
 
+use \App\Entity\Update\PoolUpdate;
+use \App\Entity\Typed\ShelfSpecific\PoolSpecific;
+use \App\Entity\Typed\Fee\PoolFee;
+use \App\Entity\Typed\Account\PoolAccount;
+use \App\Entity\Typed\Trigger\PoolTrigger;
+use Exception;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
@@ -14,12 +20,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Pool")
- * @ORM\Table(name="Pool")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @HasLifecycleCallbacks
- */
+#[ORM\Table(name: 'Pool')]
+#[ORM\Entity(repositoryClass: \App\Repository\Pool::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
+#[HasLifecycleCallbacks]
 class Pool extends DomainObject
 {
     use CreatePropertiesArrayTrait;
@@ -41,119 +45,117 @@ class Pool extends DomainObject
         'addReserveToCredit' => null,
     ];
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="pools")
      * @var ?Deal
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'pools')]
     protected $deal;
 
-    /** 
-     * @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="pool")
+    /**
      * @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Loan::class, mappedBy: 'pool')]
     protected $loans;
 
-    /** 
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond", mappedBy="pool", fetch="LAZY")
+    /**
      * @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Bond::class, mappedBy: 'pool', fetch: 'LAZY')]
     protected $bonds;
 
     /**
-     * @ORM\Column(type="integer")
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
     protected int $bondsCount = 0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $bondsTotalBalance = 0.0;
 
     /**
-     * @ORM\Column(type = "float", precision=14, scale=2)
      * @var float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $loanTotalBalance = 0.0;
 
     /**
-     * @ORM\Column(type = "integer")
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
     protected int $loansCount = 0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $originalBalance=0.0;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $poolStructure;
 
     /**
-     * @ORM\Column(type = "boolean", nullable=false)
      * @var bool
      * **/
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $isCrossed = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      **/
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $isPogroup = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      **/
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $isIoGroup = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $addReserveToCreditSupport = false;
     
-    /** 
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="pool", fetch="LAZY")
+    /**
      * @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: PoolUpdate::class, mappedBy: 'pool', fetch: 'LAZY')]
     protected $poolUpdates;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\PoolSpecific", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: PoolSpecific::class, mappedBy: 'pools')]
     protected $specifics;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\PoolFee", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: PoolFee::class, mappedBy: 'pools')]
     protected $fees;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\PoolAccount", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: PoolAccount::class, mappedBy: 'pools')]
     protected $accounts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\PoolTrigger", mappedBy="pools")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: PoolTrigger::class, mappedBy: 'pools')]
     protected $triggers;
 
     public function __construct()
@@ -199,13 +201,13 @@ class Pool extends DomainObject
     /**
      * @param Loan $loan
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function addLoan(Loan $loan)
     {
         $loanId = $loan->getId();
         if(!isset($loanId)) {
-            throw new \Exception("Cannot add a loan to pool with out ID");
+            throw new Exception("Cannot add a loan to pool with out ID");
         }
         $coll = $this->getLoans()->filter(function(Loan $ln) use($loan){
             return ($ln->getLoanId() === $loan->getLoanId());

@@ -4,25 +4,23 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="KycDocRequestStatus")
- */
+#[ORM\Table(name: 'KycDocRequestStatus')]
+#[ORM\Entity]
 class KycDocRequestStatus
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $status;
 
     /**

@@ -14,29 +14,25 @@ use Doctrine\ORM\PersistentCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="UserRating")
- */
+#[ORM\Table(name: 'UserRating')]
+#[ORM\Entity]
 class RatingCode 
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="ratingCode")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Rating::class, mappedBy: 'ratingCode')]
     protected $ratings;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $meaning;
 
     public function __construct()

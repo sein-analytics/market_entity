@@ -8,12 +8,11 @@
 
 namespace App\Entity\Typed;
 
+use \App\Repository\Typed\MappedType;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Typed\MappedType")
- * @ORM\Table(name="PropertyType")
- */
+#[ORM\Table(name: 'PropertyType')]
+#[ORM\Entity(repositoryClass: MappedType::class)]
 class PropertyType extends MappedTypeAbstract
 {
     protected $mappedUserType;
@@ -23,7 +22,7 @@ class PropertyType extends MappedTypeAbstract
         parent::__construct();
     }
 
-    /** @ORM\Column(type="string", nullable=false)  */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected $typeMain  = '';
 
     /**

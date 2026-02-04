@@ -8,34 +8,27 @@
 
 namespace App\Entity\Typed;
 
+use \App\Entity\Typed\Fee;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @author Samuel Belu-John
- * @ORM\Entity
- * @ORM\Table(name="FeeType")
  */
+#[ORM\Table(name: 'FeeType')]
+#[ORM\Entity]
 class FeeType
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $label;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $slug;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Fee", mappedBy="type")
-     */
+    #[ORM\OneToMany(targetEntity: Fee::class, mappedBy: 'type')]
     protected $fees;
 
     /**

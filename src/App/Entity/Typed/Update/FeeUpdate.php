@@ -10,61 +10,57 @@ use App\Entity\Typed\Fee;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-/**
- * @ORM\Entity
- * @ORM\Table(name="FeeUpdate")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'FeeUpdate')]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class FeeUpdate extends AbstractTypeUpdate
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
     
     /**
      * @var Fee
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Fee", inversedBy="updates")
      * */
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\Fee::class, inversedBy: 'updates')]
     protected $fee;
 
     /**
      * @var Period $period
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="fees")
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'fees')]
     protected $period;
 
     /**
      * @var float|null $amountOwed
-     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 3, nullable: true)]
     public float|null $amountDue;
 
     /**
      * @var float|null $amountPaid
-     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 3, nullable: true)]
     public float|null $amountPaid;
 
     /**
      * @var float|null $currentAmountPaid
-     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 3, nullable: true)]
     public float|null $currentAmountUnpaid;
 
     /**
      * @var float|null $cumulativeUnpaidAmount
-     * @ORM\Column(type="float", precision=14, scale=3, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 3, nullable: true)]
     public float|null $cumulativeAmountUnpaid;
 
     /**
      * @var float|null $unpaidReimbursed
-     * @ORM\Column(type="float", precision=14, scale=3, nullable = true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 3, nullable: true)]
     public float|null $unpaidAmountReimbursed;
     
 

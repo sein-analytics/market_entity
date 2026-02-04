@@ -7,45 +7,42 @@
  */
 
 namespace App\Entity\Data;
+use App\Entity\Loan;
 use App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Data\State")
- * @ORM\Table(name="State")
- */
+#[ORM\Table(name: 'State')]
+#[ORM\Entity(repositoryClass: \App\Repository\Data\State::class)]
 class State
 {
-    /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MarketUser", mappedBy="state")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: MarketUser::class, mappedBy: 'state')]
     protected $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Loan", mappedBy="state")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'state')]
     protected $loans;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $abbreviation;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $name;
 
     public function __construct()

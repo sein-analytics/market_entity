@@ -8,56 +8,52 @@
 
 namespace App\Entity\Typed\Update;
 
+use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Triggers;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-/**
- *
- * @ORM\Entity
- * @ORM\Table(name="TriggerUpdate")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'TriggerUpdate')]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class TriggerUpdate extends AbstractTypeUpdate
 {
     const TRIGGER_RESULT_PASS = 1;
     const TRIGGER_RESULT_FAIL = 0;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue *
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
      * @var Triggers $trigger
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Triggers", inversedBy="updates")
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\Triggers::class, inversedBy: 'updates')]
     protected $trigger;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="triggers")
      * @var Period
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'triggers')]
     protected $period;
 
     /**
      * @var float $threshold
-     * @ORM\Column(type="float", precision=14, scale=3)
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 3)]
     public float $threshold = 0;
 
     /**
      * @var float $actual
-     * @ORM\Column(type="float", precision=14, scale=3)
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 3)]
     public float $actual = 0;
 
     /**
-     * @ORM\Column(type="string")
      * @var int $triggerResult
      */
+    #[ORM\Column(type: 'string')]
     public int $triggerResult = self::TRIGGER_RESULT_PASS;
 
     public function getId():int
@@ -130,12 +126,12 @@ class TriggerUpdate extends AbstractTypeUpdate
 
     /**
      * @param $triggerResult
-     * @throws \Exception
+     * @throws Exception
      */
     public function setTriggerResult($triggerResult) {
         $constant = @constant("self::TRIGGER_RESULT{$triggerResult}");
         if(is_null($constant)){
-            throw new \Exception("Could not find constant: self::TRIGGER_RESULT{$triggerResult} in TriggerUpdate");
+            throw new Exception("Could not find constant: self::TRIGGER_RESULT{$triggerResult} in TriggerUpdate");
         }
         $this->implementChange($this,'triggerResult', $this->triggerResult, $constant);
     }

@@ -1,93 +1,86 @@
 <?php
 
 namespace App\Entity;
+use \App\Entity\Loan;
+use \App\Entity\KickOutsLoan;
+use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity (repositoryClass="\App\Repository\Bid")
- * @ORM\Table (name="Bid")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'Bid')]
+#[ORM\Entity(repositoryClass: \App\Repository\Bid::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class Bid extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="bids")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'bids')]
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bids")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      */
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'bids')]
     protected $deal;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy="bids")
      * @var ArrayCollection
      */
+    #[ORM\ManyToMany(targetEntity: Loan::class, inversedBy: 'bids')]
     protected $loans;
 
-    /**
-     * @ORM\Column(type="float", precision=9, scale=3, nullable=false)
-     */
+    #[ORM\Column(type: 'float', precision: 9, scale: 3, nullable: false)]
     protected float $price = 0.0;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected $effectiveBalance = 0.0;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float $proportionalBalance = 0.0;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected $bidHistory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\BidStatus", inversedBy="bids")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var BidStatus
      */
+    #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\BidStatus::class, inversedBy: 'bids')]
     protected $status;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $date;
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
-     * @ORM\OneToOne(targetEntity="\App\Entity\DueDiligence", mappedBy="bid")
      * @var DueDiligence|null
      */
+    #[ORM\OneToOne(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'bid')]
     protected $dueDiligence;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\KickOutsLoan", mappedBy="bid")
      * @var PersistentCollection | ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: KickOutsLoan::class, mappedBy: 'bid')]
     protected $carveOuts;
 
     public function __construct()
@@ -241,17 +234,17 @@ class Bid extends DomainObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate() : \DateTime
+    public function getDate() : DateTime
     {
         return $this->date;
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date)
     {
         $this->implementChange($this, 'date', $this->date, $date);
     }

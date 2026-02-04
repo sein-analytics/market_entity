@@ -5,27 +5,24 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 //TODO ANY CHANGES TO THE TABLE MUST BE REFLECTED IN CLODUINARY ISSUER KYC FOLDERS
-
-/**
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="\App\Repository\KycType")
- * @ORM\Table(name="KycType")
- */
+#[ORM\Table(name: 'KycType')]
+#[ORM\Entity]
+#[ORM\Entity(repositoryClass: \App\Repository\KycType::class)]
 class KycType
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $type;
 
     /**

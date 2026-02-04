@@ -8,100 +8,100 @@
 
 namespace App\Entity;
 
+use \App\Entity\Message;
+use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DueDiligenceIssue")
- * @ORM\Table(name="DueDiligenceIssue")
- */
+#[ORM\Table(name: 'DueDiligenceIssue')]
+#[ORM\Entity(repositoryClass: \App\Repository\DueDiligenceIssue::class)]
 class DueDiligenceIssue 
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="issues")
-     * @ORM\JoinColumn(name="due_diligence_id", referencedColumnName="id", nullable=false)
      * @var DueDiligence
      */
+    #[ORM\JoinColumn(name: 'due_diligence_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligence::class, inversedBy: 'issues')]
     protected DueDiligence $dueDiligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDilIssueStatus", inversedBy="issues")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DueDilIssueStatus
      */
+    #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDilIssueStatus::class, inversedBy: 'issues')]
     protected DueDilIssueStatus $status;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $issue;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="issue")
      * @var null|ArrayCollection|PersistentCollection
      */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'issue')]
     protected null|ArrayCollection|PersistentCollection $messages;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealFile", inversedBy="issues")
-     * @ORM\JoinColumn(name="file_id", referencedColumnName="id", nullable=false)
      * @var DealFile
      */
+    #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DealFile::class, inversedBy: 'issues')]
     protected DealFile $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="issues")
-     * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=false)
      * @var MessagePriority
      */
+    #[ORM\JoinColumn(name: 'priority_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MessagePriority::class, inversedBy: 'issues')]
     protected MessagePriority $priority;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'issues')]
     protected Loan $loan;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $notifySeller = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
      * @var bool
      */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $notifyTeam = false;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
-    protected \DateTime $openDate;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    protected DateTime $openDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
-    protected \DateTime $closedDate;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    protected DateTime $closedDate;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: false, unique: true)]
     protected ?string $annotationId;
 
     public function __construct()
@@ -110,8 +110,8 @@ class DueDiligenceIssue
         $this->dueDiligence = new DueDiligence();
         $this->status = new DueDilIssueStatus();
         $this->priority = new MessagePriority();
-        $this->openDate = new \DateTime();
-        $this->closedDate = new \DateTime();
+        $this->openDate = new DateTime();
+        $this->closedDate = new DateTime();
         $this->loan = new Loan();
     }
 
@@ -219,27 +219,27 @@ class DueDiligenceIssue
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getOpenDate(): \DateTime { return $this->openDate; }
+    public function getOpenDate(): DateTime { return $this->openDate; }
 
     /**
-     * @param \DateTime $openDate
+     * @param DateTime $openDate
      */
-    public function setOpenDate(\DateTime $openDate):void
+    public function setOpenDate(DateTime $openDate):void
     {
         $this->openDate = $openDate;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getClosedDate(): \DateTime { return $this->closedDate; }
+    public function getClosedDate(): DateTime { return $this->closedDate; }
 
     /**
-     * @param \DateTime $closedDate
+     * @param DateTime $closedDate
      */
-    public function setClosedDate(\DateTime $closedDate):void
+    public function setClosedDate(DateTime $closedDate):void
     {
         $this->closedDate = $closedDate;
     }

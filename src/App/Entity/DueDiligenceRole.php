@@ -10,29 +10,25 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="DueDiligenceRole")
- */
+#[ORM\Table(name: 'DueDiligenceRole')]
+#[ORM\Entity]
 class DueDiligenceRole 
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $role = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="diligenceRole")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'diligenceRole')]
     protected $dueDiligence;
 
     function __construct()

@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use DateTime;
+use App\Entity\Loan\SaleAttribute;
+use Exception;
 use App\Entity\Data\State;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -74,12 +77,12 @@ class MarketUser extends DomainObject implements AuthenticableContracts, CanRese
     // {"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
     // {"format":"Y-m-d\TH:iP"}
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    protected ?\DateTime $createdAt = null;
+    protected ?DateTime $createdAt = null;
 
     // {"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
     // {"format":"Y-m-d\TH:iP"}
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    protected ?\DateTime $updatedAt = null;
+    protected ?DateTime $updatedAt = null;
 
     #[ORM\ManyToOne(targetEntity: Issuer::class, inversedBy: 'users')]
     protected ?Issuer $issuer = null;
@@ -195,7 +198,7 @@ class MarketUser extends DomainObject implements AuthenticableContracts, CanRese
     #[ORM\ManyToMany(targetEntity: Deal::class, inversedBy: 'marketUsers')]
     protected ArrayCollection|PersistentCollection|null $marketDeals = null;
 
-    #[ORM\ManyToMany(targetEntity: \App\Entity\Loan\SaleAttribute::class, mappedBy: 'buyers')]
+    #[ORM\ManyToMany(targetEntity: SaleAttribute::class, mappedBy: 'buyers')]
     protected ArrayCollection|PersistentCollection|null $boughtLoans = null;
 
     #[ORM\OneToMany(targetEntity: DueDiligence::class, mappedBy: 'user')]
@@ -409,14 +412,14 @@ class MarketUser extends DomainObject implements AuthenticableContracts, CanRese
         $this->implementChange($this, 'authyId', $this->authyId, $authyId);
     }
 
-    public function setNotifications(int $int): ?\Exception
+    public function setNotifications(int $int): ?Exception
     {
         if (array_key_exists($int, self::NOTIFY)) {
             $this->notifications = $int;
             return null;
         }
 
-        return new \Exception('Notifications must be either 1, 2 or 3.');
+        return new Exception('Notifications must be either 1, 2 or 3.');
     }
 
     public function getDiligence(): ArrayCollection|PersistentCollection|null { return $this->diligence; }

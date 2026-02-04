@@ -17,7 +17,7 @@ class Auto extends Loan
     /**
      * @param Loan\ArmAttribute $armAttributes
      */
-    public function setArmAttributes(Loan\ArmAttribute $armAttributes)
+    public function setArmAttributes(ArmAttribute $armAttributes)
     {
         $this->armAttributes = $armAttributes;
     }

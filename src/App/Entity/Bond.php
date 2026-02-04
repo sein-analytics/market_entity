@@ -2,6 +2,12 @@
 
 
 namespace App\Entity;
+use \App\Entity\BasisCount;
+use \App\Entity\Typed\ShelfSpecific\BondSpecific;
+use \App\Entity\Typed\Fee\BondFee;
+use \App\Entity\Typed\Account\BondAccount;
+use \App\Entity\Typed\Trigger\BondTrigger;
+use DateTime;
 use App\Entity\Bond\Component;
 use App\Entity\Update\BondUpdate;
 use App\Service\CreatePropertiesArrayTrait;
@@ -9,13 +15,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="Bond")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @HasLifecycleCallbacks
- *
- */
+#[ORM\Table(name: 'Bond')]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
+#[HasLifecycleCallbacks]
 class Bond extends DomainObject
 {
     use CreatePropertiesArrayTrait;
@@ -23,178 +26,130 @@ class Bond extends DomainObject
     const SOLVE_FOR_YIELD = 1;
     const SOLVE_FOR_PRICE = 2;
 
-    /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool", inversedBy="bonds")
      * @var Pool
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Pool::class, inversedBy: 'bonds')]
     protected $pool;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="bonds", cascade={"persist"})
      * @var Deal
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'bonds', cascade: ['persist'])]
     protected $deal;
 
-    /** @ORM\Column(type="string", unique=false) **/
+    #[ORM\Column(type: 'string', unique: false)]
     protected string $cusip;
 
-    /** @ORM\Column(type="string") **/
+    #[ORM\Column(type: 'string')]
     protected string $className;
 
-    /** @ORM\Column(type="float", precision=14, scale=2) **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $originalBalance;
 
-    /** @ORM\Column(type="float", precision=14, scale=2) **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $currentBalance = 0;
 
-    /** @ORM\Column(type="string", nullable=true) **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $rateFormula;
 
-    /** @ORM\Column(type="date", nullable=true) **/
+    #[ORM\Column(type: 'date', nullable: true)]
     protected $scheduledMaturityDate;
 
-    /** @ORM\Column(type="float", precision=6, scale=5, nullable=true) **/
+    #[ORM\Column(type: 'float', precision: 6, scale: 5, nullable: true)]
     protected float $fixedRate;
 
-    /** @ORM\Column(type="float", precision=8, scale=6, nullable=true) **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 6, nullable: true)]
     protected float $origCreditSupport;
 
-    /**
-     * @ORM\Column(type="float", precision=6, scale=5) *
-     */
+    #[ORM\Column(type: 'float', precision: 6, scale: 5)]
     protected float$currCreditSupport = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\BasisCount", inversedBy="bonds") *
-     */
+    #[ORM\ManyToOne(targetEntity: BasisCount::class, inversedBy: 'bonds')]
     protected $basisCount;
 
-    /**
-     * @ORM\Column(name="floatingIndex", type="string", nullable=true)*
-     */
+    #[ORM\Column(name: 'floatingIndex', type: 'string', nullable: true)]
     protected string $floatingIndex;
 
-    /**
-     * @ORM\Column(name="indexMaturity", type="string", nullable=true) *
-     */
+    #[ORM\Column(name: 'indexMaturity', type: 'string', nullable: true)]
     protected string $indexMaturity;
 
-    /**
-     * @ORM\Column(name="spreadArray", type="string", nullable=true) *
-     */
+    #[ORM\Column(name: 'spreadArray', type: 'string', nullable: true)]
     protected string $spreadArray;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true) *
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $legalFinal;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true) *
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected $isIoBond;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true) *
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $isPoBond;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true) *
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $isComponent;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\Component",
-     *     mappedBy="bond", mappedBy="bond")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Bond\Component::class, mappedBy: 'bond')]
     protected $components;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="bond")
-     * @ORM\OrderBy({"reportDate" = "ASC"})
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Update\BondUpdate::class, mappedBy: 'bond')]
+    #[ORM\OrderBy(['reportDate' => 'ASC'])]
     protected $updates;
 
-    /** @ORM\Column(type="integer") **/
+    #[ORM\Column(type: 'integer')]
     protected $updateCount = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Update\BondUpdate")
-     * @var \App\Entity\Update\BondUpdate
+     * @var BondUpdate
      **/
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Update\BondUpdate::class)]
     protected $latestUpdate;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $moodysRating;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $spRating;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $fitchRating;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $dbrsRating;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\ShelfSpecific\BondSpecific", mappedBy="bonds")
-     */
+    #[ORM\ManyToMany(targetEntity: BondSpecific::class, mappedBy: 'bonds')]
     protected $specifics;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Fee\BondFee", mappedBy="bonds")
-     */
+    #[ORM\ManyToMany(targetEntity: BondFee::class, mappedBy: 'bonds')]
     protected $fees;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Account\BondAccount", mappedBy="bonds")
-     */
+    #[ORM\ManyToMany(targetEntity: BondAccount::class, mappedBy: 'bonds')]
     protected $accounts;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Typed\Trigger\BondTrigger", mappedBy="bonds")
-     */
+    #[ORM\ManyToMany(targetEntity: BondTrigger::class, mappedBy: 'bonds')]
     protected $triggers;
 
-    /**
-     * @ORM\Column(type = "integer")
-     *
-     **/
+    #[ORM\Column(type: 'integer')]
     protected int $feeCount = 0;
 
-    /**
-     * @ORM\Column(type = "integer")
-     *
-     **/
+    #[ORM\Column(type: 'integer')]
     protected int $triggerCount = 0;
 
-    /**
-     * @ORM\Column(type = "integer")
-     *
-     **/
+    #[ORM\Column(type: 'integer')]
     protected int $shelfSpecificCount = 0;
 
-    /**
-     * @ORM\Column(type = "integer")
-     *
-     **/
+    #[ORM\Column(type: 'integer')]
     protected int $accountCount = 0;
 
     public function __construct()
@@ -327,17 +282,17 @@ class Bond extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getScheduledMaturityDate():\DateTime|null
+    public function getScheduledMaturityDate():DateTime|null
     {
         return $this->scheduledMaturityDate;
     }
 
     /**
-     * @param \DateTime $scheduledMaturityDate
+     * @param DateTime $scheduledMaturityDate
      */
-    public function setScheduledMaturityDate(\DateTime $scheduledMaturityDate):void
+    public function setScheduledMaturityDate(DateTime $scheduledMaturityDate):void
     {
         $this->implementChange($this,'scheduledMaturityDate', $this->scheduledMaturityDate, $scheduledMaturityDate);
     }

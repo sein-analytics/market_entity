@@ -7,47 +7,45 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\UserStip")
- * @ORM\Table(name="UserStip")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @HasLifecycleCallbacks
- */
+#[ORM\Table(name: 'UserStip')]
+#[ORM\Entity(repositoryClass: \App\Repository\UserStip::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
+#[HasLifecycleCallbacks]
 class UserStip extends DomainObject
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="stips")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'stips')]
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="stips")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      **/
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'stips')]
     protected $deal;
 
     /**
-     * @ORM\Column(type="json", nullable=false)
      * @var array|string
      **/
+    #[ORM\Column(type: 'json', nullable: false)]
     protected array|string $stips = [];
 
     /**
-     * @ORM\Column(type="string")
      * @var string
      */
+    #[ORM\Column(type: 'string')]
     protected string $name = '';
 
     public function __construct()

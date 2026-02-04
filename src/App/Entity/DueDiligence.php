@@ -7,86 +7,69 @@
  */
 
 namespace App\Entity;
+use \App\Entity\DueDilLoanStatus;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DueDiligence")
- * @ORM\Table(name="DueDiligence")
- */
+#[ORM\Table(name: 'DueDiligence')]
+#[ORM\Entity(repositoryClass: \App\Repository\DueDiligence::class)]
 class DueDiligence
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="diligence")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'diligence')]
     protected MarketUser $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="diligence")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'diligence')]
     protected Deal $deal;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="dueDiligence")
-     */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligenceIssue::class, mappedBy: 'dueDiligence')]
     protected $issues;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceRole", inversedBy="dueDiligence")
-     * @ORM\JoinColumn(name="dd_role_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'dd_role_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligenceRole::class, inversedBy: 'dueDiligence')]
     protected DueDiligenceRole $diligenceRole;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceStatus", inversedBy="dueDiligence")
-     * @ORM\JoinColumn(name="dd_status_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'dd_status_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligenceStatus::class, inversedBy: 'dueDiligence')]
     protected DueDiligenceStatus $status;
 
     /**
      * One Bid should have one DueDiligence entity that references the user who placed the bid.
-     * @ORM\OneToOne(targetEntity="\App\Entity\Bid", inversedBy="dueDiligence")
-     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
      */
+    #[ORM\JoinColumn(name: 'bid_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Bid::class, inversedBy: 'dueDiligence')]
     protected ?Bid $bid;
 
     /**
      * All other members of the Due Diligence team will have a reference due diligence ID
      * associated with the user that placed the bid
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="ddMembers")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      *
      */
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\DueDiligence::class, inversedBy: 'ddMembers')]
     protected ?DueDiligence $parentId;
 
     /**
      * All other members of the Due Diligence team will have a reference due diligence ID
      * associated with the user that placed the bid
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="parentId")
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDiligence::class, mappedBy: 'parentId')]
     protected $ddMembers;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile", inversedBy="diligence")
-     */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\DealFile::class, inversedBy: 'diligence')]
     protected $files;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="diligence")
-     */
+    #[ORM\OneToMany(targetEntity: DueDilLoanStatus::class, mappedBy: 'diligence')]
     protected $reviewStatuses;
 
     function __construct()

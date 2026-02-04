@@ -2,6 +2,7 @@
 namespace App\Entity\Loan;
 
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
@@ -9,11 +10,9 @@ use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\ArmAttribute")
- * @ORM\Table(name="ArmAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'ArmAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\ArmAttribute::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class ArmAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
@@ -24,89 +23,59 @@ class ArmAttribute extends DomainObject
 
     protected array $defaultValueProperties = [];
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="armAttributes")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      **/
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'armAttributes')]
     protected $loan;
 
-    /**
-     * @ORM\Column(type="float", precision=18, scale=15, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 18, scale: 15, nullable: true)]
     protected float|null $grossMargin = 0.0;
 
-    /**
-     * @ORM\Column(type="float", precision=18, scale=15, nullable=true) *
-     */
+    #[ORM\Column(type: 'float', precision: 18, scale: 15, nullable: true)]
     protected float $minimumRate = 0.0;
 
-    /**
-     * @ORM\Column(type="float", precision=18, scale=15, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 18, scale: 15, nullable: true)]
     protected float $maximumRate = 0.0;
 
-    /**
-     * @ORM\Column(type = "string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $rateIndex;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $fstRateAdjPeriod;
 
-    /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     */
-    protected \DateTime|null $fstRateAdjDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected DateTime|null $fstRateAdjDate;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $fstPmntAdjPeriod;
 
-    /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     */
-    protected \DateTime|null $fstPmntAdjDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected DateTime|null $fstPmntAdjDate;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $rateAdjFrequency;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $periodicCap;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $initialCap;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $pmntAdjFrequency;
 
-    /**
-     * @ORM\Column(type ="float", precision=14, scale=5, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 5, nullable: true)]
     protected float|null $pmntIncreaseCap;
 
-    /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     */
-    protected \DateTime|null $armExpirationDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected DateTime|null $armExpirationDate;
 
     /**
      * @return mixed
@@ -213,17 +182,17 @@ class ArmAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getFstRateAdjDate():?\DateTime
+    public function getFstRateAdjDate():?DateTime
     {
         return $this->fstRateAdjDate;
     }
 
     /**
-     * @param \DateTime $fstRateAdjDate
+     * @param DateTime $fstRateAdjDate
      */
-    public function setFstRateAdjDate(\DateTime $fstRateAdjDate)
+    public function setFstRateAdjDate(DateTime $fstRateAdjDate)
     {
         $this->implementChange($this,'fstRateAdjDate', $this->fstRateAdjDate, $fstRateAdjDate);
     }
@@ -245,17 +214,17 @@ class ArmAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getFstPmntAdjDate():?\DateTime
+    public function getFstPmntAdjDate():?DateTime
     {
         return $this->fstPmntAdjDate;
     }
 
     /**
-     * @param \DateTime $fstPmntAdjDate
+     * @param DateTime $fstPmntAdjDate
      */
-    public function setFstPmtAdjDate(\DateTime $fstPmntAdjDate):void
+    public function setFstPmtAdjDate(DateTime $fstPmntAdjDate):void
     {
         $this->implementChange($this,'fstPmntAdjDate', $this->fstPmntAdjDate, $fstPmntAdjDate);
     }
@@ -341,18 +310,18 @@ class ArmAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getArmExpirationDate(): ?\DateTime
+    public function getArmExpirationDate(): ?DateTime
     {
         return $this->armExpirationDate;
     }
 
     /**
-     * @param \DateTime|null $armExpirationDate
+     * @param DateTime|null $armExpirationDate
      * @return void
      */
-    public function setArmExpirationDate(?\DateTime $armExpirationDate): void
+    public function setArmExpirationDate(?DateTime $armExpirationDate): void
     {
         $this->armExpirationDate = $armExpirationDate;
     }

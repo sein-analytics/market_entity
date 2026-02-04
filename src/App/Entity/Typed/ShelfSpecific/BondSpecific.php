@@ -12,20 +12,15 @@ use App\Entity\Bond;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class BondSpecific extends ShelfSpecific
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
     
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Bond", inversedBy = "specifics")
-     */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\Bond::class, inversedBy: 'specifics')]
     protected $bonds;
 
     public function __construct()

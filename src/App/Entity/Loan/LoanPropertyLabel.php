@@ -9,6 +9,9 @@
 namespace App\Entity\Loan;
 
 
+use Doctrine\ORM\Mapping\ClassMetadata;
+use DateTime;
+use Exception;
 use App\Repository\Loan\LoanInterface;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\EntityManager;
@@ -116,7 +119,7 @@ implements LoanInterface
 
     protected array $dbTypeSanitizer = [];
 
-    public function __construct(EntityManager $em, Mapping\ClassMetadata $class)
+    public function __construct(EntityManager $em, ClassMetadata $class)
     {
         $this->dbTypeSanitizer = [
             "integer" => function($value){
@@ -132,9 +135,9 @@ implements LoanInterface
             "datetime" => function($value){
                 $val = preg_replace('/[^0-9-\/]/', '', $value);
                 try{
-                    $date = new \DateTime($val);
-                } catch (\Exception $e){
-                    if (!($date = $this->excelDateConversion($value, $val)) instanceof \DateTime)
+                    $date = new DateTime($val);
+                } catch (Exception $e){
+                    if (!($date = $this->excelDateConversion($value, $val)) instanceof DateTime)
                         return "1970-10-10";
                 }
                 return $date->format("Y-m-d");
@@ -166,15 +169,15 @@ implements LoanInterface
     /**
      * @param string $xlDate
      * @param string $cleanDate
-     * @return string|\DateTime
+     * @return string|DateTime
      */
-    protected function excelDateConversion(string $xlDate, string $cleanDate):string|\DateTime
+    protected function excelDateConversion(string $xlDate, string $cleanDate):string|DateTime
     {
         if ($xlDate !== $cleanDate)
             return "Not XL format";
         try {
-            return new \DateTime("@" . ($cleanDate - self::XL_FORMAT_SUBTRAHEND)*self::XL_FORMAT_MULTIPLIER);
-        }catch (\Exception $exception){
+            return new DateTime("@" . ($cleanDate - self::XL_FORMAT_SUBTRAHEND)*self::XL_FORMAT_MULTIPLIER);
+        }catch (Exception $exception){
             return $exception->getMessage();
         }
     }

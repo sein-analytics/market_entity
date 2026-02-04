@@ -10,39 +10,35 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\SaleAttribute")
- * @ORM\Table(name="SaleAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'SaleAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\SaleAttribute::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class SaleAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     *  @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="saleAttributes")
-     *  @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      **/
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'saleAttributes')]
     protected $loan;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="boughtLoans")
      * @var ArrayCollection
      */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'boughtLoans')]
     protected $buyers;
 
     /**
      * @var float
-     * @ORM\Column(type="float", precision=6, scale=5, nullable = true)
      */
+    #[ORM\Column(type: 'float', precision: 6, scale: 5, nullable: true)]
     protected float $availability = 1.0;
 
     public function __construct()

@@ -12,21 +12,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Pool;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class PoolFee extends Fee
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "fees")
-     *
-     */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\Pool::class, inversedBy: 'fees')]
     protected $pools;
 
     public function __construct()

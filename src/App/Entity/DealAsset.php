@@ -6,46 +6,42 @@
 
 namespace App\Entity;
 
+use \App\Entity\Deal;
+use \App\Entity\LoanTapeTemplate;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DealAsset")
- * @ORM\Table(name="DealAsset")
- */
+#[ORM\Table(name: 'DealAsset')]
+#[ORM\Entity(repositoryClass: \App\Repository\DealAsset::class)]
 class DealAsset
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="assetType")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Deal::class, mappedBy: 'assetType')]
     protected $deals;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $assetClass = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $name = '';
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="type")
-     */
+    #[ORM\OneToMany(targetEntity: LoanTapeTemplate::class, mappedBy: 'type')]
     protected $templates;
 
     public function __construct()

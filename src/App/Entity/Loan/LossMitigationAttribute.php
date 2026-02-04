@@ -2,60 +2,59 @@
 
 namespace App\Entity\Loan;
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\LossMitigationAttribute")
- * @ORM\Table(name="LossMitigationAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'LossMitigationAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\LossMitigationAttribute::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class LossMitigationAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="lossMitigationAttribute")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'lossMitigationAttribute')]
     protected $loan;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="lossMitigationAttribute")
-     * @ORM\JoinColumn(name="delinquent_attribute_id", referencedColumnName="id", nullable=false)
      * @var DelinquentAttribute
      */
+    #[ORM\JoinColumn(name: 'delinquent_attribute_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan\DelinquentAttribute::class, inversedBy: 'lossMitigationAttribute')]
     protected $delinquentAttribute;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $setupDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $setupDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $lossMitigationStatus;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $lossMitRemovalDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $lossMitRemovalDate;
 
     /**
      * @return int
@@ -100,18 +99,18 @@ class LossMitigationAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getSetupDate(): ?\DateTime
+    public function getSetupDate(): ?DateTime
     {
         return $this->setupDate;
     }
 
     /**
-     * @param \DateTime|null $setupDate
+     * @param DateTime|null $setupDate
      * @return void
      */
-    public function setSetupDate(?\DateTime $setupDate): void
+    public function setSetupDate(?DateTime $setupDate): void
     {
         $this->setupDate = $setupDate;
     }
@@ -134,18 +133,18 @@ class LossMitigationAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getRemovalDate(): ?\DateTime
+    public function getRemovalDate(): ?DateTime
     {
         return $this->lossMitRemovalDate;
     }
 
     /**
-     * @param \DateTime|null $lossMitRemovalDate
+     * @param DateTime|null $lossMitRemovalDate
      * @return void
      */
-    public function setRemovalDate(?\DateTime $lossMitRemovalDate): void
+    public function setRemovalDate(?DateTime $lossMitRemovalDate): void
     {
         $this->lossMitRemovalDate = $lossMitRemovalDate;
     }

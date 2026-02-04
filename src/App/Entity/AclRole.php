@@ -1,13 +1,12 @@
 <?php
 namespace App\Entity;
 
+use \App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\AclRole")
- * @ORM\Table(name="AclRole")
- */
+#[ORM\Table(name: 'AclRole')]
+#[ORM\Entity(repositoryClass: \App\Repository\AclRole::class)]
 class AclRole extends AnnotationMappings
 {
     const SELLER = 'Seller';
@@ -29,22 +28,23 @@ class AclRole extends AnnotationMappings
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="role")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: MarketUser::class, mappedBy: 'role')]
     protected $users;
 
-    /** @ORM\Column(type="string", nullable=false)
+    /**
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $role = '';
 
     public function __construct()

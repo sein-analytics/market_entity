@@ -8,40 +8,37 @@
 
 namespace App\Entity;
 
+use \App\Entity\Message;
+use \App\Entity\DueDiligenceIssue;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\MessagePriority")
- * @ORM\Table(name="MessagePriority")
- *
- */
+#[ORM\Table(name: 'MessagePriority')]
+#[ORM\Entity(repositoryClass: \App\Repository\MessagePriority::class)]
 class MessagePriority 
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      *   */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $messagePriority;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="priority")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'priority')]
     protected $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="priority")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\OneToMany(targetEntity: DueDiligenceIssue::class, mappedBy: 'priority')]
     protected $issues;
 
     /**

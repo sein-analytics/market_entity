@@ -1,31 +1,26 @@
 <?php
 namespace App\Entity\Loan;
 
+use \App\Entity\Loan;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="DescAttribute")
- */
+#[ORM\Table(name: 'DescAttribute')]
+#[ORM\Entity]
 class DescAttribute
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="description")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'description')]
     protected $loans;
 
-    /**
-     * @ORM\Column(type="string", nullable=false) *
-     */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string|null $descType;
 
     public function __construct()

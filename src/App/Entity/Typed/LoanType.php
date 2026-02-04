@@ -8,12 +8,11 @@
 
 namespace App\Entity\Typed;
 
+use \App\Repository\Typed\MappedType;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Typed\MappedType")
- * @ORM\Table(name="LoanType")
- */
+#[ORM\Table(name: 'LoanType')]
+#[ORM\Entity(repositoryClass: MappedType::class)]
 class LoanType extends MappedTypeAbstract
 {
     protected $mappedUserType;

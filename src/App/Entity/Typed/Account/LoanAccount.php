@@ -14,22 +14,15 @@ use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 use Illuminate\Support\Arr;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class LoanAccount extends Account
 {
-    /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "accounts")
-     *
-     */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\Loan::class, inversedBy: 'accounts')]
     protected $loans;
 
     public function __construct()

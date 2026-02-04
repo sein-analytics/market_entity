@@ -1,15 +1,17 @@
 <?php
 namespace App\Entity\AssetType;
 
+use App\Entity\Loan\ArmAttribute;
+use App\Entity\Loan\CommAttribute;
 use App\Entity\Loan;
 class Commercial extends Loan
 {
-    public function setArmAttributes(Loan\ArmAttribute $armAttributes)
+    public function setArmAttributes(ArmAttribute $armAttributes)
     {
         $this->implementChange($this,'armAttributes', $this->armAttributes, $armAttributes);
     }
 
-    public function setCommAttributes(Loan\CommAttribute $commAttributes)
+    public function setCommAttributes(CommAttribute $commAttributes)
     {
         $this->implementChange($this,'commAttributes', $this->commAttributes, $commAttributes);
     }

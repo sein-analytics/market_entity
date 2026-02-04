@@ -10,69 +10,63 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Account;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-/**
- *
- * @ORM\Entity
- * @ORM\Table(name="AccountUpdate")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- *
- */
+#[ORM\Table(name: 'AccountUpdate')]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class AccountUpdate extends AbstractTypeUpdate
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
      * @var Account $account
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\Account", inversedBy="updates", fetch="EAGER")
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\Account::class, inversedBy: 'updates', fetch: 'EAGER')]
     protected $account;
 
     /**
      * @var Period $period
-     * @ORM\ManyToOne(targetEntity="App\Entity\Period", inversedBy="accounts", fetch="EAGER")
      **/
+    #[ORM\ManyToOne(targetEntity: Period::class, inversedBy: 'accounts', fetch: 'EAGER')]
     protected $period;
 
     /**
      * @var float|null $beginningBalance
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $beginningBalance;
 
     /**
      * @var float|null $accountWithdrawals
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $accountWithdrawals;
 
     /**
      * @var float|null $accountDeposits
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $accountDeposits;
 
     /**
      * @var float|null $endingBalance
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $endingBalance;
 
     /**
      * @var float|null $shortfall
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $shortfall;
 
     /**
      * @var float|null $requiredAmount
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $requiredAmount;
 
     /**

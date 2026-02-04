@@ -7,64 +7,62 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\PropertyAttribute")
- * @ORM\Table(name="PropertyAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'PropertyAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\PropertyAttribute::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class PropertyAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="propertyAttribute")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Loan::class, inversedBy: 'propertyAttribute')]
     protected $loan;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $address;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array | null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected ?array $reportLinks;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array | null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected ?array $priceComps;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array | null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected ?array $propertyPictures;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array | null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected ?array $propertyLinks;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @var float | null
      **/
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $sellerAsIsValue;
 
     /**

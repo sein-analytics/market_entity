@@ -13,21 +13,15 @@ use App\Entity\Loan;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class LoanTrigger extends Triggers
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "triggers")
-     */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\Loan::class, inversedBy: 'triggers')]
     protected $loans;
 
     public function __construct()

@@ -3,104 +3,103 @@
 
 namespace App\Entity\Data;
 
+use DateTime;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity()
- * @ORM\Table(name="CuBaseData")
- */
+#[ORM\Table(name: 'CuBaseData')]
+#[ORM\Entity]
 class CuBaseData
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CuBase", inversedBy="cuData")
      * @var CuBase
      */
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Data\CuBase::class, inversedBy: 'cuData')]
     protected $cuBase;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $date;
 
     /**
-     * @ORM\Column(type="float", precision=14, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 14, nullable: false)]
     protected float|int|string $members;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected float|int|string $totalAssets;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected float|int|string $totalLoans;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected float|int|string $totalDeposits;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $returnOnAvgAsset;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $netWorthRatio;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $loanToShare;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $depositGrowthPct;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $loansGrowthPct;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $assetGrowthPct;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $membersGrowthPct;
 
     /**
-     * @ORM\Column(type="float", precision=18, scale=12, nullable=false)
      * @var float|int|string
      */
+    #[ORM\Column(type: 'float', precision: 18, scale: 12, nullable: false)]
     protected float|int|string $netWorthGrowthPct;
 
     /**
@@ -114,9 +113,9 @@ class CuBaseData
     public function getCuBase(): CuBase { return $this->cuBase; }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate(): \DateTime { return $this->date; }
+    public function getDate(): DateTime { return $this->date; }
 
     /**
      * @return float|int|string

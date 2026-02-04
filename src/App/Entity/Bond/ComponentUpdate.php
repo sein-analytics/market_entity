@@ -9,77 +9,56 @@ use App\Entity\DomainObject;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Update\BondUpdate;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="ComponentUpdate")
- *
- */
+#[ORM\Table(name: 'ComponentUpdate')]
+#[ORM\Entity]
 class ComponentUpdate extends DomainObject
 {
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond\Component", inversedBy="updates")
      * @var Component
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Bond\Component::class, inversedBy: 'updates')]
     protected $component;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float $startingBalance;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float $endingBalance;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Update\BondUpdate", inversedBy="components")
      * @var BondUpdate
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Update\BondUpdate::class, inversedBy: 'components')]
     protected $bondUpdate;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $principalPaid;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $cumulativeLosses;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $interestDue;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $interestPaid;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $interestUnpaid;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $interestOnUnpaidInterest;
 
-    /**
-     * @ORM\Column(type="float", precision=14, scale=2) *
-     */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $basisCarry;
 
     /**

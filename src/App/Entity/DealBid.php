@@ -6,38 +6,32 @@
 
 namespace App\Entity;
 
+use \App\Entity\Deal;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Support\Arr;
 
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity
- * @ORM\Table(name="DealBid")
- *
- * Any change in the definition should be reflected in
- * ServiceInterface.php
- */
+#[ORM\Table(name: 'DealBid')]
+#[ORM\Entity]
 class DealBid 
 {
     use CreatePropertiesArrayTrait;
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="bidType")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Deal::class, mappedBy: 'bidType')]
     protected $deals;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $bidClass;
 
     public function __construct()

@@ -12,35 +12,31 @@ use Doctrine\ORM\PersistentCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="Speciality")
- */
+#[ORM\Table(name: 'Speciality')]
+#[ORM\Entity]
 class Speciality 
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\MarketUser", inversedBy="specialities")
      * @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\ManyToMany(targetEntity: MarketUser::class, inversedBy: 'specialities')]
     protected $users;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $speciality;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true)
      * @var string
      **/
+    #[ORM\Column(type: 'string', nullable: false, unique: true)]
     protected string $uuid;
 
     /**

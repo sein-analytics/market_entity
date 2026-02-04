@@ -6,6 +6,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 
@@ -13,70 +14,66 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\LoginLog")
- * @ORM\Table(name="LoginLog")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @HasLifecycleCallbacks
- */
+#[ORM\Table(name: 'LoginLog')]
+#[ORM\Entity(repositoryClass: \App\Repository\LoginLog::class)]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
+#[HasLifecycleCallbacks]
 class LoginLog extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="logins")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\MarketUser::class, inversedBy: 'logins')]
     protected $user;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $ip='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $userName='';
 
     /**
-     * @ORM\Column(type="string", nullable=true, unique=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true, unique: true)]
     protected ?string $mobileConfirmation;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $startTime;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $endTime;
 
     /**
-     * @ORM\Column(type="time", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      */
+    #[ORM\Column(type: 'time', nullable: false)]
     protected $sessionDuration = '00:00:00';
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $lastSeen = '00:00:00';
 
     /**
@@ -153,57 +150,57 @@ class LoginLog extends DomainObject
     }
 
     /**
-     * @return ?\DateTime
+     * @return ?DateTime
      */
-    public function getStartTime():?\DateTime
+    public function getStartTime():?DateTime
     {
         return $this->startTime;
     }
 
     /**
-     * @param \DateTime $startTime
+     * @param DateTime $startTime
      */
-    public function setStartTime(\DateTime $startTime):void
+    public function setStartTime(DateTime $startTime):void
     {
         $this->implementChange($this,'startTime', $this->startTime, $startTime);
     }
 
     /**
-     * @return ?\DateTime
+     * @return ?DateTime
      */
-    public function getEndTime():?\DateTime
+    public function getEndTime():?DateTime
     {
         return $this->endTime;
     }
 
     /**
-     * @param \DateTime $endTime
+     * @param DateTime $endTime
      */
-    public function setEndTime(\DateTime $endTime):void
+    public function setEndTime(DateTime $endTime):void
     {
         $this->implementChange($this, 'endTime', $this->endTime, $endTime);
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getSessionDuration():\DateTime
+    public function getSessionDuration():DateTime
     {
         return $this->sessionDuration;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getLastSeen():\DateTime
+    public function getLastSeen():DateTime
     {
         return $this->lastSeen;
     }
 
     /**
-     * @param \DateTime $lastSeen
+     * @param DateTime $lastSeen
      */
-    public function setLastSeen(\DateTime $lastSeen):void
+    public function setLastSeen(DateTime $lastSeen):void
     {
         $this->lastSeen = $lastSeen;
     }

@@ -12,21 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class BondFee extends Fee
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Bond", inversedBy = "fees")
-     */
+    #[ORM\ManyToMany(targetEntity:  \App\Entity\Bond::class, inversedBy: 'fees')]
     protected $bonds;
 
     public function __construct()

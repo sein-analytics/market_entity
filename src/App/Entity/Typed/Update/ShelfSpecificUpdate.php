@@ -12,97 +12,93 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\ShelfSpecific;
 use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-/**
- * @ORM\Entity
- * @ORM\Table(name="ShelfSpecificUpdate")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'ShelfSpecificUpdate')]
+#[ORM\Entity]
+#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class ShelfSpecificUpdate extends AbstractTypeUpdate
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
     /**
      * @var ShelfSpecific $shelfSpecific
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecific", inversedBy="updates")
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\ShelfSpecific::class, inversedBy: 'updates')]
     protected $shelfSpecific;
 
     /**
      * @var Period $period
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="shelfSpecifics")
      **/
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Period::class, inversedBy: 'shelfSpecifics')]
     protected $period;
 
     /**
      * @var float $amountDue
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $amountDue = 0;
 
     /**
      * @var float $amountPaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $amountPaid = 0;
 
     /**
      * @var float $currentAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $currentAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $cumulativeAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $beginningBalance = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $endingBalance = 0;
 
     /**
      * @var float|null $interestRate
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $interestRate;
 
     /**
      * @var float|null $interestRate
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $deferredAmount;
 
     /**
      * @var float|null $calculatedInterest
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $calculatedInterest;
 
     /**
      * @var float|null $interestPaid
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $interestPaid;
 
     /**
      * @var float|null $unpaidInterest
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $unpaidInterest;
 
     public function getId():int

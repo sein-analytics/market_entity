@@ -9,6 +9,7 @@
 namespace App\Entity\Typed;
 
 
+use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Deal;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,17 +17,11 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Typed\Update\ShelfSpecificUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
-/**
- *
- * @ORM\MappedSuperclass
- * @ORM\Entity
- * @ORM\Table(name="ShelfSpecific")
- * @ORM\DiscriminatorColumn(name="specificClass", type="string")
- * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\ShelfSpecific\BondSpecific",
- *                        "pool" = "\App\Entity\Typed\ShelfSpecific\PoolSpecific",
- *                        "loan" = "\App\Entity\Typed\ShelfSpecific\LoanSpecific"
- * })
- */
+#[ORM\Table(name: 'ShelfSpecific')]
+#[ORM\MappedSuperclass]
+#[ORM\Entity]
+#[ORM\DiscriminatorColumn(name: 'specificClass', type: 'string')]
+#[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\ShelfSpecific\BondSpecific', 'pool' => '\App\Entity\Typed\ShelfSpecific\PoolSpecific', 'loan' => '\App\Entity\Typed\ShelfSpecific\LoanSpecific'])]
 abstract class ShelfSpecific extends AbstractTyped
 {
 
@@ -34,88 +29,88 @@ abstract class ShelfSpecific extends AbstractTyped
 
     /**
      * @var integer $id
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue *
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "shelfSpecifics")
      * @var Deal
      */
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Deal::class, inversedBy: 'shelfSpecifics')]
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecificType", inversedBy="shelfSpecifics")
      * @var ShelfSpecificType
      */
+    #[ORM\ManyToOne(targetEntity:  \App\Entity\Typed\ShelfSpecificType::class, inversedBy: 'shelfSpecifics')]
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\ShelfSpecificUpdate", mappedBy="shelfSpecific")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\Update\ShelfSpecificUpdate::class, mappedBy: 'shelfSpecific')]
     protected $updates;
 
     /**
-     * @ORM\OneToOne(targetEntity = "\App\Entity\Typed\Update\ShelfSpecificUpdate", fetch="EAGER")
-     * @var \App\Entity\Typed\Update\ShelfSpecificUpdate
+     * @var ShelfSpecificUpdate
      */
+    #[ORM\OneToOne(targetEntity:  \App\Entity\Typed\Update\ShelfSpecificUpdate::class, fetch: 'EAGER')]
     protected $latestUpdate;
 
     /**
      * @var string|null $shelfDesignation
-     * @ORM\Column(type = "string", nullable=true)
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $shelfDesignation;
 
     /**
      * @var integer $isFeeHedge | Default = 1 Fixed;
-     * @ORM\Column(type="integer") *
      */
+    #[ORM\Column(type: 'integer')]
     protected int $rateType = self::CALC_FIXED;
 
     /**
      * @var float|null $fixedRAte
-     * @ORM\Column(type = "float", precision=7, scale=6, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 7, scale: 6, nullable: true)]
     protected float|null $fixedRate;
 
     /**
      * @var string|null $rateFormula
-     * @ORM\Column(type = "string", nullable=true)
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $rateFormula;
 
     /**
      * @var string|null $rateFormula
-     * @ORM\Column(type = "string", nullable=true)
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $directToBond;
 
     /**
      * @var string|null $rateIndex
-     * @ORM\Column(type = "string", nullable=true)
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $rateIndex;
 
     /**
      * @var string|null $indexMaturity
-     * @ORM\Column(type = "string", nullable=true)
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $indexMaturity;
 
     /**
      * @var string|null $basis
-     * @ORM\Column(type = "string", nullable=true)
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $basis;
 
     /**
      * @var float|null $originalBalance
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $originalBalance;
 
     public function __construct()
@@ -183,7 +178,7 @@ abstract class ShelfSpecific extends AbstractTyped
     /**
      * @param ShelfSpecificUpdate $specificsUpdate
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function addShelfSpecificUpdate(ShelfSpecificUpdate $specificsUpdate): static
     {

@@ -11,31 +11,23 @@ namespace App\Entity\Typed;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * @author Samuel Belu-John
- * @ORM\Entity
- * @ORM\Table(name="ShelfSpecificType")
  */
+#[ORM\Table(name: 'ShelfSpecificType')]
+#[ORM\Entity]
 class ShelfSpecificType
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $label;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     protected string $slug;
 
-    /** 
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\ShelfSpecific", mappedBy="type")
-     */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\Typed\ShelfSpecific::class, mappedBy: 'type')]
     protected $shelfSpecifics;
 
     /**

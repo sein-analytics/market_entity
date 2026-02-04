@@ -11,40 +11,38 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="DueDilReviewStatus")
- */
+#[ORM\Table(name: 'DueDilReviewStatus')]
+#[ORM\Entity]
 class DueDilReviewStatus 
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id = 0;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $status = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string  */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $plusAction = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string  */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $minusAction = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDilLoanStatus", mappedBy="reviewStatus")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  \App\Entity\DueDilLoanStatus::class, mappedBy: 'reviewStatus')]
     protected $reviewStatuses;
 
     public function __construct()

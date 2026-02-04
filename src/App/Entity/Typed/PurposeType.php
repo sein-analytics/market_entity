@@ -8,14 +8,13 @@
 
 namespace App\Entity\Typed;
 
+use \App\Repository\Typed\MappedType;
 use App\Entity\MappedUserType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Typed\MappedType")
- * @ORM\Table(name="PurposeType")
- */
+#[ORM\Table(name: 'PurposeType')]
+#[ORM\Entity(repositoryClass: MappedType::class)]
 class PurposeType extends MappedTypeAbstract
 {
     protected $mappedUserType;
