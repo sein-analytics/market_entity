@@ -6,7 +6,6 @@
 
 namespace App\Entity;
 
-use dateTime;
 use \App\Entity\Loan\PropertyAttribute;
 use DateTime;
 use \App\Entity\Update\LoanUpdate;
@@ -441,25 +440,25 @@ class Loan extends DomainObject
     protected $description;
 
     /**
-     * @var ?dateTime
+     * @var ?DateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $foreclosureDate;
 
     /**
-     * @var ?dateTime
+     * @var ?DateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $bankruptcyDate;
 
     /**
-     * @var ?dateTime
+     * @var ?DateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $reoDate;
 
     /**
-     * @var ?dateTime
+     * @var ?DateTime
      **/
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected $zeroBalanceDate;
@@ -1333,12 +1332,12 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return ?dateTime
+     * @return ?DateTime
      */
-    public function getForeclosureDate():?dateTime { return $this->foreclosureDate; }
+    public function getForeclosureDate():?DateTime { return $this->foreclosureDate; }
 
     /**
-     * @param dateTime $foreclosureDate
+     * @param DateTime $foreclosureDate
      */
     public function setForeclosureDate(DateTime $foreclosureDate)
     {
@@ -1346,9 +1345,9 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return dateTime|null
+     * @return DateTime|null
      */
-    public function getBankruptcyDate():?dateTime { return $this->bankruptcyDate; }
+    public function getBankruptcyDate():?DateTime { return $this->bankruptcyDate; }
 
     /**
      * @param DateTime $bankruptcyDate
@@ -1361,7 +1360,7 @@ class Loan extends DomainObject
     /**
      * @return DateTime|null
      */
-    public function getReoDate():?dateTime { return $this->reoDate; }
+    public function getReoDate():?DateTime { return $this->reoDate; }
 
     /**
      * @param mixed $reoDate
@@ -1372,12 +1371,12 @@ class Loan extends DomainObject
     }
 
     /**
-     * @return dateTime
+     * @return DateTime
      */
-    public function getZeroBalanceDate():?dateTime { return $this->zeroBalanceDate; }
+    public function getZeroBalanceDate():?DateTime { return $this->zeroBalanceDate; }
 
     /**
-     * @param dateTime $zeroBalanceDate
+     * @param DateTime $zeroBalanceDate
      */
     public function setZeroBalanceDate(DateTime $zeroBalanceDate):void
     {
