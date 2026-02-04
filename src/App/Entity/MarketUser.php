@@ -18,7 +18,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 #[ORM\Entity(repositoryClass: \App\Repository\MarketUser::class)]
 #[ORM\Table(name: 'MarketUser')]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[ORM\HasLifecycleCallbacks]
 class MarketUser extends DomainObject implements AuthenticableContracts, CanResetPasswordContracts, JWTSubject
 {
