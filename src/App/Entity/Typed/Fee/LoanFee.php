@@ -15,11 +15,6 @@ use App\Entity\Typed\TypedInterface;
 #[ORM\Entity]
 class LoanFee extends Fee
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    protected int $id;
-
     #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'fees')]
     protected $loans;
 
