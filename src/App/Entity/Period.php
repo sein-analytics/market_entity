@@ -16,14 +16,14 @@ use \App\Entity\Typed\Update\TriggerUpdate;
 use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(name: 'Period')]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class Period extends DomainObject
 {
     use CreatePropertiesArrayTrait;

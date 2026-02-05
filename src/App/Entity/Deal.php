@@ -21,7 +21,7 @@ use \App\Entity\Typed\Triggers;
 use \App\Entity\DealContract;
 use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\App;
 
 #[ORM\Table(name: 'Deal')]
 #[ORM\Entity(repositoryClass: \App\Repository\Deal::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class Deal extends DealAbstract
 {
     use CreatePropertiesArrayTrait;

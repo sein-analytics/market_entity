@@ -14,7 +14,7 @@ use \App\Entity\Typed\Trigger\PoolTrigger;
 use Exception;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 #[ORM\Table(name: 'Pool')]
 #[ORM\Entity(repositoryClass: \App\Repository\Pool::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 #[HasLifecycleCallbacks]
 class Pool extends DomainObject
 {

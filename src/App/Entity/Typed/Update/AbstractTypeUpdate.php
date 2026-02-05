@@ -7,7 +7,7 @@
 namespace App\Entity\Typed\Update;
 
 use App\Entity\DomainObject;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping\MappedSuperclass;
 
 use App\Entity\Period;
@@ -16,7 +16,7 @@ use App\Entity\Period;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\MappedSuperclass]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 abstract class AbstractTypeUpdate extends DomainObject
     implements TypedUpdateInterface
 {

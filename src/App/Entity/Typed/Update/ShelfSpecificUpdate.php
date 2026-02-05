@@ -11,10 +11,10 @@ namespace App\Entity\Typed\Update;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\ShelfSpecific;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 #[ORM\Table(name: 'ShelfSpecificUpdate')]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class ShelfSpecificUpdate extends AbstractTypeUpdate
 {
 

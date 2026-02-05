@@ -12,10 +12,8 @@ use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Triggers;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
 #[ORM\Table(name: 'TriggerUpdate')]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
 class TriggerUpdate extends AbstractTypeUpdate
 {
     const TRIGGER_RESULT_PASS = 1;

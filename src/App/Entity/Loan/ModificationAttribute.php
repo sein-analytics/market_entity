@@ -6,12 +6,12 @@ use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'ModificationAttribute')]
 #[ORM\Entity(repositoryClass: \App\Repository\Loan\ModificationAttribute::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class ModificationAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;

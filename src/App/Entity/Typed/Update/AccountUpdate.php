@@ -9,10 +9,10 @@ namespace App\Entity\Typed\Update;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 use App\Entity\Typed\Account;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 #[ORM\Table(name: 'AccountUpdate')]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class AccountUpdate extends AbstractTypeUpdate
 {
 

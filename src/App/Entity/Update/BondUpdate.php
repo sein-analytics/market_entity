@@ -16,14 +16,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Bond;
 use App\Entity\Period;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 /**
  * @author Samuel Belu-John
  */
 #[ORM\Table(name: 'BondUpdate')]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class BondUpdate extends DomainObject
 {   
     use CreatePropertiesArrayTrait;

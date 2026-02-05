@@ -5,12 +5,12 @@ namespace App\Entity\Loan;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'DelinquentAttribute')]
 #[ORM\Entity(repositoryClass: \App\Repository\Loan\DelinquentAttribute::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class DelinquentAttribute extends DomainObject
 {
     /**

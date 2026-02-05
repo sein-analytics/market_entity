@@ -9,10 +9,10 @@ namespace App\Entity\Typed\Update;
 use App\Entity\Typed\Fee;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 #[ORM\Table(name: 'FeeUpdate')]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class FeeUpdate extends AbstractTypeUpdate
 {
 

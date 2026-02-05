@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'PoolUpdate')]
 #[ORM\Index(name: 'period_pool_idx', columns: ['period_id', 'pool_id'])]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class PoolUpdate extends DomainObject
 {
     use CreatePropertiesArrayTrait;

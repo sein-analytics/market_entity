@@ -10,14 +10,14 @@ use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 #[ORM\Table(name: 'Message')]
 #[ORM\Entity(repositoryClass: \App\Repository\Message::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 #[HasLifecycleCallbacks]
 class Message extends DomainObject
 {

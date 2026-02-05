@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 
 use Doctrine\ORM\Mapping\Index;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 abstract class AnnotationMappings

@@ -2,14 +2,14 @@
 
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'UserStip')]
 #[ORM\Entity(repositoryClass: \App\Repository\UserStip::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 #[HasLifecycleCallbacks]
 class UserStip extends DomainObject
 {

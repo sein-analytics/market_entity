@@ -14,11 +14,11 @@ use App\Entity\Period;
 use App\Service\CreatePropertiesArrayTrait;
 use App\Entity\Loan;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 #[ORM\Table(name: 'LoanUpdate')]
 #[ORM\Entity(repositoryClass: \App\Repository\Update\LoanUpdate::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class LoanUpdate extends DomainObject
 {
     use CreatePropertiesArrayTrait;

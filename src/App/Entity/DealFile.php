@@ -8,7 +8,7 @@ namespace App\Entity;
 
 use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,7 +16,7 @@ use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(name: 'DealFile')]
 #[ORM\Entity(repositoryClass: \App\Repository\DealFile::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class DealFile extends DomainObject
 {
     use CreatePropertiesArrayTrait;

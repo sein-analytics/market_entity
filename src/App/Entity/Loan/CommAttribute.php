@@ -15,7 +15,7 @@ use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'CommAttribute')]
 #[ORM\Entity(repositoryClass: \App\Repository\Loan\CommAttribute::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class CommAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;

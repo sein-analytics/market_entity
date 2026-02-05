@@ -6,13 +6,13 @@ use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
 
 #[ORM\Table(name: 'ArmAttribute')]
 #[ORM\Entity(repositoryClass: \App\Repository\Loan\ArmAttribute::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class ArmAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'MortgagePaymentCode')]
 #[ORM\Entity(repositoryClass: \App\Repository\MortgagePaymentCode::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class MortgagePaymentCode
 {
     /**

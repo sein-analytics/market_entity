@@ -6,12 +6,12 @@ use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'LossMitigationAttribute')]
 #[ORM\Entity(repositoryClass: \App\Repository\Loan\LossMitigationAttribute::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class LossMitigationAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;

@@ -24,14 +24,14 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notification;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'MarketUser')]
 #[ORM\Entity(repositoryClass: \App\Repository\MarketUser::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 #[HasLifecycleCallbacks]
 class MarketUser
     extends DomainObject

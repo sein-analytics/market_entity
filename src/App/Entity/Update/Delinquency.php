@@ -11,10 +11,10 @@ namespace App\Entity\Update;
 use App\Entity\DomainObject;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 #[ORM\Table(name: 'Delinquency')]
 #[ORM\Entity]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class Delinquency extends DomainObject
 {
     use CreatePropertiesArrayTrait;

@@ -38,7 +38,7 @@ use Doctrine\ORM\PersistentCollection;
 
 #[ORM\Table(name: 'loans')]
 #[ORM\Entity(repositoryClass: \App\Repository\Loan::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 #[ORM\DiscriminatorColumn(name: 'assetClass', type: 'string')]
 #[ORM\DiscriminatorMap(['Auto' => '\App\Entity\AssetType\Auto', 'Residential' => '\App\Entity\AssetType\Residential', 'Commercial' => '\App\Entity\AssetType\Commercial', 'CreditCard' => '\App\Entity\AssetType\CreditCard', 'Cre' => '\App\Entity\AssetType\Cre', 'HomeEquity' => '\App\Entity\AssetType\HomeEquity'])]
 class Loan extends DomainObject

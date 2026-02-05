@@ -7,13 +7,13 @@
  */
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'Statistic')]
 #[ORM\Entity(repositoryClass: \App\Repository\Statistic::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class Statistic extends DomainObject
 {
 

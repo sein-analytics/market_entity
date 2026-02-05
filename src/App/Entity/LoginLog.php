@@ -8,7 +8,7 @@ namespace App\Entity;
 
 use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 #[ORM\Table(name: 'LoginLog')]
 #[ORM\Entity(repositoryClass: \App\Repository\LoginLog::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 #[HasLifecycleCallbacks]
 class LoginLog extends DomainObject
 {

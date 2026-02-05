@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'Bid')]
 #[ORM\Entity(repositoryClass: \App\Repository\Bid::class)]
-#[ORM\ChangeTrackingPolicy('NOTIFY')]
+ 
 class Bid extends DomainObject
 {
     use CreatePropertiesArrayTrait;
