@@ -14,12 +14,7 @@ use App\Entity\Typed\TypedInterface;
 
 #[ORM\Entity]
 class BondSpecific extends ShelfSpecific
-{
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    protected int $id;
-    
+{   
     #[ORM\ManyToMany(targetEntity:  Bond::class, inversedBy: 'specifics')]
     protected $bonds;
 

@@ -16,11 +16,6 @@ use App\Entity\Typed\TypedInterface;
 #[ORM\Entity]
 class BondTrigger extends Triggers
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    protected int $id;
-
     #[ORM\ManyToMany(targetEntity:  Bond::class, inversedBy: 'triggers')]
     protected $bonds;
 

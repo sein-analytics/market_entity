@@ -15,11 +15,6 @@ use App\Entity\Typed\TypedInterface;
 #[ORM\Entity]
 class PoolSpecific extends ShelfSpecific
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    protected int $id;
-
     #[ORM\ManyToMany(targetEntity:  Pool::class, inversedBy: 'specifics')]
     protected $pools;
 

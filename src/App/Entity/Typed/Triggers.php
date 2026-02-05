@@ -11,14 +11,13 @@ namespace App\Entity\Typed;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Deal;
 use App\Entity\Typed\Update\TriggerUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 use Illuminate\Support\Arr;
 
 #[ORM\Table(name: 'Triggers')]
-#[ORM\MappedSuperclass]
+#[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\Entity]
 #[ORM\DiscriminatorColumn(name: 'triggerClass', type: 'string')]
 #[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Trigger\BondTrigger', 'pool' => '\App\Entity\Typed\Trigger\PoolTrigger', 'loan' => '\App\Entity\Typed\Trigger\LoanTrigger'])]

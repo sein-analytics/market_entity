@@ -16,11 +16,6 @@ use App\Entity\Typed\TypedInterface;
 #[ORM\Entity]
 class LoanTrigger extends Triggers
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    protected int $id;
-
     #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'triggers')]
     protected $loans;
 
