@@ -13,12 +13,11 @@ use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Deal;
-use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Typed\Update\FeeUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
 #[ORM\Table(name: 'Fee')]
-#[ORM\MappedSuperclass]
+#[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\Entity]
 #[ORM\DiscriminatorColumn(name: 'feeClass', type: 'string')]
 #[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Fee\BondFee', 'pool' => '\App\Entity\Typed\Fee\PoolFee', 'loan' => '\App\Entity\Typed\Fee\LoanFee'])]
