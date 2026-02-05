@@ -15,7 +15,6 @@ use \App\Entity\Bond;
 use \App\Entity\Bid;
 use \App\Entity\DocAccess;
 use \App\Entity\Typed\Fee;
-use \App\Entity\Typed\Account;
 use \App\Entity\Typed\ShelfSpecific;
 use \App\Entity\Typed\Triggers;
 use \App\Entity\DealContract;
@@ -193,9 +192,6 @@ class Deal extends DealAbstract
 
     #[ORM\OneToMany(targetEntity: Fee::class, mappedBy: 'deal')]
     protected $fees;
-
-    #[ORM\OneToMany(targetEntity: Account::class, mappedBy: 'deal')]
-    protected $accounts;
 
     #[ORM\OneToMany(targetEntity: ShelfSpecific::class, mappedBy: 'deal')]
     protected $shelfSpecifics;

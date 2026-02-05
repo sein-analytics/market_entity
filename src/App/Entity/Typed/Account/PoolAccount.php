@@ -16,11 +16,6 @@ use App\Entity\Typed\TypedInterface;
 #[ORM\Entity]
 class PoolAccount extends Account
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    protected int $id;
-
     #[ORM\ManyToMany(targetEntity:  Pool::class, inversedBy: 'accounts')]
     protected $pools;
 

@@ -17,11 +17,6 @@ use Illuminate\Support\Arr;
 #[ORM\Entity]
 class LoanAccount extends Account
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    protected int $id;
-
     #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'accounts')]
     protected $loans;
 

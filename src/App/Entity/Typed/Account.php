@@ -12,12 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Deal;
 use App\Entity\Typed\Update\AccountUpdate;
-use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
-#[ORM\Table(name: 'Account')]
 #[ORM\MappedSuperclass]
-#[ORM\Entity]
 #[ORM\DiscriminatorColumn(name: 'accountClass', type: 'string')]
 #[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Account\BondAccount', 'pool' => '\App\Entity\Typed\Account\PoolAccount', 'loan' => '\App\Entity\Typed\Account\LoanAccount'])]
 abstract class Account extends AbstractTyped
