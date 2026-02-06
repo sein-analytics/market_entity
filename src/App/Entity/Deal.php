@@ -21,14 +21,16 @@ use \App\Entity\DealContract;
 use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
  
+use App\Repository\Deal as dealRepo;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use Illuminate\Support\Facades\App;
 
 #[ORM\Table(name: 'Deal')]
-#[ORM\Entity(repositoryClass: \App\Repository\Deal::class)]
- 
+#[ORM\Entity(repositoryClass: dealRepo::class)]
+// #[ORM\Entity(repositoryClass: \App\Repository\Deal::class)]
 class Deal extends DealAbstract
 {
     use CreatePropertiesArrayTrait;
