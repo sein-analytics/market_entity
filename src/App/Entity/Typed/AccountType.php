@@ -27,6 +27,12 @@ class AccountType
     protected string $slug;
 
     /**
+     * @var Account
+     */
+    #[ORM\OneToMany(targetEntity:  Account::class, mappedBy: 'type')]
+    protected $accounts;
+
+    /**
      * @return int
      */
     public function getId():int
@@ -64,6 +70,22 @@ class AccountType
     public function setSlug(string $slug):void
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @return Account
+     */
+    public function getAccounts(): Account
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param Account $accounts
+     */
+    public function setAccounts(Account $accounts):void
+    {
+        $this->accounts = $accounts;
     }
 
 }

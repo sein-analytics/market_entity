@@ -17,7 +17,7 @@ use App\Entity\Typed\Update\TypedUpdateInterface;
 use Illuminate\Support\Arr;
 
 #[ORM\Table(name: 'Triggers')]
-#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\InheritanceType('JOINED')]
 #[ORM\Entity]
 #[ORM\DiscriminatorColumn(name: 'triggerClass', type: 'string')]
 #[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Trigger\BondTrigger', 'pool' => '\App\Entity\Typed\Trigger\PoolTrigger', 'loan' => '\App\Entity\Typed\Trigger\LoanTrigger'])]

@@ -17,7 +17,7 @@ use App\Entity\Typed\Update\FeeUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
 #[ORM\Table(name: 'Fee')]
-#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\InheritanceType('JOINED')]
 #[ORM\Entity]
 #[ORM\DiscriminatorColumn(name: 'feeClass', type: 'string')]
 #[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Fee\BondFee', 'pool' => '\App\Entity\Typed\Fee\PoolFee', 'loan' => '\App\Entity\Typed\Fee\LoanFee'])]
