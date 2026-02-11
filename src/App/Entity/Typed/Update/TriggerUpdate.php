@@ -11,7 +11,7 @@ namespace App\Entity\Typed\Update;
 use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-use App\Entity\Typed\Triggers;
+// use App\Entity\Typed\Triggers;
 #[ORM\Table(name: 'TriggerUpdate')]
 #[ORM\Entity]
 class TriggerUpdate extends AbstractTypeUpdate
@@ -24,11 +24,11 @@ class TriggerUpdate extends AbstractTypeUpdate
     #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @var Triggers $trigger
-     **/
-    #[ORM\ManyToOne(targetEntity:  Triggers::class, inversedBy: 'updates')]
-    protected $trigger;
+    // /**
+    //  * @var Triggers $trigger
+    //  **/
+    // #[ORM\ManyToOne(targetEntity:  Triggers::class, inversedBy: 'updates')]
+    // protected $trigger;
 
     /**
      * @var Period
@@ -59,12 +59,12 @@ class TriggerUpdate extends AbstractTypeUpdate
         return $this->id;
     }
 
-    /**
-     * @return Triggers
-     */
-    public function getTrigger():Triggers {
-        return $this->trigger;
-    }
+    // /**
+    //  * @return Triggers
+    //  */
+    // public function getTrigger():Triggers {
+    //     return $this->trigger;
+    // }
 
     /**
      * @return Period
@@ -101,12 +101,12 @@ class TriggerUpdate extends AbstractTypeUpdate
         return $this->triggerResult;
     }
 
-    /**
-     * @param Triggers $trigger
-     */
-    public function setTrigger(Triggers $trigger):void {
-        $this->implementChange($this,'trigger', $this->trigger, $trigger);
-    }
+    // /**
+    //  * @param Triggers $trigger
+    //  */
+    // public function setTrigger(Triggers $trigger):void {
+    //     $this->implementChange($this,'trigger', $this->trigger, $trigger);
+    // }
 
     /**
      * @param float $threshold
