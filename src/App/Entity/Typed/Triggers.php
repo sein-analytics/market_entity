@@ -16,11 +16,7 @@ use App\Entity\Typed\Update\TriggerUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 use Illuminate\Support\Arr;
 
-#[ORM\Table(name: 'Triggers')]
-#[ORM\InheritanceType('JOINED')]
-#[ORM\Entity]
-#[ORM\DiscriminatorColumn(name: 'triggerClass', type: 'string')]
-#[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Trigger\BondTrigger', 'pool' => '\App\Entity\Typed\Trigger\PoolTrigger', 'loan' => '\App\Entity\Typed\Trigger\LoanTrigger'])]
+#[ORM\MappedSuperclass]
 abstract class Triggers extends AbstractTyped
 {
     abstract public function addAttached(TypedInterface $entity);

@@ -17,11 +17,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Typed\Update\ShelfSpecificUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
-#[ORM\Table(name: 'ShelfSpecific')]
-#[ORM\InheritanceType('JOINED')]
-#[ORM\Entity]
-#[ORM\DiscriminatorColumn(name: 'specificClass', type: 'string')]
-#[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\ShelfSpecific\BondSpecific', 'pool' => '\App\Entity\Typed\ShelfSpecific\PoolSpecific', 'loan' => '\App\Entity\Typed\ShelfSpecific\LoanSpecific'])]
+#[ORM\MappedSuperclass]
 abstract class ShelfSpecific extends AbstractTyped
 {
 
