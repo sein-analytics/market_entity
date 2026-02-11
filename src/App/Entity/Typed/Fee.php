@@ -16,11 +16,7 @@ use App\Entity\Deal;
 use App\Entity\Typed\Update\FeeUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
-#[ORM\Table(name: 'Fee')]
-#[ORM\InheritanceType('JOINED')]
-#[ORM\Entity]
-#[ORM\DiscriminatorColumn(name: 'feeClass', type: 'string')]
-#[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Fee\BondFee', 'pool' => '\App\Entity\Typed\Fee\PoolFee', 'loan' => '\App\Entity\Typed\Fee\LoanFee'])]
+#[ORM\MappedSuperclass]
 abstract class Fee extends AbstractTyped
 {
     abstract public function addAttached(TypedInterface $entity);
