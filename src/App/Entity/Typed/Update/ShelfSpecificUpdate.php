@@ -10,7 +10,7 @@ namespace App\Entity\Typed\Update;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-use App\Entity\Typed\ShelfSpecific;
+// use App\Entity\Typed\ShelfSpecific;
  
 #[ORM\Table(name: 'ShelfSpecificUpdate')]
 #[ORM\Entity]
@@ -23,11 +23,11 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
     #[ORM\Column(type: 'integer')]
     protected int $id;
 
-    /**
-     * @var ShelfSpecific $shelfSpecific
-     **/
-    #[ORM\ManyToOne(targetEntity:  ShelfSpecific::class, inversedBy: 'updates')]
-    protected $shelfSpecific;
+    // /**
+    //  * @var ShelfSpecific $shelfSpecific
+    //  **/
+    // #[ORM\ManyToOne(targetEntity:  ShelfSpecific::class, inversedBy: 'updates')]
+    // protected $shelfSpecific;
 
     /**
      * @var Period $period
@@ -106,13 +106,13 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
         return $this->id;
     }
 
-    /**
-     * @return ShelfSpecific
-     */
-    public function getShelfSpecific():ShelfSpecific
-    {
-        return $this->shelfSpecific;
-    }
+    // /**
+    //  * @return ShelfSpecific
+    //  */
+    // public function getShelfSpecific():ShelfSpecific
+    // {
+    //     return $this->shelfSpecific;
+    // }
 
     /**
      * @return Period
@@ -128,13 +128,13 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
         $this->implementChange($this,'period', $this->period, $period);
     }
 
-    /**
-     * @param ShelfSpecific $shelfSpecific
-     */
-    public function setShelfSpecific(ShelfSpecific $shelfSpecific):void
-    {
-        $this->implementChange($this,'shelfSpecific', $this->shelfSpecific, $shelfSpecific);
-    }
+    // /**
+    //  * @param ShelfSpecific $shelfSpecific
+    //  */
+    // public function setShelfSpecific(ShelfSpecific $shelfSpecific):void
+    // {
+    //     $this->implementChange($this,'shelfSpecific', $this->shelfSpecific, $shelfSpecific);
+    // }
 
     /**
      * @return float|null
