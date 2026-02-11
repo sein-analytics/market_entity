@@ -6,7 +6,7 @@
 
 namespace App\Entity\Typed\Update;
 
-use App\Entity\Typed\Fee;
+// use App\Entity\Typed\Fee;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
  
@@ -21,11 +21,11 @@ class FeeUpdate extends AbstractTypeUpdate
     #[ORM\GeneratedValue]
     protected int $id;
     
-    /**
-     * @var Fee
-     * */
-    #[ORM\ManyToOne(targetEntity:  Fee::class, inversedBy: 'updates')]
-    protected $fee;
+    // /**
+    //  * @var Fee
+    //  * */
+    // #[ORM\ManyToOne(targetEntity:  Fee::class, inversedBy: 'updates')]
+    // protected $fee;
 
     /**
      * @var Period $period
@@ -137,8 +137,8 @@ class FeeUpdate extends AbstractTypeUpdate
     /**
      * @param mixed $fee
      */
-    public function setFee(Fee $fee)
-    {
-        $this->fee = $fee;
-    }
+    // public function setFee(Fee $fee)
+    // {
+    //     $this->fee = $fee;
+    // }
 }
