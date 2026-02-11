@@ -14,11 +14,7 @@ use App\Entity\Deal;
 use App\Entity\Typed\Update\AccountUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
-#[ORM\Table(name: 'Account')]
-#[ORM\InheritanceType('JOINED')]
-#[ORM\Entity]
-#[ORM\DiscriminatorColumn(name: 'accountClass', type: 'string')]
-#[ORM\DiscriminatorMap(['bond' => '\App\Entity\Typed\Account\BondAccount', 'pool' => '\App\Entity\Typed\Account\PoolAccount', 'loan' => '\App\Entity\Typed\Account\LoanAccount'])]
+#[ORM\MappedSuperclass]
 abstract class Account extends AbstractTyped
 {
     abstract public function addAttached(TypedInterface $entity);
