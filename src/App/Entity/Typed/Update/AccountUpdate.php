@@ -8,7 +8,7 @@ namespace App\Entity\Typed\Update;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-use App\Entity\Typed\Account; 
+// use App\Entity\Typed\Account; 
 
 #[ORM\Table(name: 'AccountUpdate')]
 #[ORM\Entity]
@@ -21,11 +21,11 @@ class AccountUpdate extends AbstractTypeUpdate
     #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @var Account $account
-     **/
-    #[ORM\ManyToOne(targetEntity:  Account::class, inversedBy: 'updates', fetch: 'EAGER')]
-    protected $account;
+    // /**
+    //  * @var Account $account
+    //  **/
+    // #[ORM\ManyToOne(targetEntity:  Account::class, inversedBy: 'updates', fetch: 'EAGER')]
+    // protected $account;
 
     /**
      * @var Period $period
@@ -77,12 +77,12 @@ class AccountUpdate extends AbstractTypeUpdate
         return $this->id;
     }
 
-    /**
-     * @return Account $account
-    */
-    public function getAccount():Account {
-        return $this->account;
-    }
+    // /**
+    //  * @return Account $account
+    // */
+    // public function getAccount():Account {
+    //     return $this->account;
+    // }
 
     /**
      * @return Period
@@ -140,12 +140,12 @@ class AccountUpdate extends AbstractTypeUpdate
         return $this->requiredAmount;
     }
 
-    /**
-    * @param Account $account
-    */
-    public function setAccount(Account $account):void {
-        $this->implementChange($this,'account', $this->account, $account);
-    }
+    // /**
+    // * @param Account $account
+    // */
+    // public function setAccount(Account $account):void {
+    //     $this->implementChange($this,'account', $this->account, $account);
+    // }
 
     /**
      * @param float $beginningBalance
