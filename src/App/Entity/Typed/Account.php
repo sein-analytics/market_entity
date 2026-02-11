@@ -48,7 +48,7 @@ abstract class Account extends AbstractTyped
     /**
      * @var AccountUpdate
      */
-    #[ORM\OneToOne(targetEntity: FeeUpdate::class, fetch: 'EAGER')]
+    #[ORM\OneToOne(targetEntity: AccountUpdate::class, fetch: 'EAGER')]
     protected $latestUpdate = null;
 
     /**
