@@ -6,35 +6,32 @@
 
 namespace App\Entity;
 
+use \App\Entity\Deal;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="DealAuction")
- */
+#[ORM\Table(name: 'DealAuction')]
+#[ORM\Entity]
 class DealAuction
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="auctionType")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Deal::class, mappedBy: 'auctionType')]
     protected $deals;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $auctionClass ='';
 
     public function __construct()

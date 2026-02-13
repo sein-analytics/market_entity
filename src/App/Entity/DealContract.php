@@ -2,94 +2,77 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DealContract")
- * @ORM\Table(name="DealContract")
- */
+#[ORM\Table(name: 'DealContract')]
+#[ORM\Entity(repositoryClass: \App\Repository\DealContract::class)]
 class DealContract
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="contracts")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'contracts')]
     protected Deal $deal;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
-     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'bid_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  Bid::class)]
     protected ?Bid $bid;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
-     * @ORM\JoinColumn(name="buyer_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'buyer_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'contracts')]
     protected ?MarketUser $buyer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="contracts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'contracts')]
     protected MarketUser $user;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
-     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'doc_type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  DocType::class, inversedBy: 'dealFiles')]
     protected DocType $docType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
-     * @ORM\JoinColumn(name="deal_asset_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'deal_asset_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  DealAsset::class)]
     protected DealAsset $dealAsset;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $assetId = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $secureUrl = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
-     * @var string
-     */
+      * @var string
+      */
+     #[ORM\Column(type: 'string', nullable: false)]
      protected string $fileName = '';
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $date;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
-     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'contract_signature_id', referencedColumnName: 'id', unique: true, nullable: true)]
+    #[ORM\OneToOne(targetEntity: ContractSignature::class)]
     protected ?ContractSignature $contractSignature;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\KycDocRequest")
-     * @ORM\JoinColumn(name="kyc_doc_request_id", referencedColumnName="id", unique=true, nullable=true)
-    */
+    #[ORM\JoinColumn(name: 'kyc_doc_request_id', referencedColumnName: 'id', unique: true, nullable: true)]
+    #[ORM\OneToOne(targetEntity: KycDocRequest::class)]
     protected ?KycDocRequest $kycDocRequest;
 
     function __construct()
@@ -194,14 +177,14 @@ class DealContract
     public function setFileName(string $fileName):void { $this->fileName = $fileName; }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate() : \DateTime { return $this->date; }
+    public function getDate() : DateTime { return $this->date; }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date) { $this->date = $date; }
+    public function setDate(DateTime $date) { $this->date = $date; }
 
     /**
      * @return ContractSignature|null

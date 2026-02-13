@@ -2,6 +2,16 @@
 
 namespace App\Entity;
 
+use \App\Entity\Bid;
+use \App\Entity\Message;
+use \App\Entity\DocAccess;
+use \App\Entity\DealFile;
+use \App\Entity\Loan\SaleAttribute;
+use \App\Entity\Chat;
+use \App\Entity\GroupChat;
+use \App\Entity\DealContract;
+use Exception;
+use DateTime;
 use App\Entity\Data\State;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,17 +24,15 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notification;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\MarketUser")
- * @ORM\Table(name="MarketUser")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @HasLifecycleCallbacks
- */
+#[ORM\Table(name: 'MarketUser')]
+#[ORM\Entity(repositoryClass: \App\Repository\MarketUser::class)]
+ 
+#[HasLifecycleCallbacks]
 class MarketUser
     extends DomainObject
     implements AuthenticableContracts, CanResetPasswordContracts, JWTSubject
@@ -43,349 +51,340 @@ class MarketUser
         3 => self::NOTIFY_OFF
     ];
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
     public $incrementing = false;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false, unique: true)]
     protected string $userName='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $firstName='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $lastName='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      *@var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $image_arn='';
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $signature_arn;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $companyAddress='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $city='';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      *@var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $zip='';
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\State", inversedBy="users")
      * @var State
      **/
+    #[ORM\ManyToOne(targetEntity: State::class, inversedBy: 'users')]
     protected $state;
 
     /**
-     * @ORM\Column(type="string", unique=true, nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true, nullable: false)]
     protected string $phone='';
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *{"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
-     * {"format":"Y-m-d\TH:iP"}
-     * @var \DateTime
+     * @var DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * {"type":"datetime","min":"2010-01-01T00:00:00Z","max":"2020-01-01T00:00:00Z","step":"1"}
-     * {"format":"Y-m-d\TH:iP"}
-     * @var \DateTime
+     * @var DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Issuer", inversedBy="users")
      * @var Issuer
      */
+    #[ORM\ManyToOne(targetEntity: Issuer::class, inversedBy: 'users')]
     protected $issuer;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      *
      * This doubles as the users uuid
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $emailConfirmHash='';
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $email;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $phoneConfirmToken='';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $userSalt;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $notifications;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Deal", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: Deal::class, mappedBy: 'user')]
     protected $deals;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $password='';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\LoginLog", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: LoginLog::class, mappedBy: 'user')]
     protected $logins;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\UserStip", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: UserStip::class, mappedBy: 'user')]
     protected $stips;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bid", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: Bid::class, mappedBy: 'user')]
     protected $bids;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: CommunityInvite::class, mappedBy: 'user')]
     protected $communityInvites;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'user')]
     protected $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Message", mappedBy="recipients")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: Message::class, mappedBy: 'recipients')]
     protected $receivedMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: DocAccess::class, mappedBy: 'user')]
     protected $documents;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\AclRole", inversedBy="users")
      * @var AclRole
      */
+    #[ORM\ManyToOne(targetEntity: AclRole::class, inversedBy: 'users')]
     protected $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\UserStatus", inversedBy="users")
      * @var UserStatus
      */
+    #[ORM\ManyToOne(targetEntity: UserStatus::class, inversedBy: 'users')]
     protected $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\FailedLogin", inversedBy="users")
      * @var FailedLogin
      */
+    #[ORM\ManyToOne(targetEntity: FailedLogin::class, inversedBy: 'users')]
     protected $failedAttempts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Speciality", mappedBy="users")
      * @var Speciality
      */
+    #[ORM\ManyToMany(targetEntity: Speciality::class, mappedBy: 'users')]
     protected $specialities;
 
     /**
-     * @ORM\Column(type="bigint", nullable=false, unique=true)
      * @var int
      */
+    #[ORM\Column(type: 'bigint', nullable: false, unique: true)]
     protected int $authyId = 0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected float $closedVolume = 0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=false)
      * @var float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: false)]
     protected float $dealVolume = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user')]
     protected $ratings;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Community", mappedBy="users")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: Community::class, mappedBy: 'users')]
     protected $communities;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Community", mappedBy="owner")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'owner')]
     protected $myCommunities;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Rating", mappedBy="rater")
      * @var ArrayCollection|PersistentCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'rater')]
     protected $rated;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinTable(name="followers",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="follower_id", referencedColumnName="id")}
-     *     )
      * @var ArrayCollection|PersistentCollection|null
      **/
+    #[ORM\JoinTable(name: 'followers')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'follower_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: MarketUser::class)]
     protected $followers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinTable(name="following",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="following_id", referencedColumnName="id")}
-     *     )
      * @var ArrayCollection|PersistentCollection|null
      **/
+    #[ORM\JoinTable(name: 'following')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'following_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: MarketUser::class)]
     protected $following;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: DealFile::class, mappedBy: 'user')]
     protected $files;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="userFavorites")
-     * @ORM\JoinTable(name="user_favorite_deals",
-     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="favorite_deal_id", referencedColumnName="id")}
-     *     )
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\JoinTable(name: 'user_favorite_deals')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'favorite_deal_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity: Deal::class, inversedBy: 'userFavorites')]
     protected $marketFavorites;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $token;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $authyToken;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $rememberToken;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Deal", inversedBy="marketUsers")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: Deal::class, inversedBy: 'marketUsers')]
     protected $marketDeals;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan\SaleAttribute", mappedBy="buyers")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: SaleAttribute::class, mappedBy: 'buyers')]
     protected $boughtLoans;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: DueDiligence::class, mappedBy: 'user')]
     protected $diligence;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\LoanTapeTemplate", mappedBy="user")
      * @var  ArrayCollection|PersistentCollection|null
      * */
+    #[ORM\OneToMany(targetEntity: LoanTapeTemplate::class, mappedBy: 'user')]
     protected $templates;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: Chat::class, mappedBy: 'user')]
     protected $chats;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Chat", mappedBy="recipient")
      * @var MarketUser
      */
+    #[ORM\OneToMany(targetEntity: Chat::class, mappedBy: 'recipient')]
     protected $chatRecipient;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="user")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: GroupChat::class, mappedBy: 'user')]
     protected $groupChats;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\GroupChat", mappedBy="members")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\ManyToMany(targetEntity: GroupChat::class, mappedBy: 'members')]
     protected $chatGroupMemberships;
 
     /**
@@ -394,9 +393,9 @@ class MarketUser
     protected $mappedTypes;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealContract", mappedBy="buyer")
      * @var ArrayCollection|PersistentCollection|null
      */
+    #[ORM\OneToMany(targetEntity: DealContract::class, mappedBy: 'buyer')]
     protected $contracts;
 
     public function __construct()
@@ -571,7 +570,7 @@ class MarketUser
 
     /**
      * @param $status UserStatus
-     * @throws \Exception
+     * @throws Exception
      */
     public function setStatus(UserStatus $status):void
     {
@@ -587,7 +586,7 @@ class MarketUser
 
     /**
      * @param $failedAttempts
-     * @throws \Exception
+     * @throws Exception
      */
     public function setFailedAttempts(FailedLogin $failedAttempts)
     {
@@ -619,15 +618,16 @@ class MarketUser
 
     /**
      * @param int $int
-     * @return \Exception|void
+     * @return Exception|void
      * @throw  \Exception
      */
-    public function setNotifications(int $int):?\Exception
+    public function setNotifications(int $int):?Exception
     {
         if(array_key_exists($int, self::NOTIFY)){
             $this->notifications = $int;
+            return null;
         }else{
-            return new \Exception("Notifications must be either 1, 2 or 3.");
+            return new Exception("Notifications must be either 1, 2 or 3.");
         }
     }
 

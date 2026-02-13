@@ -7,126 +7,122 @@
  */
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Statistic")
- * @ORM\Table(name="Statistic")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'Statistic')]
+#[ORM\Entity(repositoryClass: \App\Repository\Statistic::class)]
+ 
 class Statistic extends DomainObject
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Deal", inversedBy="stats")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      **/
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  Deal::class, inversedBy: 'stats')]
     protected $deal;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $states;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $summaryStates;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var  array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $ltv;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var  array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $summaryLtv;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var  array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $balance;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $summaryBalance;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $rate;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $summaryRate;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $loanType;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $propertyType;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $occupancy;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $maturity;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $summaryMaturity;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $credit;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $summaryCredit;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array|string|null
      */
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string|null $filterData;
 
     /**

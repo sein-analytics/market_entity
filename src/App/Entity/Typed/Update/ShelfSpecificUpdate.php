@@ -10,99 +10,95 @@ namespace App\Entity\Typed\Update;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
-use App\Entity\Typed\ShelfSpecific;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
-/**
- * @ORM\Entity
- * @ORM\Table(name="ShelfSpecificUpdate")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+// use App\Entity\Typed\ShelfSpecific;
+ 
+#[ORM\Table(name: 'ShelfSpecificUpdate')]
+#[ORM\Entity]
+ 
 class ShelfSpecificUpdate extends AbstractTypeUpdate
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
-    /**
-     * @var ShelfSpecific $shelfSpecific
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\ShelfSpecific", inversedBy="updates")
-     **/
-    protected $shelfSpecific;
+    // /**
+    //  * @var ShelfSpecific $shelfSpecific
+    //  **/
+    // #[ORM\ManyToOne(targetEntity:  ShelfSpecific::class, inversedBy: 'updates')]
+    // protected $shelfSpecific;
 
     /**
      * @var Period $period
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="shelfSpecifics")
      **/
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'shelfSpecifics')]
     protected $period;
 
     /**
      * @var float $amountDue
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $amountDue = 0;
 
     /**
      * @var float $amountPaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $amountPaid = 0;
 
     /**
      * @var float $currentAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $currentAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $cumulativeAmountUnpaid = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $beginningBalance = 0;
 
     /**
      * @var float $cumulativeAmountUnpaid
-     * @ORM\Column(type = "float", precision=14, scale=2)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     public float $endingBalance = 0;
 
     /**
      * @var float|null $interestRate
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $interestRate;
 
     /**
      * @var float|null $interestRate
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $deferredAmount;
 
     /**
      * @var float|null $calculatedInterest
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $calculatedInterest;
 
     /**
      * @var float|null $interestPaid
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $interestPaid;
 
     /**
      * @var float|null $unpaidInterest
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true)
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     public float|null $unpaidInterest;
 
     public function getId():int
@@ -110,13 +106,13 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
         return $this->id;
     }
 
-    /**
-     * @return ShelfSpecific
-     */
-    public function getShelfSpecific():ShelfSpecific
-    {
-        return $this->shelfSpecific;
-    }
+    // /**
+    //  * @return ShelfSpecific
+    //  */
+    // public function getShelfSpecific():ShelfSpecific
+    // {
+    //     return $this->shelfSpecific;
+    // }
 
     /**
      * @return Period
@@ -132,13 +128,13 @@ class ShelfSpecificUpdate extends AbstractTypeUpdate
         $this->implementChange($this,'period', $this->period, $period);
     }
 
-    /**
-     * @param ShelfSpecific $shelfSpecific
-     */
-    public function setShelfSpecific(ShelfSpecific $shelfSpecific):void
-    {
-        $this->implementChange($this,'shelfSpecific', $this->shelfSpecific, $shelfSpecific);
-    }
+    // /**
+    //  * @param ShelfSpecific $shelfSpecific
+    //  */
+    // public function setShelfSpecific(ShelfSpecific $shelfSpecific):void
+    // {
+    //     $this->implementChange($this,'shelfSpecific', $this->shelfSpecific, $shelfSpecific);
+    // }
 
     /**
      * @return float|null

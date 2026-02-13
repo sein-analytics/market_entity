@@ -12,21 +12,10 @@ use App\Entity\Loan;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class LoanSpecific extends ShelfSpecific
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
-    protected int $id;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "specifics")
-     */
+    #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'specifics')]
     protected $loans;
 
     public function __construct()

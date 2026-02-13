@@ -14,47 +14,43 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\LoanTapeTemplate")
- * @ORM\Table(name="LoanTapeTemplate")
- */
+#[ORM\Table(name: 'LoanTapeTemplate')]
+#[ORM\Entity(repositoryClass: \App\Repository\LoanTapeTemplate::class)]
 class LoanTapeTemplate 
 {
     use CreatePropertiesArrayTrait, FetchingTrait, FetchMapperTrait;
 
-    /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\MarketUser", inversedBy="templates")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      **/
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: MarketUser::class, inversedBy: 'templates')]
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\DealAsset", inversedBy="templates")
-     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id", nullable=true)
      * @var DealAsset
      */
+    #[ORM\JoinColumn(name: 'asset_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: DealAsset::class, inversedBy: 'templates')]
     protected $type;
 
     /**
-     * @ORM\Column(type="json", nullable=false)
      * @var array | null
      *
      **/
+    #[ORM\Column(type: 'json', nullable: false)]
     protected $template;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      *
      **/
+    #[ORM\Column(type: 'string', nullable: false)]
     protected $templateName;
 
     /**
@@ -63,7 +59,7 @@ class LoanTapeTemplate
     public function getId():int { return $this->id; }
 
     /**
-     * @return \App\Entity\MarketUser
+     * @return MarketUser
      */
     public function getUser() { return $this->user; }
 
@@ -73,9 +69,9 @@ class LoanTapeTemplate
     public function getTemplateName() { return $this->templateName; }
 
     /**
-     * @param \App\Entity\MarketUser $user
+     * @param MarketUser $user
      */
-    public function setUsers(\App\Entity\MarketUser $user)
+    public function setUsers(MarketUser $user)
     {
         $this->user = $user;
     }

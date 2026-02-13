@@ -4,26 +4,22 @@
 namespace App\Entity\Data;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Data\Treasuries")
- * @ORM\Table(name="Treasuries")
- */
+#[ORM\Table(name: 'Treasuries')]
+#[ORM\Entity(repositoryClass: \App\Repository\Data\Treasuries::class)]
 class Treasuries
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $name;
 
-    /** @ORM\Column(type="float", precision=9, scale=6, nullable = true) **/
+    #[ORM\Column(type: 'float', precision: 9, scale: 6, nullable: true)]
     protected float $value;
 
     /**

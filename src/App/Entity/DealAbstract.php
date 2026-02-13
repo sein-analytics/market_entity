@@ -1,6 +1,7 @@
 <?php
 namespace App\Entity;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+use Exception;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -85,12 +86,12 @@ abstract class DealAbstract extends DomainObject
 
     /**
      * @param $auctionType
-     * @throws \Exception
+     * @throws Exception
      */
     public function setAuctionType($auctionType):void
     {
         if(!array_key_exists(strtoupper($auctionType), self::$auctionTypes)){
-            throw new \Exception("Auction class type: $auctionType does not exist");
+            throw new Exception("Auction class type: $auctionType does not exist");
         }
         $this->auctionType = $auctionType;
     }
@@ -98,12 +99,12 @@ abstract class DealAbstract extends DomainObject
 
     /**
      * @param $assetType
-     * @throws \Exception
+     * @throws Exception
      */
     public function setAssetType($assetType):void
     {
         if(!array_key_exists(strtoupper($assetType), self::$assetTypes)){
-            throw new \Exception("Asset class type: $assetType does not exist");
+            throw new Exception("Asset class type: $assetType does not exist");
         }
         $this->assetType = $assetType;
     }
@@ -118,12 +119,12 @@ abstract class DealAbstract extends DomainObject
 
     /**
      * @param $bidType
-     * @throws \Exception
+     * @throws Exception
      */
     public function setBidType($bidType)
     {
         if(!array_key_exists(strtoupper($bidType), self::$bidTypes)){
-            throw new \Exception("Bid class type: $bidType does not exist");
+            throw new Exception("Bid class type: $bidType does not exist");
         }
         $this->bidType = $bidType;
     }

@@ -12,20 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class LoanFee extends Fee
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue **/
-    protected int $id;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Loan", inversedBy = "fees")
-     */
+    #[ORM\ManyToMany(targetEntity:  Loan::class, inversedBy: 'fees')]
     protected $loans;
 
     public function __construct()

@@ -3,97 +3,93 @@
 
 namespace App\Entity\Data;
 
+use \App\Entity\Data\CuBaseData;
+use \App\Entity\Issuer;
 use App\Entity\Data\CunaRegion;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Data\State;
 use App\Entity\Data\CunaType;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="CuBase")
- */
+#[ORM\Table(name: 'CuBase')]
+#[ORM\Entity]
 class CuBase
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
      * @var int
      **/
+    #[ORM\Column(type: 'integer')]
     protected int $charterNum;
 
     /**
-     * @ORM\Column(type="integer")
      * @var int
      **/
+    #[ORM\Column(type: 'integer')]
     protected int $ncuaId;
 
     /**
-     * @ORM\Column(type="string")
      * @var string
      **/
+    #[ORM\Column(type: 'string')]
     protected string $name;
 
     /**
-     * @ORM\Column(type="string")
      * @var string
      **/
+    #[ORM\Column(type: 'string')]
     protected string $address;
 
     /**
-     * @ORM\Column(type="string")
      * @var string
      **/
+    #[ORM\Column(type: 'string')]
     protected string $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\State")
-     * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      * @var State
      **/
+    #[ORM\JoinColumn(name: 'state_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity:  State::class)]
     protected $state;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $zip;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected bool $isLowIncDes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaType")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      * @var CunaType
      **/
+    #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity:  CunaType::class)]
     protected $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Data\CunaRegion")
-     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * @var CunaRegion
      **/
+    #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne(targetEntity:  CunaRegion::class)]
     protected $region;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Data\CuBaseData", mappedBy="cuBase")
      * @var PersistentCollection
      **/
+    #[ORM\OneToMany(targetEntity: CuBaseData::class, mappedBy: 'cuBase')]
     protected $cuData;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Issuer", mappedBy="cuMain")
-     */
+    #[ORM\OneToMany(targetEntity: Issuer::class, mappedBy: 'cuMain')]
     protected $issuers;
 
     /**

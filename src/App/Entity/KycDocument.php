@@ -2,107 +2,88 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\KycDocument")
- * @ORM\Table(name="KycDocument")
- */
+#[ORM\Table(name: 'KycDocument')]
+#[ORM\Entity(repositoryClass: \App\Repository\KycDocument::class)]
 class KycDocument
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'issuer_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $issuer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'community_user_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected ?MarketUser $communityUser;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="community_issuer_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'community_issuer_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected ?Issuer $communityIssuer;
     
-        /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ContractType")
-     * @ORM\JoinColumn(name="contract_type_id", referencedColumnName="id", nullable=false)
-     */
+        #[ORM\JoinColumn(name: 'contract_type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  ContractType::class)]
     protected ContractType $contractType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
-     * @ORM\JoinColumn(name="kyc_asset_type_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'kyc_asset_type_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  DealAsset::class)]
     protected ?DealAsset $assetType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\KycType")
-     * @ORM\JoinColumn(name="kyc_type_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'kyc_type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  KycType::class)]
     protected KycType $kycType;
 
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $assetId = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $secureUrl = '';
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var ?string
-     */
+      * @var ?string
+      */
+     #[ORM\Column(type: 'string', nullable: true)]
      protected ?string $fileName;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
+     * @var DateTime|null
      **/
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $date = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Issuer", mappedBy="kycDocuments")
      * @var ArrayCollection
      */
+    #[ORM\ManyToMany(targetEntity:  Issuer::class, mappedBy: 'kycDocuments')]
     protected $accessIssuer;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ContractSignature")
-     * @ORM\JoinColumn(name="contract_signature_id", referencedColumnName="id", unique=true, nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'contract_signature_id', referencedColumnName: 'id', unique: true, nullable: true)]
+    #[ORM\OneToOne(targetEntity: ContractSignature::class)]
     protected ?ContractSignature $contractSignature;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\KycDocRequest")
-     * @ORM\JoinColumn(name="kyc_doc_request_id", referencedColumnName="id", unique=true, nullable=true)
-    */
+    #[ORM\JoinColumn(name: 'kyc_doc_request_id', referencedColumnName: 'id', unique: true, nullable: true)]
+    #[ORM\OneToOne(targetEntity: KycDocRequest::class)]
     protected ?KycDocRequest $kycDocRequest;
     
     function __construct()
@@ -221,14 +202,14 @@ class KycDocument
     public function setFileName(string $fileName):void { $this->fileName = $fileName; }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate() : ?\DateTime { return $this->date; }
+    public function getDate() : ?DateTime { return $this->date; }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date) { $this->date = $date; }
+    public function setDate(DateTime $date) { $this->date = $date; }
     
     public function addAccessIssuer(Issuer $accessIssuer)
     {

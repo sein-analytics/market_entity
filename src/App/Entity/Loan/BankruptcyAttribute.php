@@ -2,90 +2,89 @@
 
 namespace App\Entity\Loan;
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\BankruptcyAttribute")
- * @ORM\Table(name="BankruptcyAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'BankruptcyAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\BankruptcyAttribute::class)]
+ 
 class BankruptcyAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="bankruptcyAttribute")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'bankruptcyAttribute')]
     protected $loan;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="bankruptcyAttribute")
-     * @ORM\JoinColumn(name="delinquent_attribute_id", referencedColumnName="id", nullable=false)
      * @var DelinquentAttribute
      */
+    #[ORM\JoinColumn(name: 'delinquent_attribute_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  DelinquentAttribute::class, inversedBy: 'bankruptcyAttribute')]
     protected $delinquentAttribute;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $fileDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $fileDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $caseNumber;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $dismissedDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $dismissedDate;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $planStartDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $planStartDate;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $planEndDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $planEndDate;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $postPetitionDueDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $postPetitionDueDate;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $caseClosedDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $caseClosedDate;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $motionReliefDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $motionReliefDate;
 
     /**
      * @return int
@@ -130,18 +129,18 @@ class BankruptcyAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getFileDate(): ?\DateTime
+    public function getFileDate(): ?DateTime
     {
         return $this->fileDate;
     }
 
     /**
-     * @param \DateTime|null $fileDate
+     * @param DateTime|null $fileDate
      * @return void
      */
-    public function setFileDate(?\DateTime $fileDate): void
+    public function setFileDate(?DateTime $fileDate): void
     {
         $this->fileDate = $fileDate;
     }
@@ -164,103 +163,103 @@ class BankruptcyAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getDismissedDate(): ?\DateTime
+    public function getDismissedDate(): ?DateTime
     {
         return $this->dismissedDate;
     }
 
     /**
-     * @param \DateTime|null $dismissedDate
+     * @param DateTime|null $dismissedDate
      * @return void
      */
-    public function setDismissedDate(?\DateTime $dismissedDate): void
+    public function setDismissedDate(?DateTime $dismissedDate): void
     {
         $this->dismissedDate = $dismissedDate;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getPlanStartDate(): ?\DateTime
+    public function getPlanStartDate(): ?DateTime
     {
         return $this->planStartDate;
     }
 
     /**
-     * @param \DateTime|null $planStartDate
+     * @param DateTime|null $planStartDate
      * @return void
      */
-    public function setPlanStartDate(?\DateTime $planStartDate): void
+    public function setPlanStartDate(?DateTime $planStartDate): void
     {
         $this->planStartDate = $planStartDate;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getPlanEndDate(): ?\DateTime
+    public function getPlanEndDate(): ?DateTime
     {
         return $this->planEndDate;
     }
 
     /**
-     * @param \DateTime|null $planEndDate
+     * @param DateTime|null $planEndDate
      * @return void
      */
-    public function setPlanEndDate(?\DateTime $planEndDate): void
+    public function setPlanEndDate(?DateTime $planEndDate): void
     {
         $this->planEndDate = $planEndDate;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getPostPetitionDueDate(): ?\DateTime
+    public function getPostPetitionDueDate(): ?DateTime
     {
         return $this->postPetitionDueDate;
     }
 
     /**
-     * @param \DateTime|null $postPetitionDueDate
+     * @param DateTime|null $postPetitionDueDate
      * @return void
      */
-    public function setPostPetitionDueDate(?\DateTime $postPetitionDueDate): void
+    public function setPostPetitionDueDate(?DateTime $postPetitionDueDate): void
     {
         $this->postPetitionDueDate = $postPetitionDueDate;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getCaseClosedDate(): ?\DateTime
+    public function getCaseClosedDate(): ?DateTime
     {
         return $this->caseClosedDate;
     }
 
     /**
-     * @param \DateTime|null $caseClosedDate
+     * @param DateTime|null $caseClosedDate
      * @return void
      */
-    public function setCaseClosedDate(?\DateTime $caseClosedDate): void
+    public function setCaseClosedDate(?DateTime $caseClosedDate): void
     {
         $this->caseClosedDate = $caseClosedDate;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getMotionReliefDate(): ?\DateTime
+    public function getMotionReliefDate(): ?DateTime
     {
         return $this->motionReliefDate;
     }
 
     /**
-     * @param \DateTime|null $motionReliefDate
+     * @param DateTime|null $motionReliefDate
      * @return void
      */
-    public function setMotionReliefDate(?\DateTime $motionReliefDate): void
+    public function setMotionReliefDate(?DateTime $motionReliefDate): void
     {
         $this->motionReliefDate = $motionReliefDate;
     }

@@ -5,185 +5,183 @@ namespace App\Entity\Loan;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\DelinquentAttribute")
- * @ORM\Table(name="DelinquentAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'DelinquentAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\DelinquentAttribute::class)]
+ 
 class DelinquentAttribute extends DomainObject
 {
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="delinquentAttribute")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'delinquentAttribute')]
     protected $loan;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\ModificationAttribute", mappedBy="delinquentAttribute")
      * @var ModificationAttribute
      */
+    #[ORM\OneToOne(targetEntity:  ModificationAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $modificationAttribute;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\ForeclosureAttribute", mappedBy="delinquentAttribute")
      * @var ForeclosureAttribute
      */
+    #[ORM\OneToOne(targetEntity:  ForeclosureAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $foreclosureAttribute;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\BankruptcyAttribute", mappedBy="delinquentAttribute")
      * @var BankruptcyAttribute
      */
+    #[ORM\OneToOne(targetEntity:  BankruptcyAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $bankruptcyAttribute;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\LossMitigationAttribute", mappedBy="delinquentAttribute")
      * @var LossMitigationAttribute
      */
+    #[ORM\OneToOne(targetEntity:  LossMitigationAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $lossMitigationAttribute;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\EscrowAttribute", mappedBy="delinquentAttribute")
      * @var EscrowAttribute
      */
+    #[ORM\OneToOne(targetEntity:  EscrowAttribute::class, mappedBy: 'delinquentAttribute')]
     protected $escrowAttribute;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $servicer;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $subServicer;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $servicerNotes;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $subServicerNotes;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $servicerStatus;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $subServicerStatus;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $masterServicer;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $masterServicerStatus;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $assetManager;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $assetManagerStatus;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $assetManagerSubStatus;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $daysDelinquent;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $delinquentPrincipal;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $delinquentInterest;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $totalDelinquentBalance;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $subStatus;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $subStatusNotes;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $generalNotes;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $suspenseBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $deferredBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $accruedInterest;
 
     /**

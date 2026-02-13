@@ -3,95 +3,93 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Chat")
- * @ORM\Table(name="Chat")
- */
+#[ORM\Table(name: 'Chat')]
+#[ORM\Entity(repositoryClass: \App\Repository\Chat::class)]
 class Chat 
 {
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chats")
      * @var MarketUser
      */
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'chats')]
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="chatRecipient")
-     * @ORM\JoinColumn(name="recipient_id", referencedColumnName="id", nullable=true)
      * @var MarketUser|null
      */
+    #[ORM\JoinColumn(name: 'recipient_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'chatRecipient')]
     protected $recipient;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id", nullable=true)
      * @var MarketUser
      */
+    #[ORM\JoinColumn(name: 'contact_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\GroupChat", inversedBy="chats")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", nullable=true)
      * @var GroupChat|null
      */
+    #[ORM\JoinColumn(name: 'group_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  GroupChat::class, inversedBy: 'chats')]
     protected $group;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'blob', nullable: true)]
     protected string $message;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $messageDate;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
      * @var array | null
      **/
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|null $attachments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Chat")
-     * @ORM\JoinTable(name="chat_replies",
-     *      joinColumns={@ORM\JoinColumn(name="chat_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
-     *     )
      * @var PersistentCollection|ArrayCollection
      */
+    #[ORM\JoinTable(name: 'chat_replies')]
+    #[ORM\JoinColumn(name: 'chat_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'response_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity:  Chat::class)]
     protected $chatReplies;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatTracker", inversedBy="chats")
      * @var ChatTracker
      */
+    #[ORM\ManyToOne(targetEntity:  ChatTracker::class, inversedBy: 'chats')]
     protected $tracker;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChatStatus", inversedBy="chats")
      * @var ChatStatus
      */
+    #[ORM\ManyToOne(targetEntity:  ChatStatus::class, inversedBy: 'chats')]
     protected $status;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
      * @var bool
      */
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => '0'])]
     protected bool $isGroup;
 
     public function __construct()
@@ -163,9 +161,9 @@ class Chat
     public function setMessage(string $message): void { $this->message = $message; }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getMessageDate(): \DateTime { return $this->messageDate; }
+    public function getMessageDate(): DateTime { return $this->messageDate; }
 
     /**
      * @return array|null

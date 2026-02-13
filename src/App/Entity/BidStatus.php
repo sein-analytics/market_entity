@@ -9,26 +9,22 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\BidStatus")
- * @ORM\Table(name="BidStatus")
- */
+#[ORM\Table(name: 'BidStatus')]
+#[ORM\Entity(repositoryClass: \App\Repository\BidStatus::class)]
 class BidStatus
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /** @ORM\Column(type="string", nullable=false)   */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $status;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\Bid", mappedBy="status")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  Bid::class, mappedBy: 'status')]
     protected $bids;
 
     function __construct()

@@ -12,29 +12,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\MessageType")
- * @ORM\Table(name="MessageType")
- */
+#[ORM\Table(name: 'MessageType')]
+#[ORM\Entity(repositoryClass: \App\Repository\MessageType::class)]
 class MessageType 
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      **/
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $type='';
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="type")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\OneToMany(targetEntity:  Message::class, mappedBy: 'type')]
     protected $messages;
 
     function __construct()

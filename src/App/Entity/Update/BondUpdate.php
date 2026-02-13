@@ -8,204 +8,206 @@
 
 namespace App\Entity\Update;
 
+use \App\Entity\Bond\ComponentUpdate;
+use DateTime;
 use App\Entity\DomainObject;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Bond;
 use App\Entity\Period;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 /**
  * @author Samuel Belu-John
- * @ORM\Entity
- * @ORM\Table(name="BondUpdate")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
  */
+#[ORM\Table(name: 'BondUpdate')]
+#[ORM\Entity]
+ 
 class BondUpdate extends DomainObject
 {   
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="updates")
      * @var Bond
      **/
+    #[ORM\ManyToOne(targetEntity:  Bond::class, inversedBy: 'updates')]
     protected $bond;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2)
      * @var  float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $startingBalance = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $endingBalance = 0.0;
 
     /**
-     * @ORM\Column(name="reportDate", type = "datetime")
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(name: 'reportDate', type: 'datetime')]
     protected  $reportDate;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $calculatedInterest;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $interestPaid = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $scheduledPrincipalPayment;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $principalPaid;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $unscheduledPrincipalPayment;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2)
      * @var float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2)]
     protected float $principalLoss = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $interestLoss;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $unpaidInterest;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $deferredInterest;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $interestCarry;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $cumulativeRealizedLosses;
 
     /**
-     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 8, scale: 7, nullable: true)]
     protected ?float $bondFactor;
 
     /**
-     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 7, nullable: true)]
     protected ?float $currentOC;
 
     /**
-     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      *@var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 7, nullable: true)]
     protected ?float $interestShortfall;
 
     /**
-     * @ORM\Column(type="float", precision=8, scale=7, nullable=true)
      *@var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 8, scale: 7, nullable: true)]
     protected ?float $unsupportedIntShortfall;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="bondUpdate")
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: ComponentUpdate::class, mappedBy: 'bondUpdate')]
     protected $components;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="bondUpdates")
      * @var Period
      **/
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'bondUpdates')]
     protected $period;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $startReserveBalance;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $reserveDraw;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $reserveDeposit;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $endReserveBalance;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @var ?int
      **/
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $isHistory = 0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $netHedge;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected ?float $accretionAmount;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
      * @var int
      **/
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $updateStatus = 1;
 
     public function __construct()
@@ -271,17 +273,17 @@ class BondUpdate extends DomainObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getReportDate():\DateTime
+    public function getReportDate():DateTime
     {
         return $this->reportDate;
     }
 
     /**
-     * @param \DateTime $reportDate
+     * @param DateTime $reportDate
      */
-    public function setReportDate(\DateTime $reportDate):void
+    public function setReportDate(DateTime $reportDate):void
     {
         $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }
@@ -537,7 +539,7 @@ class BondUpdate extends DomainObject
     /**
      * @param Bond\ComponentUpdate $component
      */
-    public function setComponents(Bond\ComponentUpdate $component)
+    public function setComponents(ComponentUpdate $component)
     {
         $this->getComponents()->add($component);
     }

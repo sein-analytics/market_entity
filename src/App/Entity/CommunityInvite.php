@@ -2,61 +2,58 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\CommunityInvite")
- * @ORM\Table(name="CommunityInvite")
- */
+#[ORM\Table(name: 'CommunityInvite')]
+#[ORM\Entity(repositoryClass: \App\Repository\CommunityInvite::class)]
 class CommunityInvite
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne (targetEntity="\App\Entity\Community", inversedBy="invites")
-     * @ORM\JoinColumn(name="community_id", referencedColumnName="id", nullable=false)
      * @var Community
      */
+    #[ORM\JoinColumn(name: 'community_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Community::class, inversedBy: 'invites')]
     protected $community;
 
     /**
-     * @ORM\ManyToOne (targetEntity="\App\Entity\CommInviteStatus", inversedBy="invites")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var CommInviteStatus
      */
+    #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  CommInviteStatus::class, inversedBy: 'invites')]
     protected $status;
 
     /**
-     * @ORM\ManyToOne (targetEntity="\App\Entity\MarketUser", inversedBy="communityInvites")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * @var null|MarketUser
      */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'communityInvites')]
     protected $user;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $email;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * {"type":"datetime","min":"2010-01-01T00:00:00Z","step":"1"}
-     * {"format":"Y-m-d\TH:iP"}
-     * @var \DateTime
+     * @var DateTime
      */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $inviteDate;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $uuid;
 
     /**
@@ -105,14 +102,14 @@ class CommunityInvite
     public function setEmail(string $email): void { $this->email = $email; }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getInviteDate(): \DateTime { return $this->inviteDate; }
+    public function getInviteDate(): DateTime { return $this->inviteDate; }
 
     /**
-     * @param \DateTime $inviteDate
+     * @param DateTime $inviteDate
      */
-    public function setInviteDate(\DateTime $inviteDate): void { $this->inviteDate = $inviteDate; }
+    public function setInviteDate(DateTime $inviteDate): void { $this->inviteDate = $inviteDate; }
 
     /**
      * @return string

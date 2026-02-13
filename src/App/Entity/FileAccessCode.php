@@ -1,14 +1,12 @@
 <?php
 
 namespace App\Entity;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="FileAccessCode")
- */
+#[ORM\Table(name: 'FileAccessCode')]
+#[ORM\Entity]
 class FileAccessCode extends DomainObject
 {
     const PUBLIC_ACC_LABEL = 'public';
@@ -24,17 +22,17 @@ class FileAccessCode extends DomainObject
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $label = '';
 
     /**

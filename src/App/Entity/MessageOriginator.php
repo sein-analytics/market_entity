@@ -13,31 +13,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\MessageOriginator")
- * @ORM\Table(name="MessageOriginator")
- */
+#[ORM\Table(name: 'MessageOriginator')]
+#[ORM\Entity(repositoryClass: \App\Repository\MessageOriginator::class)]
 class MessageOriginator 
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      *   */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $originator;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Message", mappedBy="originator")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\OneToMany(targetEntity:  Message::class, mappedBy: 'originator')]
     protected $messages;
 
     function __construct()

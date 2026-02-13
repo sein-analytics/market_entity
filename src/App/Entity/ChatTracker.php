@@ -3,40 +3,39 @@
 
 namespace App\Entity;
 
+use \App\Entity\Chat;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\ChatTracker")
- * @ORM\Table(name="ChatTracker")
- */
+#[ORM\Table(name: 'ChatTracker')]
+#[ORM\Entity(repositoryClass: \App\Repository\ChatTracker::class)]
 class ChatTracker
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(name: 'id', type: 'integer')]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $uuid;
 
     /**
-     * @ORM\OneToOne (targetEntity="\App\Entity\GroupChat", mappedBy="tracker")
      * @var GroupChat|null
      */
+    #[ORM\OneToOne(targetEntity:  GroupChat::class, mappedBy: 'tracker')]
     protected $group;
 
     /**
-     * @ORM\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="tracker")
      * @var PersistentCollection
      */
+    #[ORM\OneToMany(targetEntity: Chat::class, mappedBy: 'tracker')]
     protected $chats;
 
     /**

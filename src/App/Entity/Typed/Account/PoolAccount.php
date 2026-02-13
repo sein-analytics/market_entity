@@ -13,21 +13,10 @@ use App\Entity\Pool;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class PoolAccount extends Account
 {
-    /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
-    protected int $id;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Pool", inversedBy = "accounts")
-     */
+    #[ORM\ManyToMany(targetEntity:  Pool::class, inversedBy: 'accounts')]
     protected $pools;
 
     public function __construct()

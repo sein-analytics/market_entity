@@ -8,35 +8,32 @@
 
 namespace App\Entity;
 
+use \App\Entity\DealFile;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="DocType")
- */
+#[ORM\Table(name: 'DocType')]
+#[ORM\Entity]
 class DocType 
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DealFile", mappedBy="docType")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: DealFile::class, mappedBy: 'docType')]
     protected $dealFiles;
 
     public function __construct()

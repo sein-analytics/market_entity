@@ -4,36 +4,28 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="KycNotification")
- */
+#[ORM\Table(name: 'KycNotification')]
 class KycNotification
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="sender_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'sender_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $sender;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'issuer_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $issuer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $user;
 
     function __construct()

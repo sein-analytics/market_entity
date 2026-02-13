@@ -7,6 +7,7 @@
 namespace App\Entity\Typed;
 
 
+use Exception;
 use App\Entity\DomainObject;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 use App\Service\CreatePropertiesArrayTrait;
@@ -15,7 +16,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Period;
 
- abstract class AbstractTyped extends DomainObject
+#[ORM\MappedSuperclass]
+abstract class AbstractTyped extends DomainObject
      implements  TypedInterface
 {
     use CreatePropertiesArrayTrait;
@@ -32,65 +34,62 @@ use App\Entity\Period;
 
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer") */
+     * @var integer */
+    #[ORM\Column(type: 'integer')]
     protected int $calculationType = self::CALC_FIXED;
 
     /**
-     * @var integer
-     * @ORM\Column(type = "integer") **/
+     * @var integer*/
+    #[ORM\Column(type: 'integer')]
     protected int $calculateAt = self::CALC_AT_LOAN;
 
     /**
-     * @var string|null
-     * @ORM\Column(type = "string", nullable=true)  **/
+     * @var string|null*/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $calculateAtFormula;
 
     /**
-     * @var float|null $fixedAmount
-     * @ORM\Column(type = "float", precision=14, scale=2, nullable=true) **/
+     * @var float|null $fixedAmount*/
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $fixed;
 
     /**
      * @var string|null $formula
-     * @ORM\Column(type = "string", nullable=true)
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string|null $formula;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     *  @var int|null
+    /** @var int|null
      **/
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $bondsCount = 0;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     *  @var int|null
+    /** @var int|null
      **/
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $loansCount = 0;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     *  @var int|null
+    /** @var int|null
      **/
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $poolsCount = 0;
 
     /**
-     * @var int
-     * @ORM\Column(type = "integer") **/
+     * @var int*/
+    #[ORM\Column(type: 'integer')]
     protected int $updatesCount = 0;
 
 
     /**
      * @param TypedUpdateInterface $updateInterface
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function addUpdate(TypedUpdateInterface $updateInterface):self
     {
         $period = $updateInterface->getPeriod();
         if(! $period instanceof Period){
-            throw new \Exception('Period in updateInterface must be an instance of Entity\Market\Period');
+            throw new Exception('Period in updateInterface must be an instance of Entity\Market\Period');
         }
         $this->updateLatestUpdate($updateInterface, $period);
         $coll = $this->getUpdates()->filter(function(TypedUpdateInterface $up) use ($period){
@@ -201,14 +200,14 @@ use App\Entity\Period;
 
     /**
      * @param $calculationType
-     * @throws \Exception
+     * @throws Exception
      */
     public function setCalculationType($calculationType)
     {
         $case = strtoupper($calculationType);
         $constant = @constant("self::CALC_{$case}");
         if(is_null($constant)){
-            throw new \Exception("Could not find constant: self::CALC_{$calculationType} in AbstractType");
+            throw new Exception("Could not find constant: self::CALC_{$calculationType} in AbstractType");
         }
         $this->implementChange($this,'calculationType', $this->calculationType, $constant);
     }
@@ -223,14 +222,14 @@ use App\Entity\Period;
 
     /**
      * @param $calculateAt
-     * @throws \Exception
+     * @throws Exception
      */
     public function setCalculateAt($calculateAt):void
     {
         $case = strtoupper($calculateAt);
         $constant = @constant("self::CALC_AT_{$case}");
         if(is_null($constant)){
-            throw new \Exception("Could not find constant: self::CALC_AT_{$calculateAt} AbstractType");
+            throw new Exception("Could not find constant: self::CALC_AT_{$calculateAt} AbstractType");
         }
         $this->implementChange($this,'calculateAt', $this->calculateAt, $constant);
     }

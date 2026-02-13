@@ -2,87 +2,68 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\KycDocRequest")
- * @ORM\Table(name="KycDocRequest")
- */
+#[ORM\Table(name: 'KycDocRequest')]
+#[ORM\Entity(repositoryClass: \App\Repository\KycDocRequest::class)]
 class KycDocRequest
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="community_user_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'community_user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected MarketUser $communityUser;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="community_issuer_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'community_issuer_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $communityIssuer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class)]
     protected ?MarketUser $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Issuer")
-     * @ORM\JoinColumn(name="issuer_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'issuer_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Issuer::class)]
     protected Issuer $issuer;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\KycType")
-     * @ORM\JoinColumn(name="kyc_type_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'kyc_type_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  KycType::class)]
     protected ?KycType $kycType;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DealAsset")
-     * @ORM\JoinColumn(name="kyc_asset_type_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'kyc_asset_type_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  DealAsset::class)]
     protected ?DealAsset $assetType;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid")
-     * @ORM\JoinColumn(name="bid_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'bid_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  Bid::class)]
     protected ?Bid $bid;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  Deal::class)]
     protected ?Deal $deal;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
+     * @var DateTime|null
      **/
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $date = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\KycDocRequestStatus")
-     * @ORM\JoinColumn(name="kyc_doc_request_status_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'kyc_doc_request_status_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  KycDocRequestStatus::class)]
     protected ?KycDocRequestStatus $status;
 
     function __construct()
@@ -213,17 +194,17 @@ class KycDocRequest
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate(): ?\DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTime $date)
     {
         $this->date = $date;
     }

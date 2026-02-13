@@ -1,47 +1,46 @@
 <?php
 
 namespace App\Entity;
+use \App\Entity\deal;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\KickOutsLoan")
- * @ORM\Table(name="KickOutLoan")
- */
+#[ORM\Table(name: 'KickOutLoan')]
+#[ORM\Entity(repositoryClass: \App\Repository\KickOutsLoan::class)]
 class KickOutsLoan
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bid", inversedBy="carveOuts")
-     * @ORM\JoinColumn(name="bidId", referencedColumnName="id", nullable=false)
      * @var Bid
      */
+    #[ORM\JoinColumn(name: 'bidId', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Bid::class, inversedBy: 'carveOuts')]
     protected $bid;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan")
-     * @ORM\JoinColumn(name="loanId", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loanId', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Loan::class)]
     protected $loan;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Pool")
-     * @ORM\JoinColumn(name="poolId", referencedColumnName="id", nullable=false)
      * @var Pool
      */
+    #[ORM\JoinColumn(name: 'poolId', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Pool::class)]
     protected $pool;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\deal")
-     * @ORM\JoinColumn(name="dealId", referencedColumnName="id", nullable=false)
      * @var Deal
      */
+    #[ORM\JoinColumn(name: 'dealId', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: deal::class)]
     protected $deal;
 
     /**

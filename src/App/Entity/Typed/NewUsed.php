@@ -10,10 +10,8 @@ namespace App\Entity\Typed;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="NewUsed")
- */
+#[ORM\Table(name: 'NewUsed')]
+#[ORM\Entity]
 class NewUsed extends MappedTypeAbstract
 {
 

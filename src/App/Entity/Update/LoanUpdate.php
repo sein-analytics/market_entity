@@ -8,202 +8,199 @@
 
 namespace App\Entity\Update;
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Period;
 use App\Service\CreatePropertiesArrayTrait;
 use App\Entity\Loan;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Update\LoanUpdate")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @ORM\Table(name="LoanUpdate")
- */
+#[ORM\Table(name: 'LoanUpdate')]
+#[ORM\Entity(repositoryClass: \App\Repository\Update\LoanUpdate::class)]
+ 
 class LoanUpdate extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue *
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="updates")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      **/
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'updates')]
     protected $loan;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Update\PoolUpdate", inversedBy="loans")
      * @var PoolUpdate
      **/
+    #[ORM\ManyToOne(targetEntity:  PoolUpdate::class, inversedBy: 'loans')]
     protected $pool;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Period", inversedBy="loanUpdates")
      * @var Period
      **/
+    #[ORM\ManyToOne(targetEntity:  Period::class, inversedBy: 'loanUpdates')]
     protected $period;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4)
      * @var float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4)]
     protected float $beginningBalance = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4)
      * @var float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4)]
     protected float $endingBalance = 0.0;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
+     * @var DateTime|null
      **/
-    protected ?\DateTime $dueforDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $dueforDate;
 
     /**
-     * @ORM\Column(type="float", precision=7, scale=4, nullable=true)
      * @var float
      **/
+    #[ORM\Column(type: 'float', precision: 7, scale: 4, nullable: true)]
     protected float $currentRate = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $monthlyPayment = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var float|null
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $principalPayment = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $interestPayment = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $tiPayment = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $lossAmount = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $prepaymentAmount = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $defaultingAmount = 0.0;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $delinquencyReason = '';
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var ?\DateTime
+     * @var ?DateTime
      **/
-    protected ?\DateTime $nextRateResetDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $nextRateResetDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var ?\DateTime
+     * @var ?DateTime
      **/
-    protected ?\DateTime $nextPaymentResetDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $nextPaymentResetDate;
 
     /**
-     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextRateAdjustmentPeriod;
 
     /**
-     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $nextPaymentAdjustmentPeriod;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $netRate= 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $unsupportedIntShortfall;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $servicingDues = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $latePaymentDues = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $recoveries = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $interestShortfall = 0.0;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $compensatingInterest = 0.0;
 
     /**
-     * @ORM\Column(type = "integer", nullable=true)
      * @var ?int
      **/
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $loanDelinquencyStatus;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=4, nullable=true)
      * @var ?float
      **/
+    #[ORM\Column(type: 'float', precision: 14, scale: 4, nullable: true)]
     protected ?float $escrowBalance = 0.0;
 
     /**
-     * @ORM\Column(type = "string", nullable=true)
      * @var ?string
      **/
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $servicingComments = '';
 
     /**
@@ -264,14 +261,14 @@ class LoanUpdate extends DomainObject
     }
 
     /**
-     * @return ?\DateTime
+     * @return ?DateTime
      */
-    public function getDueforDate():?\DateTime { return $this->dueforDate; }
+    public function getDueforDate():?DateTime { return $this->dueforDate; }
 
     /**
-     * @param \DateTime $dueforDate
+     * @param DateTime $dueforDate
      */
-    public function setDueforDate(\DateTime $dueforDate):void
+    public function setDueforDate(DateTime $dueforDate):void
     {
         $this->implementChange($this,'dueforDate', $this->dueforDate, $dueforDate);
     }
@@ -381,27 +378,27 @@ class LoanUpdate extends DomainObject
     }
 
     /**
-     * @return ?\DateTime
+     * @return ?DateTime
      */
-    public function getNextRateResetDate():?\DateTime { return $this->nextRateResetDate; }
+    public function getNextRateResetDate():?DateTime { return $this->nextRateResetDate; }
 
     /**
-     * @param \DateTime $nextRateResetDate
+     * @param DateTime $nextRateResetDate
      */
-    public function setNextRateResetDate(\DateTime $nextRateResetDate)
+    public function setNextRateResetDate(DateTime $nextRateResetDate)
     {
         $this->implementChange($this,'nextRateResetDate', $this->nextRateResetDate, $nextRateResetDate);
     }
 
     /**
-     * @return ?\DateTime
+     * @return ?DateTime
      */
-    public function getNextPaymentResetDate():?\DateTime { return $this->nextPaymentResetDate; }
+    public function getNextPaymentResetDate():?DateTime { return $this->nextPaymentResetDate; }
 
     /**
-     * @param \DateTime $nextPaymentResetDate
+     * @param DateTime $nextPaymentResetDate
      */
-    public function setNextPaymentResetDate(\DateTime $nextPaymentResetDate):void
+    public function setNextPaymentResetDate(DateTime $nextPaymentResetDate):void
     {
         $this->implementChange($this,'nextPaymentResetDate', $this->nextPaymentResetDate, $nextPaymentResetDate);
     }

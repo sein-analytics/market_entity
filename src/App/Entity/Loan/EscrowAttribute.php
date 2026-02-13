@@ -5,98 +5,96 @@ namespace App\Entity\Loan;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\EscrowAttribute")
- * @ORM\Table(name="EscrowAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'EscrowAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\EscrowAttribute::class)]
+ 
 class EscrowAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="escrowAttribute")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'escrowAttribute')]
     protected $loan;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="escrowAttribute")
-     * @ORM\JoinColumn(name="delinquent_attribute_id", referencedColumnName="id", nullable=false)
      * @var DelinquentAttribute
      */
+    #[ORM\JoinColumn(name: 'delinquent_attribute_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  DelinquentAttribute::class, inversedBy: 'escrowAttribute')]
     protected $delinquentAttribute;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $totalDebtBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $accruedLateFees;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $escrowBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $restrictedEscrow;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $escrowAdvanceBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $corpAdvanceBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $thirdPartyBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $accruedBalance;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $taxAndInsurancePayment;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $totalPiti;
 
     /**

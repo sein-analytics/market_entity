@@ -2,64 +2,63 @@
 
 namespace App\Entity\Loan;
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\ModificationAttribute")
- * @ORM\Table(name="ModificationAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'ModificationAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\ModificationAttribute::class)]
+ 
 class ModificationAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="modificationAttribute")
      * @var Loan
      */
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'modificationAttribute')]
     protected $loan;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan\DelinquentAttribute", inversedBy="modificationAttribute")
-     * @ORM\JoinColumn(name="delinquent_attribute_id", referencedColumnName="id", nullable=false)
      * @var DelinquentAttribute
      */
+    #[ORM\JoinColumn(name: 'delinquent_attribute_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  DelinquentAttribute::class, inversedBy: 'modificationAttribute')]
     protected $delinquentAttribute;
 
     /**
-     * @ORM\Column (type = "datetime", nullable = true)
-     * @var ?\DateTime
+     * @var ?DateTime
      */
-    protected ?\DateTime $modificationDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTime $modificationDate;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $capitalizedAmount;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $modificationStatus;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $postPrincipalBalance;
 
     /**
@@ -105,18 +104,18 @@ class ModificationAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getModificationDate(): ?\DateTime
+    public function getModificationDate(): ?DateTime
     {
         return $this->modificationDate;
     }
 
     /**
-     * @param \DateTime|null $modificationDate
+     * @param DateTime|null $modificationDate
      * @return void
      */
-    public function setModificationDate(?\DateTime $modificationDate): void
+    public function setModificationDate(?DateTime $modificationDate): void
     {
         $this->modificationDate = $modificationDate;
     }

@@ -9,6 +9,7 @@
 namespace App\Entity\Typed;
 
 
+use Exception;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Deal;
 use App\Entity\Typed\Update\TypedUpdateInterface;
@@ -21,7 +22,7 @@ interface TypedInterface
      */
     public function getId();
 
-    /** @return \App\Entity\Deal */
+    /** @return Deal */
     function getDeal();
 
     /**  @param Deal $deal */
@@ -32,11 +33,11 @@ interface TypedInterface
 
     /**
      * @param TypedUpdateInterface $updateInterface
-     * @throws \Exception
+     * @throws Exception
      */
     function addUpdate(TypedUpdateInterface $updateInterface);
 
-    /** @return \App\Entity\Typed\Update\TypedUpdateInterface */
+    /** @return TypedUpdateInterface */
     function getLatestUpdate();
 
     /**
@@ -50,10 +51,10 @@ interface TypedInterface
     /** @param  string $formula */
     function setFormula($formula);
 
-    /** @return  \App\Entity\Typed\DefineTypeInterface */
+    /** @return DefineTypeInterface */
     function getType();
 
-    /** @param \App\Entity\Typed\DefineTypeInterface $type */
+    /** @param DefineTypeInterface $type */
     function setType(DefineTypeInterface $type);
 
 }

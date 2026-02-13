@@ -8,85 +8,82 @@
 
 namespace App\Entity;
 
+use \App\Entity\GroupChat;
+use DateTime;
 use \App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Community")
- * @ORM\Table(name="Community")
- */
+#[ORM\Table(name: 'Community')]
+#[ORM\Entity(repositoryClass: \App\Repository\Community::class)]
 class Community
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="communities")
-     * @ORM\JoinTable(name="user_communities",
-     *     joinColumns={@ORM\JoinColumn(name="comm_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
-     *     )
-     */
+    #[ORM\JoinTable(name: 'user_communities')]
+    #[ORM\JoinColumn(name: 'comm_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, inversedBy: 'communities')]
     protected $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="myCommunities")
-     * @ORM\JoinColumn(name="owner", referencedColumnName="id", nullable=false)
      * @var MarketUser
      */
+    #[ORM\JoinColumn(name: 'owner', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'myCommunities')]
     protected $owner;
 
     /**
-     * @ORM\Column(type="string", length=35, unique=true, nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', length: 35, unique: true, nullable: false)]
     protected string $name='';
 
     /**
-     * @ORM\Column(type="text", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'text', nullable: false)]
     protected string $description='';
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected $dateCreated;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default":"0"})
      * @var int
      */
+    #[ORM\Column(type: 'boolean', nullable: false, options: ['default' => '0'])]
     protected int $isPrimaryGroup = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\GroupChat", mappedBy="community")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: GroupChat::class, mappedBy: 'community')]
     protected $groupChats;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $avatar;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $uuid;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommunityInvite", mappedBy="community")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: CommunityInvite::class, mappedBy: 'community')]
     protected $invites;
 
     // @ORM\Column(type="boolean", options={"default":"0"}
@@ -134,7 +131,7 @@ class Community
     public function getName():string { return $this->name; }
 
     /**
-     * @return \App\Entity\MarketUser
+     * @return MarketUser
      */
     public function getOwner(): MarketUser { return $this->owner; }
 
@@ -143,7 +140,7 @@ class Community
      */
     public function getDescription():string { return $this->description; }
 
-    public function getDateCreated():\DateTime { return $this->dateCreated; }
+    public function getDateCreated():DateTime { return $this->dateCreated; }
 
     /**
      * @return int
@@ -197,7 +194,7 @@ class Community
      */
     public function setDescription(string $description):void { $this->description = $description; }
 
-    public function setDateCreated(\DateTime $dateCreated):void { $this->dateCreated = $dateCreated; }
+    public function setDateCreated(DateTime $dateCreated):void { $this->dateCreated = $dateCreated; }
 
     /**
      * @param int $isPrimaryGroup

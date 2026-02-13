@@ -8,77 +8,69 @@
 
 namespace App\Entity\Typed;
 
+use \App\Entity\Typed\FeeType;
+use Exception;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Deal;
-use Doctrine\ORM\Mapping\MappedSuperclass;
 use App\Entity\Typed\Update\FeeUpdate;
 use App\Entity\Typed\Update\TypedUpdateInterface;
 
-/**
- * @ORM\MappedSuperclass
- * @ORM\Entity
- * @ORM\Table(name="Fee")
- * @ORM\DiscriminatorColumn(name="feeClass", type="string")
- * @ORM\DiscriminatorMap({"bond" = "\App\Entity\Typed\Fee\BondFee",
- *                        "pool" = "\App\Entity\Typed\Fee\PoolFee",
- *                        "loan" = "\App\Entity\Typed\Fee\LoanFee"
- * })
- */
+#[ORM\MappedSuperclass]
 abstract class Fee extends AbstractTyped
 {
     abstract public function addAttached(TypedInterface $entity);
 
     /**
      * @var integer $id
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
     
     /**
      * @var Deal $deal
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy = "fees") *
      */
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'fees')]
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Typed\FeeType", inversedBy="fees")
      * @var FeeType
      */
+    #[ORM\ManyToOne(targetEntity: FeeType::class, inversedBy: 'fees')]
     protected $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="fee")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  FeeUpdate::class, mappedBy: 'fee')]
     protected $updates;
 
     /**
      * @var FeeUpdate
-     * @ORM\OneToOne(targetEntity="\App\Entity\Typed\Update\FeeUpdate", fetch="EAGER")
      */
+    #[ORM\OneToOne(targetEntity:  FeeUpdate::class, fetch: 'EAGER')]
     protected $latestUpdate = null;
 
     /**
      * @var int $isFeeHedge | Default = 0 Negative;
-     * @ORM\Column(type="integer") *
      */
+    #[ORM\Column(type: 'integer')]
     protected int $isFeeHedge = 0;
 
 
     /**
-     * @ORM\Column(type="integer")
      * @var int $isStructuredDealFee | Default = 1, fee is paid at the
      *      StructuredDeal level
      */
+    #[ORM\Column(type: 'integer')]
     protected int $isDealFee = 1;
 
     /**
-     * @ORM\Column(type="float", precision=14, scale=2, nullable=true)
      * @var float|null
      */
+    #[ORM\Column(type: 'float', precision: 14, scale: 2, nullable: true)]
     protected float|null $periodTotalFees;
     
     public function __construct()
@@ -148,7 +140,7 @@ abstract class Fee extends AbstractTyped
     /**
      * @param FeeUpdate $feeUpdate
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function addFeeUpdate(FeeUpdate $feeUpdate){
         return $this->addUpdate($feeUpdate);
@@ -183,7 +175,7 @@ abstract class Fee extends AbstractTyped
         if ($isFeeHedge == 0 || $isFeeHedge == 1){
             $this->implementChange($this,'isFeeHedge', $this->isFeeHedge, $isFeeHedge);
         }else
-            throw new \Exception(
+            throw new Exception(
                 "Variable isInterestRateHedgeFee can only be either 1 or 0: $isFeeHedge was given");
     }
 

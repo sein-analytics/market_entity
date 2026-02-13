@@ -6,124 +6,92 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks as HasLifecycleCallbacks;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Message")
- * @ORM\Table(name="Message")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- * @HasLifecycleCallbacks
- */
+#[ORM\Table(name: 'Message')]
+#[ORM\Entity(repositoryClass: \App\Repository\Message::class)]
+ 
+#[HasLifecycleCallbacks]
 class Message extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="messages")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     **/
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'messages')]
     protected MarketUser $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="messages")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'messages')]
     protected ?Deal $deal;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="issues")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'issues')]
     protected ?Loan $loan;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected \DateTime $date;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    protected DateTime $date;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $subject;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Message")
-     * @ORM\JoinTable(name="responses",
-     *     joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="response_id", referencedColumnName="id")}
-     *     )
-     */
+    #[ORM\JoinTable(name: 'responses')]
+    #[ORM\JoinColumn(name: 'message_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'response_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity:  Message::class)]
     protected ArrayCollection|PersistentCollection|null $responses;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageType", inversedBy="messages")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MessageType::class, inversedBy: 'messages')]
     protected MessageType $type;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\MarketUser", inversedBy="receivedMessages")
      * @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\ManyToMany(targetEntity:  MarketUser::class, inversedBy: 'receivedMessages')]
     protected $recipients;
 
-    /**
-     * @ORM\Column(type="text", nullable=false)
-     */
+    #[ORM\Column(type: 'text', nullable: false)]
     protected string $message='';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageOriginator", inversedBy="messages")
-     * @ORM\JoinColumn(name="originator_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'originator_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MessageOriginator::class, inversedBy: 'messages')]
     protected MessageOriginator $originator;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageStatus", inversedBy="messages")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MessageStatus::class, inversedBy: 'messages')]
     protected ?MessageStatus $status;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessagePriority", inversedBy="messages")
-     * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'priority_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MessagePriority::class, inversedBy: 'messages')]
     protected ?MessagePriority $priority;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MessageAction", inversedBy="messages")
-     * @ORM\JoinColumn(name="action_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'action_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  MessageAction::class, inversedBy: 'messages')]
     protected ?MessageAction $action;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $sendStatus;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     protected array|string $msgRecipientIds;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligenceIssue", inversedBy="messages")
-     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\JoinColumn(name: 'issue_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  DueDiligenceIssue::class, inversedBy: 'messages')]
     protected $issue;
 
     public function __construct()
@@ -191,14 +159,14 @@ class Message extends DomainObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate():\DateTime { return $this->date; }
+    public function getDate():DateTime { return $this->date; }
 
     /**
      * @param mixed $date
      */
-    public function setDate(\DateTime $date):void
+    public function setDate(DateTime $date):void
     {
         $this->implementChange($this,'date', $this->date, $date);
     }

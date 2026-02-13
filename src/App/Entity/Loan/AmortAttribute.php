@@ -3,32 +3,28 @@
 
 namespace App\Entity\Loan;
 
+use \App\Entity\Loan;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="AmortAttribute")
- */
+#[ORM\Table(name: 'AmortAttribute')]
+#[ORM\Entity]
 class AmortAttribute
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
-    /** @ORM\OneToMany(targetEntity="\App\Entity\Loan", mappedBy="amortization")
+    /**
      * @var ArrayCollection
      **/
+    #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'amortization')]
     protected $loans;
 
 
 
-    /**
-     * @ORM\Column(type="string", nullable=false) *
-     */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $amortType;
 
     public function __construct()

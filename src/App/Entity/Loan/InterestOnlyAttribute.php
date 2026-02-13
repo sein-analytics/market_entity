@@ -2,60 +2,53 @@
 
 namespace App\Entity\Loan;
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\InterestOnlyAttribute")
- * @ORM\Table(name="InterestOnlyAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'InterestOnlyAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\InterestOnlyAttribute::class)]
+ 
 class InterestOnlyAttribute extends DomainObject
 {
     /**
-     * @ORM\Id
-     * @ORM\Column (type="integer")
-     * @ORM\GeneratedValue
      * @var int
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="interestOnlyAttribute")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'interestOnlyAttribute')]
     protected $loan;
 
-    /**
-     * @ORM\Column(type = "integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $interestOnlyTerm;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var ?string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $interestOnlyIndicator;
 
     /**
-     * @ORM\Column (type="float", precision=16, scale=3, nullable=true)
      * @var ?float
      */
+    #[ORM\Column(type: 'float', precision: 16, scale: 3, nullable: true)]
     protected ?float $interestOnlyPayment;
 
-    /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     */
-    protected \DateTime|null $interestOnlyStartDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected DateTime|null $interestOnlyStartDate;
 
-    /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     */
-    protected \DateTime|null $interestOnlyExpirationDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected DateTime|null $interestOnlyExpirationDate;
 
     /**
      * @return int
@@ -134,35 +127,35 @@ class InterestOnlyAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getInterestOnlyStartDate(): ?\DateTime
+    public function getInterestOnlyStartDate(): ?DateTime
     {
         return $this->interestOnlyStartDate;
     }
 
     /**
-     * @param \DateTime|null $interestOnlyStartDate
+     * @param DateTime|null $interestOnlyStartDate
      * @return void
      */
-    public function setInterestOnlyStartDate(?\DateTime $interestOnlyStartDate): void
+    public function setInterestOnlyStartDate(?DateTime $interestOnlyStartDate): void
     {
         $this->interestOnlyStartDate = $interestOnlyStartDate;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getInterestOnlyExpirationDate(): ?\DateTime
+    public function getInterestOnlyExpirationDate(): ?DateTime
     {
         return $this->interestOnlyExpirationDate;
     }
 
     /**
-     * @param \DateTime|null $interestOnlyExpirationDate
+     * @param DateTime|null $interestOnlyExpirationDate
      * @return void
      */
-    public function setInterestOnlyExpirationDate(?\DateTime $interestOnlyExpirationDate): void
+    public function setInterestOnlyExpirationDate(?DateTime $interestOnlyExpirationDate): void
     {
         $this->interestOnlyExpirationDate = $interestOnlyExpirationDate;
     }

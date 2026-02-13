@@ -13,22 +13,10 @@ use App\Entity\Bond;
 use App\Entity\Typed\ShelfSpecific;
 use App\Entity\Typed\TypedInterface;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class BondAccount extends Account
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
-    protected int $id;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Bond", inversedBy = "accounts")
-     *
-     */
+    #[ORM\ManyToMany(targetEntity:  Bond::class, inversedBy: 'accounts')]
     protected $bonds;
 
     public function __construct()

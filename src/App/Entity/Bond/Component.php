@@ -11,75 +11,55 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Bond;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="Component")
- */
+#[ORM\Table(name: 'Component')]
+#[ORM\Entity]
 class Component
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Bond", inversedBy="components")
      * @var Bond
      **/
+    #[ORM\ManyToOne(targetEntity:  Bond::class, inversedBy: 'components')]
     protected $bond;
 
-    /**
-     * @ORM\Column(type="integer") *
-     */
+    #[ORM\Column(type: 'integer')]
     protected int $componentNumber;
 
-    /**
-     * @ORM\Column(type="string") *
-     */
+    #[ORM\Column(type: 'string')]
     protected string $componentName;
 
-    /**
-     * @ORM\Column(type="float", precision=6, scale=5, nullable=true) *
-     */
+    #[ORM\Column(type: 'float', precision: 6, scale: 5, nullable: true)]
     protected float $fixedRate;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $rateFormula;
 
-    /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Bond\ComponentUpdate") *
-     */
+    #[ORM\OneToOne(targetEntity:  ComponentUpdate::class)]
     protected $latestUpdate;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Bond\ComponentUpdate", mappedBy="component")
      * @var ArrayCollection;
      **/
+    #[ORM\OneToMany(targetEntity:  ComponentUpdate::class, mappedBy: 'component')]
     protected $updates;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $componentBasis;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $floatingIndex;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $indexMaturity;
 
-    /**
-     * @ORM\Column(type="string", nullable=true) *
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $spreadArray;
 
     public function __construct()

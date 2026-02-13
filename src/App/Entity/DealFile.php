@@ -6,19 +6,17 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DealFile")
- * @ORM\Table(name="DealFile")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- *
- */
+#[ORM\Table(name: 'DealFile')]
+#[ORM\Entity(repositoryClass: \App\Repository\DealFile::class)]
+ 
 class DealFile extends DomainObject
 {
     use CreatePropertiesArrayTrait;
@@ -33,133 +31,129 @@ class DealFile extends DomainObject
 
     protected array $defaultValueProperties = [];
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="dealDocs")
-     * @ORM\JoinColumn(name="deal_id", referencedColumnName="id", nullable=false)
      * @var Deal
      */
+    #[ORM\JoinColumn(name: 'deal_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'dealDocs')]
     protected $deal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MarketUser", inversedBy="files")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * @var MarketUser
      */
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MarketUser::class, inversedBy: 'files')]
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="files")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=true)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'files')]
     protected $loan;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DocAccess", mappedBy="document")
      * @var DocAccess
      */
+    #[ORM\OneToMany(targetEntity:  DocAccess::class, mappedBy: 'document')]
     protected $docAccess;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $fileName ='';
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $fileSize=0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\MimeType", inversedBy="files")
-     * @ORM\JoinColumn(name="mime_id", referencedColumnName="id", nullable=false)
      * @var MimeType
      */
+    #[ORM\JoinColumn(name: 'mime_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  MimeType::class, inversedBy: 'files')]
     protected $mime;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected string $publicPath ='';
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
-     * @ORM\JoinTable(name="file_replacements",
-     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="replacement_id", referencedColumnName="id")}
-     *     )
      * @var ArrayCollection
      **/
+    #[ORM\JoinTable(name: 'file_replacements')]
+    #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'replacement_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity:  DealFile::class)]
     protected $replacements;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\DealFile")
-     * @ORM\JoinTable(name="file_appends",
-     *     joinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="append_id", referencedColumnName="id")}
-     *     )
      * @var ArrayCollection
      */
+    #[ORM\JoinTable(name: 'file_appends')]
+    #[ORM\JoinColumn(name: 'file_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'append_id', referencedColumnName: 'id')]
+    #[ORM\ManyToMany(targetEntity:  DealFile::class)]
     protected $appends;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DocType", inversedBy="dealFiles")
-     * @ORM\JoinColumn(name="doc_type_id", referencedColumnName="id", nullable=false)
      * @var DocType
      */
+    #[ORM\JoinColumn(name: 'doc_type_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  DocType::class, inversedBy: 'dealFiles')]
     protected $docType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\FileAccessCode")
-     * @ORM\JoinColumn(name="access_id", referencedColumnName="id", nullable=true)
      * @var FileAccessCode
      */
+    #[ORM\JoinColumn(name: 'access_id', referencedColumnName: 'id', nullable: true)]
+    #[ORM\ManyToOne(targetEntity:  FileAccessCode::class)]
     protected $accessId;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $assetId = '';
 
     /**
-     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected string $scanLocation = '';
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
      * @var boolean
      */
+    #[ORM\Column(type: 'boolean', nullable: false)]
     protected $hasViruses = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\DueDiligenceIssue", mappedBy="file")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity:  DueDiligenceIssue::class, mappedBy: 'file')]
     protected $issues;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\App\Entity\DueDiligence", mappedBy="files")
      * @var ArrayCollection
      */
+    #[ORM\ManyToMany(targetEntity:  DueDiligence::class, mappedBy: 'files')]
     protected $diligence;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
+     * @var DateTime|null
      **/
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $date = null;
 
     public function __construct()
@@ -366,13 +360,13 @@ class DealFile extends DomainObject
     public function setMime(MimeType $mime):void { $this->mime = $mime;  }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate() : ?\DateTime { return $this->date; }
+    public function getDate() : ?DateTime { return $this->date; }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date) { $this->date = $date; }
+    public function setDate(DateTime $date) { $this->date = $date; }
 
 }

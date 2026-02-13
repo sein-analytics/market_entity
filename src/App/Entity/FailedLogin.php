@@ -6,33 +6,32 @@
 
 namespace App\Entity;
 
+use \App\Entity\MarketUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\FailedLogin")
- * @ORM\Table(name="FailedLogin")
- */
+#[ORM\Table(name: 'FailedLogin')]
+#[ORM\Entity(repositoryClass: \App\Repository\FailedLogin::class)]
 class FailedLogin 
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
+    #[ORM\Column(type: 'integer', nullable: false)]
     protected int $state = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\MarketUser", mappedBy="failedAttempts")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: MarketUser::class, mappedBy: 'failedAttempts')]
     protected $users;
 
     public function __construct()

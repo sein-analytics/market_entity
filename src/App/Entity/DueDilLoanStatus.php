@@ -8,13 +8,13 @@
 
 namespace App\Entity;
 
+use App\Entity\AssetType\Residential;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\DueDilLoanStatus")
- * @ORM\Table(name="DueDilLoanStatus")
- */
+#[ORM\Table(name: 'DueDilLoanStatus')]
+#[ORM\Entity(repositoryClass: \App\Repository\DueDilLoanStatus::class)]
 class DueDilLoanStatus 
 {
     protected array $logObject = [
@@ -23,54 +23,48 @@ class DueDilLoanStatus
         'action' => null
     ];
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDiligence", inversedBy="reviewStatuses")
-     * @ORM\JoinColumn(name="dd_id", referencedColumnName="id", nullable=false)
      * @var DueDiligence
      */
+    #[ORM\JoinColumn(name: 'dd_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  DueDiligence::class, inversedBy: 'reviewStatuses')]
     protected $diligence;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Loan", inversedBy="reviewStatuses")
-     * @ORM\JoinColumn(name="ln_id", referencedColumnName="id", nullable=false)
      * @var Loan
      */
+    #[ORM\JoinColumn(name: 'ln_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  Loan::class, inversedBy: 'reviewStatuses')]
     protected $loan;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\DueDilReviewStatus", inversedBy="reviewStatuses")
-     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      * @var DueDilReviewStatus
      */
+    #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\ManyToOne(targetEntity:  DueDilReviewStatus::class, inversedBy: 'reviewStatuses')]
     protected $reviewStatus;
 
-    /**
-     * @ORM\Column(type="json", nullable=false)
-     */
+    #[ORM\Column(type: 'json', nullable: false)]
     protected $logger;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     protected $issuesCount = 0;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime|null
+     * @var DateTime|null
      **/
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $lastModified = null;
 
     public function __construct()
     {
         $this->logger = $this->logObject;
-        $this->loan = new AssetType\Residential();
+        $this->loan = new Residential();
         $this->diligence = new DueDiligence();
         $this->reviewStatus = new DueDilReviewStatus();
     }
@@ -149,17 +143,17 @@ class DueDilLoanStatus
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getLastModified() : ?\DateTime
+    public function getLastModified() : ?DateTime
     {
         return $this->lastModified;
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setLastModified(\DateTime $lastModified)
+    public function setLastModified(DateTime $lastModified)
     {
         $this->lastModified = $lastModified;
     }

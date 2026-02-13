@@ -8,14 +8,14 @@
 
 namespace App\Entity;
 
+use \App\Entity\Bond;
+use DateTime;
+use DateInterval;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity
- * @ORM\Table(name="BasisCount")
- *
- */
+#[ORM\Table(name: 'BasisCount')]
+#[ORM\Entity]
 class BasisCount extends DomainObject
 {
 
@@ -40,28 +40,26 @@ class BasisCount extends DomainObject
     ];
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
+    #[ORM\Column(type: 'string', nullable: false)]
     protected $basis;
 
     /**
-     * @ORM\Column(type="json", nullable=false)
      * @var string
      */
+    #[ORM\Column(type: 'json', nullable: false)]
     protected $formula;
 
     /**
-     * @ORM\OneToMany(targetEntity = "\App\Entity\Bond", mappedBy="basisCount")
      * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: Bond::class, mappedBy: 'basisCount')]
     protected $bonds;
 
     public function __construct()
@@ -71,71 +69,71 @@ class BasisCount extends DomainObject
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $thruDate
+     * @param DateTime $startDate
+     * @param DateTime $thruDate
      * @return float|int
      */
-    public function calculate30_360DayCountFactor(\DateTime $startDate, \DateTime $thruDate)
+    public function calculate30_360DayCountFactor(DateTime $startDate, DateTime $thruDate)
     {
         $factor = $this->factorNumerator($thruDate->diff($startDate)) / self::BASE_360;
         return $factor;
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $thruDate
+     * @param DateTime $startDate
+     * @param DateTime $thruDate
      * @param int $freq
      * @return float|int
      */
-    public function calculate30_360CouponFactor(\DateTime $startDate, \DateTime $thruDate, int $freq=0)
+    public function calculate30_360CouponFactor(DateTime $startDate, DateTime $thruDate, int $freq=0)
     {
         $factor = $this->factorNumerator($startDate->diff($thruDate)) / self::BASE_360;
         return $factor;
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $thruDate
-     * @param \DateTime $couponDate
+     * @param DateTime $startDate
+     * @param DateTime $thruDate
+     * @param DateTime $couponDate
      * @param int $frequency
      * @return float|int
      */
-    public function calculateActual_actualDayCountFactor(\DateTime $startDate, \DateTime $thruDate, \DateTime $couponDate, int $frequency)
+    public function calculateActual_actualDayCountFactor(DateTime $startDate, DateTime $thruDate, DateTime $couponDate, int $frequency)
     {
         $factor = $thruDate->diff($startDate)->days / ($frequency * $couponDate->diff($startDate)->days);
         return $factor;
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $couponDate
+     * @param DateTime $startDate
+     * @param DateTime $couponDate
      * @param int $frequency
      * @return float|int
      */
-    public function calculateActual_actualCouponFactor(\DateTime $startDate, \DateTime $couponDate, int $frequency)
+    public function calculateActual_actualCouponFactor(DateTime $startDate, DateTime $couponDate, int $frequency)
     {
         $factor = $couponDate->diff($startDate)->days / ($frequency * $couponDate->diff($startDate)->days);
         return $factor;
     }
 
     /**
-     * @param \DateInterval $diff
+     * @param DateInterval $diff
      * @return float|int
      */
-    public function factorNumerator(\DateInterval $diff)
+    public function factorNumerator(DateInterval $diff)
     {
         return (self::BASE_360 * $diff->y + self::BASE_30 * $diff->m + $diff->d);
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $thruDate
-     * @param \DateTime $couponDate
+     * @param DateTime $startDate
+     * @param DateTime $thruDate
+     * @param DateTime $couponDate
      * @param int $base
      * @param string $calcType
      * @return bool|float|int
      */
-    public function calculateActual_fixedFactors(\DateTime $startDate, \DateTime $thruDate, \DateTime $couponDate, int $base, string $calcType)
+    public function calculateActual_fixedFactors(DateTime $startDate, DateTime $thruDate, DateTime $couponDate, int $base, string $calcType)
     {
         if ($calcType !== self::DAY_COUNT_FACTOR && $calcType !== self::COUPON_FACTOR)
             return false;

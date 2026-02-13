@@ -6,101 +6,99 @@
 
 namespace App\Entity;
 
+use \App\Entity\Update\PoolUpdate;
+use \App\Entity\Update\LoanUpdate;
+use \App\Entity\Update\BondUpdate;
+use \App\Entity\Typed\Update\FeeUpdate;
+use \App\Entity\Typed\Update\AccountUpdate;
+use \App\Entity\Typed\Update\ShelfSpecificUpdate;
+use \App\Entity\Typed\Update\TriggerUpdate;
+use DateTime;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\ChangeTrackingPolicy;
+ 
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
-/**
- *
- * @ORM\Entity
- * @ORM\Table(name="Period")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- *
- */
+#[ORM\Table(name: 'Period')]
+#[ORM\Entity]
+ 
 class Period extends DomainObject
 {
     use CreatePropertiesArrayTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue *
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\Column(type="integer")
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
     protected int $periodIndex;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime
+     * @var DateTime
      **/
+    #[ORM\Column(type: 'datetime')]
     protected $reportDate;
 
     /**
-     * @ORM\Column(type="integer")
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
     protected int $isHistorical = 0;
 
     /**
-     * @ORM\Column(type="integer")
      * @var int
      */
+    #[ORM\Column(type: 'integer')]
     protected int $allParamsSet = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\PoolUpdate", mappedBy="period")
      * @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: PoolUpdate::class, mappedBy: 'period')]
     protected $poolUpdates;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\LoanUpdate", mappedBy="period")
      * @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: LoanUpdate::class, mappedBy: 'period')]
     protected $loanUpdates;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Deal", inversedBy="periods")
      * @var ?Deal
      **/
+    #[ORM\ManyToOne(targetEntity:  Deal::class, inversedBy: 'periods')]
     protected $deal;
 
     /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Update\BondUpdate", mappedBy="period")
      * @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: BondUpdate::class, mappedBy: 'period')]
     protected $bondUpdates;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\FeeUpdate", mappedBy="period")
-     *  @var PersistentCollection|ArrayCollection|null
+    /** @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: FeeUpdate::class, mappedBy: 'period')]
     protected $fees;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\AccountUpdate", mappedBy="period")
-     *  @var PersistentCollection|ArrayCollection|null
+    /** @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: AccountUpdate::class, mappedBy: 'period')]
     protected $accounts;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\ShelfSpecificUpdate", mappedBy="period")
-     *  @var PersistentCollection|ArrayCollection|null
+    /** @var PersistentCollection|ArrayCollection|null
      */
+    #[ORM\OneToMany(targetEntity: ShelfSpecificUpdate::class, mappedBy: 'period')]
     protected $shelfSpecifics;
 
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\Typed\Update\TriggerUpdate", mappedBy="period")
-     *  @var PersistentCollection|ArrayCollection|null
+    /** @var PersistentCollection|ArrayCollection|null
      **/
+    #[ORM\OneToMany(targetEntity: TriggerUpdate::class, mappedBy: 'period')]
     protected $triggers;
 
 
@@ -138,17 +136,17 @@ class Period extends DomainObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getReportDate():\DateTime
+    public function getReportDate():DateTime
     {
         return $this->reportDate;
     }
 
     /**
-     * @param \DateTime $reportDate
+     * @param DateTime $reportDate
      */
-    public function setReportDate (\DateTime $reportDate):void
+    public function setReportDate (DateTime $reportDate):void
     {
         $this->implementChange($this,'reportDate', $this->reportDate, $reportDate);
     }

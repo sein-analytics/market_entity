@@ -2,33 +2,32 @@
 
 namespace App\Entity;
 
+use \App\Entity\Chat;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
-/**
- * @ORM\Entity
- * @ORM\Table(name="ChatStatus")
- */
+#[ORM\Table(name: 'ChatStatus')]
+#[ORM\Entity]
 class ChatStatus
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      **/
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected int $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
      * @var string
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected string $status;
 
     /**
-     * @ORM\OneToMany (targetEntity="\App\Entity\Chat", mappedBy="status")
      * @var PersistentCollection
      */
+    #[ORM\OneToMany(targetEntity: Chat::class, mappedBy: 'status')]
     protected $chats;
 
     /**

@@ -8,15 +8,14 @@
 
 namespace App\Entity\Loan;
 
+use DateTime;
 use App\Entity\DomainObject;
 use App\Entity\Loan;
 use App\Service\CreatePropertiesArrayTrait;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity(repositoryClass="\App\Repository\Loan\CommAttribute")
- * @ORM\Table(name="CommAttribute")
- * @ORM\ChangeTrackingPolicy("NOTIFY")
- */
+#[ORM\Table(name: 'CommAttribute')]
+#[ORM\Entity(repositoryClass: \App\Repository\Loan\CommAttribute::class)]
+ 
 class CommAttribute extends DomainObject
 {
     use CreatePropertiesArrayTrait;
@@ -27,69 +26,49 @@ class CommAttribute extends DomainObject
 
     protected array $defaultValueProperties = [];
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
     protected int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="\App\Entity\Loan", inversedBy="commAttributes")
-     * @ORM\JoinColumn(name="loan_id", referencedColumnName="id", nullable=false)
-     * @var \App\Entity\Loan
+     * @var Loan
      **/
+    #[ORM\JoinColumn(name: 'loan_id', referencedColumnName: 'id', nullable: false)]
+    #[ORM\OneToOne(targetEntity:  Loan::class, inversedBy: 'commAttributes')]
     protected $loan;
 
-    /**
-     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]
     protected float|null $dscr;
 
-    /**
-     * @ORM\Column(type="float", precision=16, scale=4, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 16, scale: 4, nullable: true)]
     protected float|null $noi;
 
-    /**
-     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]
     protected float|null $netWorthToLoan;
 
-    /**
-     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]
     protected float|null $profitRatio;
 
-    /**
-     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]
     protected float|null $loanToCostRatio;
 
-    /**
-     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]
     protected float|null $debtYieldRatio;
 
-    /**
-     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]
     protected float|null $vacancyRate;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int|null $lockoutPeriod;
 
     /**
-     * @ORM\Column(type = "datetime", nullable=true)
-     * @var \DateTime|null
+     * @var DateTime|null
      **/
-    protected \DateTime|null $defeasanceDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected DateTime|null $defeasanceDate;
 
-    /**
-     * @ORM\Column(type="float", precision=12, scale=8, nullable=true)
-     */
+    #[ORM\Column(type: 'float', precision: 12, scale: 8, nullable: true)]
     protected float|null $capRate;
 
     /**
@@ -215,14 +194,14 @@ class CommAttribute extends DomainObject
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getDefeasanceDate():\DateTime|null {  return $this->defeasanceDate; }
+    public function getDefeasanceDate():DateTime|null {  return $this->defeasanceDate; }
 
     /**
-     * @param \DateTime $defeasanceDate
+     * @param DateTime $defeasanceDate
      */
-    public function setDefeasanceDate(\DateTime $defeasanceDate):void
+    public function setDefeasanceDate(DateTime $defeasanceDate):void
     {
         $this->implementChange($this,'defeasanceDate', $this->defeasanceDate, $defeasanceDate);
     }
