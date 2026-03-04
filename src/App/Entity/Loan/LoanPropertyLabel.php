@@ -278,14 +278,14 @@ implements LoanInterface
 
     }
 
-    public function assignRowLabel(array $row, array $properties):array
+    public function assignRowLabel(array $row, ORM\FieldMapping $properties):array
     {
-        if (array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
-            && !is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
-            $label = $this->propertyLabels[$properties[self::ENTITY_COLUMN]];
+        if (array_key_exists($properties->columnName, $this->propertyLabels)
+            && !is_null($this->propertyLabels[$properties->columnName])){
+            $label = $this->propertyLabels[$properties->columnName];
             $row[self::LABEL] = ucwords(str_replace('_',' ', $label));
         } else {
-            $row[self::LABEL] = ucwords(str_replace('_',' ', $properties[self::ENTITY_COLUMN]));
+            $row[self::LABEL] = ucwords(str_replace('_',' ', $properties->columnName));
         }
         return $row;
     }
