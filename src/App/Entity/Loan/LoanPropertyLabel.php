@@ -192,8 +192,8 @@ implements LoanInterface
     {
         $data = $this->addStateProp($data, $addState);
         foreach ($this->getClassMetadata()->fieldMappings as $propName => $properties){
-            if(array_key_exists($properties[self::ENTITY_COLUMN], $this->propertyLabels)
-                && is_null($this->propertyLabels[$properties[self::ENTITY_COLUMN]])){
+            if(array_key_exists($properties->{self::ENTITY_COLUMN}, $this->propertyLabels)
+                && is_null($this->propertyLabels[$properties->{self::ENTITY_COLUMN}])){
                 continue;
             }
             $row['id'] = $count;
@@ -201,7 +201,7 @@ implements LoanInterface
             $row = $this->assignFieldMappingsToRow($row, $properties);
             $row = $this->assignSignificance($properties, $row);
             $row = $this->assignCategory($row);
-            array_push($data, $row);
+            $data[] = $row;
             $count++;
         }
         return $data;
@@ -291,14 +291,14 @@ implements LoanInterface
     }
 
     /**
-     * @param array $fieldMapping
+     * @param ORM\FieldMapping $fieldMapping
      * @param $row
      * @return array
      */
-    public function assignSignificance(array $fieldMapping, $row):array {
+    public function assignSignificance(ORM\FieldMapping $fieldMapping, $row):array {
         if($this->getClassMetadata()->getName() == 'App\Entity\Loan\ArmAttribute'){
             $row[self::SIGNIFICANCE] = self::CONDITIONAL;
-        }elseif ($fieldMapping[self::ENTITY_NULL]){
+        }elseif ($fieldMapping->{self::ENTITY_NULL}){
             $row[self::SIGNIFICANCE] = self::OPTIONAL;
         }else{
             $row[self::SIGNIFICANCE] = self::REQUIRED;
@@ -322,13 +322,13 @@ implements LoanInterface
 
     /**
      * @param array $row
-     * @param array $properties
+     * @param ORM\FieldMapping $properties
      * @return array
      */
-    public function assignFieldMappingsToRow(array $row, array $properties):array
+    public function assignFieldMappingsToRow(array $row, ORM\FieldMapping $properties):array
     {
         foreach (self::FIELD_MAPPINGS_TO_ROW as $key => $rowProp){
-            $row[$rowProp] = $properties[$key];
+            $row[$rowProp] = $properties->{$key};
         }
         return $row;
     }
