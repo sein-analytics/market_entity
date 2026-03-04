@@ -373,4 +373,6 @@ implements LoanInterface
     public function getPropertyLabels():array { return $this->propertyLabels; }
 
     public function getDbTypeSanitizer():array { return $this->dbTypeSanitizer; }
+
+    public function returnClassMetadata():ClassMetadata { return $this->getClassMetadata(); }
 }
