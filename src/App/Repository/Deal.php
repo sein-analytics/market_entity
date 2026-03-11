@@ -60,6 +60,8 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :loanId, :limitValue, :flag)';
 
+    private string $callLoansAllowedForScenario = 'call LoansAllowedForScenario(:dealId, :priorityIds, :cursorBucket, :cursorSort, :cursorId, :pageSize)';
+
     private string $callLoansByDealId = 'call LoansByDealId(:dealId)';
 
     private string $callFetchUserAllowedLpaDealsBySeller = 'call FetchUserAllowedLpaDealsBySeller(:sellerId, :buyerId, :assetTypeId)';
@@ -368,6 +370,16 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
         return $results;
     }
     
+    public function fetchLoansAllowedForScenario(
+        int $dealId, array $priorityIds = [], ?int $cursorBucket = null, 
+        ?int $cursorSort = null, ?int $cursorId = null, int $pageSize = 10
+    ) {
+        $priorityIds = json_encode($priorityIds);
+
+        $results = $this->executeProcedure([$dealId, $priorityIds, $cursorBucket, $cursorSort, $cursorId, $pageSize], $this->callLoansAllowedForScenario);
+        return $results;
+    }
+
     public function fetchDealById(int $dealId): mixed
     {
         return $this->buildAndExecuteFromSql(
