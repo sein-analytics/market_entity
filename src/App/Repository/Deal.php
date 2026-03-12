@@ -60,7 +60,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :loanId, :limitValue, :flag)';
 
-    private string $callLoansAllowedForScenario = 'call LoansAllowedForScenario(:dealId, :priorityIds, :cursorBucket, :cursorSort, :cursorId, :pageSize)';
+    private string $callLoansAllowedForScenario = 'call LoansAllowedForScenario(:dealId, :priorityIds, :cursorBucket, :cursorSort, :cursorId, :pageSize, :cursorDirection)';
 
     private string $callGreatestCurrentBalancesOnLoans = 'call GreatestCurrentBalancesOnLoans(:dealId)';
 
@@ -373,12 +373,15 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
     }
     
     public function fetchLoansAllowedForScenario(
-        int $dealId, array $priorityIds = [], ?int $cursorBucket = null, 
-        ?int $cursorSort = null, ?int $cursorId = null, int $pageSize = 10
+        int $dealId, array $priorityIds = [], ?int $cursorBucket = null,
+        ?int $cursorSort = null, ?int $cursorId = null,
+        int $pageSize = 10, string $cursorDirection = 'next'
     ) {
         $priorityIds = json_encode($priorityIds);
 
-        $results = $this->executeProcedure([$dealId, $priorityIds, $cursorBucket, $cursorSort, $cursorId, $pageSize], $this->callLoansAllowedForScenario);
+        $results = $this->executeProcedure([
+            $dealId, $priorityIds, $cursorBucket, $cursorSort, $cursorId, $pageSize, $cursorDirection
+        ], $this->callLoansAllowedForScenario);
         return $results;
     }
 
