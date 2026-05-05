@@ -58,7 +58,7 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
 
     private string $callDealAuthorizedDetails = 'call DealAuthorizedDetails(:dealId)';
 
-    private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :loanId, :limitValue, :flag)';
+    private string $callDealLoansPaginated = 'call DealLoansPaginated(:dealId, :loanId, :limitValue, :flag, :loanSearch)';
 
     private string $callLoansAllowedForScenario = 'call LoansAllowedForScenario(:dealId, :priorityIds, :cursorBucket, :cursorSort, :cursorId, :pageSize, :cursorDirection, :loanSearch)';
 
@@ -360,10 +360,10 @@ class Deal extends EntityRepository implements SqlManagerTraitInterface, DbalSta
             ? $result[0] : [];
     }
 
-    public function fetchPaginatedDealLoans(int $dealId, int $loanId, int $limit, string $flag)
+    public function fetchPaginatedDealLoans(int $dealId, int $loanId, int $limit, string $flag, string $loanSearch = '')
     {
         $results = $this->executeProcedure(
-            [$dealId, $loanId, $limit, $flag], 
+            [$dealId, $loanId, $limit, $flag, $loanSearch],
             $this->callDealLoansPaginated
         );
         if (count($results) > 0 && $flag == 'previous') {
