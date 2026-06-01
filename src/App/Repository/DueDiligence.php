@@ -78,6 +78,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $fetchDdByParentAndFileAccessSql = "SELECT dd.* FROM DueDiligence AS dd INNER JOIN deal_file_due_diligence AS dfDd ON dfDd.due_diligence_id = dd.id WHERE dd.parent_id=? AND dfDd.deal_file_id=?";
 
+    private string $fetchDueDiligencesByParentSql = "SELECT * FROM DueDiligence WHERE parent_id=? OR id=?";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -548,6 +550,16 @@ class DueDiligence extends DueDiligenceAbstract
             $sql,
             self::FETCH_ALL_ASSO_MTHD,
             $dueDiligencesIds, [$loanId]
+        );
+    }
+    
+    public function fetchDueDiligencesByParent(int $dueDilParentId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDueDiligencesByParentSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dueDilParentId, $dueDilParentId]
         );
     }
 
