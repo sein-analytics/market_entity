@@ -141,7 +141,7 @@ class Message extends MessageAbstract
             $base = $base . PHP_EOL .
             '(' .
                 $message[self::MSG_QRY_USER_ID_KEY] . ',' .
-                $message[self::MSG_QRY_DEAL_ID_KEY] . ',' .
+                (is_null($message[self::MSG_QRY_DEAL_ID_KEY]) ? "$nullValue" : $message[self::MSG_QRY_DEAL_ID_KEY]) . ',' .
                 (is_null($message[self::MSG_QRY_LOAN_ID_KEY]) ? "$nullValue" : $message[self::MSG_QRY_LOAN_ID_KEY]) . ',' .
                 $message[self::MSG_QRY_TYPE_ID_KEY] . ',' .
                 $message[self::QRY_ORIGINATOR_ID_KEY] . ',' .
