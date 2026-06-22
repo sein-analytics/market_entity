@@ -33,6 +33,10 @@ interface BidInterface
 
     const KO_DEAL_ID_KEY = "dealId";
 
+    const KO_QRY_COMMENT_ID_KEY = 'comment_id';
+
+    const KO_COMMENT_ID_KEY = 'commentId';
+
     const DD_BID_REQUESTS_COLLECTION_NAME = "bid_requests";
 
     const DD_BID_REQUESTEDS_LOANS_COLLECTION_NAME = "requested_loans";
