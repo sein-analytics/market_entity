@@ -25,6 +25,9 @@ class KickOutsLoan extends EntityRepository
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => self::TBL_PROP_NONE_DEFAULT],
         self::KO_DEAL_ID_KEY => [self::TBL_PROP_ENTITY_KEY => self::DEAL_ENTITY,
             self::TBL_PROP_NULLABLE_KEY => false, self::TBL_PROP_DEFAULT_KEY => self::TBL_PROP_NONE_DEFAULT],
+        self::KO_QRY_COMMENT_ID_KEY => [
+            self::TBL_PROP_ENTITY_KEY => null, self::TBL_PROP_NULLABLE_KEY => true, self::TBL_PROP_DEFAULT_KEY => null
+        ],
     ];
 
     public function insertNewKickOutLoan (array $params)
