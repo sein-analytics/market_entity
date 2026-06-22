@@ -44,6 +44,12 @@ class KickOutsLoan
     protected $deal;
 
     /**
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected ?string $commentId = null;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -99,4 +105,21 @@ class KickOutsLoan
     {
         $this->deal = $deal;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCommentId(): string|null
+    {
+        return $this->commentId;
+    }
+
+    /**
+     * @param string
+     */
+    public function setCommentId(string $commentId): void
+    {
+        $this->commentId = $commentId;
+    }
+
 }
