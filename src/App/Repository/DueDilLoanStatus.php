@@ -45,6 +45,8 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
 
+    private string $deleteDdLnStatusByDdsAndLoanSql = "DELETE FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id=?";
+
     private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`, `last_modified`) VALUES";
 
     private string $fetchStatusesByDdsAndLoanSql = "SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)";
@@ -130,6 +132,18 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             $this->deleteStatusByDdIdLoanIdSql,
             self::EXECUTE_MTHD,
             [$ddId, $lnId]
+        );
+    }
+
+    public function deleteDdLnStatusByDdsAndLoan(array $dueDiligencesIds, int $loanId):mixed
+    {
+        $dueDiligencesIds = implode(', ', $dueDiligencesIds);
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteDdLnStatusByDdsAndLoanSql,
+            self::EXECUTE_MTHD,
+            [$dueDiligencesIds, $loanId]
         );
     }
 
