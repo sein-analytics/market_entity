@@ -52,6 +52,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $deleteFromManyToManySql = "DELETE FROM deal_file_due_diligence WHERE due_diligence_id = ? AND deal_file_id = ?";
 
+    private string $deleteDfDdByDdsAndLoanSql = "DELETE FROM deal_file_due_diligence WHERE due_diligence_id IN (?) AND deal_file_id IN ( SELECT id FROM DealFile WHERE loan_id=?)";
+
     private string $leadDdIdsUserIdsByDealIdSql = "SELECT dueDil.id, dueDil.user_id, dueDil.bid_id, CONCAT(mktUsers.first_name,' ', mktUsers.last_name) AS ddUserName, Issuer.id AS ddUserIssuerId, Issuer.issuer_name AS buyersCompany FROM `DueDiligence` dueDil LEFT JOIN MarketUser mktUsers ON mktUsers.id = dueDil.user_id LEFT JOIN Issuer on Issuer.id = mktUsers.issuer_id WHERE dd_role_id=1 AND deal_id=?;";
 
     private string $ddLeadsByDealIdLoanIdSql = "SELECT dueDil.id, dueDil.user_id, dueDil.bid_id, CONCAT(mktUsers.first_name,' ', mktUsers.last_name) AS ddUserName, Issuer.id AS ddUserIssuerId, Issuer.issuer_name AS buyersCompany FROM `DueDiligence` dueDil LEFT JOIN MarketUser mktUsers ON mktUsers.id = dueDil.user_id LEFT JOIN Issuer on Issuer.id = mktUsers.issuer_id WHERE dd_role_id=1 AND deal_id=? and dueDil.id IN(SELECT dd_id FROM DueDilLoanStatus WHERE ln_id = ?)";
@@ -126,6 +128,18 @@ class DueDiligence extends DueDiligenceAbstract
             $this->deleteFromManyToManySql,
             self::EXECUTE_MTHD,
             [$ddId, $fileId]
+        );
+    }
+
+    public function deleteDfDdByDdsAndLoan(array $dueDiligencesIds, int $loanId):mixed
+    {
+        $dueDiligencesIds = implode(', ', $dueDiligencesIds);
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteDfDdByDdsAndLoanSql,
+            self::EXECUTE_MTHD,
+            [$dueDiligencesIds, $loanId]
         );
     }
 
