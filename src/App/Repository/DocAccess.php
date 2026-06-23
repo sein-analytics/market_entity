@@ -24,6 +24,8 @@ class DocAccess extends EntityRepository
 
     private string $deleteAllAccessByFileIdSql = "DELETE FROM DocAccess WHERE document_id = ?";
 
+    private string $deleteAccessByUsersAndLoanSql = "DELETE FROM DocAccess WHERE user_id IN (?) AND document_id IN (SELECT id FROM DealFile WHERE loan_id=?)";
+
     private string $multipleInsertDocAccessSql = "INSERT INTO DocAccess (`user_id`, `deal_id`, `document_id`) VALUES";
 
     private array $tableProps = [
@@ -86,6 +88,18 @@ class DocAccess extends EntityRepository
             $this->deleteAllAccessByFileIdSql,
             self::EXECUTE_MTHD,
             [$fileId]
+        );
+    }
+    
+    public function deleteAccessByUsersAndLoan(array $usersIds, int $loanId):mixed
+    {
+        $usersIds = implode(',', $usersIds);
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteAccessByUsersAndLoanSql,
+            self::EXECUTE_MTHD,
+            [$usersIds, $loanId]
         );
     }
 
