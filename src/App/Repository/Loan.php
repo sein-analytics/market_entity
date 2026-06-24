@@ -115,6 +115,8 @@ class Loan extends EntityRepository
 
     private string $fetchPayHistoryByIdSql = "SELECT * FROM PayHistoryAttribute WHERE id=?";
 
+    private string $fetchLoansByIdsSql = "SELECT * FROM loans WHERE id IN (?)";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -275,6 +277,18 @@ class Loan extends EntityRepository
             $sql,
             self::FETCH_ALL_ASSO_MTHD,
             $poolIds
+        );
+    }
+
+    public function fetchLoansByIds(array $loanIds)
+    {
+        $loanIds = implode(',', $loanIds);
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchLoansByIdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$loanIds]
         );
     }
 
