@@ -282,13 +282,11 @@ class Loan extends EntityRepository
 
     public function fetchLoansByIds(array $loanIds)
     {
-        $loanIds = implode(',', $loanIds);
-
-        return $this->buildAndExecuteFromSql(
-            $this->getEntityManager(),
+        return $this->buildAndExecuteIntArrayStmt(
+            $this->em,
             $this->fetchLoansByIdsSql,
             self::FETCH_ALL_ASSO_MTHD,
-            [$loanIds]
+            $loanIds
         );
     }
 
