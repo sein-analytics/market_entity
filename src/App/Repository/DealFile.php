@@ -71,6 +71,8 @@ class DealFile extends EntityRepository
 
     private string $fetchDealFileIdsByDealIdSql = "SELECT id FROM DealFile Where deal_id=?";
 
+    private string $fetchDealFileIdsByLoanIdSql = "SELECT id FROM DealFile WHERE loan_id=?";
+
     private string $unattachedFilesByDealIdSql = "SELECT * FROM `DealFile` WHERE `deal_id` =? AND loan_id IS NULL";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
@@ -90,6 +92,18 @@ class DealFile extends EntityRepository
             $this->fetchDealFileIdsByDealIdSql,
             self::FETCH_ALL_ASSO_MTHD,
             [$dealId]
+        );
+
+        return $this->completeIdFetchQuery($results);
+    }
+
+    public function fetchDealFileIdsByLoanId(int $loanId)
+    {
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDealFileIdsByLoanIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$loanId]
         );
 
         return $this->completeIdFetchQuery($results);
