@@ -82,6 +82,8 @@ class DueDiligence extends DueDiligenceAbstract
 
     private string $fetchDueDiligencesByParentSql = "SELECT * FROM DueDiligence WHERE parent_id=? OR id=?";
 
+    private string $fetchDueDiligenceByBidSql = "SELECT * FROM DueDiligence WHERE bid_id=?";
+
     public function insertNewDueDiligence(array $params):mixed
     {
         if (array_key_exists(self::DD_QRY_ID_KEY, $params))
@@ -574,6 +576,16 @@ class DueDiligence extends DueDiligenceAbstract
             $this->fetchDueDiligencesByParentSql,
             self::FETCH_ALL_ASSO_MTHD,
             [$dueDilParentId, $dueDilParentId]
+        );
+    }
+    
+    public function fetchDueDiligenceByBid(int $bidId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchDueDiligenceByBidSql,
+            self::FETCH_ASSO_MTHD,
+            [ $bidId ]
         );
     }
 
