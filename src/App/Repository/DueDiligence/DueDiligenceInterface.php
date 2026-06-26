@@ -260,6 +260,8 @@ interface DueDiligenceInterface
 
     const USERS_IDS_KEY = 'usersIds';
 
+    const DD_LOAN_FILES_COUNT_API_KEY = 'filesCount';
+
     const DD_REQUEST_LOAN_DOCS_VALIDATIONS = [
         self::DD_REQUEST_LOAN_DOCS_SUBJECT_KEY => 'required|string',
         self::BID_HISTORY_LOANS_KEY => 'required|array',
