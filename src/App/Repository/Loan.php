@@ -115,7 +115,7 @@ class Loan extends EntityRepository
 
     private string $fetchPayHistoryByIdSql = "SELECT * FROM PayHistoryAttribute WHERE id=?";
 
-    private string $fetchLoansByIdsSql = "SELECT l.*, p.deal_id AS dealId FROM loans AS l LEFT JOIN Pool AS p ON p.id = l.pool_id WHERE l.id IN (?);";
+    private string $fetchLoansByIdsSql = "SELECT l.*, p.deal_id AS dealId, (SELECT COUNT(*) FROM DealFile AS df WHERE df.loan_id = l.id ) AS filesCount FROM loans AS l LEFT JOIN Pool AS p ON p.id = l.pool_id WHERE l.id IN (?);";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
