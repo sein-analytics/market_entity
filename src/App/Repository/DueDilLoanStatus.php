@@ -244,7 +244,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     public function fetchParentAndChildDdLnSByFileAndLoan(int $ddParentId, int $fileId, int $loanId)
     {
-        $sql = "SELECT ddlns.*, dds.parent_id, dds.deal_id AS dealId, ddUser.issuer_id AS issuerId FROM DueDilLoanStatus AS ddlns ".
+        $sql = "SELECT ddlns.*, dds.parent_id, dds.deal_id AS dealId, ddUser.user_id AS userId, ddUser.issuer_id, AS issuerId FROM DueDilLoanStatus AS ddlns ".
             "LEFT JOIN ( ".
                 "SELECT id, parent_id, user_id, deal_id FROM DueDiligence WHERE id = $ddParentId UNION ALL ".
                 "SELECT id, parent_id, user_id, deal_id FROM DueDiligence WHERE parent_id = $ddParentId ".
