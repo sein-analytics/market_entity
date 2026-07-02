@@ -303,7 +303,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     public function fetchStatusesByDdsAndLoan(array $dueDiligenceIds, int $loanId):mixed
     {
-        $sql = "SELECT ddlns.*, dds.parent_id, dds.deal_id AS dealId, ddUser.issuer_id AS issuerId FROM DueDilLoanStatus AS ddlns ".
+        $sql = "SELECT ddlns.*, dds.parent_id, dds.deal_id AS dealId, ddUser.issuer_id AS issuerId, dds.user_id AS userId FROM DueDilLoanStatus AS ddlns ".
             "LEFT JOIN DueDiligence AS dds ON dds.id = ddlns.dd_id ".
             "LEFT JOIN MarketUser AS ddUser ON ddUser.id = dds.user_id " .
             "WHERE dd_id IN (?) AND ln_id IN (?)";
