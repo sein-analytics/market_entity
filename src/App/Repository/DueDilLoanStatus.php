@@ -45,6 +45,8 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     private string $deleteStatusByDdIdLoanIdSql = "DELETE FROM DueDilLoanStatus WHERE dd_id=? AND ln_id=?";
 
+    private string $deleteDdLnStatusByDdsAndLoanSql = "DELETE FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id=?";
+
     private string $multipleInsertsDdLoanStatus = "INSERT INTO DueDilLoanStatus (`dd_id`, `ln_id`, `status_id`, `logger`, `issues_count`, `last_modified`) VALUES";
 
     private string $fetchStatusesByDdsAndLoanSql = "SELECT * FROM DueDilLoanStatus WHERE dd_id IN (?) AND ln_id IN (?)";
@@ -130,6 +132,18 @@ class DueDilLoanStatus extends DueDiligenceAbstract
             $this->deleteStatusByDdIdLoanIdSql,
             self::EXECUTE_MTHD,
             [$ddId, $lnId]
+        );
+    }
+
+    public function deleteDdLnStatusByDdsAndLoan(array $dueDiligencesIds, int $loanId):mixed
+    {
+        $dueDiligencesIds = implode(', ', $dueDiligencesIds);
+
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteDdLnStatusByDdsAndLoanSql,
+            self::EXECUTE_MTHD,
+            [$dueDiligencesIds, $loanId]
         );
     }
 
@@ -230,7 +244,7 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     public function fetchParentAndChildDdLnSByFileAndLoan(int $ddParentId, int $fileId, int $loanId)
     {
-        $sql = "SELECT ddlns.*, dds.parent_id, dds.deal_id AS dealId, ddUser.issuer_id AS issuerId FROM DueDilLoanStatus AS ddlns ".
+        $sql = "SELECT ddlns.*, dds.parent_id, dds.deal_id AS dealId, dds.user_id AS userId, ddUser.issuer_id AS issuerId, dds.deal_id AS dealId FROM DueDilLoanStatus AS ddlns ".
             "LEFT JOIN ( ".
                 "SELECT id, parent_id, user_id, deal_id FROM DueDiligence WHERE id = $ddParentId UNION ALL ".
                 "SELECT id, parent_id, user_id, deal_id FROM DueDiligence WHERE parent_id = $ddParentId ".
@@ -289,8 +303,9 @@ class DueDilLoanStatus extends DueDiligenceAbstract
 
     public function fetchStatusesByDdsAndLoan(array $dueDiligenceIds, int $loanId):mixed
     {
-        $sql = "SELECT ddlns.*, dds.parent_id FROM DueDilLoanStatus AS ddlns ".
+        $sql = "SELECT ddlns.*, dds.parent_id, dds.deal_id AS dealId, ddUser.issuer_id AS issuerId, dds.user_id AS userId FROM DueDilLoanStatus AS ddlns ".
             "LEFT JOIN DueDiligence AS dds ON dds.id = ddlns.dd_id ".
+            "LEFT JOIN MarketUser AS ddUser ON ddUser.id = dds.user_id " .
             "WHERE dd_id IN (?) AND ln_id IN (?)";
 
         try {

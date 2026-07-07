@@ -44,6 +44,8 @@ class Bid extends EntityRepository
 
     private string $fetchLastBidPriceByDealSql = "SELECT price FROM Bid WHERE id IN (SELECT Max(id) FROM Bid WHERE deal_id=?)";
 
+    private string $fetchUserDdBidsIdsSql = "SELECT id FROM Bid WHERE user_id=? AND status_id = 4";
+
     private string $callDealLoiBidsAuthenticity = "call DealLoiBidsAuthenticity(:dealId, :bidsIds)";
 
     /**
@@ -257,6 +259,17 @@ class Bid extends EntityRepository
             self::FETCH_ASSO_MTHD,
             [$bidId]
         );
+    }
+    public function fetchUserDdBidsIds(int $userId): mixed
+    {
+        $results = $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchUserDdBidsIdsSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$userId]
+        );
+
+        return $this->flattenResultArrayByKey($results, 'id');
     }
 
     public function fetchDealIssuersLoiActiveBids(int $dealId, array $bidsStatusIds):mixed
