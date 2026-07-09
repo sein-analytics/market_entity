@@ -23,6 +23,8 @@ class SaleAttribute extends EntityRepository
 
     private string $fetchSaleAttributeIdsByLoanIdsSql = "SELECT id FROM SaleAttribute Where loan_id in (?)";
 
+    private $fetchAttributesByDealIdSql = "SELECT slAttr.* FROM SaleAttribute AS slAttr INNER JOIN loans AS l ON l.id = slAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?"; 
+
     public function fetchSaleAttributeIdsByLoanIds(array $loanIds)
     {
         $results = $this->buildAndExecuteIntArrayStmt(
@@ -49,6 +51,16 @@ class SaleAttribute extends EntityRepository
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
         return array_keys(self::$table);
+    }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
     }
 
 }

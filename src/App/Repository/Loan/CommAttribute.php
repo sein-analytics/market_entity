@@ -38,6 +38,8 @@ class CommAttribute extends EntityRepository
 
     private string $fetchCommAttributeIdsByLoanIdsSql = "SELECT id FROM CommAttribute Where loan_id in (?)";
 
+    private $fetchAttributesByDealIdSql = "SELECT cmmAttr.* FROM CommAttribute AS cmmAttr INNER JOIN loans AS l ON l.id = cmmAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
+
     public function fetchCommAttributeIdsByLoanIds(array $loanIds)
     {
         $results = $this->buildAndExecuteIntArrayStmt(
@@ -67,5 +69,15 @@ class CommAttribute extends EntityRepository
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
         return array_keys(self::$table);
+    }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
     }
 }

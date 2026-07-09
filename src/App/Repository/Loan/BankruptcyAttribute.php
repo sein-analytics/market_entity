@@ -2,6 +2,7 @@
 
 namespace App\Repository\Loan;
 
+use App\Repository\DbalStatementInterface;
 use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
@@ -9,7 +10,7 @@ use App\Service\SqlManagerTraitInterface;
 use Doctrine\ORM\EntityRepository;
 
 class BankruptcyAttribute extends EntityRepository
-    implements SqlManagerTraitInterface, LoanInterface
+    implements SqlManagerTraitInterface, LoanInterface, DbalStatementInterface
 {
 
     use FetchingTrait, FetchMapperTrait, QueryManagerTrait;
@@ -28,6 +29,8 @@ class BankruptcyAttribute extends EntityRepository
         'motion_relief_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::BK_ATTR_CATEGORY],
     ];
 
+    private $fetchAttributesByDealIdSql = "SELECT bkrptAttr.* FROM BankruptcyAttribute AS bkrptAttr INNER JOIN loans AS l ON l.id = bkrptAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('BankruptcyAttribute');
@@ -37,4 +40,15 @@ class BankruptcyAttribute extends EntityRepository
     {
         return array_keys(self::$table);
     }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+    }
+
 }

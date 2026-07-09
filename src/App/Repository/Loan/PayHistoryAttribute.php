@@ -40,6 +40,8 @@ class PayHistoryAttribute extends EntityRepository
 
     private string $fetchPayHistoryByIdSql = "SELECT * FROM PayHistoryAttribute WHERE id=?";
 
+    private string $fetchAttributesByDealIdSql = "SELECT phAttr.* FROM PayHistoryAttribute AS phAttr INNER JOIN loans AS l ON l.id = phAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('PayHistoryAttribute');
@@ -57,6 +59,16 @@ class PayHistoryAttribute extends EntityRepository
             $this->fetchPayHistoryByIdSql,
             self::FETCH_ASSO_MTHD,
             [$id]
+        );
+    }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
         );
     }
 

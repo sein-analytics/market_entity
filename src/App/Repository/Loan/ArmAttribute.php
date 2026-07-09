@@ -45,6 +45,8 @@ class ArmAttribute extends EntityRepository
 
     private $fetchArmAttributeIdsByLoanIdsSql = "SELECT id FROM ArmAttribute Where loan_id in (?)";
 
+    private $fetchAttributesByDealIdSql = "SELECT armAttr.* FROM ArmAttribute AS armAttr INNER JOIN loans AS l ON l.id = armAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -102,4 +104,15 @@ class ArmAttribute extends EntityRepository
     {
         return array_keys(self::$table);
     }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+    }
+
 }
