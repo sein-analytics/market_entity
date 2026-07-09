@@ -161,9 +161,9 @@ class Loan extends EntityRepository
             " EscrowAttribute.total_debt_balance, EscrowAttribute.accrued_late_fees, EscrowAttribute.escrow_balance, EscrowAttribute.restricted_escrow, EscrowAttribute.escrow_advance_balance, EscrowAttribute.corp_advance_balance, ".
             " EscrowAttribute.third_party_balance, EscrowAttribute.accrued_balance, EscrowAttribute.tax_and_insurance_payment, ".
             " ForeclosureAttribute.foreclosure_start_date, ForeclosureAttribute.foreclosure_bid_amount, ForeclosureAttribute.actual_sale_date, ForeclosureAttribute.judgement_date, ForeclosureAttribute.referred_to_atty_date, ForeclosureAttribute.service_complete_date, ".
-            " ForeclosureAttribute.foreclosure_status, ForeclosureAttribute.schedule_sale_date, ForeclosureAttribute.completed_date, ForeclosureAttribute.removal_date, ForeclosureAttribute.suspended_date, ForeclosureAttribute.foreclosure_type, ".
+            " ForeclosureAttribute.foreclosure_status, ForeclosureAttribute.schedule_sale_date, ForeclosureAttribute.completed_date, ForeclosureAttribute.removal_date, ForeclosureAttribute.suspended_date, ".
             " ForeclosureAttribute.foreclosure_type, ForeclosureAttribute.next_step_date, ForeclosureAttribute.referral_date, ".
-            " LossMitigationAttribute.setup_date, LossMitigationAttribute.loss_mitigation_status, LossMitigationAttribute.removal_date, ".
+            " LossMitigationAttribute.setup_date, LossMitigationAttribute.loss_mitigation_status, LossMitigationAttribute.loss_mit_removal_date, ".
             " ModificationAttribute.modification_date, ModificationAttribute.capitalized_amount, ModificationAttribute.modification_status, ModificationAttribute.post_principal_balance, ".
             " PayHistoryAttribute.history1, PayHistoryAttribute.history2, PayHistoryAttribute.history3, PayHistoryAttribute.history4, PayHistoryAttribute.history5, PayHistoryAttribute.history6, ".
             " PayHistoryAttribute.history7, PayHistoryAttribute.history8, PayHistoryAttribute.history9, PayHistoryAttribute.history10, PayHistoryAttribute.history11, PayHistoryAttribute.history12, ".
