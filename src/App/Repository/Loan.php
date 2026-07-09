@@ -154,10 +154,10 @@ class Loan extends EntityRepository
             " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap, lnState.abbreviation AS state, ".
             " SaleAttribute.availability, CommAttribute.dscr, CommAttribute.noi, CommAttribute.net_worth_to_loan, CommAttribute.profit_ratio, CommAttribute.loan_to_cost_ratio, ".
             " CommAttribute.debt_yield_ratio, CommAttribute.vacancy_rate, CommAttribute.lockout_period, CommAttribute.defeasance_date, CommAttribute.cap_rate, ".
-            " DelinquencyAttribute.servicer, DelinquencyAttribute.sub_servicer, DelinquencyAttribute.servicer_notes, DelinquencyAttribute.sub_servicer_notes, DelinquencyAttribute.servicer_status, DelinquencyAttribute.sub_servicer_status, ".
-            " DelinquencyAttribute.master_servicer, DelinquencyAttribute.master_servicer_status, DelinquencyAttribute.asset_manager, DelinquencyAttribute.asset_manager_status, DelinquencyAttribute.asset_manager_sub_status, DelinquencyAttribute.days_delinquent, ".
-            " DelinquencyAttribute.delinquent_principal, DelinquencyAttribute.delinquent_interest, DelinquencyAttribute.total_delinquent_balance, DelinquencyAttribute.general_notes, DelinquencyAttribute.sub_status, DelinquencyAttribute.sub_status_notes, ".
-            " DelinquencyAttribute.suspense_balance, DelinquencyAttribute.deferred_balance, ".
+            " DelinquentAttribute.servicer, DelinquentAttribute.sub_servicer, DelinquentAttribute.servicer_notes, DelinquentAttribute.sub_servicer_notes, DelinquentAttribute.servicer_status, DelinquentAttribute.sub_servicer_status, ".
+            " DelinquentAttribute.master_servicer, DelinquentAttribute.master_servicer_status, DelinquentAttribute.asset_manager, DelinquentAttribute.asset_manager_status, DelinquentAttribute.asset_manager_sub_status, DelinquentAttribute.days_delinquent, ".
+            " DelinquentAttribute.delinquent_principal, DelinquentAttribute.delinquent_interest, DelinquentAttribute.total_delinquent_balance, DelinquentAttribute.general_notes, DelinquentAttribute.sub_status, DelinquentAttribute.sub_status_notes, ".
+            " DelinquentAttribute.suspense_balance, DelinquentAttribute.deferred_balance, ".
             " EscrowAttribute.total_debt_balance, EscrowAttribute.accrued_late_fees, EscrowAttribute.escrow_balance, EscrowAttribute.restricted_escrow, EscrowAttribute.escrow_advance_balance, EscrowAttribute.corp_advance_balance, ".
             " EscrowAttribute.third_party_balance, EscrowAttribute.accrued_balance, EscrowAttribute.tax_and_insurance_payment, ".
             " ForeclosureAttribute.foreclosure_start_date, ForeclosureAttribute.foreclosure_bid_amount, ForeclosureAttribute.actual_sale_date, ForeclosureAttribute.judgement_date, ForeclosureAttribute.referred_to_atty_date, ForeclosureAttribute.service_complete_date, ".
