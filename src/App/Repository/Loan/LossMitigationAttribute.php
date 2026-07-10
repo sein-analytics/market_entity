@@ -26,7 +26,7 @@ class LossMitigationAttribute extends EntityRepository
         'loss_mit_removal_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::LOSS_MIT_CATEGORY],
     ];
 
-    private $fetchAttributesByDealIdSql = "lssMtAttr.* FROM LossMitigationAttribute AS lssMtAttr INNER JOIN loans AS l ON l.id = lssMtAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
+    private $fetchAttributesByDealIdSql = "SELECT lssMtAttr.* FROM LossMitigationAttribute AS lssMtAttr INNER JOIN loans AS l ON l.id = lssMtAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
 
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
