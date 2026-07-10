@@ -40,6 +40,12 @@ class CommAttribute extends EntityRepository
 
     private $fetchAttributesByDealIdSql = "SELECT cmmAttr.* FROM CommAttribute AS cmmAttr INNER JOIN loans AS l ON l.id = cmmAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
 
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
+
     public function fetchCommAttributeIdsByLoanIds(array $loanIds)
     {
         $results = $this->buildAndExecuteIntArrayStmt(

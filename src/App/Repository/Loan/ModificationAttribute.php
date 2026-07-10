@@ -28,6 +28,12 @@ class ModificationAttribute extends EntityRepository
 
     private $fetchAttributesByDealIdSql = "SELECT modAttr.* FROM ModificationAttribute AS modAttr INNER JOIN loans AS l ON l.id = modAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
 
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('ModificationAttribute');
