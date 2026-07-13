@@ -127,14 +127,14 @@ class Loan extends EntityRepository
      * @param int $dealId
      * @return array|bool
      */
-    public function fetchLoansByDealId(int $dealId)
+    public function fetchLoansByDealId(int $dealId, bool $fetchAttrs = false)
     {
         $sql = "SELECT * FROM Pool WHERE deal_id IN (?)";
         $results = $this->fetchByIntArray($this->em, array($dealId), $sql);
         if(count($results) > 0){
             $poolIds = $this->array_value_recursive('id', $results);
             try{
-                $results = $this->fetchLoansByPoolIds($poolIds);
+                $results = !$fetchAttrs ? $this->fetchLoansByPoolIds($poolIds) : $this->fetchLoansByPoolIdsAttrs($poolIds);
             } catch (\Exception $e){
                 return ['message' => $e->getMessage()];
             }
@@ -148,6 +148,18 @@ class Loan extends EntityRepository
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchLoansByPoolIds(array $ids)
+    {
+        $sql = "SELECT loans.*, lnState.abbreviation AS state FROM loans LEFT JOIN State lnState ON lnState.id=loans.state_id WHERE pool_id IN (?) ORDER BY loans.id ASC";
+     
+        return $this->buildAndExecuteMultiIntStmt(
+            $this->em,
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $ids,
+        );
+    }
+
+    public function fetchLoansByPoolIdsAttrs(array $ids)
     {
         $sql = "SELECT loans.*, ArmAttribute.gross_margin, ArmAttribute.minimum_rate, ArmAttribute.maximum_rate, ArmAttribute.rate_index, ".
             "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
