@@ -7,7 +7,9 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class DelinquentAttribute extends EntityRepository
     implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
@@ -40,6 +42,14 @@ class DelinquentAttribute extends EntityRepository
         'accrued_interest' => [self::DATA_TYPE => 'float', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::DQ_ATTR_CATEGORY],
     ];
 
+    private $fetchAttributesByDealIdSql = "SELECT dqAttr.* FROM DelinquentAttribute AS dqAttr INNER JOIN loans AS l ON l.id = dqAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
+
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('DelinquentAttribute');
@@ -49,4 +59,15 @@ class DelinquentAttribute extends EntityRepository
     {
         return array_keys(self::$table);
     }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+    }
+
 }

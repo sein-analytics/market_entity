@@ -127,14 +127,14 @@ class Loan extends EntityRepository
      * @param int $dealId
      * @return array|bool
      */
-    public function fetchLoansByDealId(int $dealId)
+    public function fetchLoansByDealId(int $dealId, bool $fetchAttrs = false)
     {
         $sql = "SELECT * FROM Pool WHERE deal_id IN (?)";
         $results = $this->fetchByIntArray($this->em, array($dealId), $sql);
         if(count($results) > 0){
             $poolIds = $this->array_value_recursive('id', $results);
             try{
-                $results = $this->fetchLoansByPoolIds($poolIds);
+                $results = !$fetchAttrs ? $this->fetchLoansByPoolIds($poolIds) : $this->fetchLoansByPoolIdsAttrs($poolIds);
             } catch (\Exception $e){
                 return ['message' => $e->getMessage()];
             }
@@ -149,21 +149,33 @@ class Loan extends EntityRepository
      */
     public function fetchLoansByPoolIds(array $ids)
     {
+        $sql = "SELECT loans.*, lnState.abbreviation AS state FROM loans LEFT JOIN State lnState ON lnState.id=loans.state_id WHERE pool_id IN (?) ORDER BY loans.id ASC";
+     
+        return $this->buildAndExecuteMultiIntStmt(
+            $this->em,
+            $sql,
+            self::FETCH_ALL_ASSO_MTHD,
+            $ids,
+        );
+    }
+
+    public function fetchLoansByPoolIdsAttrs(array $ids)
+    {
         $sql = "SELECT loans.*, ArmAttribute.gross_margin, ArmAttribute.minimum_rate, ArmAttribute.maximum_rate, ArmAttribute.rate_index, ".
             "ArmAttribute.fst_rate_adj_period, ArmAttribute.fst_rate_adj_date, ArmAttribute.fst_pmnt_adj_period, ArmAttribute.fst_pmnt_adj_date, ArmAttribute.rate_adj_frequency, ".
             " ArmAttribute.periodic_cap, ArmAttribute.initial_cap, ArmAttribute.pmnt_adj_frequency, ArmAttribute.pmnt_increase_cap, lnState.abbreviation AS state, ".
             " SaleAttribute.availability, CommAttribute.dscr, CommAttribute.noi, CommAttribute.net_worth_to_loan, CommAttribute.profit_ratio, CommAttribute.loan_to_cost_ratio, ".
             " CommAttribute.debt_yield_ratio, CommAttribute.vacancy_rate, CommAttribute.lockout_period, CommAttribute.defeasance_date, CommAttribute.cap_rate, ".
-            " DelinquencyAttribute.servicer, DelinquencyAttribute.sub_servicer, DelinquencyAttribute.servicer_notes, DelinquencyAttribute.sub_servicer_notes, DelinquencyAttribute.servicer_status, DelinquencyAttribute.sub_servicer_status, ".
-            " DelinquencyAttribute.master_servicer, DelinquencyAttribute.master_servicer_status, DelinquencyAttribute.asset_manager, DelinquencyAttribute.asset_manager_status, DelinquencyAttribute.asset_manager_sub_status, DelinquencyAttribute.days_delinquent, ".
-            " DelinquencyAttribute.delinquent_principal, DelinquencyAttribute.delinquent_interest, DelinquencyAttribute.total_delinquent_balance, DelinquencyAttribute.general_notes, DelinquencyAttribute.sub_status, DelinquencyAttribute.sub_status_notes, ".
-            " DelinquencyAttribute.suspense_balance, DelinquencyAttribute.deferred_balance, ".
+            " DelinquentAttribute.servicer, DelinquentAttribute.sub_servicer, DelinquentAttribute.servicer_notes, DelinquentAttribute.sub_servicer_notes, DelinquentAttribute.servicer_status, DelinquentAttribute.sub_servicer_status, ".
+            " DelinquentAttribute.master_servicer, DelinquentAttribute.master_servicer_status, DelinquentAttribute.asset_manager, DelinquentAttribute.asset_manager_status, DelinquentAttribute.asset_manager_sub_status, DelinquentAttribute.days_delinquent, ".
+            " DelinquentAttribute.delinquent_principal, DelinquentAttribute.delinquent_interest, DelinquentAttribute.total_delinquent_balance, DelinquentAttribute.general_notes, DelinquentAttribute.sub_status, DelinquentAttribute.sub_status_notes, ".
+            " DelinquentAttribute.suspense_balance, DelinquentAttribute.deferred_balance, ".
             " EscrowAttribute.total_debt_balance, EscrowAttribute.accrued_late_fees, EscrowAttribute.escrow_balance, EscrowAttribute.restricted_escrow, EscrowAttribute.escrow_advance_balance, EscrowAttribute.corp_advance_balance, ".
             " EscrowAttribute.third_party_balance, EscrowAttribute.accrued_balance, EscrowAttribute.tax_and_insurance_payment, ".
             " ForeclosureAttribute.foreclosure_start_date, ForeclosureAttribute.foreclosure_bid_amount, ForeclosureAttribute.actual_sale_date, ForeclosureAttribute.judgement_date, ForeclosureAttribute.referred_to_atty_date, ForeclosureAttribute.service_complete_date, ".
-            " ForeclosureAttribute.foreclosure_status, ForeclosureAttribute.schedule_sale_date, ForeclosureAttribute.completed_date, ForeclosureAttribute.removal_date, ForeclosureAttribute.suspended_date, ForeclosureAttribute.foreclosure_type, ".
+            " ForeclosureAttribute.foreclosure_status, ForeclosureAttribute.schedule_sale_date, ForeclosureAttribute.completed_date, ForeclosureAttribute.removal_date, ForeclosureAttribute.suspended_date, ".
             " ForeclosureAttribute.foreclosure_type, ForeclosureAttribute.next_step_date, ForeclosureAttribute.referral_date, ".
-            " LossMitigationAttribute.setup_date, LossMitigationAttribute.loss_mitigation_status, LossMitigationAttribute.removal_date, ".
+            " LossMitigationAttribute.setup_date, LossMitigationAttribute.loss_mitigation_status, LossMitigationAttribute.loss_mit_removal_date, ".
             " ModificationAttribute.modification_date, ModificationAttribute.capitalized_amount, ModificationAttribute.modification_status, ModificationAttribute.post_principal_balance, ".
             " PayHistoryAttribute.history1, PayHistoryAttribute.history2, PayHistoryAttribute.history3, PayHistoryAttribute.history4, PayHistoryAttribute.history5, PayHistoryAttribute.history6, ".
             " PayHistoryAttribute.history7, PayHistoryAttribute.history8, PayHistoryAttribute.history9, PayHistoryAttribute.history10, PayHistoryAttribute.history11, PayHistoryAttribute.history12, ".

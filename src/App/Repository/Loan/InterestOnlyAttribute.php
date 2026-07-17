@@ -7,7 +7,9 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class InterestOnlyAttribute extends EntityRepository
     implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
@@ -24,6 +26,14 @@ class InterestOnlyAttribute extends EntityRepository
         'interest_only_expiration_date' => [self::DATA_TYPE => 'datetime', self::DATA_DEFAULT => 'NULL', self::PROP_CATEGORY_KEY =>self::IO_ATTR_CATEGORY],
     ];
 
+    private $fetchAttributesByDealIdSql = "SELECT intrstAttr.* FROM InterestOnlyAttribute AS intrstAttr INNER JOIN loans AS l ON l.id = intrstAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?";
+
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
+
     public function fetchNextAvailableId()
     {
         return $this->fetchNextAvailableTableId('InterestOnlyAttribute');
@@ -33,4 +43,15 @@ class InterestOnlyAttribute extends EntityRepository
     {
         return array_keys(self::$table);
     }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
+    }
+
 }

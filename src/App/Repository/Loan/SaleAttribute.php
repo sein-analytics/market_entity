@@ -8,7 +8,9 @@ use App\Service\FetchingTrait;
 use App\Service\FetchMapperTrait;
 use App\Service\QueryManagerTrait;
 use App\Service\SqlManagerTraitInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class SaleAttribute extends EntityRepository 
     implements SqlManagerTraitInterface, DbalStatementInterface, LoanInterface
@@ -22,6 +24,14 @@ class SaleAttribute extends EntityRepository
     ];
 
     private string $fetchSaleAttributeIdsByLoanIdsSql = "SELECT id FROM SaleAttribute Where loan_id in (?)";
+
+    private $fetchAttributesByDealIdSql = "SELECT slAttr.* FROM SaleAttribute AS slAttr INNER JOIN loans AS l ON l.id = slAttr.loan_id INNER JOIN Pool AS p ON p.id = l.pool_id WHERE p.deal_id=?"; 
+
+    public function __construct(EntityManager $em, ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+        $this->em = $em;
+    }
 
     public function fetchSaleAttributeIdsByLoanIds(array $loanIds)
     {
@@ -49,6 +59,16 @@ class SaleAttribute extends EntityRepository
     public function fetchEntityPropertiesForSql(string $subType = null)
     {
         return array_keys(self::$table);
+    }
+
+    public function fetchAttributesByDealId(int $dealId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->fetchAttributesByDealIdSql,
+            self::FETCH_ALL_ASSO_MTHD,
+            [$dealId]
+        );
     }
 
 }
