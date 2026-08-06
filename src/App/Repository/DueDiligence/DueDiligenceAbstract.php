@@ -25,6 +25,8 @@ abstract class DueDiligenceAbstract extends EntityRepository
 
     protected static string $callDueDilSellersLoanData = 'call DueDilSellersLoanData(:userIds)';
 
+    protected static string $callDueDilBuyersDealLoans = 'call DueDilBuyersDealLoans(:dealId, :userId, :attrsFilter)';
+
     protected static string $callDueDilBuyersLoanData = 'call DueDilBuyersLoanData(:userIds)';
 
     protected static string $callDueDilSellerBiddersData = 'call DueDilSellerBiddersData(:dealIds)';
