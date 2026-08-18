@@ -165,6 +165,11 @@ class DueDiligence extends DueDiligenceAbstract
         return $this->executeProcedure([implode(', ', $ids)], self::$callDueDilSellersLoanData);
     }
 
+    public function fetchDueDilBuyersDealLoans(int $dealId, int $userId, ?string $attrsFilter = null )
+    {
+        return $this->executeProcedure([ $dealId, $userId, $attrsFilter ], self::$callDueDilBuyersDealLoans);
+    }
+
     public function fetchDueDilSellerBiddersData(array $dealIds)
     {
         return $this->executeProcedure([implode(', ', $dealIds)], self::$callDueDilSellerBiddersData);
