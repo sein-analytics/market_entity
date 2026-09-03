@@ -46,9 +46,9 @@ class MarketUser extends abstractMktUser
         return $this->flattenResultArrayByKey($result, 'uuid', false);
     }
     
-    function fetchUserAuthAttributes(int $userId)
+    public function fetchUserAuthAttributes(string $username)
     {
-        $result = $this->executeProcedure([$userId], $this->callUserAuthAttributes);
+        $result = $this->executeProcedure([$username], $this->callUserAuthAttributes);
  
         return count($result) > 0 ? $result[0] : [];
     }
