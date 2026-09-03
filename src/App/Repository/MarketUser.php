@@ -34,6 +34,8 @@ class MarketUser extends abstractMktUser
 
     private string $userRoleIdByUserIdSql = "SELECT role_id FROM `MarketUser` WHERE id = ?";
 
+    private string $callUserAuthAttributes = 'call UserAuthAttributes(:userId)';
+
     function fetchUsersUuidFromIds(array $userIds)
     {
         $result = $this->executeProcedure([implode(', ', $userIds)],
@@ -42,6 +44,13 @@ class MarketUser extends abstractMktUser
         if ($result instanceof \Exception)
             return $result;
         return $this->flattenResultArrayByKey($result, 'uuid', false);
+    }
+    
+    function fetchUserAuthAttributes(int $userId)
+    {
+        $result = $this->executeProcedure([$userId], $this->callUserAuthAttributes);
+ 
+        return count($result) > 0 ? $result[0] : [];
     }
 
     /**
