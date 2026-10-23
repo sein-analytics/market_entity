@@ -75,6 +75,8 @@ class DealFile extends EntityRepository
 
     private string $unattachedFilesByDealIdSql = "SELECT * FROM `DealFile` WHERE `deal_id` =? AND loan_id IS NULL";
 
+    private string $deleteFileByAssetIdSql = "DELETE FROM DealFile WHERE asset_id=?";
+
     public function __construct(EntityManager $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -358,6 +360,15 @@ class DealFile extends EntityRepository
             $this->deleteFileByIdSql,
             self::EXECUTE_MTHD,
             [$dealFileId]
+        );
+    }
+    public function deleteFileByAssetId(string $assetId)
+    {
+        return $this->buildAndExecuteFromSql(
+            $this->getEntityManager(),
+            $this->deleteFileByAssetIdSql,
+            self::EXECUTE_MTHD,
+            [$assetId]
         );
     }
 
